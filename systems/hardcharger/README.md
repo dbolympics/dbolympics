@@ -1,10 +1,12 @@
 # Hardcharger
 
 [Hardcharger](https://github.com/gizmodata/hardcharger) 2.0.0 serves DuckDB 2.0.0
-through Warp SQL. `install` downloads the released server and `hardcharger` CLI,
-checks their archive's SHA-256, and builds the runner adapter with a pinned Rust
-toolchain and lockfile. JSON and Parquet support are compiled into the server;
-the run needs no network access or extension downloads.
+through Warp SQL. `install` uses the [official Hardcharger installer](https://gizmodata.com/hardcharger/install),
+pinned to `--version 2.0.0`, to install the server and `hardcharger` CLI under
+`/opt/hardcharger`. The installer selects the architecture, verifies the release
+checksums and checks both binaries before making them current. The runner adapter
+is built with a pinned Rust toolchain and lockfile. JSON and Parquet support are
+compiled into the server; the run needs no network access or extension downloads.
 
 Every benchmark statement is sent unchanged to **one persistent `hardcharger`
 CLI process**, using one database session for the whole run. The CLI produces
