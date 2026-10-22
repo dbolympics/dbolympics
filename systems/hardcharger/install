@@ -1,0 +1,27 @@
+#!/bin/bash
+set -euo pipefail
+cd /system
+
+apt-get update -y
+apt-get install -y --no-install-recommends build-essential tzdata
+
+# Released, statically linked server AND CLI; no extensions need downloading at runtime.
+VERSION=2.0.0
+case "$(uname -m)" in
+    x86_64) ARCH=amd64; SHA256=1298b857b05300bee5f96046013944410eb0f2e13218d141ddb0b82c6d07c98b ;;
+    aarch64) ARCH=arm64; SHA256=86e95d3e1598deaa459f5ef6500e348d7b6aceabc29b3ffc964bd5ac2ca689ef ;;
+    *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+curl -fsSL --retry 10 "https://github.com/gizmodata/hardcharger/releases/download/v$VERSION/hardcharger-linux-$ARCH.tar.gz" -o /tmp/hardcharger.tar.gz
+echo "$SHA256  /tmp/hardcharger.tar.gz" | sha256sum --check -
+mkdir -p /opt/hardcharger
+tar -xzf /tmp/hardcharger.tar.gz -C /opt/hardcharger --strip-components=1
+ln -s /opt/hardcharger/bin/hardcharger-server /usr/local/bin/hardcharger-server
+ln -s /opt/hardcharger/bin/hardcharger /usr/local/bin/hardcharger
+hardcharger-server --version
+hardcharger --version
+
+curl -fsSL --retry 10 https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain 1.98.1
+"$HOME/.cargo/bin/cargo" build --release --locked
+install -m 0755 target/release/query query
+rm -rf target "$HOME/.cargo" "$HOME/.rustup" /tmp/hardcharger.tar.gz

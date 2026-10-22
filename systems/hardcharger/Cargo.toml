@@ -1,0 +1,17 @@
+[package]
+name = "query"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[[bin]]
+name = "query"
+path = "query.rs"
+
+[dependencies]
+dbo = { path = "../dbo" }
+# HTTP is only used to authenticate the cancellation channel and cancel the CLI's session.
+ureq = { version = "=3.4.2", default-features = false, features = ["json"] }
+serde_json = "1"
+
+[workspace]
