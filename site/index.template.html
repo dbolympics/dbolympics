@@ -88,6 +88,12 @@ table.board { width: 100%; border-collapse: collapse; font-size: 15px; }
 .board .rank { width: 28px; color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
 .board .sys { width: 170px; white-space: nowrap; }
 .board .sys .glyph { margin-right: 9px; vertical-align: -1px; color: var(--ink-2); }
+/* a mother's children (PostgreSQL's extensions): the triangle before the mother shows them beneath it, indented */
+.board .twist { font: inherit; font-size: 11px; color: var(--muted); background: none; border: 0; padding: 0 6px 0 0; margin-left: -17px;
+  width: 17px; cursor: pointer; }
+.board .twist:hover { color: var(--ink); }
+.board tr.child td.sys { padding-left: 22px; }
+.board tr.child td { color: var(--ink-2); }
 .board .r { text-align: right; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; padding-left: 18px; }
 .board .barcell { width: 40%; padding-left: 18px; }
 .bar { position: relative; height: 7px; }
@@ -363,7 +369,10 @@ const glyph = (name, size) => `<svg class="glyph" viewBox="0 0 16 16" width="${s
 const PERIODS = ["2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4"];
 const STATUS = ["ok", "wrong result", "error", "timeout", "not run"];
 
-const state = { sf: /*DEFAULT_SF*/, marks: "best", machine: null, order: "id", sel: null, query: 0, keys: false };
+const state = { sf: /*DEFAULT_SF*/, marks: "best", machine: null, order: "id", sel: null, query: 0, keys: false, open: new Set() };
+// a child system (D.mothers: its mother, e.g. PostgreSQL of its extensions) is shown only while its mother is open
+const shown = name => !D.mothers[name] || state.open.has(D.mothers[name]);
+const children = name => Object.keys(D.mothers).filter(n => D.mothers[n] === name && n in cfg().systems);
 const cfg = () => Object.values(D.configs).find(c => c.sf === state.sf && c.machine === state.machine);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmtT = s => s == null ? "–" : s < 1 ? `${(s * 1000).toPrecision(s < 0.01 ? 2 : 3)} ms` : `${s.toPrecision(3)} s`;
@@ -374,7 +383,7 @@ const fmtN = x => x >= 99.5 ? String(Math.round(x)) : x.toPrecision(2);
 const fmtUsd = x => `$${x.toFixed(x > 0 ? Math.max(2, 1 - Math.floor(Math.log10(x))) : 2)}`;
 const fmtX = x => x < 10 ? x.toFixed(2) : x < 100 ? x.toFixed(1) : Math.round(x).toString();
 const fmtTick = s => s < 1 ? `${+(s * 1000).toPrecision(3)} ms` : `${+s.toPrecision(3)} s`;
-const ranked = () => Object.entries(cfg().systems).sort((a, b) => a[1].score - b[1].score);
+const ranked = () => Object.entries(cfg().systems).filter(([n]) => shown(n)).sort((a, b) => a[1].score - b[1].score);
 const machines = () => Object.values(D.configs).filter(c => c.sf === state.sf).map(c => c.machine)
   .sort((a, b) => parseInt(MACHINES[a]) - parseInt(MACHINES[b]));  // by cores
 state.machine = machines().at(-1);  // the largest machine
@@ -440,7 +449,10 @@ function heroCorner(el) {
 // Figure 1's view (scale factor, machines, the scale of each axis) is a pair of SVGs, for a large screen and a phone:
 // the first view is in the page, every other loaded when first shown (build.py, hero) and kept
 const heroPlot = document.getElementById("hero-plot"), heroViews = { [heroPlot.dataset.key]: heroPlot.innerHTML };
-const heroKey = () => { const h = document.querySelector(".hero"); return `${state.sf}-${state.marks}-${h.dataset.xscale}-${h.dataset.yscale}`; };
+const heroKey = () => {
+  const h = document.querySelector(".hero"), open = [...state.open].sort().join("+");
+  return `${state.sf}-${state.marks}-${h.dataset.xscale}-${h.dataset.yscale}${open ? `-${open}` : ""}`;
+};
 async function showHero() {
   const key = heroKey();
   if (heroPlot.dataset.key === key) return;
@@ -516,22 +528,30 @@ function renderBoard() {
   // by cost, the cheapest first; a run that did not finish has no last round to cost: it goes below the others, with
   // what ended it; a system disabled at this scale factor goes last
   const last = s => !s.failed ? 0 : s.failed.status === "disabled" ? 2 : 1;
-  const rows = ranked().map(([name, s]) => [name, s, secs(s)]).sort((a, b) => last(a[1]) - last(b[1]) || a[2] - b[2]);
+  const order = rs => rs.sort((a, b) => last(a[1]) - last(b[1]) || a[2] - b[2]);
+  // by cost without the children; an open mother's children right beneath it, by their own cost
+  const all = ranked().map(([name, s]) => [name, s, secs(s)]);
+  const rows = order(all.filter(([n]) => !D.mothers[n]))
+    .flatMap(r => [r, ...order(all.filter(([n]) => D.mothers[n] === r[0]))]);
   const max = Math.log(Math.max(...rows.filter(r => !r[1].failed).map(r => r[1].score)));
   const tb = document.getElementById("board");
   tb.innerHTML = "";
   document.getElementById("unchecked").hidden = !c.unchecked;
-  rows.forEach(([name, s, t], i) => {
+  let rank = 0;
+  rows.forEach(([name, s, t]) => {
     const tr = document.createElement("tr");
-    if (state.sel === name) tr.className = "sel";
+    const child = !!D.mothers[name], kids = child ? [] : children(name);
+    tr.className = [state.sel === name ? "sel" : "", child ? "child" : ""].join(" ").trim();
+    if (!child && !s.failed) rank++;
+    const twist = kids.length ? `<button class="twist" type="button" aria-expanded="${state.open.has(name)}" title="${state.open.has(name) ? "Hide" : "Show"} ${kids.map(n => NAMES[n] || n).join(", ")}">${state.open.has(name) ? "▾" : "▸"}</button>` : "";
     const failed = !!s.failed;
     const w = Math.max(0.5, (Math.log(s.score) / max) * 100);
     // a run that did not finish all five loads has no comparable load time
     const loaded = s.load.every(v => v != null) && !s.failed;
     const qps = Q.length / t, usd = PRICES[c.machine] / 3600 * t;
     tr.innerHTML = `
-      <td class="rank">${failed ? "" : i + 1}</td>
-      <td class="sys">${glyph(name, 13)}${NAMES[name] || name}</td>
+      <td class="rank">${failed || child ? "" : rank}</td>
+      <td class="sys">${twist}${glyph(name, 13)}${NAMES[name] || name}</td>
       ${failed
         // what ended the run, across the columns it leaves without a value
         ? `<td class="barcell" colspan="3"><span class="note">${failure(s.failed)}</span></td>`
@@ -541,6 +561,9 @@ function renderBoard() {
       <td class="r">${s.correct}<span class="frac"><i style="width:${s.correct / 409 * 100}%"></i></span></td>
       <td class="r load">${loaded ? `${s.load.reduce((a, b) => a + b, 0).toFixed(0)} s` : "–"}</td>`;
     tr.onclick = () => select(name);
+    // the triangle opens or closes the mother (its children here and in the figures), without selecting it
+    const tw = tr.querySelector(".twist");
+    if (tw) tw.onclick = e => { e.stopPropagation(); state.open.has(name) ? state.open.delete(name) : state.open.add(name); render(); };
     tr.onmousemove = e => tip(e, `<div class="t">${NAMES[name]}</div>
       <div>${s.correct} correct · ${s.wrong} wrong · ${s.error} error · ${s.timeout} timeout</div>
       <div class="m">first load ${fmtT(s.load[0])}</div>`);

@@ -6,12 +6,16 @@ The hero figure (queries per second against the cost of running all queries) is 
 factor in a wide and a narrow layout, so it is on the page as soon as the HTML arrives. Hover highlighting is CSS;
 the remaining sections are drawn by the page's script from data.js.
 """
-import glob, hashlib, html, json, math, os, random, re, shutil, subprocess
+import glob, hashlib, html, itertools, json, math, os, random, re, shutil, subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))  # site/: the scripts, templates, stylesheet and fonts
 ROOT = os.path.dirname(HERE)                         # the repository
 OUT = os.path.join(HERE, "out")                      # everything built; not checked in
 D = json.load(open(os.path.join(OUT, "data.json")))
+# the children of a system (mother in their system files, extract.py): shown under their mother when it is opened,
+# never on the Pareto front
+MOTHERS = D["mothers"]
+FAMILIES = sorted(set(MOTHERS.values()))
 # the scale factor shown first: the largest in the results
 DEFAULT_SF = max(c["sf"] for c in D["configs"].values())
 NQ = len(D["queries"])
@@ -155,12 +159,12 @@ def nice_step(v):
     e = 10 ** math.floor(math.log10(v))
     return next(m * e for m in (1, 2, 5, 10) if m * e >= v * (1 - 1e-9))
 
-def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=True):
+def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=True, opened=()):
     """With best_only, a system shows only its most efficient machine; its other marks, and the line joining them, are
     drawn hidden (class alt), for hovering and selecting. The axes are the same either way. Queries per second on a
     log scale (ylog) or a linear one, from 0, and the cost likewise (xlog); the page switches each axis between the two
-    by a click on its title."""
-    pts = points(sf)
+    by a click on its title. A child system is drawn only if its mother is in `opened`, and never on the front."""
+    pts = [p for p in points(sf) if MOTHERS.get(p["name"]) in (None, *opened)]
     by = {}
     for p in pts:
         by.setdefault(p["name"], []).append(p)
@@ -168,7 +172,7 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
     # the Pareto front of all systems on all machines: no cheaper mark answers more queries per second; with best_only
     # a system shows its most efficient machine and those of its machines on the front, the others drawn hidden
     front = []
-    for p in sorted(pts, key=lambda p: (p["dollars"], -p["qps"])):
+    for p in sorted((p for p in pts if p["name"] not in MOTHERS), key=lambda p: (p["dollars"], -p["qps"])):
         if not front or p["qps"] > front[-1]["qps"]:
             front.append(p)
     keep = {id(p) for p in front} | {id(p) for p in top.values()}
@@ -331,24 +335,24 @@ def tip(name, ps, best=None):
     return html.escape(f'<div class="t">{NAMES[name]}</div>{rows}<div class="m">{ps[0]["correct"]} of {NQ} correct</div>', quote=True)
 
 def hero():
-    """Figure 1 in every view, each a file of its own (out/fig1/<sf>-<best|all>-<x log|lin>-<y log|lin>-<wide|narrow>.svg),
-    the page loading a view when it is first shown; the first view (the largest scale factor, the most efficient
-    machines, both axes linear), for a large screen and a phone, is in the page itself."""
+    """Figure 1 in every view, each a file of its own
+    (out/fig1/<sf>-<best|all>-<x log|lin>-<y log|lin>[-<opened mothers, joined by +>]-<wide|narrow>.svg), the page
+    loading a view when it is first shown; the first view (the largest scale factor, the most efficient machines, both
+    axes linear, no mother opened), for a large screen and a phone, is in the page itself."""
     d = os.path.join(OUT, "fig1")
     shutil.rmtree(d, ignore_errors=True)
     os.makedirs(d)
     first = f"{DEFAULT_SF}-best-lin-lin"
     inline = ""
-    for sf in scale_factors():
-        for m in ("best", "all"):
-            for xlog in (True, False):
-                for ylog in (True, False):
-                    key = f"{sf}-{m}-{'log' if xlog else 'lin'}-{'log' if ylog else 'lin'}"
-                    for width, args in (("wide", (1000, 540, 15, 15, 22)), ("narrow", (420, 450, 12.5, 12, 17))):
-                        svg = hero_svg(sf, *args, f"v-{width}", m == "best", ylog, xlog)
-                        open(os.path.join(d, f"{key}-{width}.svg"), "w").write(svg)
-                        if key == first:
-                            inline += svg
+    # every set of opened mothers
+    openings = [o for k in range(len(FAMILIES) + 1) for o in itertools.combinations(FAMILIES, k)]
+    for sf, m, xlog, ylog, opened in itertools.product(scale_factors(), ("best", "all"), (True, False), (True, False), openings):
+        key = f"{sf}-{m}-{'log' if xlog else 'lin'}-{'log' if ylog else 'lin'}" + (f"-{'+'.join(opened)}" if opened else "")
+        for width, args in (("wide", (1000, 540, 15, 15, 22)), ("narrow", (420, 450, 12.5, 12, 17))):
+            svg = hero_svg(sf, *args, f"v-{width}", m == "best", ylog, xlog, opened)
+            open(os.path.join(d, f"{key}-{width}.svg"), "w").write(svg)
+            if key == first:
+                inline += svg
     return f'<div class="hero-plot" id="hero-plot" data-key="{first}">{inline}</div>'
 
 def machine_size(machine):

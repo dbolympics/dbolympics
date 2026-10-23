@@ -67,6 +67,9 @@ pub struct Container {
 #[serde(deny_unknown_fields)]
 pub struct System {
     pub name: String,
+    /// the system this one runs inside or on, e.g. "postgres" for an extension of PostgreSQL: the website shows it under
+    /// its mother, and only when asked to
+    pub mother: Option<String>,
     #[serde(default = "native")]
     pub arrays: Arrays,
     /// the `keys` settings the system can run (default: all)
@@ -109,6 +112,11 @@ impl System {
         }
         if s.scale_limit.is_some() != s.scale_limit_message.is_some() {
             bail!("{}: scale_limit and scale_limit_message go together", file.display());
+        }
+        if let Some(m) = &s.mother {
+            if m.contains('/') || !dir.with_file_name(m).join("system.toml").is_file() {
+                bail!("{}: no system {m} to be the mother of", file.display());
+            }
         }
         if !dir.join("start").is_file() {
             bail!("{}: no start script (it starts the query program)", dir.display());

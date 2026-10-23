@@ -2,10 +2,14 @@
 # PostgreSQL tables, and DuckDB runs the queries on them (duckdb.force_execution).
 # The load is the same as for plain PostgreSQL (../postgres).
 name = "pg_duckdb"
+# its mother: the website shows it under PostgreSQL, when PostgreSQL is opened
+mother = "postgres"
 # the version, kept with the results (by hand)
 version = "1.1.1 (PostgreSQL 18.1)"
 # arrays as PostgreSQL literals, which COPY parses
 arrays = "text"
+scale_limit = 1000
+scale_limit_message = "Gets stuck at SF1000 on every machine."
 
 
 [load]
