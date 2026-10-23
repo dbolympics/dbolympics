@@ -93,6 +93,23 @@ figcaption b { font-weight: 600; color: var(--ink); font-variant-caps: all-small
 .tip .t { font-weight: 600; }
 .tip .m { color: var(--muted); }
 
+/* Watermark: the results are not final yet. Loud, behind the content, never in the way of a click.
+   Along the diagonal of the window, end to end: "WORK IN PROGRESS" is 9.4 of its font size wide, 80% of the diagonal */
+body::before, body::after {
+  --wm-size: calc(hypot(100vw, 100vh) * 0.085); --wm-turn: calc(-1 * atan2(100vh, 100vw));
+  position: fixed; left: 50%; top: 50%; z-index: -1; pointer-events: none; white-space: nowrap;
+  color: #ff3b30;
+  font-family: var(--serif); text-align: center; line-height: 1;
+}
+body::before {
+  content: "WORK IN PROGRESS"; transform: translate(-50%, -50%) rotate(var(--wm-turn)) translateY(calc(-0.3 * var(--wm-size)));
+  font-size: var(--wm-size); font-weight: 700; letter-spacing: 0.04em;
+}
+body::after {
+  content: "results are not final"; transform: translate(-50%, -50%) rotate(var(--wm-turn)) translateY(calc(0.7 * var(--wm-size)));
+  font-size: calc(0.42 * var(--wm-size)); font-weight: 600; font-style: italic;
+}
+
 /* Code */
 pre.sql {
   grid-column: 1 / -1; min-width: 0; margin: 0; padding: 14px 16px; background: var(--code-bg); border-radius: 3px;
