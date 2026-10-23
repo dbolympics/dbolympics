@@ -389,11 +389,18 @@ class Bot:
                 if errs := [p for _, p in problems(self.mirror, "main", base, tip)]:
                     raise Refused("The bot does not run this pull request:\n" + "\n".join(f"- {e}" for e in errs))
                 changed, _ = changed_systems(self.mirror, base, tip)
-                systems = named or changed
+                # the systems of the run (run_tree): main's, and the pull request's own, without those it removes
+                has = lambda rev, s: bool(git(self.mirror, "ls-tree", rev, "--", f"systems/{s}/system.toml"))
+                on_main = {path.split("/")[1] for path in git(self.mirror, "ls-tree", "-r", "--name-only", "main", "--", "systems/").splitlines()
+                           if path.count("/") == 2 and path.endswith("/system.toml")}
+                available = sorted((on_main - set(changed)) | {s for s in changed if has(tip, s)})
+                # `all`: every system of the run
+                systems = available if "all" in named else named or changed
                 if not systems:
-                    raise Refused("The pull request changes no system: name the systems, e.g. `/benchmark duckdb`.")
+                    raise Refused("The pull request changes no system: name the systems, e.g. `/benchmark duckdb`, "
+                                  "or run them all with `/benchmark all`.")
                 for s in systems:
-                    if not SYSTEM_NAME.match(s) or not git(self.mirror, "ls-tree", tip, "--", f"systems/{s}/system.toml"):
+                    if not SYSTEM_NAME.match(s) or s not in available:
                         raise Refused(f"There is no system `{s}` in the pull request.")
                 benchmarks = self.benchmarks(sfs or self.cfg["benchmarks"])
                 tree = git(self.mirror, "rev-parse", f"{tip}^{{tree}}")

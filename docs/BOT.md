@@ -21,6 +21,7 @@ results become the pull request's last commit, so that they are reviewed with it
 |---|---|
 | `/benchmark` | runs the systems the pull request changes on all benchmark files, `bench/benchmark_sf{1,10,100,1000}.toml` |
 | `/benchmark duckdb sf10` | runs the named systems on the named benchmark files |
+| `/benchmark all` | runs every system: main's and the pull request's own (with `sf10` etc. on those files only) |
 | `/benchmark sf1-c8a.large` | runs only that configuration of the file |
 | `/benchmark @1a2b3c4` | runs only if the pull request is at that commit |
 | `/benchmark move` | moves the results commit to the end again, without running anything |
