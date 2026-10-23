@@ -1,6 +1,6 @@
 {
   "benchmark": "bench/benchmark_sf10.toml",
-  "commit": "f958d75ae41d32ad093b4593dd055047d994d3f4",
+  "commit": "f38935ccb7a07f4037c74cd360a6ae49d981b333",
   "complete": true,
   "config": "sf10-c8a.4xlarge",
   "cpuset": "0-15",
@@ -14,16 +14,16 @@
     "memory_bytes": 1080968810496
   },
   "images": {
-    "system": "localhost/dbo-datafusion@sha256:e517e3b46048e4e4204e7e2f6c5ed146300ba337b1b64749488af756ef67b7a6"
+    "system": "localhost/dbo-datafusion@sha256:78c7ae0d8af98f61c605809d7f24905ff2d5d135d4a8a76b45c7384bf171cd6c"
   },
   "keys": "none",
   "load_timeout": 600,
   "memory": "32GB",
-  "memory_peak_bytes": 2147196928,
+  "memory_peak_bytes": 2152210432,
   "queries": null,
   "query_timeout": 5,
   "repetitions": 1,
-  "schema_seconds": 0.04482580899999999,
+  "schema_seconds": 0.044266258999999995,
   "sf": 10.0,
   "storage_bytes": 37030,
   "system": "datafusion",
