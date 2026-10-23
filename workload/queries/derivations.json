@@ -2996,6 +2996,12 @@
  ],
  "q086": [
   {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
    "kind": "numeric",
    "step": "edit",
    "count": 1,
@@ -8044,6 +8050,12 @@
  ],
  "q233": [
   {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
    "kind": "determinism",
    "step": "edit",
    "count": 1,
@@ -8159,6 +8171,12 @@
   }
  ],
  "q237": [
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
   {
    "kind": "numeric",
    "step": "edit",
@@ -9446,6 +9464,12 @@
  ],
  "q274": [
   {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
    "kind": "numeric",
    "step": "edit",
    "count": 1,
@@ -9837,6 +9861,24 @@
   }
  ],
  "q288": [
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
   {
    "kind": "numeric",
    "step": "edit",
@@ -10303,6 +10345,18 @@
   }
  ],
  "q304": [
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
   {
    "kind": "hard",
    "step": "cast",
@@ -11372,6 +11426,12 @@
   }
  ],
  "q350": [
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
   {
    "kind": "hard",
    "step": "cast",
@@ -13143,6 +13203,12 @@
  ],
  "q404": [
   {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
    "kind": "determinism",
    "step": "edit",
    "count": 1,
@@ -13274,6 +13340,12 @@
   }
  ],
  "q408": [
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
   {
    "kind": "numeric",
    "step": "edit",
