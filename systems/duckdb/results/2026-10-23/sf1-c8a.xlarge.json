@@ -1,6 +1,6 @@
 {
   "benchmark": "bench/benchmark_sf1.toml",
-  "commit": "e90d7b3359d3039a5e264c490da3785c630b08db",
+  "commit": "53367cfcdc1788ce44b60ce4aa14d55c14392076",
   "complete": true,
   "config": "sf1-c8a.xlarge",
   "cpuset": "0-3",
@@ -14,20 +14,20 @@
     "memory_bytes": 1080968810496
   },
   "images": {
-    "system": "localhost/dbo-duckdb@sha256:b1e4dd487bd1f942ea2251c260cc33f6efbc0a461ba0ffb2118c6d2736c9e77b"
+    "system": "localhost/dbo-duckdb@sha256:b82a94759c9e1ac39df52c227348f9e330ba37b32d65246a44eaf565b4728d46"
   },
   "keys": "none",
   "load_timeout": 300,
   "memory": "8GB",
-  "memory_peak_bytes": 1412272128,
+  "memory_peak_bytes": 1071022080,
   "queries": null,
   "query_timeout": 5,
   "repetitions": 1,
-  "schema_seconds": 0.08213164699999996,
+  "schema_seconds": 0.13594058299999995,
   "sf": 1.0,
-  "storage_bytes": 407575998,
+  "storage_bytes": 370027351,
   "system": "duckdb",
   "threads": 4,
   "timeout_check": "cancelled",
-  "version": "1.5.6"
+  "version": "2.0.0"
 }
