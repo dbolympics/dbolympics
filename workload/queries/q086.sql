@@ -22,7 +22,7 @@ FROM (
       SELECT
         o.tenant_id AS tenant_id,
         o.user_id AS user_id,
-        CASE WHEN (s.delivered_at - s.shipped_at) <= INTERVAL '7 days' THEN 'on-time' ELSE 'late' END AS delivery_bucket,
+        CASE WHEN s.delivered_at <= s.shipped_at + INTERVAL '7' DAY THEN 'on-time' ELSE 'late' END AS delivery_bucket,
         s.delivered_at AS delivered_at,
         (
           SELECT MIN(o2.placed_at)
