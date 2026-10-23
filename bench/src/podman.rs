@@ -74,16 +74,17 @@ impl Podman {
     /// either directory changes (its results do not count).
     pub fn system_image(&self, bench: &Path, sys: &System, work: &Path) -> Result<String> {
         self.build(BASE_IMAGE, &bench.join("image"), &bench.join("image/Containerfile"), None)?;
-        let tag = format!("localhost/dbo-{}", sys.name);
+        let tag = format!("localhost/dbo-{}", sys.image_name());
         let file = work.join("Containerfile");
-        let install = if sys.dir.join("install").is_file() { "RUN ./install\n" } else { "" };
-        let name = sys.dir.file_name().context("system directory")?.to_string_lossy();
+        let dir = sys.scripts();
+        let install = if dir.join("install").is_file() { "RUN ./install\n" } else { "" };
+        let name = dir.file_name().context("system directory")?.to_string_lossy();
         std::fs::write(&file, format!("FROM {BASE_IMAGE}\nCOPY {name} /system\nCOPY dbo /dbo\n{install}"))?;
         // not part of the system: its results (results/), what a local build of a Rust query
         // program leaves, the library's documentation
         let ignore = work.join("Containerignore");
         std::fs::write(&ignore, "*/results\n**/target\ndbo/README.md\n*/logo.svg\n")?;
-        let systems = sys.dir.parent().context("systems directory")?;
+        let systems = dir.parent().context("systems directory")?;
         self.build(&tag, systems, &file, Some(&ignore))?;
         Ok(tag)
     }
@@ -91,7 +92,7 @@ impl Podman {
     /// The image of a system as it is in the storage (built, or loaded from another machine), for a
     /// run that must not build it again.
     pub fn existing_image(&self, sys: &System) -> Result<String> {
-        let tag = format!("localhost/dbo-{}", sys.name);
+        let tag = format!("localhost/dbo-{}", sys.image_name());
         if !self.cmd().args(["image", "exists", &tag]).status()?.success() {
             bail!("{tag} is not there (--no-build): build it with dbo-bench images, or load it");
         }

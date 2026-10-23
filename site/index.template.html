@@ -26,7 +26,7 @@
 #dist-chart .n { font-size: 11.5px; font-variant-numeric: lining-nums tabular-nums; pointer-events: none; }
 #dist-chart .pct { font-size: 11.5px; fill: var(--muted); font-variant-numeric: lining-nums tabular-nums; pointer-events: none; }
 .hero-svg .axis { stroke: var(--rule-strong); }
-.hero .opts { display: inline-flex; gap: 16px; }
+.hero .opts, .settings .opts { display: inline-flex; gap: 16px; }
 .hero-svg .front { fill: none; stroke: var(--muted); stroke-dasharray: 3 3; }
 .hero-svg .pr { stroke: var(--rule-strong); }
 .hero-svg .leader { stroke: var(--rule-strong); stroke-width: 0.8; }
@@ -50,12 +50,15 @@
 /* Settings */
 .settings {
   position: sticky; top: 0; z-index: 5; background: var(--paper);
-  display: flex; flex-wrap: wrap; gap: 8px 36px; align-items: baseline;
+  display: flex; flex-wrap: wrap; gap: 8px 36px; align-items: baseline; justify-content: space-between;
   margin: 72px 0 0; padding: 14px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule);
   font-size: 15px;
 }
 /* the label, then its options, which wrap next to it: a second line starts under the first option */
 .setting { display: flex; gap: 14px; align-items: baseline; flex-wrap: nowrap; }
+/* settings one beneath the other (the category, then the scale factor), their options lined up */
+.setting-col { display: grid; grid-template-columns: max-content auto; gap: 8px 14px; align-items: baseline; }
+.setting-col > .setting { display: contents; }
 .setting > .label { flex: none; }
 .setting > :not(.label) { flex: 0 1 auto; min-width: 0; }
 .setting .label { color: var(--muted); }
@@ -66,6 +69,8 @@
 .opt:hover { color: var(--ink); }
 .opt[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 .opt small { color: var(--muted); font-size: 13px; }
+/* a category of systems without results yet: greyed out, its note on hover */
+.opt.soon { color: var(--rule-strong); text-decoration: none; cursor: default; }
 /* the chip floats at the right of the bar's first row instead of wrapping onto a row of its own (which, hidden, would
    still take the row's height); its padding is taken back by the margin */
 .chip {
@@ -227,8 +232,12 @@ canvas { display: block; }
 
 <figure class="hero" data-sf="/*DEFAULT_SF*/" data-marks="best" data-yscale="lin" data-xscale="lin">
   <div class="hero-head">
-    <div class="setting"><span class="label hn" tabindex="0" data-note="The approximate size of the data in CSV form.">Scale factor</span>
-      <span class="opts"><!--SF_BUTTONS--></span></div>
+    <div class="setting-col">
+      <div class="setting"><span class="label hn" tabindex="0" data-note="Native systems load the data into their own storage; Parquet systems query the Parquet files where they are. All shows both: a system on the Parquet files under its native one, where it has one.">Category</span>
+        <span class="opts"><!--CATEGORY_BUTTONS--></span></div>
+      <div class="setting"><span class="label hn" tabindex="0" data-note="The approximate size of the data in CSV form.">Scale factor</span>
+        <span class="opts"><!--SF_BUTTONS--></span></div>
+    </div>
     <div class="setting"><span class="label">Machines</span>
       <span class="opts"><button class="opt" data-marks="best">most efficient</button><button class="opt" data-marks="all">all</button></span></div>
   </div>
@@ -243,7 +252,10 @@ canvas { display: block; }
 </figure>
 
 <nav class="settings" aria-label="Configuration">
-  <div class="setting"><span class="label hn" tabindex="0" data-note="The approximate size of the data in CSV form.">Scale factor</span><span id="opt-sf"></span></div>
+  <div class="setting-col">
+    <div class="setting"><span class="label hn" tabindex="0" data-note="Native systems load the data into their own storage; Parquet systems query the Parquet files where they are. All shows both: a system on the Parquet files under its native one, where it has one.">Category</span><span class="opts"><!--CATEGORY_BUTTONS--></span></div>
+    <div class="setting"><span class="label hn" tabindex="0" data-note="The approximate size of the data in CSV form.">Scale factor</span><span id="opt-sf"></span></div>
+  </div>
   <div class="setting"><span class="label">Machine</span><span id="opt-machine"></span></div>
   <button class="chip off" id="sel-chip" type="button" aria-hidden="true" tabindex="-1">× none</button>
 </nav>
@@ -361,19 +373,26 @@ canvas { display: block; }
 const D = window.DATA;
 const Q = D.queries;
 const NAMES = /*NAMES*/;
+// a view's own names (build.py NAMES_IN), put into NAMES when it is shown: in all systems', a Parquet variant's
+const NAMES_ONE = { ...NAMES }, NAMES_IN = /*NAMES_IN*/;
 // Cores and memory of every machine, from the benchmark configurations that ran on it.
 const PRICES = /*PRICES*/;  // USD per hour of every machine, as in Figure 1
-const MACHINES = Object.fromEntries(Object.values(D.configs).map(c =>
+// The categories of systems (D.categories): the page shows one at a time, D.configs its configurations (with its
+// systems only).
+const MACHINES = Object.fromEntries(Object.values(D.categories).flatMap(cs => Object.values(cs)).map(c =>
   [c.machine, `${c.threads} ${c.threads === 1 ? "core" : "cores"} · ${c.memory.replace(/(\d)([A-Z])/, "$1 $2")}`]));
 const GLYPHS = /*GLYPHS*/;
 const glyph = (name, size) => `<svg class="glyph" viewBox="0 0 16 16" width="${size}" height="${size}" aria-hidden="true">${GLYPHS[name] || ""}</svg>`;
 const PERIODS = ["2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4"];
 const STATUS = ["ok", "wrong result", "error", "timeout", "not run"];
 
-const state = { sf: /*DEFAULT_SF*/, marks: "best", machine: null, order: "id", sel: null, query: 0, keys: false, open: new Set() };
-// a variant (D.based_on: its base, e.g. PostgreSQL of its extensions) is shown only while its base is open
-const shown = name => !D.based_on[name] || state.open.has(D.based_on[name]);
-const variants = name => Object.keys(D.based_on).filter(n => D.based_on[n] === name && n in cfg().systems);
+const state = { category: /*DEFAULT_CATEGORY*/, sf: /*DEFAULT_SF*/, marks: "best", machine: null, order: "id", sel: null, query: 0, keys: false, open: new Set() };
+D.configs = D.categories[state.category];
+D.variant = D.based_on[state.category] || {};  // the view's variants: {variant: its base}
+Object.assign(NAMES, NAMES_IN[state.category] || {});  // the first view's names
+// a variant (D.variant: its base, e.g. PostgreSQL of its extensions) is shown only while its base is open
+const shown = name => !D.variant[name] || state.open.has(D.variant[name]);
+const variants = name => Object.keys(D.variant).filter(n => D.variant[n] === name && n in cfg().systems);
 const cfg = () => Object.values(D.configs).find(c => c.sf === state.sf && c.machine === state.machine);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmtT = s => s == null ? "–" : s < 1 ? `${(s * 1000).toPrecision(s < 0.01 ? 2 : 3)} ms` : `${s.toPrecision(3)} s`;
@@ -407,6 +426,19 @@ function setSF(v) {
   if (!ms.includes(state.machine)) state.machine = ms.at(-1);
   render();
 }
+const scaleFactors = () => [...new Set(Object.values(D.configs).map(c => c.sf))].sort((a, b) => a - b);
+// another view: its configurations, variants and names; the scale factor kept if it has it (else its largest), and
+// the machine; a selected system not in the view no longer selected, the selected one's base open
+function setCategory(v) {
+  state.category = v;
+  D.configs = D.categories[v];
+  D.variant = D.based_on[v] || {};
+  Object.assign(NAMES, NAMES_ONE, NAMES_IN[v] || {});
+  if (!scaleFactors().includes(state.sf)) state.sf = scaleFactors().at(-1);
+  if (state.sel && !Object.values(D.configs).some(c => state.sel in c.systems)) state.sel = null;
+  state.open = new Set(state.sel ? [D.variant[state.sel] || state.sel] : []);
+  setSF(state.sf);
+}
 function renderSettings() {
   const hero = document.querySelector(".hero");
   hero.dataset.sf = state.sf;
@@ -419,9 +451,11 @@ function renderSettings() {
   chip.setAttribute("aria-hidden", !state.sel); chip.tabIndex = state.sel ? 0 : -1;
   if (state.sel) { chip.textContent = `× ${NAMES[state.sel]}`; chip.title = "Clear the highlight"; }
   hero.querySelectorAll("[data-sf]").forEach(b => b.tagName === "BUTTON" && b.setAttribute("aria-pressed", +b.dataset.sf === state.sf));
+  // the scale factors of the category only
+  hero.querySelectorAll("button[data-sf]").forEach(b => b.hidden = !scaleFactors().includes(+b.dataset.sf));
+  document.querySelectorAll("button[data-category]").forEach(b => b.setAttribute("aria-pressed", b.dataset.category === state.category));
   hero.querySelectorAll("button[data-marks]").forEach(b => b.setAttribute("aria-pressed", b.dataset.marks === state.marks));
-  options(document.getElementById("opt-sf"), [...new Set(Object.values(D.configs).map(c => c.sf))].sort((a, b) => a - b)
-    .map(v => ({ v, label: `${v} GB` })), state.sf, setSF);
+  options(document.getElementById("opt-sf"), scaleFactors().map(v => ({ v, label: `${v} GB` })), state.sf, setSF);
   options(document.getElementById("opt-machine"),
     machines().map(m => ({ v: m, label: `${m} <small>${MACHINES[m]}</small>` })), state.machine,
     v => { state.machine = v; render(); });
@@ -433,6 +467,7 @@ function renderSettings() {
   ], state.order, v => { state.order = v; renderSettings(); drawBarcode(); });
 }
 document.querySelectorAll(".hero button[data-sf]").forEach(b => b.onclick = () => setSF(+b.dataset.sf));
+document.querySelectorAll("button[data-category]").forEach(b => b.onclick = () => setCategory(b.dataset.category));
 document.querySelectorAll(".hero button[data-marks]").forEach(b => b.onclick = () => { state.marks = b.dataset.marks; renderSettings(); });
 document.getElementById("sel-chip").onclick = () => select(null);
 // Figure 1's tooltips sit in a corner of the plot, the bottom left if they cover none of the hovered system's marks
@@ -450,10 +485,7 @@ function heroCorner(el) {
 // Figure 1's view (scale factor, machines, the scale of each axis) is a pair of SVGs, for a large screen and a phone:
 // the first view is in the page, every other loaded when first shown (build.py, hero) and kept
 const heroPlot = document.getElementById("hero-plot"), heroViews = { [heroPlot.dataset.key]: heroPlot.innerHTML };
-const heroKey = () => {
-  const h = document.querySelector(".hero");
-  return `${state.sf}-${state.marks}-${h.dataset.xscale}-${h.dataset.yscale}`;
-};
+const heroKey = () => { const h = document.querySelector(".hero"); return `${state.category}-${state.sf}-${state.marks}-${h.dataset.xscale}-${h.dataset.yscale}`; };
 // a variant (data-base) is shown only while its base is opened
 const heroOpen = () => heroPlot.querySelectorAll("[data-base]").forEach(el => el.classList.toggle("closed", !state.open.has(el.dataset.base)));
 async function showHero() {
@@ -507,7 +539,7 @@ function select(name) {
   state.sel = name && state.sel !== name ? name : null;
   // the selected system's variants are shown, or, of a variant, its base's: a base is open while it or one of its
   // variants is selected
-  state.open = new Set(state.sel ? [D.based_on[state.sel] || state.sel] : []);
+  state.open = new Set(state.sel ? [D.variant[state.sel] || state.sel] : []);
   // the selected system is Figure 4's first; if it was the second, the two change places
   if (state.sel && state.vsA !== state.sel) {
     if (state.vsB === state.sel) state.vsB = state.vsA;
@@ -539,8 +571,8 @@ function renderBoard() {
   const order = rs => rs.sort((a, b) => last(a[1]) - last(b[1]) || a[2] - b[2]);
   // by cost without the variants; an open base's variants right beneath it, by their own cost
   const all = ranked().map(([name, s]) => [name, s, secs(s)]);
-  const rows = order(all.filter(([n]) => !D.based_on[n]))
-    .flatMap(r => [r, ...order(all.filter(([n]) => D.based_on[n] === r[0]))]);
+  const rows = order(all.filter(([n]) => !D.variant[n]))
+    .flatMap(r => [r, ...order(all.filter(([n]) => D.variant[n] === r[0]))]);
   const max = Math.log(Math.max(...rows.filter(r => !r[1].failed).map(r => r[1].score)));
   const tb = document.getElementById("board");
   tb.innerHTML = "";
@@ -548,7 +580,7 @@ function renderBoard() {
   let rank = 0;
   rows.forEach(([name, s, t]) => {
     const tr = document.createElement("tr");
-    const variant = !!D.based_on[name], kids = variant ? [] : variants(name);
+    const variant = !!D.variant[name], kids = variant ? [] : variants(name);
     tr.className = [state.sel === name ? "sel" : "", variant ? "variant" : ""].join(" ").trim();
     if (!variant && !s.failed) rank++;
     const twist = kids.length ? `<button class="twist" type="button" aria-expanded="${state.open.has(name)}" title="${state.open.has(name) ? "Hide" : "Show"} ${kids.map(n => NAMES[n] || n).join(", ")}">${state.open.has(name) ? "▾" : "▸"}</button>` : "";

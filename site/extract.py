@@ -43,7 +43,40 @@ DATES = sorted({path.split("/")[-2] for path in LATEST.values()})
 # fastest system, the Pareto front)
 BASED_ON = {f.split("/")[-2]: tomllib.load(open(f, "rb")).get("based_on") for f in glob.glob(f"{ROOT}/systems/*/system.toml")}
 
-records, bench = {}, {}
+def overlay(under, top):
+    """The keys of `top` put into `under`: a table into the table of the same name, key by key (as the runner does)."""
+    for k, v in top.items():
+        if isinstance(v, dict) and isinstance(under.get(k), dict):
+            overlay(under[k], v)
+        else:
+            under[k] = v
+
+def system_spec(name):
+    """A system's system.toml, a variant's (base = ...) put over its base's."""
+    spec = tomllib.load(open(f"{ROOT}/systems/{name}/system.toml", "rb"))
+    if "base" in spec:
+        merged = system_spec(spec["base"])
+        overlay(merged, spec)
+        return merged
+    return spec
+
+# the systems' categories (category in their system.toml): the site shows one at a time, and a configuration's
+# systems are compared within their category, with each other only
+SPECS = {system: system_spec(system) for system, _ in LATEST}
+CATEGORY = {system: spec.get("category", "native") for system, spec in SPECS.items()}
+
+# the views of the site: each category, and "all" for the native and the Parquet systems together. A view's variants
+# (system: its base): in a category, the systems based on another (BASED_ON); in "all" also the Parquet variants of a
+# native system (base = ...), each under the system at the top of its bases, e.g. chdb-parquet under ClickHouse
+ALL = ("native", "parquet")
+def top(name):
+    raw = tomllib.load(open(f"{ROOT}/systems/{name}/system.toml", "rb"))
+    up = raw.get("based_on") or raw.get("base")
+    return top(up) if up else name
+VARIANTS = {category: {s: b for s, b in BASED_ON.items() if b and CATEGORY.get(s) == category} for category in set(CATEGORY.values())}
+VARIANTS["all"] = {s: top(s) for s in CATEGORY if CATEGORY[s] in ALL and top(s) != s}
+
+records, bench = {}, {}  # bench: (config, category) -> what ran
 for (system, cfg), path in sorted(LATEST.items()):
     date = path.split("/")[-2]
     meta = path[:-4] + ".json"
@@ -51,10 +84,13 @@ for (system, cfg), path in sorted(LATEST.items()):
     r = records[(cfg, system)] = json.load(open(meta))
     assert (r["system"], r["config"], r["date"]) == (system, cfg, date), f"{os.path.relpath(meta, ROOT)}: is about {r['system']}, {r['config']}, {r['date']}"
     facts = {k: r.get(k) for k in SAME}
-    first = bench.setdefault(cfg, dict(facts, system=system))
+    first = bench.setdefault((cfg, CATEGORY[system]), dict(facts, system=system))
     diff = [k for k in SAME if first[k] != facts[k]]
     assert not diff, f"{cfg}: {system} and {first['system']} ran with different {', '.join(diff)}"
 
+for (cfg, category), b in list(bench.items()):
+    if category in ALL and (cfg, "all") not in bench:
+        bench[(cfg, "all")] = bench.get((cfg, "native"), b)
 configs = {}
 # why queries failed, in each system's words: the message column of the results, or <config>.errors.csv
 # next to them (the runners of 15 and 16 October)
@@ -130,8 +166,8 @@ def standard_sql(sql):
 # results there, the configuration shows why (scale_limit_message)
 for cfg, c in configs.items():
     for system in sorted({s for s, _ in LATEST}):
-        spec = tomllib.load(open(f"{ROOT}/systems/{system}/system.toml", "rb"))
-        if spec.get("scale_limit") is not None and bench[cfg]["sf"] >= spec["scale_limit"]:
+        spec, b = SPECS[system], bench.get((cfg, CATEGORY[system]))
+        if b and spec.get("scale_limit") is not None and b["sf"] >= spec["scale_limit"]:
             c[system] = {"runs": defaultdict(dict), "load": {}, "failed": {"run": 1, "status": "disabled", "query": "", "message": spec["scale_limit_message"]}}
             records.setdefault((cfg, system), {})
             messages.pop((cfg, system), None)
@@ -157,11 +193,15 @@ roles = {m["id"]: m["title"] for m in personas["managers"]}
 # a result not checked (no reference results for the scale factor) counts as correct; the configuration says so
 STATUS = {"ok": 0, "unchecked": 0, "wrong_result": 1, "error": 2, "timeout": 3}
 
-out = {"dates": DATES, "roles": roles, "queries": queries, "based_on": {s: b for s, b in sorted(BASED_ON.items()) if b}, "configs": {}}
-for cfg, systems in configs.items():
+# every view's configurations, each with the systems of that view only
+out = {"dates": DATES, "roles": roles, "queries": queries, "categories": {},
+       "based_on": {v: dict(sorted(VARIANTS.get(v, {}).items())) for v in sorted({v for _, v in bench})}}
+for (cfg, category), b in sorted(bench.items()):
+    systems = {n: s for n, s in configs[cfg].items() if (CATEGORY[n] in ALL if category == "all" else CATEGORY[n] == category)}
+    variant = VARIANTS.get(category, {})
     m = re.match(r"sf(\d+)-(.*)", cfg)
-    REPS, TIMEOUT = bench[cfg]["repetitions"], float(bench[cfg]["query_timeout"])
-    assert float(m.group(1)) == bench[cfg]["sf"], f"{cfg}: the name does not match sf {bench[cfg]['sf']}"
+    REPS, TIMEOUT = b["repetitions"], float(b["query_timeout"])
+    assert float(m.group(1)) == b["sf"], f"{cfg}: the name does not match sf {b['sf']}"
     last = {}
     for name, s in systems.items():
         runs = s["runs"]
@@ -177,11 +217,11 @@ for cfg, systems in configs.items():
     # per-query best correct time across systems (without the children)
     best = []
     for i in range(len(qids)):
-        ok = [last[n][0][i] for n in last if not BASED_ON.get(n) and last[n][1][i] == 0 and last[n][0][i] is not None]
+        ok = [last[n][0][i] for n in last if n not in variant and last[n][1][i] == 0 and last[n][0][i] is not None]
         best.append(min(ok) if ok else None)
     # what a query without a correct result counts as: a timeout the timeout; an error, a wrong result or a query not
     # run twice the slowest correct time of that query (the timeout if no system answered it)
-    worst = [max((last[n][0][i] for n in last if not BASED_ON.get(n) and last[n][1][i] == 0 and last[n][0][i] is not None), default=TIMEOUT / 2)
+    worst = [max((last[n][0][i] for n in last if n not in variant and last[n][1][i] == 0 and last[n][0][i] is not None), default=TIMEOUT / 2)
              for i in range(len(qids))]
     cost = lambda t, st, i: t[i] if st[i] == 0 else TIMEOUT if st[i] == 3 else 2 * worst[i]
     sysout = {}
@@ -226,12 +266,13 @@ for cfg, systems in configs.items():
             "per_run_n": len(common),
             "failed": s["failed"],
         }
-    out["configs"][cfg] = {"sf": int(m.group(1)), "machine": m.group(2), "timeout": TIMEOUT, "worst": [round(w, 6) for w in worst],
-                           "threads": bench[cfg]["threads"], "memory": bench[cfg]["memory"], "benchmark": bench[cfg]["benchmark"],
-                           "cpuset": bench[cfg]["cpuset"], "host": bench[cfg]["host"],  # the server that ran it
-                           "reps": REPS, "best": best, "systems": sysout,
-                           # the results were not checked: no reference results for the scale factor
-                           "unchecked": any(s["unchecked"] for s in sysout.values())}
+    out["categories"].setdefault(category, {})[cfg] = {
+        "sf": int(m.group(1)), "machine": m.group(2), "timeout": TIMEOUT, "worst": [round(w, 6) for w in worst],
+        "threads": b["threads"], "memory": b["memory"], "benchmark": b["benchmark"],
+        "cpuset": b["cpuset"], "host": b["host"],  # the server that ran it
+        "reps": REPS, "best": best, "systems": sysout,
+        # the results were not checked: no reference results for the scale factor
+        "unchecked": any(s["unchecked"] for s in sysout.values())}
 
 os.makedirs(OUT, exist_ok=True)
 
@@ -247,10 +288,11 @@ for d in sorted(glob.glob(f"{ROOT}/workload/results/sf*/through-2025-Q4")):
                   open(os.path.join(OUT, "results", sf, f"{q['id']}.json"), "w"), separators=(",", ":"))
 
 json.dump(out, open(os.path.join(OUT, "data.json"), "w"), separators=(",", ":"))
-for cfg, c in out["configs"].items():
-    print(cfg)
-    for n, s in sorted(c["systems"].items(), key=lambda kv: kv[1]["score"]):
-        print(f"  {n:15s} {s['score']:8.2f}  {s['correct']:3d} ok  {s['wrong']:3d} wrong  {s['error']:3d} err  {s['timeout']:3d} to  load {s['load'][0]}")
+for category, cfgs in sorted(out["categories"].items()):
+    for cfg, c in cfgs.items():
+        print(f"{cfg} ({category})")
+        for n, s in sorted(c["systems"].items(), key=lambda kv: kv[1]["score"]):
+            print(f"  {n:15s} {s['score']:8.2f}  {s['correct']:3d} ok  {s['wrong']:3d} wrong  {s['error']:3d} err  {s['timeout']:3d} to  load {s['load'][0]}")
 with open(os.path.join(OUT, "data.js"), "w") as f:
     f.write("window.DATA = ")
     json.dump(out, f, separators=(",", ":"))

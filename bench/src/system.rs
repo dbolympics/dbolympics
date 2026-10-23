@@ -26,8 +26,33 @@ pub enum Arrays {
 #[serde(deny_unknown_fields)]
 pub struct Load {
     /// The statement that loads the Parquet file `{file}` into `{table}`. A load runs it for every
-    /// table, with the table's file of the load's period.
-    pub statement: String,
+    /// table, with the table's file of the load's period. A system that reads the files in place
+    /// makes `{table}` a view over the table's files so far instead: `{files}` (quoted, separated
+    /// by commas), `{glob}` (one glob, `{a,b}` for alternatives) or `{dir}` (a directory with a
+    /// link to each of them). Several statements are a list, run one after the other.
+    #[serde(deserialize_with = "one_or_more")]
+    pub statement: Vec<String>,
+}
+
+/// The kind of system: where it has the data it queries.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum Category {
+    /// its own: the schema is created, and a load copies the files into it
+    #[default]
+    Native,
+    /// the Parquet files where they are: no schema, a load makes every table (a view or the like)
+    /// over its files so far, those without rows too
+    Parquet,
+}
+
+impl Category {
+    pub fn name(self) -> &'static str {
+        match self {
+            Category::Native => "native",
+            Category::Parquet => "parquet",
+        }
+    }
 }
 
 #[derive(Debug, Default, Deserialize)]
@@ -70,6 +95,11 @@ pub struct System {
     /// the system of the benchmark this one is based on (docs/RUNNER.md), e.g. "postgres" for an extension of
     /// PostgreSQL: the website shows it under its base, and only when asked to
     pub based_on: Option<String>,
+    /// the system whose directory (scripts, query program, image) this one runs, with a system
+    /// file of its own: a variant of it, e.g. one that reads the Parquet files in place
+    pub base: Option<String>,
+    #[serde(default)]
+    pub category: Category,
     #[serde(default = "native")]
     pub arrays: Arrays,
     /// the `keys` settings the system can run (default: all)
@@ -93,6 +123,20 @@ pub struct System {
     pub dir: PathBuf,
 }
 
+/// A statement, or a list of them.
+fn one_or_more<'de, D: serde::Deserializer<'de>>(d: D) -> Result<Vec<String>, D::Error> {
+    #[derive(Deserialize)]
+    #[serde(untagged)]
+    enum OneOrMore {
+        One(String),
+        More(Vec<String>),
+    }
+    Ok(match OneOrMore::deserialize(d)? {
+        OneOrMore::One(s) => vec![s],
+        OneOrMore::More(v) => v,
+    })
+}
+
 fn native() -> Arrays {
     Arrays::Native
 }
@@ -104,11 +148,31 @@ fn all_keys() -> Vec<Keys> {
 impl System {
     pub fn read(dir: &Path) -> Result<System> {
         let file = dir.join("system.toml");
-        let text = std::fs::read_to_string(&file).with_context(|| format!("reading {}", file.display()))?;
-        let mut s: System = toml::from_str(&text).with_context(|| format!("system file {}", file.display()))?;
+        let read = |file: &Path| -> Result<toml::Table> {
+            let text = std::fs::read_to_string(file).with_context(|| format!("reading {}", file.display()))?;
+            toml::from_str(&text).with_context(|| format!("system file {}", file.display()))
+        };
+        let mut table = read(&file)?;
+        // a variant's file is its base's, with what it sets itself in place
+        if let Some(toml::Value::String(b)) = table.get("base") {
+            let base_file = dir.with_file_name(b).join("system.toml");
+            if b.contains('/') || !base_file.is_file() {
+                bail!("{}: no system {b} to base on", file.display());
+            }
+            let mut merged = read(&base_file)?;
+            if merged.contains_key("base") {
+                bail!("{}: its base {b} is a variant itself", file.display());
+            }
+            overlay(&mut merged, table);
+            table = merged;
+        }
+        let mut s: System = table.try_into().with_context(|| format!("system file {}", file.display()))?;
         s.dir = dir.to_path_buf();
-        if !s.load.statement.contains("{file}") {
-            bail!("{}: the load statement needs {{file}}", file.display());
+        if !["{file}", "{files}", "{glob}", "{dir}"].iter().any(|p| s.load.statement.iter().any(|st| st.contains(p))) {
+            bail!("{}: the load statement needs {{file}}, {{files}}, {{glob}} or {{dir}}", file.display());
+        }
+        if s.category == Category::Parquet && s.keys != [Keys::None] {
+            bail!("{}: a system on the Parquet files has no keys: keys = [\"none\"]", file.display());
         }
         if s.scale_limit.is_some() != s.scale_limit_message.is_some() {
             bail!("{}: scale_limit and scale_limit_message go together", file.display());
@@ -124,16 +188,42 @@ impl System {
                 bail!("{}: based_on: {b} is itself based on another system", file.display());
             }
         }
-        if !dir.join("start").is_file() {
-            bail!("{}: no start script (it starts the query program)", dir.display());
+        if !s.scripts().join("start").is_file() {
+            bail!("{}: no start script (it starts the query program)", s.scripts().display());
         }
         Ok(s)
+    }
+
+    /// The directory with the scripts and the query program: the base system's, or the own.
+    pub fn scripts(&self) -> PathBuf {
+        match &self.base {
+            Some(b) => self.dir.with_file_name(b),
+            None => self.dir.clone(),
+        }
+    }
+
+    /// The name of the system the image is built for: the base system's, or the own.
+    pub fn image_name(&self) -> &str {
+        self.base.as_deref().unwrap_or(&self.name)
     }
 
     pub fn ddl_suffix(&self, keys: Keys) -> &str {
         match (keys, &self.ddl.suffix_without_keys) {
             (Keys::None, Some(s)) => s,
             _ => &self.ddl.suffix,
+        }
+    }
+}
+
+/// Put the keys of `top` into `under`: a table into the table of the same name, key by key,
+/// anything else (an array too) in place of what is there.
+fn overlay(under: &mut toml::Table, top: toml::Table) {
+    for (k, v) in top {
+        match (under.get_mut(&k), v) {
+            (Some(toml::Value::Table(u)), toml::Value::Table(t)) => overlay(u, t),
+            (_, v) => {
+                under.insert(k, v);
+            }
         }
     }
 }

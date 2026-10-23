@@ -6,7 +6,7 @@ The hero figure (queries per second against the cost of running all queries) is 
 factor in a wide and a narrow layout, so it is on the page as soon as the HTML arrives. Hover highlighting is CSS;
 the remaining sections are drawn by the page's script from data.js.
 """
-import glob, hashlib, html, itertools, json, math, os, random, re, shutil, subprocess
+import glob, hashlib, html, json, math, os, random, re, shutil, subprocess, tomllib
 
 HERE = os.path.dirname(os.path.abspath(__file__))  # site/: the scripts, templates, stylesheet and fonts
 ROOT = os.path.dirname(HERE)                         # the repository
@@ -14,9 +14,18 @@ OUT = os.path.join(HERE, "out")                      # everything built; not che
 D = json.load(open(os.path.join(OUT, "data.json")))
 # the variants of a system (based_on in their system files, extract.py): shown under their base when it is opened,
 # never on the Pareto front
-BASED_ON = D["based_on"]
+VARIANTS = D["based_on"]  # view: {variant: its base}
+# The categories of systems (category in their system files), each with its configurations and the systems of that
+# category in them; the page shows one category at a time, all systems first. CATEGORIES: the selector's, in order, with
+# the note of one that has no results yet. CONFIGS: every category's configurations, for what they share (machines,
+# scale factors, timeouts).
+CATEGORIES = [("all", "All", None), ("native", "Native", None), ("parquet", "Parquet", None),
+              ("cloud", "Cloud", "Will be published soon.")]
+assert set(D["categories"]) <= {c for c, _, _ in CATEGORIES}, f"a category without a name: {set(D['categories'])}"
+CONFIGS = [c for cat in D["categories"].values() for c in cat.values()]
+DEFAULT_CATEGORY = "all"
 # the scale factor shown first: the largest in the results
-DEFAULT_SF = max(c["sf"] for c in D["configs"].values())
+DEFAULT_SF = max(c["sf"] for c in D["categories"][DEFAULT_CATEGORY].values())
 NQ = len(D["queries"])
 
 NAMES = {
@@ -25,6 +34,10 @@ NAMES = {
     "clickhouse": "ClickHouse", "chdb": "chDB", "pg_clickhouse": "pg_clickhouse",
     "pg_brew": "pg_brew", "clickhouse_brew": "clickhouse_brew",
 }
+# in the view of all systems, a system on the Parquet files is named "(Parquet)": DuckDB (Parquet) next to DuckDB
+PARQUET = {s for c in D["categories"].get("parquet", {}).values() for s in c["systems"]}
+NAMES_IN = {"all": {n: f"{NAMES[n]} (Parquet)" for n in PARQUET}}
+name_in = lambda category, n: NAMES_IN.get(category, {}).get(n, NAMES[n])
 # USD per hour, on demand, Linux, us-east-1 (October 2026): AWS prices c8a by the vCPU, $0.053885 each
 PRICE_H = {"c8a.medium": 0.0539, "c8a.large": 0.1078, "c8a.xlarge": 0.2155, "c8a.2xlarge": 0.4311, "c8a.4xlarge": 0.8622,
            "c8a.8xlarge": 1.7243, "c8a.12xlarge": 2.5865, "c8a.16xlarge": 3.4486, "c8a.24xlarge": 5.1730}
@@ -41,7 +54,9 @@ DEFAULT_GLYPH = '<circle cx="8" cy="8" r="5.5" fill="currentColor"/>'  # a syste
 def load_glyph(name):
     path = os.path.join(ROOT, "systems", name, "logo.svg")
     if not os.path.isfile(path):
-        return DEFAULT_GLYPH
+        # a variant (base = ... in its system file) has its base's
+        base = tomllib.load(open(os.path.join(ROOT, "systems", name, "system.toml"), "rb")).get("base")
+        return load_glyph(base) if base else DEFAULT_GLYPH
     text = re.sub(r"<\?xml.*?\?>|<!--.*?-->|<!DOCTYPE[^>]*>", "", open(path).read(), flags=re.S)
     m = re.search(r"<svg\b([^>]*)>(.*)</svg>", text, re.S)
     assert m, f"{path}: no <svg> element"
@@ -80,8 +95,8 @@ def logo(height):
 # ---------------------------------------------------------------------------------------------------------------
 # The hero figure
 
-def points(sf):
-    cfgs = sorted((c for c in D["configs"].values() if c["sf"] == sf), key=lambda c: machine_order(c["machine"]))
+def points(category, sf):
+    cfgs = sorted((c for c in D["categories"][category].values() if c["sf"] == sf), key=lambda c: machine_order(c["machine"]))
     pts = []
     for m, c in enumerate(cfgs):
         # a query without a correct result counts as in Table 1 (extract.py): a timeout the timeout, anything else twice
@@ -158,16 +173,17 @@ def nice_step(v):
     e = 10 ** math.floor(math.log10(v))
     return next(m * e for m in (1, 2, 5, 10) if m * e >= v * (1 - 1e-9))
 
-def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=True):
+def hero_svg(category, sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=True):
     """With best_only, a system shows only its most efficient machine; its other marks, and the line joining them, are
     drawn hidden (class alt), for hovering and selecting. The axes are the same either way. Queries per second on a
     log scale (ylog) or a linear one, from 0, and the cost likewise (xlog); the page switches each axis between the two
     by a click on its title. A variant is never on the front; it is drawn with its base in data-base, and the page shows
     it only while its base is opened. The axes and the labels' places are those with every variant shown, so that one
     figure serves whichever bases are opened."""
-    pts = points(sf)
+    pts = points(category, sf)
     # a variant's marks, line and label carry its base
-    vb = lambda name: f' data-base="{BASED_ON[name]}"' if name in BASED_ON else ""
+    variant = VARIANTS.get(category, {})
+    vb = lambda name: f' data-base="{variant[name]}"' if name in variant else ""
     by = {}
     for p in pts:
         by.setdefault(p["name"], []).append(p)
@@ -175,7 +191,7 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
     # the Pareto front of all systems on all machines: no cheaper mark answers more queries per second; with best_only
     # a system shows its most efficient machine and those of its machines on the front, the others drawn hidden
     front = []
-    for p in sorted((p for p in pts if p["name"] not in BASED_ON), key=lambda p: (p["dollars"], -p["qps"])):
+    for p in sorted((p for p in pts if p["name"] not in variant), key=lambda p: (p["dollars"], -p["qps"])):
         if not front or p["qps"] > front[-1]["qps"]:
             front.append(p)
     keep = {id(p) for p in front} | {id(p) for p in top.values()}
@@ -254,7 +270,7 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
     places = {}  # name: [(cost, box, the mark it is next to)], cheapest first
     for name, p in ((n, q) for n, _ in anchors for q in marks_of[n]):
         extra = 0 if p is top[name] else 50
-        w, h = text_width(NAMES[name], font) + 2, font + 1
+        w, h = text_width(name_in(category, name), font) + 2, font + 1
         px, py = X(p["dollars"]), Y(p["qps"])
         g = size(p) / 2 + 3  # the gap between a mark and its label
         def dist(b, cx=px, cy=py):  # from a mark's centre to the nearest point of a label box
@@ -304,7 +320,7 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
             else:
                 ex, ey = (pos[0] - 3 if px < pos[0] else pos[1] + 3), (pos[2] + pos[3]) / 2
             labels.append(f'<line class="leader s-{name}"{vb(name)} x1="{px:.1f}" y1="{py:.1f}" x2="{ex:.1f}" y2="{ey:.1f}"/>')
-        labels.append(f'<text class="lb hit s-{name}"{vb(name)} x="{pos[0]:.1f}" y="{pos[3] - h * 0.22:.1f}" data-tip="{tip(name, by[name])}">{NAMES[name]}</text>')
+        labels.append(f'<text class="lb hit s-{name}"{vb(name)} x="{pos[0]:.1f}" y="{pos[3] - h * 0.22:.1f}" data-tip="{tip(category, name, by[name])}">{name_in(category, name)}</text>')
     for p in pts:
         z = size(p)
         o.append(f'<circle class="halo s-{p["name"]}{alt(p)}"{vb(p["name"])} cx="{X(p["dollars"]):.1f}" cy="{Y(p["qps"]):.1f}" r="{z / 2 + 2.5}"/>')
@@ -319,11 +335,11 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
         # the most efficient mark tells about all of the system's machines, which it shows when hovered
         about = sorted(by[p["name"]], key=lambda q: q["rank"]) if best_only else [p]
         o.append(f'<circle class="hit s-{p["name"]}{alt(p)}"{vb(p["name"])} cx="{X(p["dollars"]):.1f}" cy="{Y(p["qps"]):.1f}" r="{size(p) / 2 + 5}" '
-                 f'data-tip="{tip(p["name"], about, top[p["name"]] if best_only else None)}"/>')
+                 f'data-tip="{tip(category, p["name"], about, top[p["name"]] if best_only else None)}"/>')
     o.append("</g>")
     return "".join(o) + "</svg>"
 
-def tip(name, ps, best=None):
+def tip(category, name, ps, best=None):
     """One machine: its numbers in two lines; several: a line each, the most efficient in bold."""
     if len(ps) == 1:
         p = ps[0]
@@ -335,22 +351,25 @@ def tip(name, ps, best=None):
         if best:
             rows += '<div class="m">in bold the most efficient (queries per second ÷ cost)</div>'
 
-    return html.escape(f'<div class="t">{NAMES[name]}</div>{rows}<div class="m">{ps[0]["correct"]} of {NQ} correct</div>', quote=True)
+    return html.escape(f'<div class="t">{name_in(category, name)}</div>{rows}<div class="m">{ps[0]["correct"]} of {NQ} correct</div>', quote=True)
 
 def hero():
     """Figure 1 in every view, each a file of its own
-    (out/fig1/<sf>-<best|all>-<x log|lin>-<y log|lin>-<wide|narrow>.svg), the page
-    loading a view when it is first shown; the first view (the largest scale factor, the most efficient machines, both
-    axes linear), for a large screen and a phone, is in the page itself."""
+    (out/fig1/<category>-<sf>-<best|all>-<x log|lin>-<y log|lin>-<wide|narrow>.svg), the page loading a view when it is
+    first shown; the first view (native systems, the largest scale factor, the most efficient machines, both axes
+    linear), for a large screen and a phone, is in the page itself."""
     d = os.path.join(OUT, "fig1")
     shutil.rmtree(d, ignore_errors=True)
     os.makedirs(d)
-    first = f"{DEFAULT_SF}-best-lin-lin"
+    first = f"{DEFAULT_CATEGORY}-{DEFAULT_SF}-best-lin-lin"
     inline = ""
-    for sf, m, xlog, ylog in itertools.product(scale_factors(), ("best", "all"), (True, False), (True, False)):
-        key = f"{sf}-{m}-{'log' if xlog else 'lin'}-{'log' if ylog else 'lin'}"
+    # every category's scale factors, with the most efficient or all machines, each axis log or linear
+    views = [(category, sf, m, xlog, ylog) for category, cfgs in D["categories"].items() for sf in sorted({c["sf"] for c in cfgs.values()})
+             for m in ("best", "all") for xlog in (True, False) for ylog in (True, False)]
+    for category, sf, m, xlog, ylog in views:
+        key = f"{category}-{sf}-{m}-{'log' if xlog else 'lin'}-{'log' if ylog else 'lin'}"
         for width, args in (("wide", (1000, 540, 15, 15, 22)), ("narrow", (420, 450, 12.5, 12, 17))):
-            svg = hero_svg(sf, *args, f"v-{width}", m == "best", ylog, xlog)
+            svg = hero_svg(category, sf, *args, f"v-{width}", m == "best", ylog, xlog)
             open(os.path.join(d, f"{key}-{width}.svg"), "w").write(svg)
             if key == first:
                 inline += svg
@@ -358,7 +377,7 @@ def hero():
 
 def machine_size(machine):
     """Cores and memory of a machine, as the benchmark configurations that ran on it give them."""
-    specs = {(c["threads"], c["memory"]) for c in D["configs"].values() if c["machine"] == machine}
+    specs = {(c["threads"], c["memory"]) for c in CONFIGS if c["machine"] == machine}
     assert len(specs) == 1, f"{machine}: configurations disagree on threads and memory: {specs}"
     return specs.pop()
 
@@ -375,12 +394,12 @@ def machine_order(machine):
     return (machine_size(machine)[0], price_h(machine))
 
 def sf_machines(sf):
-    return sorted({c["machine"] for c in D["configs"].values() if c["sf"] == sf}, key=machine_order)
+    return sorted({c["machine"] for c in CONFIGS if c["sf"] == sf}, key=machine_order)
 
 def hero_machines():
     """Caption text naming the machines behind the marks, one per scale factor."""
     out = []
-    for sf in sorted({c["sf"] for c in D["configs"].values()}):
+    for sf in sorted({c["sf"] for c in CONFIGS}):
         ms = sf_machines(sf)
         name = lambda m: f"{m} ({', '.join(machine_spec(m))})"
         if len(ms) == 1:
@@ -396,7 +415,7 @@ def hero_machines():
     return "".join(out)
 
 def machines():
-    return sorted({c["machine"] for c in D["configs"].values()}, key=machine_order)
+    return sorted({c["machine"] for c in CONFIGS}, key=machine_order)
 
 def note(text, note):
     """Text with a hover note: dashed underline, the note on hover, focus or tap."""
@@ -449,7 +468,7 @@ def machines_text():
     hosts = {json.dumps(json.load(open(f))["host"], sort_keys=True) for f in records}
     assert len(hosts) == 1, f"the results ran on several servers: {hosts}"
     host = json.loads(hosts.pop())
-    assert all(c["threads"] <= cores for c in D["configs"].values()), "a configuration has more vCPUs than the server has cores"
+    assert all(c["threads"] <= cores for c in CONFIGS), "a configuration has more vCPUs than the server has cores"
     return ('<p>Every system runs on every machine configuration of its scale factor below: pinned to that many '
             'hardware threads and limited to that much memory, everything included. The configurations are AWS c8a '
             'instances.</p>'
@@ -465,7 +484,7 @@ def machines_text():
 
 def example_run():
     """A run command for one configuration of the results, as the reproduce section shows it."""
-    c = min(D["configs"].items(), key=lambda kv: (kv[1]["sf"], machine_order(kv[1]["machine"])))
+    c = min(D["categories"][DEFAULT_CATEGORY].items(), key=lambda kv: (kv[1]["sf"], machine_order(kv[1]["machine"])))
     return f'./target/release/dbo-bench run --benchmark {c[1]["benchmark"]} --system duckdb --config {c[0]}'
 
 # What every system is and how it runs; the name shown where its results recorded no version.
@@ -543,12 +562,12 @@ def glyph_svg(name, size):
 def system_version(name):
     """The versions the system reported in its results (its system file's version query), joined if runs differ;
     None if no run recorded one."""
-    vs = sorted({v for c in D["configs"].values() if name in c["systems"] for v in [c["systems"][name].get("version")] if v})
+    vs = sorted({v for c in CONFIGS if name in c["systems"] for v in [c["systems"][name].get("version")] if v})
     return " / ".join(vs) if vs else None
 
 def systems_table():
     # the systems with results
-    shown = [n for n in NAMES if any(n in c["systems"] for c in D["configs"].values())]
+    shown = [n for n in NAMES if any(n in c["systems"] for c in CONFIGS)]
     rows = "".join(f'<tr><td>{glyph_svg(n, 13)}{NAMES[n]}</td><td>{html.escape(system_version(n) or SYSTEM_INFO[n][0])}</td><td class="hide-s">{SYSTEM_INFO[n][1]}</td></tr>'
                    for n in shown)
     # a note only where a system shows its name instead of a version
@@ -559,8 +578,8 @@ def systems_table():
 
 def machines_table():
     used = {}
-    for c in D["configs"].values():
-        used.setdefault(c["machine"], []).append(c["sf"])
+    for c in CONFIGS:
+        used.setdefault(c["machine"], set()).add(c["sf"])
     # the cores as a number: the column says what they are
     rows = "".join(f'<tr><td>{m}</td><td class="r">{machine_size(m)[0]}</td><td class="r">{machine_spec(m)[1]}</td>'
                    f'<td class="r">${price_h(m):.4f}</td><td class="r">{", ".join(str(s) for s in sorted(used[m]))}</td></tr>'
@@ -619,12 +638,14 @@ POINT_MEANING = {
 
 def dialects_section():
     """The customization points, their default spelling, and which systems spell them differently."""
-    import subprocess, tomllib
+    import subprocess
     binary = os.path.join(ROOT, "target", "release", "dbo-bench")
     points = json.loads(subprocess.run([binary, "points"], capture_output=True, text=True, check=True).stdout)
     missing = [p["name"] for p in points if p["name"] not in POINT_MEANING]
     assert not missing, f"add a plain meaning to POINT_MEANING for {missing}"
-    systems = [n for n in NAMES if any(n in c["systems"] for c in D["configs"].values())]
+    # a variant (base = ... in its system file) spells everything as its base: only the systems of their own
+    own = lambda n: "base" not in tomllib.load(open(os.path.join(ROOT, "systems", n, "system.toml"), "rb"))
+    systems = [n for n in NAMES if own(n) and any(n in c["systems"] for c in CONFIGS)]
     spelled = {}
     for n in systems:
         f = tomllib.load(open(os.path.join(ROOT, "systems", n, "system.toml"), "rb")).get("dialect", {}).get("functions", {})
@@ -642,7 +663,18 @@ def dialects_section():
     return ("".join(rows) + (f'<p class="measure">{", ".join(plain)} use the standard spelling everywhere.</p>' if plain else ""))
 
 def scale_factors():
-    return sorted({c["sf"] for c in D["configs"].values()})
+    return sorted({c["sf"] for c in CONFIGS})
+
+def shown_categories():
+    """The categories with results, in the selector's order."""
+    return [c for c, _, note in CATEGORIES if note is None and c in D["categories"]]
+
+def category_buttons():
+    """The categories of systems; one without results yet greyed out, with its note."""
+    soon = lambda note: html.escape(note or "Will be published soon.", quote=True)
+    return "".join(f'<button class="opt" data-category="{c}">{name}</button>' if c in shown_categories() else
+                   f'<span class="opt soon hn" tabindex="0" data-note="{soon(note)}">{name}</span>'
+                   for c, name, note in CATEGORIES)
 
 def sf_buttons():
     # a scale factor is about 1 GB of CSV per unit
@@ -667,7 +699,7 @@ def fmt_s(v):
 def timeouts_text():
     """The timeout of every scale factor: 5 s, or 5 s at SF1 and SF10, 50 s at SF100."""
     by = {}
-    for c in D["configs"].values():
+    for c in CONFIGS:
         by.setdefault(c["timeout"], set()).add(c["sf"])
     if len(by) == 1:
         return fmt_s(next(iter(by)))
@@ -683,7 +715,7 @@ NUMBERS = {1: "one", 2: "two", 3: "three"}
 
 def one(key):
     """The value of a configuration field when all configurations share it."""
-    vals = {c[key] for c in D["configs"].values()}
+    vals = {c[key] for c in CONFIGS}
     assert len(vals) == 1, f"configurations differ in {key}: {vals}; the page text assumes one value"
     return vals.pop()
 
@@ -704,6 +736,9 @@ def main():
         "<!--HERO-->": hero(),
         "<!--HERO_MACHINES-->": hero_machines(),
         "<!--SF_BUTTONS-->": sf_buttons(),
+        "<!--CATEGORY_BUTTONS-->": category_buttons(),
+        "/*DEFAULT_CATEGORY*/": json.dumps(DEFAULT_CATEGORY),
+
         **{f"{{{{SEC_{name.upper()}}}}}": n for name, n in SEC.items()},
         "<!--HEAD-->": head_extra(),
         "<!--SYSTEMS-->": systems_table(),
@@ -714,6 +749,7 @@ def main():
         "/*HERO_CSS*/": hero_css(),
         "/*GLYPHS*/": json.dumps(GLYPHS),
         "/*NAMES*/": json.dumps(NAMES),
+        "/*NAMES_IN*/": json.dumps(NAMES_IN),
         "/*PRICES*/": json.dumps({m: price_h(m) for m in machines()}),
         "/*DEFAULT_SF*/": str(DEFAULT_SF),
         "{{GITHUB}}": GITHUB,
