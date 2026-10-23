@@ -28,7 +28,7 @@ LEFT JOIN (
 ) t2 ON t2.kind = t0.kind
 LEFT JOIN (
   SELECT pm3.kind AS kind,
-         100.0 * SUM(CASE WHEN (p3.captured_at - o3.placed_at) <= INTERVAL '7 days' THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_7_days
+         100.0 * SUM(CASE WHEN p3.captured_at <= o3.placed_at + INTERVAL '7' DAY THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_7_days
   FROM payments p3
   JOIN payment_methods pm3 ON p3.payment_method_id = pm3.id
   JOIN orders o3 ON p3.order_id = o3.id
@@ -40,7 +40,7 @@ LEFT JOIN (
 ) t3 ON t3.kind = t0.kind
 LEFT JOIN (
   SELECT pm4.kind AS kind,
-         100.0 * SUM(CASE WHEN (p4.captured_at - o4.placed_at) <= INTERVAL '14 days' THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_14_days
+         100.0 * SUM(CASE WHEN p4.captured_at <= o4.placed_at + INTERVAL '14' DAY THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_14_days
   FROM payments p4
   JOIN payment_methods pm4 ON p4.payment_method_id = pm4.id
   JOIN orders o4 ON p4.order_id = o4.id

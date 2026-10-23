@@ -7,7 +7,7 @@ WITH refund_base AS (
     t_pr.created_at AS created_at,
     t_pr.processed_at AS processed_at,
     CASE
-      WHEN (t_pr.processed_at - t_pr.created_at) <= INTERVAL '7 days' THEN 'fast'
+      WHEN t_pr.processed_at <= t_pr.created_at + INTERVAL '7' DAY THEN 'fast'
       ELSE 'slow'
     END AS refund_group
   FROM payment_refunds t_pr

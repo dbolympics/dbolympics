@@ -139,5 +139,83 @@
    "to": ") cart_rows\n",
    "note": "The subquery alias final (a non-reserved word in the standard) is ClickHouse's FINAL modifier; renamed, which costs nothing anywhere. (docs/RUNNER.md, Dialects)"
   }
+ ],
+ "q086": [
+  {
+   "from": "(s.delivered_at - s.shipped_at) <= INTERVAL '7 days'",
+   "to": "s.delivered_at <= s.shipped_at + INTERVAL '7' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q233": [
+  {
+   "from": "delivered_at - shipped_at <= INTERVAL '3 days'",
+   "to": "delivered_at <= shipped_at + INTERVAL '3' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q237": [
+  {
+   "from": "(max_delivered_at - placed_at) <= INTERVAL '5 days'",
+   "to": "max_delivered_at <= placed_at + INTERVAL '5' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q274": [
+  {
+   "from": "(t_pr.processed_at - t_pr.created_at) <= INTERVAL '7 days'",
+   "to": "t_pr.processed_at <= t_pr.created_at + INTERVAL '7' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q288": [
+  {
+   "from": "COALESCE(c.converted_at, c.abandoned_at, c.expires_at) - c.created_at <= INTERVAL '1 hour'",
+   "to": "COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '1' HOUR",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "from": "COALESCE(c.converted_at, c.abandoned_at, c.expires_at) - c.created_at > INTERVAL '1 hour'",
+   "to": "COALESCE(c.converted_at, c.abandoned_at, c.expires_at) > c.created_at + INTERVAL '1' HOUR",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "from": "COALESCE(c.converted_at, c.abandoned_at, c.expires_at) - c.created_at <= INTERVAL '7 days'",
+   "to": "COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '7' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q304": [
+  {
+   "from": "(p3.captured_at - o3.placed_at) <= INTERVAL '7 days'",
+   "to": "p3.captured_at <= o3.placed_at + INTERVAL '7' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "from": "(p4.captured_at - o4.placed_at) <= INTERVAL '14 days'",
+   "to": "p4.captured_at <= o4.placed_at + INTERVAL '14' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q350": [
+  {
+   "from": "s.delivered_at - s.shipped_at <= INTERVAL '5 days'",
+   "to": "s.delivered_at <= s.shipped_at + INTERVAL '5' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q404": [
+  {
+   "from": "s.delivered_at - s.shipped_at <= interval '3 days'",
+   "to": "s.delivered_at <= s.shipped_at + INTERVAL '3' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
+ ],
+ "q408": [
+  {
+   "from": "s.delivered_at - s.shipped_at <= INTERVAL '3 days'",
+   "to": "s.delivered_at <= s.shipped_at + INTERVAL '3' DAY",
+   "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
+  }
  ]
 }
