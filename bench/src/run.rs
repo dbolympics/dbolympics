@@ -16,7 +16,7 @@ use crate::dialect::Dialect;
 use crate::client::{Answer, Client, Gone};
 use crate::podman::{Limits, Mounts, Pod, Podman};
 use crate::results::{Row, write_csv};
-use crate::system::{Arrays, System, subst};
+use crate::system::{Arrays, Category, System, subst};
 
 /// Why a run failed as a whole. Its measurements up to that point are kept, but the run does
 /// not count.
@@ -262,7 +262,7 @@ fn median(times: &mut [f64]) -> f64 {
 /// Everything that decides a run of `sys` in configuration `cfg`, and where it comes from: the
 /// start of `run.json`, which is kept with the results.
 pub fn describe(ctx: &Ctx, bench: &Benchmark, sys: &System, cfg: &Config) -> serde_json::Value {
-    let mut v = serde_json::json!({"system": sys.name, "version": sys.version, "config": cfg.name, "date": ctx.date, "sf": cfg.sf, "threads": cfg.threads, "cpuset": cfg.cpuset(),
+    let mut v = serde_json::json!({"system": sys.name, "version": sys.version, "category": sys.category.name(), "config": cfg.name, "date": ctx.date, "sf": cfg.sf, "threads": cfg.threads, "cpuset": cfg.cpuset(),
         "memory": cfg.memory, "query_timeout": cfg.query_timeout(), "load_timeout": cfg.load_timeout, "grace_period": cfg.grace_period(), "repetitions": bench.repetitions,
         "keys": cfg.keys.unwrap_or(bench.keys).name(), "queries": bench.queries});
     if let Some(o) = v.as_object_mut() {
@@ -406,9 +406,10 @@ fn procedure(ctx: &Ctx, bench: &Benchmark, sys: &System, cfg: &Config, out: &Pat
     if ctx.checks_only {
         return Ok(());
     }
-    // the schema: one CREATE TABLE after the other, timed apart from the loads
+    // the schema: one CREATE TABLE after the other, timed apart from the loads; a system on the
+    // Parquet files has none (its loads make the tables)
     let mut schema_seconds = 0.0;
-    for (table, sql) in &tables {
+    for (table, sql) in tables.iter().filter(|_| sys.category == Category::Native) {
         match s.statement(&format!("create table {table}"), sql, None)? {
             Stmt::Ok { seconds, .. } => schema_seconds += seconds,
             Stmt::Error(e) => return Err(Failed { kind: Failure::Setup, detail: format!("create table {table}: {}", last_line(&e)) }),
@@ -420,27 +421,45 @@ fn procedure(ctx: &Ctx, bench: &Benchmark, sys: &System, cfg: &Config, out: &Pat
     // every execution and every load, as they happen
     let mut times: Vec<[String; 6]> = Vec::new();
     let mut loads: Vec<[String; 5]> = Vec::new();
+    // every table's periods loaded so far, for a system that reads the files in place: {files} (a
+    // list), {glob} (one glob, `{a,b}` for alternatives), {dir} (/run/dbo/tables/<table>, with a
+    // link to each file)
+    let mut loaded: BTreeMap<String, Vec<String>> = BTreeMap::new();
     for (k, period) in all.iter().enumerate() {
         let (run, through) = (k + 1, period.clone());
         summary["at"] = serde_json::json!({"run": run, "loaded": through, "query": "load"});
-        // load: the period's file of every table that has rows in it, one after the other
+        // load: the period's file of every table that has rows in it, one after the other; on the
+        // Parquet files every table's, so that every table is there from the first load on
         let (mut ntables, mut nrows, mut total) = (0, 0, 0.0);
         for (table, _) in &tables {
             let (host, root) = if array_tables.contains(table) { (mounts.arrays.as_ref().unwrap(), "/data-arrays") } else { (&mounts.data, "/data") };
             let n = setup(rows_of(&host.join(table).join(format!("{period}.parquet"))))?;
-            if n == 0 {
+            if n == 0 && sys.category == Category::Native {
                 continue;
             }
-            let v = BTreeMap::from([("table".to_string(), table.clone()), ("file".to_string(), format!("{root}/{table}/{period}.parquet"))]);
-            // the load's limit, less what its statements before took
-            let budget = cfg.load_timeout.map(|l| Duration::from_secs(l).saturating_sub(Duration::from_secs_f64(total)));
-            let sql = setup(subst(&sys.load.statement, &v))?;
-            match s.load_statement(&format!("load {through} {table}"), &sql, budget, cfg.load_timeout.unwrap_or(0))? {
-                Stmt::Ok { seconds, .. } => total += seconds,
-                Stmt::Error(e) => return Err(Failed { kind: Failure::Load, detail: format!("load {through} {table}: {}", last_line(&e)) }),
-                Stmt::Timeout => unreachable!(),
+            let file = format!("{root}/{table}/{period}.parquet");
+            let files = loaded.entry(table.clone()).or_default();
+            files.push(period.clone());
+            let links = pod.sockets.join("tables").join(table);
+            setup(std::fs::create_dir_all(&links).and_then(|_| std::os::unix::fs::symlink(&file, links.join(format!("{period}.parquet")))).context("linking the file"))?;
+            let v = BTreeMap::from([
+                ("table".to_string(), table.clone()),
+                ("file".to_string(), file),
+                ("files".to_string(), files.iter().map(|p| format!("'{root}/{table}/{p}.parquet'")).collect::<Vec<_>>().join(", ")),
+                ("dir".to_string(), format!("/run/dbo/tables/{table}")),
+                ("glob".to_string(), if files.len() == 1 { format!("{root}/{table}/{period}.parquet") } else { format!("{root}/{table}/{{{}}}.parquet", files.join(",")) }),
+            ]);
+            for statement in &sys.load.statement {
+                // the load's limit, less what its statements before took
+                let budget = cfg.load_timeout.map(|l| Duration::from_secs(l).saturating_sub(Duration::from_secs_f64(total)));
+                let sql = setup(subst(statement, &v))?;
+                match s.load_statement(&format!("load {through} {table}"), &sql, budget, cfg.load_timeout.unwrap_or(0))? {
+                    Stmt::Ok { seconds, .. } => total += seconds,
+                    Stmt::Error(e) => return Err(Failed { kind: Failure::Load, detail: format!("load {through} {table}: {}", last_line(&e)) }),
+                    Stmt::Timeout => unreachable!(),
+                }
             }
-            ntables += 1;
+            ntables += (n > 0) as usize;
             nrows += n;
         }
         loads.push([run.to_string(), through.clone(), ntables.to_string(), nrows.to_string(), format!("{total:.6}")]);

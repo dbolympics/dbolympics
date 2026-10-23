@@ -77,7 +77,8 @@ For every configuration and every system, on a fresh system (new containers, no 
    (`failed_setup`); the outcome is `timeout_check` in the run's record.
 2. **Settings and schema**: the session settings of the system file, then the same tables for
    every system, rendered from `schema/schema.json` (column names double-quoted); a system may
-   only change type names and append text to `CREATE TABLE`.
+   only change type names and append text to `CREATE TABLE`. A system on the Parquet files
+   (`category = "parquet"`) gets no schema: its loads make the tables.
 3. **Load** `2024-and-earlier`: every table's file of that period, one statement per table, one
    after the other; the load's time is their sum (run 1).
 4. **Run all queries** `repetitions` times, in query order.
@@ -186,6 +187,8 @@ version = "experimental"   # the version, set by hand, kept with the results: wi
 based_on = "postgres"      # the system of the benchmark it is based on (default: none), see below
 arrays = "text"                # default "native"
 keys = ["none", "primary"]     # the `keys` settings the system can run (default: both)
+category = "native"            # "native" (default): loads into its own storage; "parquet":
+                               # queries the Parquet files where they are, no schema, no keys
 scale_limit = 1000             # disabled from this scale factor on (default: never): a configuration
                                # at or above it is skipped, no results written
 scale_limit_message = "..."    # why, shown on the website in place of any results there
@@ -213,6 +216,16 @@ data_writable = false          # see below
 
 - **Placeholders** in a container's `command` and `env` and the settings: `{threads}`,
   `{memory_bytes}`, `{memory_mb}`, `{memory_gb}`; `{memory_mb%45}` is 45 percent of the value.
+- **Placeholders of the load:** `{table}`, and `{file}`, the file of the load's period. A system
+  that reads the files in place, without loading them, makes the table a view over its files so
+  far: `{files}` lists them (quoted, separated by commas), `{glob}` is one glob of them (`{a,b}`
+  for alternatives), `{dir}` a directory with a link to each of them (`/run/dbo/tables/<table>`).
+  Such a system has `category = "parquet"`: no schema is created for it, and its loads include
+  the files without rows, so that every table is there from the first load on. Several
+  statements are a list (`statement = ["...", "..."]`), run one after the other.
+- **A variant** (`base = "duckdb"`) is another system that runs the base system's directory
+  (scripts, query program, image). Its system file is the base's, with what it sets itself in
+  place (a table key by key): `duckdb-parquet` is DuckDB on the files in place.
 - **`data_writable`** mounts the data writable in that container, for a system that only
   opens files for writing. The runner then compares size and modification time of every data
   file before and after the run and fails the run if one changed.

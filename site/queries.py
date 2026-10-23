@@ -33,7 +33,9 @@ def rendered_texts():
     """{system: {query: text}}: each query as the runner renders it for each system, placeholders marked."""
     import subprocess, tempfile
     out = {}
-    systems = [n for n in build.NAMES if any(n in c["systems"] for c in build.D["configs"].values())]
+    # a variant (base = ... in its system file) gets its base's text
+    own = lambda n: "base" not in build.tomllib.load(open(os.path.join(ROOT, "systems", n, "system.toml"), "rb"))
+    systems = [n for n in build.NAMES if own(n) and any(n in c["systems"] for c in build.CONFIGS)]
     with tempfile.TemporaryDirectory() as tmp:
         for n in systems:
             d = os.path.join(tmp, n)
@@ -451,8 +453,8 @@ DEFAULT_MACHINE = build.sf_machines(build.DEFAULT_SF)[-1]
 
 
 def dots_svg(qid):
-    """The query's time on every system at the default configuration, as on the start page's query panel."""
-    c = next(c for c in build.D["configs"].values() if c["sf"] == build.DEFAULT_SF and c["machine"] == DEFAULT_MACHINE)
+    """The query's time on every native system at the default configuration, as on the start page's query panel."""
+    c = next(c for c in build.D["categories"][build.DEFAULT_CATEGORY].values() if c["sf"] == build.DEFAULT_SF and c["machine"] == DEFAULT_MACHINE)
     i = next(k for k, q in enumerate(build.D["queries"]) if q["id"] == qid)
     rows = sorted(((n, s) for n, s in c["systems"].items() if s["status"][i] != 4), key=lambda r: r[1]["score"])
     timeout = c["timeout"]
