@@ -34,12 +34,17 @@ impl DayBuf {
     }
 }
 
-/// Handle to a deferred row inside its chunk.
+/// Handle to a deferred row inside its chunk (its table is in the pending `rid`).
 #[derive(Clone, Copy, Debug)]
 pub struct DHandle {
-    pub table: TableId,
     pub pos: u32,
     pub rid: Rid,
+}
+
+impl DHandle {
+    fn table(self) -> TableId {
+        self.rid.parts().0
+    }
 }
 
 impl Chunk {
@@ -79,18 +84,18 @@ impl Chunk {
         *cnt += 1;
         let v = &mut self.deferred[t.0];
         v.push((rid, packed::pack(&row)));
-        DHandle { table: t, pos: (v.len() - 1) as u32, rid }
+        DHandle { pos: (v.len() - 1) as u32, rid }
     }
 
     /// The deferred row, to change: it is packed again when the returned guard is dropped.
     pub fn deferred_mut(&mut self, h: DHandle) -> DeferredMut<'_> {
-        let packed = &mut self.deferred[h.table.0][h.pos as usize].1;
+        let packed = &mut self.deferred[h.table().0][h.pos as usize].1;
         DeferredMut { row: packed::unpack(packed), packed }
     }
 
     /// A copy of the deferred row.
     pub fn deferred_ref(&self, h: DHandle) -> Row {
-        packed::unpack(&self.deferred[h.table.0][h.pos as usize].1)
+        packed::unpack(&self.deferred[h.table().0][h.pos as usize].1)
     }
 }
 

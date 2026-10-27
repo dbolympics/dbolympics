@@ -45,10 +45,10 @@ impl ShopperChunk {
     /// Count a storefront feature used by a shopper today (one row per user, feature and day).
     pub(super) fn use_feature(&mut self, ms: &MerchantSim, s: usize, feature: &'static str, at: Ts) {
         let day = self.chunk.day;
-        if self.shoppers[s].feat.as_ref().is_some_and(|(d, _)| *d != day) {
+        if self.shoppers[s].feat.as_deref().is_some_and(|(d, _)| *d != day) {
             self.flush_features(ms, s);
         }
-        let f = self.shoppers[s].feat.get_or_insert((day, Vec::new()));
+        let f = self.shoppers[s].feat.get_or_insert_with(|| Box::new((day, Vec::new())));
         match f.1.iter_mut().find(|x| x.0 == feature) {
             Some(x) => {
                 x.1 += 1;
@@ -59,7 +59,8 @@ impl ShopperChunk {
     }
 
     pub(super) fn flush_features(&mut self, ms: &MerchantSim, s: usize) {
-        let Some((d, list)) = self.shoppers[s].feat.take() else { return };
+        let Some(f) = self.shoppers[s].feat.take() else { return };
+        let (d, list) = *f;
         for (feature, n, last) in list {
             if last > time::end_ts() {
                 continue;

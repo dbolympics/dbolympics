@@ -135,7 +135,7 @@ impl ShopperChunk {
     pub(super) fn credit_wallet(&mut self, ms: &MerchantSim, s: usize, amount: i64, at: Ts) {
         let day = self.chunk.day;
         let user = self.shoppers[s].rid;
-        match self.shoppers[s].wallet.as_mut() {
+        match self.shoppers[s].wallet.as_deref_mut() {
             Some((h, bal)) => {
                 *bal += amount;
                 let (h, bal) = (*h, *bal);
@@ -145,7 +145,7 @@ impl ShopperChunk {
                 let mut r = Row::new(wallets::NCOLS);
                 r.set(wallets::TENANT_ID, ms.tenant_rid()).set(wallets::USER_ID, user).set(wallets::CURRENCY_CODE, ms.m.currency.clone()).set(wallets::BALANCE, V::Money(amount)).set(wallets::IS_ACTIVE, true).set(wallets::CREATED_AT, V::Ts(at)).set(wallets::UPDATED_AT, V::Ts(at));
                 let h = self.chunk.emit_deferred(wallets::T, day, r);
-                self.shoppers[s].wallet = Some((h, amount));
+                self.shoppers[s].wallet = Some(Box::new((h, amount)));
             }
         }
         let _ = MICROS_PER_HOUR;

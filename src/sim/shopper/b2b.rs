@@ -185,7 +185,7 @@ impl ShopperChunk {
                 self.chunk.emit(contact_list_members::T, day, r);
             }
         }
-        self.shoppers[s].b2b = Some(Buyer { account: a as u32, contact, transfer_pm: None });
+        self.shoppers[s].b2b = Some(Box::new(Buyer { account: a as u32, contact, transfer_pm: None }));
         if !primary {
             return;
         }

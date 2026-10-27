@@ -118,7 +118,7 @@ struct Shopper {
     device2: Device,
     ua2: &'static str,
     anon2: u128,
-    open_cart: Option<OpenCart>,
+    open_cart: Option<Box<OpenCart>>,
     /// consumables: day the last purchase runs out, how long a unit lasts, what they buy
     need_day: Option<Day>,
     cycle_days: f64,
@@ -134,11 +134,11 @@ struct Shopper {
     sub: Option<u32>,
     ident: Ident,
     last_name: String,
-    b2b: Option<Buyer>,
+    b2b: Option<Box<Buyer>>,
     /// experiment variants: (experiment, variant)
     exps: Vec<(u8, u8)>,
     /// store credit
-    wallet: Option<(DHandle, i64)>,
+    wallet: Option<Box<(DHandle, i64)>>,
     /// gift cards received (indices into `ShopperChunk::cards`)
     cards: Vec<u32>,
     /// S7 influencer audience, S8 fraud-ring account, S10 app user
@@ -148,9 +148,9 @@ struct Shopper {
     /// a subscription of this shopper ended then
     sub_ended: Option<Ts>,
     /// S14: a duplicate account from the re-import
-    alias: Option<incidents::Alias>,
+    alias: Option<Box<incidents::Alias>>,
     /// storefront features used today
-    feat: Option<(Day, Vec<(&'static str, i64, Ts)>)>,
+    feat: Option<Box<(Day, Vec<(&'static str, i64, Ts)>)>>,
 }
 
 /// Why a visit is planned. Only regular visits schedule the next regular visit, so each shopper
@@ -798,7 +798,7 @@ impl ShopperChunk {
         let end = j.end;
         self.touch_device(rng, ms, s, other as usize, ts, end);
         if let Some(c) = click {
-            self.shoppers[s].mkt.last_click = Some((c.campaign, c.at, c.ab));
+            self.shoppers[s].mkt.last_click = Some(Box::new((c.campaign, c.at, c.ab)));
             self.outbox.entry(day).or_default().landing_views.push(c.landing);
         }
         {
@@ -851,7 +851,7 @@ impl ShopperChunk {
             let return_day = day + back;
             let ok = rng.chance(0.3) && (return_day as usize) < self.calendar.len() && ms.is_active(return_day) && return_day < self.shoppers[s].churn_day;
             if ok && open.is_none() {
-                self.shoppers[s].open_cart = Some(OpenCart { items: j.items, token, created, return_day });
+                self.shoppers[s].open_cart = Some(Box::new(OpenCart { items: j.items, token, created, return_day }));
                 self.calendar[return_day as usize].push((s as u32, Visit::Cart));
             } else {
                 self.emit_cart(rng, ms, tenant, user, &token, &j.items, created, None);
@@ -959,7 +959,7 @@ impl ShopperChunk {
         }
         let (user, billing, email) = {
             let sh = &self.shoppers[s];
-            match &sh.alias {
+            match sh.alias.as_deref() {
                 // S14: some orders land on the duplicate account
                 Some((u, e, a)) if rng.chance(0.5) => (*u, *a, e.clone()),
                 _ => (sh.rid, sh.address, sh.email.clone()),

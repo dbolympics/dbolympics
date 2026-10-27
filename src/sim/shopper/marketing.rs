@@ -30,12 +30,12 @@ pub(super) struct Mkt {
     pub prefs_row: Option<DHandle>,
     /// device profiles of the primary and the second device
     pub devices: [Option<DHandle>; 2],
-    pub loyalty: Option<Loyalty>,
+    pub loyalty: Option<Box<Loyalty>>,
     /// own referral code: (row, created, redemptions)
-    pub referral: Option<(DHandle, Ts, i64)>,
+    pub referral: Option<Box<(DHandle, Ts, i64)>>,
     /// referred by this shopper of the same chunk
     pub referred_by: Option<u32>,
-    pub last_click: Option<(Rid, Ts, Option<DHandle>)>,
+    pub last_click: Option<Box<(Rid, Ts, Option<DHandle>)>>,
     pub first_order: Option<Ts>,
     pub third_order: Option<Ts>,
     pub last_order: Option<Ts>,
@@ -205,7 +205,7 @@ impl ShopperChunk {
                     .set(loyalty_accounts::CREATED_AT, V::Ts(created))
                     .set(loyalty_accounts::UPDATED_AT, V::Ts(created));
                 let h = self.chunk.emit_deferred(loyalty_accounts::T, day, r);
-                self.shoppers[s].mkt.loyalty = Some(Loyalty { h, balance: 0, lifetime: 0 });
+                self.shoppers[s].mkt.loyalty = Some(Box::new(Loyalty { h, balance: 0, lifetime: 0 }));
             }
         }
         // the big merchants have an app: push tokens
@@ -233,7 +233,7 @@ impl ShopperChunk {
         if self.shoppers[s].channel == Channel::Referral && s > 0 && rng.chance(0.5) {
             for _ in 0..8 {
                 let f = rng.below(s);
-                if self.shoppers[f].mkt.referral.is_some_and(|(_, t, n)| t < created && n < MAX_REFERRALS) {
+                if self.shoppers[f].mkt.referral.as_deref().is_some_and(|&(_, t, n)| t < created && n < MAX_REFERRALS) {
                     self.shoppers[s].mkt.referred_by = Some(f as u32);
                     break;
                 }
@@ -464,7 +464,7 @@ impl ShopperChunk {
             _ => None,
         };
         // last click: an email clicked in the last 7 days wins, else the visit's own channel
-        let recent = self.shoppers[s].mkt.last_click.filter(|(_, t, _)| at - *t <= 7 * MICROS_PER_DAY && *t <= at);
+        let recent = self.shoppers[s].mkt.last_click.as_deref().copied().filter(|(_, t, _)| at - *t <= 7 * MICROS_PER_DAY && *t <= at);
         let (campaign, touch) = match recent {
             Some((c, _, _)) => (Some(c), "email"),
             None => (paid_campaign(channel), channel_name(channel)),
@@ -512,7 +512,7 @@ impl ShopperChunk {
         if first {
             if let Some(f) = self.shoppers[s].mkt.referred_by {
                 let f = f as usize;
-                if let Some((h, created, n)) = self.shoppers[f].mkt.referral {
+                if let Some(&(h, created, n)) = self.shoppers[f].mkt.referral.as_deref() {
                     if created < at && n < MAX_REFERRALS {
                         let reward = (10.0 * ms.price_level * 100.0).round() as i64;
                         let mut r = Row::new(referral_redemptions::NCOLS);
@@ -526,7 +526,7 @@ impl ShopperChunk {
                             .set(referral_redemptions::CREATED_AT, V::Ts(at))
                             .set(referral_redemptions::UPDATED_AT, V::Ts(at));
                         self.emit_at(referral_redemptions::T, at, r);
-                        self.shoppers[f].mkt.referral = Some((h, created, n + 1));
+                        self.shoppers[f].mkt.referral = Some(Box::new((h, created, n + 1)));
                         self.chunk.deferred_mut(h).set(referrals::REDEMPTION_COUNT, V::Int(n + 1)).set(referrals::UPDATED_AT, V::Ts(at));
                     }
                 }
@@ -640,7 +640,7 @@ impl ShopperChunk {
             .set(referrals::UPDATED_AT, V::Ts(at));
         let d = time::day_of_ts(at).max(self.chunk.day as i64) as Day;
         let h = self.chunk.emit_deferred(referrals::T, d, r);
-        self.shoppers[s].mkt.referral = Some((h, at, 0));
+        self.shoppers[s].mkt.referral = Some(Box::new((h, at, 0)));
     }
 
     /// A pre-sales question in the shop's chat inbox, answered by staff.

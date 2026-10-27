@@ -27,7 +27,7 @@ pub(super) struct OpenSession {
 pub(super) struct Ident {
     /// signed up with a social login
     pub oauth: Option<&'static str>,
-    sess: [Option<OpenSession>; 2],
+    sess: [Option<Box<OpenSession>>; 2],
     /// erasure completed at this time (decided at creation)
     pub erased: Option<Ts>,
 }
@@ -102,7 +102,7 @@ impl ShopperChunk {
         let mut r = Row::new(login_attempts::NCOLS);
         r.set(login_attempts::TENANT_ID, tenant).set(login_attempts::USER_ID, user).set(login_attempts::EMAIL, email).set(login_attempts::SUCCEEDED, true).set(login_attempts::IP_ADDRESS, ip.clone()).set(login_attempts::USER_AGENT, ua).set(login_attempts::OCCURRED_AT, V::Ts(t));
         self.chunk.emit(login_attempts::T, self.chunk.day, r);
-        self.shoppers[s].ident.sess[which] = Some(OpenSession { token: rng.hex(64), ip, ua, start: t, last: end.max(t), expires: t + 30 * MICROS_PER_DAY });
+        self.shoppers[s].ident.sess[which] = Some(Box::new(OpenSession { token: rng.hex(64), ip, ua, start: t, last: end.max(t), expires: t + 30 * MICROS_PER_DAY }));
         Some(method)
     }
 

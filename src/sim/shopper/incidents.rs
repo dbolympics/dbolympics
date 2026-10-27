@@ -56,7 +56,7 @@ impl ShopperChunk {
             let mut r = Row::new(contact_channels::NCOLS);
             r.set(contact_channels::TENANT_ID, tenant).set(contact_channels::USER_ID, h.rid).set(contact_channels::KIND, "email").set(contact_channels::CHANNEL_ADDRESS, variant.clone()).set(contact_channels::IS_PRIMARY, true).set(contact_channels::IS_VERIFIED, false).set(contact_channels::CREATED_AT, V::Ts(t)).set(contact_channels::UPDATED_AT, V::Ts(t));
             self.chunk.emit(contact_channels::T, day, r);
-            self.shoppers[s].alias = Some((h.rid, variant, addr));
+            self.shoppers[s].alias = Some(Box::new((h.rid, variant, addr)));
             dups += 1;
         }
         // the import itself (this chunk's part of the file)
