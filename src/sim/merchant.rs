@@ -872,6 +872,8 @@ impl MerchantSim {
         let n_init = (self.launch_rate * 1096.0 / 0.35 * 0.65).round().max(8.0) as usize;
         let before = joined < time::ts_of_day(0);
         self.initial_catalog = n_init;
+        let first = self.products.len();
+        let mut created = Vec::with_capacity(n_init);
         for _ in 0..n_init {
             let ts = if before {
                 joined + rng.int(0, (time::ts_of_day(0) - joined) / MICROS_PER_DAY - 1).max(0) * MICROS_PER_DAY + rng.int(0, MICROS_PER_DAY - 1)
@@ -879,8 +881,13 @@ impl MerchantSim {
                 joined + rng.int(0, 6 * MICROS_PER_HOUR)
             };
             self.create_product(rng, day, ts);
+            created.push(ts);
         }
         self.refresh_live(day);
+        // recommendations need the live catalog: a recommendation exists once both products do
+        for (i, &ts) in created.iter().enumerate() {
+            self.relate(rng, day, first + i, |rp| if rp >= first && rp - first < created.len() { ts.max(created[rp - first]) } else { ts });
+        }
         if !self.b2b && matches!(self.m.vertical.as_str(), "beauty" | "home_living" | "apparel_footwear" | "books_stationery" | "jewelry_accessories" | "sports_outdoor") {
             self.create_gift_card(rng, day, joined + 2 * MICROS_PER_DAY);
         }
@@ -1342,30 +1349,6 @@ impl MerchantSim {
         }
         let season_code = match pt.season.as_deref() { Some("winter") => 1, Some("summer") => 2, _ => 0 };
         self.product_meta(rng, day, created, prid, &slug_for_meta, &name, &category_path, material.as_deref(), season_code, &variant_axes, images);
-        // recommendations: complements (cross-sell) and a pricier product of the same type (upsell)
-        let mut related = Vec::new();
-        let comps = self.complements[ty].clone();
-        for k in 0..3usize {
-            let target = if k < 2 && !comps.is_empty() { Some(comps[rng.below(comps.len())]) } else if k == 2 { Some(ty) } else { None };
-            if let Some(t) = target {
-                if let Some(rp) = self.product_of_type(rng, t) {
-                    if !related.contains(&rp) {
-                        related.push(rp);
-                    }
-                }
-            }
-        }
-        for (pos, &rp) in related.iter().enumerate() {
-            let mut r = Row::new(product_relations::NCOLS);
-            r.set(product_relations::TENANT_ID, tenant)
-                .set(product_relations::PRODUCT_ID, prid)
-                .set(product_relations::RELATED_PRODUCT_ID, self.products[rp].rid)
-                .set(product_relations::RELATION_KIND, if self.products[rp].ty == ty { "upsell" } else { "cross_sell" })
-                .set(product_relations::SORT_POSITION, pos)
-                .set(product_relations::CREATED_AT, V::Ts(created))
-                .set(product_relations::UPDATED_AT, V::Ts(created));
-            self.chunk.emit(product_relations::T, day, r);
-        }
         self.products.push(Product {
             rid: prid,
             public_id,
@@ -1382,7 +1365,7 @@ impl MerchantSim {
             fit_uncert: if sloppy { 1.0 } else { rng.uniform(0.1, 1.0) },
             fragility: fragility(&pt.kind) * rng.lognormal(0.0, 0.3),
             season: match pt.season.as_deref() { Some("winter") => 1, Some("summer") => 2, _ => 0 },
-            related,
+            related: Vec::new(),
             price_steps: Vec::new(),
             sizes: if sizes > 0 && variants.len() % sizes == 0 { sizes } else { 0 },
             voucher: false,
@@ -1413,6 +1396,42 @@ impl MerchantSim {
         }
         self.emit_prices(day, created, pidx);
         self.stock_new_product(rng, day, created, pidx);
+        // the initial catalog gets its recommendations once it is live
+        if !self.by_type.is_empty() {
+            self.relate(rng, day, pidx, |_| created);
+        }
+    }
+
+    /// Recommendations of a product: complements (cross-sell) and a pricier product of the same type (upsell), among
+    /// the live products. `created` gives when a recommendation is made, from the recommended product.
+    fn relate(&mut self, rng: &mut Rng, day: Day, pidx: usize, created: impl Fn(usize) -> Ts) {
+        let tenant = self.tenant_rid();
+        let (ty, prid) = (self.products[pidx].ty, self.products[pidx].rid);
+        let mut related = Vec::new();
+        let comps = self.complements[ty].clone();
+        for k in 0..3usize {
+            let target = if k < 2 && !comps.is_empty() { Some(comps[rng.below(comps.len())]) } else if k == 2 { Some(ty) } else { None };
+            if let Some(t) = target {
+                if let Some(rp) = self.product_of_type(rng, t) {
+                    if rp != pidx && !related.contains(&rp) {
+                        related.push(rp);
+                    }
+                }
+            }
+        }
+        for (pos, &rp) in related.iter().enumerate() {
+            let at = created(rp);
+            let mut r = Row::new(product_relations::NCOLS);
+            r.set(product_relations::TENANT_ID, tenant)
+                .set(product_relations::PRODUCT_ID, prid)
+                .set(product_relations::RELATED_PRODUCT_ID, self.products[rp].rid)
+                .set(product_relations::RELATION_KIND, if self.products[rp].ty == ty { "upsell" } else { "cross_sell" })
+                .set(product_relations::SORT_POSITION, pos)
+                .set(product_relations::CREATED_AT, V::Ts(at))
+                .set(product_relations::UPDATED_AT, V::Ts(at));
+            self.chunk.emit(product_relations::T, day, r);
+        }
+        self.products[pidx].related = related;
     }
 }
 
