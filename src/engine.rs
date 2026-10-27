@@ -317,14 +317,17 @@ impl Engine {
     pub fn finish(&mut self, chunks: &mut [&mut Chunk]) -> Result<Vec<(String, u64)>> {
         let last = self.finalized.expect("no day finalized");
         let ntables = schema().tables.len();
-        let mut per_table: Vec<Vec<(Rid, Box<[u8]>)>> = (0..ntables).map(|_| Vec::new()).collect();
+        // per table, the deferred rows of each chunk
+        let mut per_table: Vec<Vec<Vec<(Rid, Box<[u8]>)>>> = (0..ntables).map(|_| Vec::new()).collect();
         for c in chunks.iter_mut() {
             if !c.days.is_empty() {
                 let d = *c.days.keys().next().unwrap();
                 bail!("chunk {} has rows planned after the last day (day {d})", c.id);
             }
             for (t, rows) in c.deferred.iter_mut().enumerate() {
-                per_table[t].append(rows);
+                if !rows.is_empty() {
+                    per_table[t].push(std::mem::take(rows));
+                }
             }
         }
         let starts = &self.starts;
@@ -333,14 +336,21 @@ impl Engine {
             .zip(self.hooks.par_iter_mut())
             .zip(per_table.into_par_iter())
             .enumerate()
-            .try_for_each(|(t, ((w, hook), rows))| -> Result<()> {
+            .try_for_each(|(t, ((w, hook), mut parts))| -> Result<()> {
                 let tab = table(TableId(t));
-                // deferred rows go into the period of the day they were created
-                let mut rows: Vec<(i64, Day, Box<[u8]>)> =
-                    rows.into_iter().map(|(rid, row)| Ok((resolve_rid(rid, starts, last)?, rid.parts().1, row))).collect::<Result<_>>()?;
-                rows.sort_by_key(|(id, _, _)| *id);
-                for (id, day, row) in rows {
-                    let mut row = packed::unpack(&row);
+                // in id order: (id, part, position), a row is unpacked when it is written and freed then
+                let mut order: Vec<(i64, u32, u32)> = Vec::with_capacity(parts.iter().map(Vec::len).sum());
+                for (p, rows) in parts.iter().enumerate() {
+                    for (i, (rid, _)) in rows.iter().enumerate() {
+                        order.push((resolve_rid(*rid, starts, last)?, p as u32, i as u32));
+                    }
+                }
+                order.sort_unstable_by_key(|(id, _, _)| *id);
+                for (id, p, i) in order {
+                    let (rid, packed) = &mut parts[p as usize][i as usize];
+                    // deferred rows go into the period of the day they were created
+                    let day = rid.parts().1;
+                    let mut row = packed::unpack(&std::mem::take(packed));
                     if tab.has_id {
                         row.vals[0] = V::Int(id);
                     }

@@ -174,10 +174,12 @@ pub fn generate(cfg: &Config, out: &Path) -> Result<()> {
             eprintln!("  day {day:>4} {}  {:.1}s", time::date_of(day), t0.elapsed().as_secs_f64());
         }
     }
-    let mut all: Vec<&mut Chunk> = Vec::with_capacity(nchunks);
-    all.push(&mut global);
-    all.extend(merchants.iter_mut().map(|m| &mut m.chunk));
-    all.extend(shoppers.iter_mut().map(|s| &mut s.chunk));
+    // only the chunks are needed to write the deferred rows: free the rest of the simulation first
+    let mut chunks: Vec<Chunk> = Vec::with_capacity(nchunks);
+    chunks.push(global);
+    chunks.extend(merchants.into_iter().map(|m| m.chunk));
+    chunks.extend(shoppers.into_iter().map(|s| s.chunk));
+    let mut all: Vec<&mut Chunk> = chunks.iter_mut().collect();
     let counts = eng.finish(&mut all)?;
     let total: u64 = counts.iter().map(|(_, n)| n).sum();
     let nonempty = counts.iter().filter(|(_, n)| *n > 0).count();
