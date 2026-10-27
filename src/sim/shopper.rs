@@ -196,7 +196,8 @@ pub struct ShopperChunk {
     shoppers: Vec<Shopper>,
     /// planned visits per day: (shopper, kind)
     calendar: Vec<Vec<(u32, Visit)>>,
-    prospects: Vec<Option<Prospect>>,
+    /// prospects until they sign up: boxed, as most slots end up empty
+    prospects: Vec<Option<Box<Prospect>>>,
     /// per day: (prospect, visit time, is the signup visit)
     prospect_calendar: Vec<Vec<(u32, Ts, bool)>>,
     emails: HashSet<String>,
@@ -366,7 +367,7 @@ impl ShopperChunk {
             if d < self.prospect_calendar.len() && ns.created <= time::end_ts() {
                 self.prospect_calendar[d].push((pidx, ns.created, true));
             }
-            self.prospects.push(Some(pr));
+            self.prospects.push(Some(Box::new(pr)));
         }
         // 2) prospects: anonymous browsing, or the sign-up visit (becomes a shopper)
         for (pidx, t, signup) in std::mem::take(&mut self.prospect_calendar[day as usize]) {
@@ -388,7 +389,7 @@ impl ShopperChunk {
             let Some(pr) = self.prospects[pidx].take() else { continue };
             let mut r = Rng::new(pr.ns.seed, &[5]);
             let buys = pr.ns.buys;
-            let idx = self.create_shopper(&mut r, ms, refs, tenant, pr);
+            let idx = self.create_shopper(&mut r, ms, refs, tenant, *pr);
             self.visit(&mut r, ms, p, refs, idx, t, true, buys, false, None);
             self.schedule(&mut r, ms, idx, day, p);
         }
