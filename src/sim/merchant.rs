@@ -256,6 +256,9 @@ pub struct MerchantSim {
     pub products: Vec<Product>,
     /// live products (indices into `products`) and their sampling weights, refreshed weekly
     pub live: Vec<usize>,
+    /// the size of the initial catalog while it is created, before `live` knows it: its products' opening stock is
+    /// their share of the demand
+    initial_catalog: usize,
     pub live_w: Option<Weighted>,
     /// live products per product type, and the product types each type is bought with
     pub by_type: Vec<TypeIndex>,
@@ -434,6 +437,7 @@ impl MerchantSim {
             warehouse_q: Default::default(),
             products: Vec::new(),
             live: Vec::new(),
+            initial_catalog: 0,
             live_w: None,
             by_type: Vec::new(),
             complements,
@@ -867,6 +871,7 @@ impl MerchantSim {
         // initial catalog (for migrated merchants: products created before 2023)
         let n_init = (self.launch_rate * 1096.0 / 0.35 * 0.65).round().max(8.0) as usize;
         let before = joined < time::ts_of_day(0);
+        self.initial_catalog = n_init;
         for _ in 0..n_init {
             let ts = if before {
                 joined + rng.int(0, (time::ts_of_day(0) - joined) / MICROS_PER_DAY - 1).max(0) * MICROS_PER_DAY + rng.int(0, MICROS_PER_DAY - 1)

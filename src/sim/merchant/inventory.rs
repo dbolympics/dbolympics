@@ -231,7 +231,8 @@ impl MerchantSim {
         let (pick, _, _) = self.inv.locations[0];
         let migrated = ts < time::ts_of_day(0);
         let mut slots = Vec::with_capacity(nv);
-        let live = self.live.len().max(20) as f64;
+        // the products live now; while the initial catalog is created, before they are, the whole initial catalog
+        let live = (if self.live.is_empty() { self.initial_catalog } else { self.live.len() }).max(20) as f64;
         for vi in 0..nv {
             let v = &self.products[pidx].variants[vi];
             let (vrid, sku) = (v.rid, v.sku.clone());
