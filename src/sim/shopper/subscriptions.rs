@@ -249,7 +249,7 @@ impl ShopperChunk {
         let s = self.subs[k].shopper as usize;
         let h = self.subs[k].h;
         let src = match &self.chunk.deferred_ref(h).vals[subscriptions::METADATA] { V::Json(j) => j.trim_end_matches('}').to_string(), _ => "{".to_string() };
-        let r = self.chunk.deferred_mut(h);
+        let mut r = self.chunk.deferred_mut(h);
         r.set(subscriptions::CANCEL_AT_PERIOD_END, at_period_end)
             .set(subscriptions::CANCELED_AT, V::Ts(canceled))
             .set(subscriptions::METADATA, V::Json(format!("{src},\"cancellation_reason\":\"{reason}\"}}")))

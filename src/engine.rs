@@ -7,6 +7,7 @@ use std::path::Path;
 use anyhow::{Context, Result, bail};
 use rayon::prelude::*;
 
+use crate::packed;
 use crate::schema::{Table, TableId, schema, table};
 use crate::time::{self, Day};
 use crate::value::{Rid, Row, V};
@@ -18,7 +19,8 @@ pub struct Chunk {
     /// the day currently being simulated
     pub day: Day,
     days: BTreeMap<Day, DayBuf>,
-    deferred: Vec<Vec<(Rid, Row)>>,
+    /// deferred rows, packed: they are kept until the end
+    deferred: Vec<Vec<(Rid, Box<[u8]>)>>,
 }
 
 struct DayBuf {
@@ -76,16 +78,44 @@ impl Chunk {
         let rid = Rid::pending(t, day, chunk, *cnt);
         *cnt += 1;
         let v = &mut self.deferred[t.0];
-        v.push((rid, row));
+        v.push((rid, packed::pack(&row)));
         DHandle { table: t, pos: (v.len() - 1) as u32, rid }
     }
 
-    pub fn deferred_mut(&mut self, h: DHandle) -> &mut Row {
-        &mut self.deferred[h.table.0][h.pos as usize].1
+    /// The deferred row, to change: it is packed again when the returned guard is dropped.
+    pub fn deferred_mut(&mut self, h: DHandle) -> DeferredMut<'_> {
+        let packed = &mut self.deferred[h.table.0][h.pos as usize].1;
+        DeferredMut { row: packed::unpack(packed), packed }
     }
 
-    pub fn deferred_ref(&self, h: DHandle) -> &Row {
-        &self.deferred[h.table.0][h.pos as usize].1
+    /// A copy of the deferred row.
+    pub fn deferred_ref(&self, h: DHandle) -> Row {
+        packed::unpack(&self.deferred[h.table.0][h.pos as usize].1)
+    }
+}
+
+/// A deferred row being changed (see `Chunk::deferred_mut`).
+pub struct DeferredMut<'a> {
+    row: Row,
+    packed: &'a mut Box<[u8]>,
+}
+
+impl std::ops::Deref for DeferredMut<'_> {
+    type Target = Row;
+    fn deref(&self) -> &Row {
+        &self.row
+    }
+}
+
+impl std::ops::DerefMut for DeferredMut<'_> {
+    fn deref_mut(&mut self) -> &mut Row {
+        &mut self.row
+    }
+}
+
+impl Drop for DeferredMut<'_> {
+    fn drop(&mut self) {
+        *self.packed = packed::pack(&self.row);
     }
 }
 
@@ -282,7 +312,7 @@ impl Engine {
     pub fn finish(&mut self, chunks: &mut [&mut Chunk]) -> Result<Vec<(String, u64)>> {
         let last = self.finalized.expect("no day finalized");
         let ntables = schema().tables.len();
-        let mut per_table: Vec<Vec<(Rid, Row)>> = (0..ntables).map(|_| Vec::new()).collect();
+        let mut per_table: Vec<Vec<(Rid, Box<[u8]>)>> = (0..ntables).map(|_| Vec::new()).collect();
         for c in chunks.iter_mut() {
             if !c.days.is_empty() {
                 let d = *c.days.keys().next().unwrap();
@@ -301,18 +331,14 @@ impl Engine {
             .try_for_each(|(t, ((w, hook), rows))| -> Result<()> {
                 let tab = table(TableId(t));
                 // deferred rows go into the period of the day they were created
-                let mut rows: Vec<(i64, Day, Row)> = rows
-                    .into_iter()
-                    .map(|(rid, mut row)| {
-                        let id = resolve_rid(rid, starts, last)?;
-                        if tab.has_id {
-                            row.vals[0] = V::Int(id);
-                        }
-                        Ok((id, rid.parts().1, row))
-                    })
-                    .collect::<Result<_>>()?;
+                let mut rows: Vec<(i64, Day, Box<[u8]>)> =
+                    rows.into_iter().map(|(rid, row)| Ok((resolve_rid(rid, starts, last)?, rid.parts().1, row))).collect::<Result<_>>()?;
                 rows.sort_by_key(|(id, _, _)| *id);
-                for (_, day, mut row) in rows {
+                for (id, day, row) in rows {
+                    let mut row = packed::unpack(&row);
+                    if tab.has_id {
+                        row.vals[0] = V::Int(id);
+                    }
                     resolve(&mut row, starts, last).with_context(|| format!("table {}", tab.name))?;
                     if let Some(h) = hook {
                         h.row(&mut row);

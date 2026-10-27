@@ -41,6 +41,14 @@ impl Rid {
         debug_assert!(!self.is_pending());
         self.0 as i64
     }
+
+    pub fn to_bits(self) -> u64 {
+        self.0
+    }
+
+    pub fn from_bits(b: u64) -> Rid {
+        Rid(b)
+    }
 }
 
 /// A cell value. Conversion to the column type (and validation) happens at finalize.

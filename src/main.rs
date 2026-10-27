@@ -7,6 +7,7 @@ use anyhow::Result;
 use clap::{Parser, Subcommand};
 
 mod engine;
+mod packed;
 mod pgarrays;
 mod rng;
 mod schema;
