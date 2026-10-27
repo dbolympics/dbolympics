@@ -80,7 +80,7 @@ pub struct Marketing {
     scale: [f64; 2],
     /// daily revenue (major units) of the last 91 days, as the merchant sees it
     revenue: VecDeque<f64>,
-    /// expected daily revenue before there is a history
+    /// expected daily revenue at the end-of-window level, before there is a history
     est_daily_revenue: f64,
     /// S7: the influencer campaign
     pub influencer: Option<(Rid, String)>,
@@ -286,6 +286,15 @@ impl MerchantSim {
         self.mkt.cadence_days = if self.m.size_rank <= 15 { 7 } else if self.m.size_rank <= 50 { 14 } else { 28 };
     }
 
+    /// The revenue expected per day of `a..b` before there is a history: the end-of-window guess at the merchant's
+    /// level and season of those days (a merchant that joins mid-window starts far below its end level).
+    fn est_revenue(&self, a: Day, b: Day) -> f64 {
+        let n = time::num_days();
+        let days = (a..b.max(a + 1)).map(|x| x.min(n - 1));
+        let sum: f64 = days.map(|x| calendar::merchant_level(self.m, self.growth, x) * calendar::demand(&self.m.vertical, self.vertical, self.b2b, x)).sum();
+        self.mkt.est_daily_revenue * sum / (b - a).max(1) as f64
+    }
+
     /// Plan the paid flights for `start..end` on `day` (a quarter, two weeks ahead; or the rest
     /// of the quarter when the merchant joins). Judges the running flights first.
     fn plan_flights(&mut self, day: Day, ts: Ts, start: Day, end: Day, rng: &mut Rng) {
@@ -299,7 +308,7 @@ impl MerchantSim {
         }
         // the revenue the merchant expects: its recent revenue, adjusted for the season ahead
         let have = self.mkt.revenue.len();
-        let daily = if have >= 28 { self.mkt.revenue.iter().sum::<f64>() / have as f64 } else { self.mkt.est_daily_revenue };
+        let daily = if have >= 28 { self.mkt.revenue.iter().sum::<f64>() / have as f64 } else { self.est_revenue(start, end) };
         let season = |a: Day, b: Day| (a..b).map(|x| calendar::demand(&self.m.vertical, self.vertical, self.b2b, x.min(n - 1))).sum::<f64>() / (b - a).max(1) as f64;
         let ratio = if have >= 28 { season(start, end) / season(day.saturating_sub(have as Day), day).max(1e-9) } else { 1.0 };
         let plan = daily * ratio * (end - start) as f64;
@@ -401,7 +410,7 @@ impl MerchantSim {
         // in the peak); established shops get more organic and direct visits
         let d = self.mkt.drivers;
         let have = self.mkt.revenue.len();
-        let daily = if have >= 7 { self.mkt.revenue.iter().sum::<f64>() / have as f64 } else { self.mkt.est_daily_revenue };
+        let daily = if have >= 7 { self.mkt.revenue.iter().sum::<f64>() / have as f64 } else { self.est_revenue(day, day + 1) };
         let cpc = cpc_index(date);
         let mut w = BASE_MIX;
         for c in 0..2 {
