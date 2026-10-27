@@ -614,7 +614,8 @@ impl MerchantSim {
         if ns.fraud {
             return 0; // the ring's accounts share addresses and devices
         }
-        let key = match &ns.company { Some(c) => c.clone(), None => format!("{}@{}", ns.email_base, ns.domain) };
+        // emails are unique per chunk, so companies sharing a domain share a chunk
+        let key = match &ns.company { Some(c) => crate::sim::shopper::company_slug(c), None => format!("{}@{}", ns.email_base, ns.domain) };
         (hash_str(&key) % self.shopper_chunks as u64) as usize
     }
 

@@ -26,7 +26,7 @@ mod marketing;
 mod subscriptions;
 use journey::{Channel, Intent, Prefs, Visitor};
 use b2b::{B2b, Buyer};
-pub use b2b::{company_domain, company_name};
+pub use b2b::{company_domain, company_name, company_slug};
 use identity::Ident;
 use marketing::{Click, Mkt};
 use subscriptions::{Sub, SubEv};

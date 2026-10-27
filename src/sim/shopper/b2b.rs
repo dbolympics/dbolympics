@@ -727,7 +727,13 @@ pub fn company_name(rng: &mut Rng, country: &crate::world::Country, vertical: &s
 
 /// Email domain of a company.
 pub fn company_domain(name: &str, iso2: &str) -> String {
-    let base: String = name.split(' ').filter(|w| !["GmbH", "AG", "Ltd", "B.V.", "BV", "SAS", "AS", "AB", "ApS", "Oy", "Inc.", "LLC", "&"].contains(w)).collect::<Vec<_>>().join("-");
     let tld: String = match iso2 { "GB" => "co.uk".into(), "US" => "com".into(), x => x.to_lowercase() };
-    format!("{}.{}", people::slugify(&base), tld)
+    format!("{}.{}", company_slug(name), tld)
+}
+
+/// The company's name without its legal form: "Chen Electrical LLC" and "Chen Electrical Inc."
+/// share it, and with it their email domain.
+pub fn company_slug(name: &str) -> String {
+    let base: String = name.split(' ').filter(|w| !["GmbH", "AG", "Ltd", "B.V.", "BV", "SAS", "AS", "AB", "ApS", "Oy", "Inc.", "LLC", "&"].contains(w)).collect::<Vec<_>>().join("-");
+    people::slugify(&base)
 }
