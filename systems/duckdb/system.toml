@@ -1,7 +1,7 @@
 # DuckDB, embedded in the query program, which lives for the whole run.
 name = "duckdb"
 # the version, kept with the results (by hand)
-version = "1.5.6"
+version = "2.0.0"
 
 
 [load]

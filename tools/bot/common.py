@@ -131,6 +131,13 @@ def run_tree(repo, main, base, tip, env):
     return git(repo, "write-tree", env=env)
 
 
+# Why a pull request from a fork of an organization cannot have the bot's results: the bot pushes its results commit to
+# the pull request's branch, which "Allow edits by maintainers" lets us do only in a fork of a user's.
+ORGANIZATION_FORK = ("The pull request comes from a fork of an organization, whose branch GitHub does not let us push the "
+                     "benchmark's results to. Open it from a fork of a user's account instead (with \"Allow edits by "
+                     "maintainers\").")
+
+
 def user_results(repo, base, rev):
     """The results files that differ between the merge base and `rev`: those the pull request's commits changed.
     Results are the bot's; its results commit puts these back as they are at the merge base."""

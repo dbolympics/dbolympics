@@ -18,3 +18,4 @@ json = "varchar"
 [dialect.functions]
 # DataFusion has no FETCH FIRST
 "fetch_first(n)" = "LIMIT {n}"
+"year_month(x)" = "to_char({x}, '%Y-%m')"

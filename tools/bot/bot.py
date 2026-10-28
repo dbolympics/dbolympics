@@ -34,7 +34,7 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import (APPROVED_TRAILER, RESULTS_PATH, RESULTS_TRAILER, SYSTEM_NAME, SYSTEM_TRAILER, benchmarked,  # noqa: E402
+from common import (APPROVED_TRAILER, ORGANIZATION_FORK, RESULTS_PATH, RESULTS_TRAILER, SYSTEM_NAME, SYSTEM_TRAILER, benchmarked,  # noqa: E402
                     changed_systems, code_hash, git, problems, run_tree, split, summary, table, trailers, user_results)
 
 DEFAULTS = {
@@ -377,6 +377,8 @@ class Bot:
                 raise Refused("The bot runs open pull requests into main only.")
             if not pr["head"]["repo"]:
                 raise Refused("The pull request's repository is gone.")
+            if pr["head"]["repo"]["full_name"] != self.cfg["repo"] and pr["head"]["repo"]["owner"]["type"] == "Organization":
+                raise Refused(ORGANIZATION_FORK)
             if pr["head"]["repo"]["full_name"] != self.cfg["repo"] and not pr["maintainer_can_modify"]:
                 raise Refused("The bot adds the results to the pull request's branch: allow edits by maintainers "
                               "(the checkbox on the pull request), then ask again.")

@@ -2,7 +2,10 @@
 """The check of a pull request (.github/workflows/systems.yml): which systems it changes, whether the benchmark bot
 may run it, and that the bot's results commit is the last one and of the code as it is. See docs/BOT.md.
 
-    python3 tools/bot/check_pr.py --repo-dir PR --main origin/main --head HEAD
+    python3 tools/bot/check_pr.py --repo-dir PR --main origin/main --head HEAD [--fork-owner Organization]
+
+--fork-owner is the type of the account that owns the pull request's repository if that is a fork (User or
+Organization), empty for a branch of the repository itself.
 
 Writes the systems to $GITHUB_OUTPUT (systems=...) and a summary to $GITHUB_STEP_SUMMARY when they are set; fails
 (exit status 1) on an error.
@@ -13,7 +16,8 @@ import sys
 import tomllib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import (changed_systems, git, missing_files, problems, split, stale, SYSTEM_NAME, user_results)  # noqa: E402
+from common import (ORGANIZATION_FORK, changed_systems, git, missing_files, problems, split, stale, SYSTEM_NAME,  # noqa: E402
+                    user_results)
 
 
 def main():
@@ -21,9 +25,12 @@ def main():
     ap.add_argument("--repo-dir", default=".")
     ap.add_argument("--main", default="origin/main")
     ap.add_argument("--head", default="HEAD")
+    ap.add_argument("--fork-owner", default="")
     a = ap.parse_args()
     repo, head = a.repo_dir, git(a.repo_dir, "rev-parse", a.head)
     errors, notes = [], []
+    if a.fork_owner == "Organization":
+        errors.append(ORGANIZATION_FORK)
 
     base, results, tip = split(repo, a.main, head)
     systems, shared = changed_systems(repo, base, tip)

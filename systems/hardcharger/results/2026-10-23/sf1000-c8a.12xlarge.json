@@ -1,0 +1,35 @@
+{
+  "benchmark": "bench/benchmark_sf1000.toml",
+  "commit": "17d6fef6c879a57ba8db37c366c933090480308c",
+  "complete": false,
+  "config": "sf1000-c8a.12xlarge",
+  "cpuset": "0-47",
+  "date": "2026-10-23",
+  "dirty": false,
+  "failure": {
+    "detail": "q318: no answer within 60 s",
+    "status": "failed_stuck"
+  },
+  "grace_period": 30,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-hardcharger@sha256:ad6fe19503f5c37d696903259ecb5443edfbf1837daef875a3fbc2d37e3c6d1d"
+  },
+  "keys": "none",
+  "load_timeout": 7200,
+  "memory": "96GB",
+  "queries": null,
+  "query_timeout": 30,
+  "repetitions": 1,
+  "schema_seconds": 0.27611505800000036,
+  "sf": 1000.0,
+  "system": "hardcharger",
+  "threads": 48,
+  "timeout_check": "cancelled",
+  "version": "2.0.0 (DuckDB 2.0.0)"
+}

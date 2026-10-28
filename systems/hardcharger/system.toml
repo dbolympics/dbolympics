@@ -1,0 +1,14 @@
+# Hardcharger: DuckDB served over Warp SQL, queried by the released hardcharger CLI.
+name = "hardcharger"
+version = "2.0.0 (DuckDB 2.0.0)"
+
+[load]
+statement = "COPY {table} FROM '{file}' (FORMAT parquet)"
+
+[dialect]
+# Same resource limits and integer division semantics as the DuckDB entry.
+settings = ["SET threads = {threads}", "SET memory_limit = '{memory_mb%80}MiB'", "SET integer_division = true"]
+
+[dialect.functions]
+"date_diff_days(a, b)" = "DATE_DIFF('day', {a}, {b})"
+"year_month(x)" = "strftime({x}, '%Y-%m')"

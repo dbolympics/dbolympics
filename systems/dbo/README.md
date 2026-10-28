@@ -77,7 +77,7 @@ What the system's part must do:
 - **`cancel`** must return quickly and leave the connection usable: the next request follows at
   once. Examples: a cancel request on a new connection (the PostgreSQL protocol), `KILL QUERY` on
   another connection (ClickHouse), an interrupt handle (DuckDB), a `Notify` that ends the
-  running future (DataFusion, GizmoSQL).
+  running future (DataFusion).
 - **A cancel must have taken effect before `cancel()` returns.** The answer follows right after,
   then the next statement; a cancel the system takes only then cancels that one. Over the
   PostgreSQL protocol the system takes a cancel request when it reads it (PostgreSQL ignores it

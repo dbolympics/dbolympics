@@ -17,7 +17,7 @@ DEFAULT_SF = max(c["sf"] for c in D["configs"].values())
 NQ = len(D["queries"])
 
 NAMES = {
-    "duckdb": "DuckDB", "hyper": "Hyper", "gizmosql": "GizmoSQL", "cedardb": "CedarDB", "umbra": "Umbra",
+    "duckdb": "DuckDB", "hyper": "Hyper", "hardcharger": "Hardcharger", "cedardb": "CedarDB", "umbra": "Umbra",
     "pg_duckdb": "pg_duckdb", "postgres": "PostgreSQL", "datafusion": "DataFusion", "firebolt": "Firebolt",
     "clickhouse": "ClickHouse", "chdb": "chDB", "pg_clickhouse": "pg_clickhouse",
     "pg_brew": "pg_brew", "clickhouse_brew": "clickhouse_brew",
@@ -467,7 +467,7 @@ def example_run():
 SYSTEM_INFO = {
     "duckdb": ("DuckDB", "embedded"),
     "hyper": ("Hyper", "Tableau's engine, its own server"),
-    "gizmosql": ("GizmoSQL", "DuckDB behind an Arrow Flight SQL server"),
+    "hardcharger": ("Hardcharger", "DuckDB behind a Warp SQL server, queried through its CLI"),
     "cedardb": ("CedarDB", "its own server"),
     "umbra": ("Umbra", "its own server"),
     "pg_duckdb": ("pg_duckdb on PostgreSQL", "PostgreSQL tables, DuckDB runs the queries"),

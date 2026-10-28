@@ -32,7 +32,9 @@ jobs:
         name: Pull request
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
-        run: python3 main/tools/bot/check_pr.py --repo-dir pr --main "$BASE" --head HEAD
+          # where the pull request's branch is: a fork of an organization does not let us push the results to it
+          FORK: ${{ github.event.pull_request.head.repo.full_name != github.repository && github.event.pull_request.head.repo.owner.type || '' }}
+        run: python3 main/tools/bot/check_pr.py --repo-dir pr --main "$BASE" --head HEAD --fork-owner "$FORK"
       - uses: actions/cache@v4
         if: steps.check.outputs.systems != ''
         with:

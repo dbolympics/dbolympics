@@ -263,7 +263,7 @@ points, their defaults and where a difference goes are in [DIALECTS.md](DIALECTS
   - **What the system sees:** LXCFS files are mounted over `/proc/meminfo`, `/proc/cpuinfo`,
     `/proc/stat` and `/sys/devices/system/cpu`, so tools that read them see the limits.
     - **Sizing itself:** most systems size themselves for the container from these files and the
-      cgroup, so they get no limits of their own. These are DuckDB, GizmoSQL, ClickHouse, chDB,
+      cgroup, so they get no limits of their own. These are DuckDB, ClickHouse, chDB,
       Hyper, CedarDB and Firebolt, and DataFusion's threads; each was checked in a limited
       container.
     - **Explicit limits:** a system that does not size itself gets its limits explicitly, from

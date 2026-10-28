@@ -40,6 +40,8 @@ Each command goes at the start of a line. Edited comments do not count.
    - If main changed one of the pull request's systems since the pull request branched off, the bot asks for a
      rebase onto main: the run would leave main's change out.
    - The systems' own code only runs inside their containers. It may not contain symbolic links or submodules.
+   - A pull request from a fork needs "Allow edits by maintainers", and the fork must be a user's: GitHub does not
+     let us push the results commit to the branch of an organization's fork. The pull requests' check fails for one.
 3. **Build.** `cargo build --release --workspace` runs in the bot's checkout of that tree (a commit on main of the
    bot's own, not pushed), which keeps the generated data and the build from run to run.
 4. **The machine.** The bot waits until nobody holds the machine. Then it reserves it with `reserve-machine`, which

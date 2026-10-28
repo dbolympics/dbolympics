@@ -7,6 +7,6 @@ cd /system
 sudo apt-get update -y
 sudo apt-get install -y --no-install-recommends build-essential
 curl -fsSL --retry 10 https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain 1.99.0
-"$HOME/.cargo/bin/cargo" build --release --locked
+RUSTFLAGS="-C target-cpu=native" "$HOME/.cargo/bin/cargo" build --release --locked
 install -m 0755 target/release/query query
 rm -rf target "$HOME/.cargo" "$HOME/.rustup"

@@ -13,8 +13,8 @@ path = "query.rs"
 # the runner's protocol, shared by every query program
 dbo = { path = "../dbo" }
 # links the libduckdb that install puts in /usr/local/lib (DUCKDB_LIB_DIR)
-duckdb = "=1.10506.0"
-arrow-csv = "58"
+duckdb = "=1.20000.0"
+arrow-csv = "60"
 
 # not a member of the repository's workspace
 [workspace]

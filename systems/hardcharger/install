@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+cd /system
+
+apt-get update -y
+apt-get install -y --no-install-recommends build-essential tzdata
+
+# The official installer selects the architecture, verifies the release checksums
+# and checks both binaries. Pin the release as recorded in system.toml.
+VERSION=2.0.0
+curl -fsSL --retry 10 https://install.hardcharger.gizmodata.com | \
+    sh -s -- --version "$VERSION" --prefix /opt/hardcharger
+ln -s /opt/hardcharger/bin/hardcharger-server /usr/local/bin/hardcharger-server
+ln -s /opt/hardcharger/bin/hardcharger /usr/local/bin/hardcharger
+hardcharger-server --version
+hardcharger --version
+
+curl -fsSL --retry 10 https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain 1.98.1
+"$HOME/.cargo/bin/cargo" build --release --locked
+install -m 0755 target/release/query query
+rm -rf target "$HOME/.cargo" "$HOME/.rustup"

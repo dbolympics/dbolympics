@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+mkdir -p db
+# Bound DuckDB before the first connection as well as in the benchmark's session settings.
+HARDCHARGER_ADMIN_PASSWORD=bench nohup hardcharger-server \
+    --host 127.0.0.1 --health-port 0 --admin-username bench --database db/dbo.duckdb \
+    --memory-limit "$((DBO_MEMORY_MB * 80 / 100))MiB" \
+    --init-sql-commands "SET threads = $DBO_THREADS" \
+    --session-idle-timeout 0 >>server.log 2>&1 &
+echo $! >server.pid
+
+nohup ./query >/run/dbo/query.log 2>&1 &
+echo $! >query.pid
