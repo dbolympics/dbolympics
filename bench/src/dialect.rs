@@ -49,7 +49,7 @@ const POINTS: &[Point] = &[
     },
     // a timestamp plus n minutes (the standard's interval literal; MySQL, T-SQL and SQLite have no
     // interval type)
-    Point { name: "add_minutes", params: &["ts", "n"], default: "{ts} + {n} * INTERVAL '1' MINUTE" },
+    Point { name: "add_minutes", params: &["ts", "n"], default: "{ts} + {n} * INTERVAL '1 minute'" },
     // whole days from a to b, two timestamps: the day field of their difference (the standard
     // needs an interval qualifier no reference dialect supports)
     Point { name: "whole_days_between", params: &["a", "b"], default: "EXTRACT(DAY FROM {b} - {a})" },

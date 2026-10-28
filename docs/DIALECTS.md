@@ -22,7 +22,7 @@ points as JSON; `dbo-bench render` writes the queries as a system gets them.
 | `seconds_between(a, b)` | `CAST(EXTRACT(EPOCH FROM ({b} - {a})) AS NUMERIC(18,6))` (`EPOCH` is PostgreSQL's) |
 | `equals_any(x, arr)` | `{x} IN (SELECT dbo_unnest.dbo_element FROM UNNEST({arr}) AS dbo_unnest(dbo_element))`, the standard's membership test |
 | `count_distinct_pair(a, b)` | `COUNT(DISTINCT ({a}, {b}))` |
-| `add_minutes(ts, n)` | `{ts} + {n} * INTERVAL '1' MINUTE` (standard; MySQL, T-SQL and SQLite have no interval type) |
+| `add_minutes(ts, n)` | `{ts} + {n} * INTERVAL '1 minute'` (MySQL, T-SQL and SQLite have no interval type) |
 | `whole_days_between(a, b)` | `EXTRACT(DAY FROM {b} - {a})`, the day field of the difference (PostgreSQL's; the standard needs an interval qualifier no reference dialect supports) |
 | `timestamp_midpoint(a, b)` | `{a} + ({b} - {a}) * 0.5` (the same) |
 

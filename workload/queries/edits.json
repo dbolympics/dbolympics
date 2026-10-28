@@ -43,7 +43,7 @@
   {
    "from": "tk.created_at + (sp.resolution_target_minutes || ' minutes')::interval",
    "to": "{{add_minutes(tk.created_at, sp.resolution_target_minutes)}}",
-   "note": "An interval built from text is PostgreSQL's; the standard's `n * INTERVAL '1' MINUTE` is not supported by MySQL, T-SQL or SQLite either, so adding minutes to a timestamp is a placeholder whose default is the standard form (docs/RUNNER.md, Dialects)."
+   "note": "An interval built from text is PostgreSQL's; `n * INTERVAL '1 minute'` is not supported by MySQL, T-SQL or SQLite either, so adding minutes to a timestamp is a placeholder whose default is that form (docs/RUNNER.md, Dialects)."
   }
  ],
  "q019": [
