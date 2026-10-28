@@ -1,8 +1,8 @@
-carts.remind,21865,20,0.0914703864623828035673450720329293391265,10,10,2.51435
-audit.archive,222,0,0,111,0,
-loyalty.release,2583,0,0,29,0,
-payouts.reconcile,9974,0,0,113,0,
-search.reindex,1492,0,0,113,0,
-segments.refresh,10006,0,0,113,0,
-sitemap.build,1436,0,0,112,0,
-subscriptions.renew,1630,0,0,18,0,
+carts.remind,21822,20,0.0916506278068004765832645953624782329759,10,10,2.51805
+audit.archive,224,0,0,111,0,
+loyalty.release,2587,0,0,29,0,
+payouts.reconcile,9996,0,0,113,0,
+search.reindex,1509,0,0,113,0,
+segments.refresh,9980,0,0,113,0,
+sitemap.build,1445,0,0,112,0,
+subscriptions.renew,1633,0,0,18,0,

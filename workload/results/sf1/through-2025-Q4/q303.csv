@@ -1,50 +1,50 @@
-segment,Cragsley Outfitters,All subscribers,t,849,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Cragsley Outfitters,Lapsed 90 days,t,400,"{""all"": [{""op"": ""gt"", ""field"": ""last_order_days_ago"", ""value"": 90}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Customers before the 2023 migration,f,348,"{""signed_up_before"": ""2023-01-01""}",2023-01-01 04:00:00
-segment,Cragsley Outfitters,VIP customers,t,343,"{""all"": [{""op"": ""gte"", ""field"": ""orders_count"", ""value"": 3}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Marrowby & Vane,All subscribers,t,316,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Brennquell Kaffee,All subscribers,t,179,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Brennquell Kaffee,Customers before the 2023 migration,f,175,"{""signed_up_before"": ""2023-01-01""}",2023-01-01 04:00:00
-segment,Marrowby & Vane,Lapsed 90 days,t,155,"{""all"": [{""op"": ""gt"", ""field"": ""last_order_days_ago"", ""value"": 90}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Marrowby & Vane,Customers before the 2023 migration,f,154,"{""signed_up_before"": ""2023-01-01""}",2023-01-01 04:00:00
-segment,Ampfeld Elektronik,All subscribers,t,136,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Cragsley Outfitters,New customers (30 days),t,132,"{""all"": [{""op"": ""lte"", ""field"": ""first_order_days_ago"", ""value"": 30}]}",2025-12-31 02:17:00
-segment,Studio Vrij,All subscribers,t,129,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Marrowby & Vane,VIP customers,t,126,"{""all"": [{""op"": ""gte"", ""field"": ""orders_count"", ""value"": 3}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Brennquell Kaffee,VIP customers,t,111,"{""all"": [{""op"": ""gte"", ""field"": ""orders_count"", ""value"": 3}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2024-12,f,109,"{""signed_up_to"": ""2025-01-01"", ""signed_up_from"": ""2024-12-01""}",2025-01-01 04:00:00
-segment,Petalcourt Beauty,All subscribers,t,101,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Cinder Peak Sports Co.,All subscribers,t,98,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2023-11,f,97,"{""signed_up_to"": ""2023-12-01"", ""signed_up_from"": ""2023-11-01""}",2023-12-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-11,f,95,"{""signed_up_to"": ""2025-12-01"", ""signed_up_from"": ""2025-11-01""}",2025-12-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2024-11,f,93,"{""signed_up_to"": ""2024-12-01"", ""signed_up_from"": ""2024-11-01""}",2024-12-01 04:00:00
-segment,Fennel & Flint,All subscribers,t,93,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2025-10,f,83,"{""signed_up_to"": ""2025-11-01"", ""signed_up_from"": ""2025-10-01""}",2025-11-01 04:00:00
-segment,Brennquell Kaffee,Lapsed 90 days,t,80,"{""all"": [{""op"": ""gt"", ""field"": ""last_order_days_ago"", ""value"": 90}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Studio Vrij,Customers before the 2023 migration,f,77,"{""signed_up_before"": ""2023-01-01""}",2023-01-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2023-12,f,74,"{""signed_up_to"": ""2024-01-01"", ""signed_up_from"": ""2023-12-01""}",2024-01-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2024-05,f,72,"{""signed_up_to"": ""2024-06-01"", ""signed_up_from"": ""2024-05-01""}",2024-06-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-05,f,71,"{""signed_up_to"": ""2025-06-01"", ""signed_up_from"": ""2025-05-01""}",2025-06-01 04:00:00
-cohort,Ampfeld Elektronik,Customers before the 2023 migration,f,70,"{""signed_up_before"": ""2023-01-01""}",2023-01-01 04:00:00
-segment,Ampfeld Elektronik,Lapsed 90 days,t,70,"{""all"": [{""op"": ""gt"", ""field"": ""last_order_days_ago"", ""value"": 90}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Studio Vrij,Lapsed 90 days,t,69,"{""all"": [{""op"": ""gt"", ""field"": ""last_order_days_ago"", ""value"": 90}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2024-10,f,68,"{""signed_up_to"": ""2024-11-01"", ""signed_up_from"": ""2024-10-01""}",2024-11-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-07,f,68,"{""signed_up_to"": ""2025-08-01"", ""signed_up_from"": ""2025-07-01""}",2025-08-01 04:00:00
-segment,Linden & Loom,All subscribers,t,67,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2024-04,f,63,"{""signed_up_to"": ""2024-05-01"", ""signed_up_from"": ""2024-04-01""}",2024-05-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-04,f,63,"{""signed_up_to"": ""2025-05-01"", ""signed_up_from"": ""2025-04-01""}",2025-05-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-09,f,61,"{""signed_up_to"": ""2025-10-01"", ""signed_up_from"": ""2025-09-01""}",2025-10-01 04:00:00
-segment,Gratlinie Outdoor,All subscribers,t,60,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2024-07,f,59,"{""signed_up_to"": ""2024-08-01"", ""signed_up_from"": ""2024-07-01""}",2024-08-01 04:00:00
-segment,Wiesgrund Wohnen,All subscribers,t,59,"{""all"": [{""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-segment,Marrowby & Vane,New customers (30 days),t,58,"{""all"": [{""op"": ""lte"", ""field"": ""first_order_days_ago"", ""value"": 30}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2024-03,f,57,"{""signed_up_to"": ""2024-04-01"", ""signed_up_from"": ""2024-03-01""}",2024-04-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-03,f,57,"{""signed_up_to"": ""2025-04-01"", ""signed_up_from"": ""2025-03-01""}",2025-04-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-06,f,56,"{""signed_up_to"": ""2025-07-01"", ""signed_up_from"": ""2025-06-01""}",2025-07-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2025-08,f,56,"{""signed_up_to"": ""2025-09-01"", ""signed_up_from"": ""2025-08-01""}",2025-09-01 04:00:00
-cohort,Studio Vrij,Signed up 2025-05,f,56,"{""signed_up_to"": ""2025-06-01"", ""signed_up_from"": ""2025-05-01""}",2025-06-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2023-04,f,55,"{""signed_up_to"": ""2023-05-01"", ""signed_up_from"": ""2023-04-01""}",2023-05-01 04:00:00
-segment,Cinder Peak Sports Co.,Lapsed 90 days,t,54,"{""all"": [{""op"": ""gt"", ""field"": ""last_order_days_ago"", ""value"": 90}, {""op"": ""eq"", ""field"": ""marketing_opt_in"", ""value"": true}]}",2025-12-31 02:17:00
-cohort,Cragsley Outfitters,Signed up 2023-03,f,54,"{""signed_up_to"": ""2023-04-01"", ""signed_up_from"": ""2023-03-01""}",2023-04-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2024-06,f,54,"{""signed_up_to"": ""2024-07-01"", ""signed_up_from"": ""2024-06-01""}",2024-07-01 04:00:00
-cohort,Cragsley Outfitters,Signed up 2023-10,f,53,"{""signed_up_to"": ""2023-11-01"", ""signed_up_from"": ""2023-10-01""}",2023-11-01 04:00:00
+segment,Cragsley Outfitters,All subscribers,t,854,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Cragsley Outfitters,Lapsed 90 days,t,441,"{""all"":[{""field"":""last_order_days_ago"",""op"":""gt"",""value"":90},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Customers before the 2023 migration,f,356,"{""signed_up_before"":""2023-01-01""}",2023-01-01 04:00:00
+segment,Cragsley Outfitters,VIP customers,t,355,"{""all"":[{""field"":""orders_count"",""op"":""gte"",""value"":3},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Marrowby & Vane,All subscribers,t,325,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Brennquell Kaffee,All subscribers,t,189,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Marrowby & Vane,Lapsed 90 days,t,174,"{""all"":[{""field"":""last_order_days_ago"",""op"":""gt"",""value"":90},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Brennquell Kaffee,Customers before the 2023 migration,f,173,"{""signed_up_before"":""2023-01-01""}",2023-01-01 04:00:00
+cohort,Marrowby & Vane,Customers before the 2023 migration,f,152,"{""signed_up_before"":""2023-01-01""}",2023-01-01 04:00:00
+segment,Ampfeld Elektronik,All subscribers,t,150,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Marrowby & Vane,VIP customers,t,139,"{""all"":[{""field"":""orders_count"",""op"":""gte"",""value"":3},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Studio Vrij,All subscribers,t,120,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2024-12,f,113,"{""signed_up_from"":""2024-12-01"",""signed_up_to"":""2025-01-01""}",2025-01-01 04:00:00
+segment,Cinder Peak Sports Co.,All subscribers,t,107,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Brennquell Kaffee,VIP customers,t,105,"{""all"":[{""field"":""orders_count"",""op"":""gte"",""value"":3},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2024-11,f,105,"{""signed_up_from"":""2024-11-01"",""signed_up_to"":""2024-12-01""}",2024-12-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-11,f,105,"{""signed_up_from"":""2025-11-01"",""signed_up_to"":""2025-12-01""}",2025-12-01 04:00:00
+segment,Fennel & Flint,All subscribers,t,105,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2023-11,f,102,"{""signed_up_from"":""2023-11-01"",""signed_up_to"":""2023-12-01""}",2023-12-01 04:00:00
+segment,Petalcourt Beauty,All subscribers,t,102,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2023-12,f,98,"{""signed_up_from"":""2023-12-01"",""signed_up_to"":""2024-01-01""}",2024-01-01 04:00:00
+segment,Cragsley Outfitters,New customers (30 days),t,89,"{""all"":[{""field"":""first_order_days_ago"",""op"":""lte"",""value"":30}]}",2025-12-31 02:17:00
+segment,Brennquell Kaffee,Lapsed 90 days,t,84,"{""all"":[{""field"":""last_order_days_ago"",""op"":""gt"",""value"":90},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Ampfeld Elektronik,Customers before the 2023 migration,f,80,"{""signed_up_before"":""2023-01-01""}",2023-01-01 04:00:00
+segment,Linden & Loom,All subscribers,t,73,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2025-10,f,71,"{""signed_up_from"":""2025-10-01"",""signed_up_to"":""2025-11-01""}",2025-11-01 04:00:00
+segment,Wiesgrund Wohnen,All subscribers,t,70,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2024-05,f,68,"{""signed_up_from"":""2024-05-01"",""signed_up_to"":""2024-06-01""}",2024-06-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2024-10,f,67,"{""signed_up_from"":""2024-10-01"",""signed_up_to"":""2024-11-01""}",2024-11-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-09,f,67,"{""signed_up_from"":""2025-09-01"",""signed_up_to"":""2025-10-01""}",2025-10-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-07,f,66,"{""signed_up_from"":""2025-07-01"",""signed_up_to"":""2025-08-01""}",2025-08-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2023-10,f,63,"{""signed_up_from"":""2023-10-01"",""signed_up_to"":""2023-11-01""}",2023-11-01 04:00:00
+cohort,Marrowby & Vane,Signed up 2024-12,f,63,"{""signed_up_from"":""2024-12-01"",""signed_up_to"":""2025-01-01""}",2025-01-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2024-09,f,58,"{""signed_up_from"":""2024-09-01"",""signed_up_to"":""2024-10-01""}",2024-10-01 04:00:00
+segment,Cinder Peak Sports Co.,Lapsed 90 days,t,57,"{""all"":[{""field"":""last_order_days_ago"",""op"":""gt"",""value"":90},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+segment,Honeycomb Larder,All subscribers,t,57,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Studio Vrij,Customers before the 2023 migration,f,57,"{""signed_up_before"":""2023-01-01""}",2023-01-01 04:00:00
+segment,Ampfeld Elektronik,Lapsed 90 days,t,56,"{""all"":[{""field"":""last_order_days_ago"",""op"":""gt"",""value"":90},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2024-01,f,56,"{""signed_up_from"":""2024-01-01"",""signed_up_to"":""2024-02-01""}",2024-02-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-06,f,56,"{""signed_up_from"":""2025-06-01"",""signed_up_to"":""2025-07-01""}",2025-07-01 04:00:00
+segment,Studio Vrij,Lapsed 90 days,t,56,"{""all"":[{""field"":""last_order_days_ago"",""op"":""gt"",""value"":90},{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00
+cohort,Cragsley Outfitters,Signed up 2024-07,f,55,"{""signed_up_from"":""2024-07-01"",""signed_up_to"":""2024-08-01""}",2024-08-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-04,f,55,"{""signed_up_from"":""2025-04-01"",""signed_up_to"":""2025-05-01""}",2025-05-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2024-08,f,54,"{""signed_up_from"":""2024-08-01"",""signed_up_to"":""2024-09-01""}",2024-09-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-02,f,54,"{""signed_up_from"":""2025-02-01"",""signed_up_to"":""2025-03-01""}",2025-03-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-03,f,54,"{""signed_up_from"":""2025-03-01"",""signed_up_to"":""2025-04-01""}",2025-04-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2024-04,f,53,"{""signed_up_from"":""2024-04-01"",""signed_up_to"":""2024-05-01""}",2024-05-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2024-06,f,52,"{""signed_up_from"":""2024-06-01"",""signed_up_to"":""2024-07-01""}",2024-07-01 04:00:00
+cohort,Cragsley Outfitters,Signed up 2025-05,f,52,"{""signed_up_from"":""2025-05-01"",""signed_up_to"":""2025-06-01""}",2025-06-01 04:00:00
+segment,Gratlinie Outdoor,All subscribers,t,52,"{""all"":[{""field"":""marketing_opt_in"",""op"":""eq"",""value"":true}]}",2025-12-31 02:17:00

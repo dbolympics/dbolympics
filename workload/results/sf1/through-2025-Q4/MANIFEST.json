@@ -1,11 +1,10 @@
 {
   "config": "sf1-reference",
-  "date": "2026-10-09",
-  "engine": "Umbra, debug.semana.exactarithmetic",
+  "date": "2026-10-27",
+  "engine": "Umbra v0.2-3416-ga7efd9981 (bin/server, Umbra version v0.2-3416-ga7efd9981 (2026-10-09, format 42)), debug.semana.exactarithmetic",
   "format": "CSV, no header, rows in query order, NULL as an empty field; compare with dbo-bench check",
   "loaded": "2025-Q4",
   "queries": 409,
   "scale_factor": "1",
-  "seed": 42,
-  "notes": "Cross-checked against DuckDB: the same result on all 409 queries."
+  "seed": 42
 }

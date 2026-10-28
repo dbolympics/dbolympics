@@ -1,50 +1,50 @@
-Ballycorran Industrial Supply,New business,Prospecting,0,0.1,1,0,0,4100,EUR
-Ballycorran Industrial Supply,Renewals,Renewal due,0,0.6,7,0,0,4285.7142857142857142857142857142857142857143,EUR
-Ballycorran Industrial Supply,Renewals,Proposal sent,1,0.75,11,0,0,4472.7272727272727272727272727272727272727273,EUR
-Ballycorran Industrial Supply,New business,Qualification,1,0.25,0,0,0,,
-Ballycorran Industrial Supply,New business,Proposal,2,0.5,1,0,0,8400,EUR
-Ballycorran Industrial Supply,Renewals,Renewed,2,1,0,537,0,4369.8324022346368715083798882681564245810056,EUR
-Ballycorran Industrial Supply,Renewals,Churned,3,0,0,0,165,4493.9393939393939393939393939393939393939394,EUR
+Ballycorran Industrial Supply,New business,Prospecting,0,0.1,2,0,0,6500,EUR
+Ballycorran Industrial Supply,Renewals,Renewal due,0,0.6,9,0,0,3300,EUR
+Ballycorran Industrial Supply,Renewals,Proposal sent,1,0.75,10,0,0,3660,EUR
+Ballycorran Industrial Supply,New business,Qualification,1,0.25,1,0,0,1700,EUR
+Ballycorran Industrial Supply,New business,Proposal,2,0.5,1,0,0,3200,EUR
+Ballycorran Industrial Supply,Renewals,Renewed,2,1,0,554,0,4240.2527075812274368231046931407942238267148,EUR
+Ballycorran Industrial Supply,Renewals,Churned,3,0,0,0,174,4278.7356321839080459770114942528735632183908,EUR
 Ballycorran Industrial Supply,New business,Negotiation,3,0.75,0,0,0,,
-Ballycorran Industrial Supply,New business,Closed Won,4,1,0,501,0,3994.0119760479041916167664670658682634730539,EUR
-Ballycorran Industrial Supply,New business,Closed Lost,5,0,0,0,99,3492.9292929292929292929292929292929292929293,EUR
-Castell Fasteners,New business,Prospecting,0,0.1,1,0,0,4700,USD
-Castell Fasteners,Renewals,Renewal due,0,0.6,9,0,0,8844.4444444444444444444444444444444444444444,USD
-Castell Fasteners,Renewals,Proposal sent,1,0.75,4,0,0,12575,USD
-Castell Fasteners,New business,Qualification,1,0.25,0,0,0,,
+Ballycorran Industrial Supply,New business,Closed Won,4,1,0,517,0,3808.1237911025145067698259187620889748549323,EUR
+Ballycorran Industrial Supply,New business,Closed Lost,5,0,0,0,126,3738.0952380952380952380952380952380952380952,EUR
+Castell Fasteners,New business,Prospecting,0,0.1,0,0,0,,
+Castell Fasteners,Renewals,Renewal due,0,0.6,8,0,0,14412.5,USD
+Castell Fasteners,Renewals,Proposal sent,1,0.75,9,0,0,10688.8888888888888888888888888888888888888889,USD
+Castell Fasteners,New business,Qualification,1,0.25,1,0,0,4700,USD
 Castell Fasteners,New business,Proposal,2,0.5,0,0,0,,
-Castell Fasteners,Renewals,Renewed,2,1,0,269,0,10555.3903345724907063197026022304832713754647,USD
-Castell Fasteners,Renewals,Churned,3,0,0,0,64,10948.4375,USD
+Castell Fasteners,Renewals,Renewed,2,1,0,291,0,10751.2027491408934707903780068728522336769759,USD
+Castell Fasteners,Renewals,Churned,3,0,0,0,48,10479.1666666666666666666666666666666666666667,USD
 Castell Fasteners,New business,Negotiation,3,0.75,0,0,0,,
-Castell Fasteners,New business,Closed Won,4,1,0,240,0,9348.3333333333333333333333333333333333333333,USD
-Castell Fasteners,New business,Closed Lost,5,0,0,0,61,8804.9180327868852459016393442622950819672131,USD
-Hanse Industriebedarf,New business,Prospecting,0,0.1,1,0,0,5800,EUR
-Hanse Industriebedarf,Renewals,Renewal due,0,0.6,7,0,0,9571.4285714285714285714285714285714285714286,EUR
-Hanse Industriebedarf,Renewals,Proposal sent,1,0.75,3,0,0,2600,EUR
-Hanse Industriebedarf,New business,Qualification,1,0.25,2,0,0,3250,EUR
+Castell Fasteners,New business,Closed Won,4,1,0,241,0,9651.4522821576763485477178423236514522821577,USD
+Castell Fasteners,New business,Closed Lost,5,0,0,0,56,8410.7142857142857142857142857142857142857143,USD
+Hanse Industriebedarf,New business,Prospecting,0,0.1,0,0,0,,
+Hanse Industriebedarf,Renewals,Renewal due,0,0.6,5,0,0,6340,EUR
+Hanse Industriebedarf,Renewals,Proposal sent,1,0.75,4,0,0,3675,EUR
+Hanse Industriebedarf,New business,Qualification,1,0.25,0,0,0,,
 Hanse Industriebedarf,New business,Proposal,2,0.5,0,0,0,,
-Hanse Industriebedarf,Renewals,Renewed,2,1,0,225,0,5046.6666666666666666666666666666666666666667,EUR
-Hanse Industriebedarf,Renewals,Churned,3,0,0,0,47,6110.6382978723404255319148936170212765957447,EUR
-Hanse Industriebedarf,New business,Negotiation,3,0.75,1,0,0,5900,EUR
-Hanse Industriebedarf,New business,Closed Won,4,1,0,189,0,5023.8095238095238095238095238095238095238095,EUR
-Hanse Industriebedarf,New business,Closed Lost,5,0,0,0,32,4906.25,EUR
+Hanse Industriebedarf,Renewals,Renewed,2,1,0,216,0,4977.3148148148148148148148148148148148148148,EUR
+Hanse Industriebedarf,Renewals,Churned,3,0,0,0,52,5650,EUR
+Hanse Industriebedarf,New business,Negotiation,3,0.75,0,0,0,,
+Hanse Industriebedarf,New business,Closed Won,4,1,0,196,0,5066.8367346938775510204081632653061224489796,EUR
+Hanse Industriebedarf,New business,Closed Lost,5,0,0,0,38,4739.4736842105263157894736842105263157894737,EUR
 Midland Safety Wear,New business,Prospecting,0,0.1,0,0,0,,
-Midland Safety Wear,Renewals,Renewal due,0,0.6,5,0,0,5840,EUR
-Midland Safety Wear,Renewals,Proposal sent,1,0.75,9,0,0,8077.7777777777777777777777777777777777777778,EUR
+Midland Safety Wear,Renewals,Renewal due,0,0.6,7,0,0,6200,EUR
+Midland Safety Wear,Renewals,Proposal sent,1,0.75,5,0,0,7820,EUR
 Midland Safety Wear,New business,Qualification,1,0.25,0,0,0,,
 Midland Safety Wear,New business,Proposal,2,0.5,0,0,0,,
-Midland Safety Wear,Renewals,Renewed,2,1,0,334,0,6340.7185628742514970059880239520958083832335,EUR
-Midland Safety Wear,Renewals,Churned,3,0,0,0,85,6100,EUR
+Midland Safety Wear,Renewals,Renewed,2,1,0,309,0,6249.5145631067961165048543689320388349514563,EUR
+Midland Safety Wear,Renewals,Churned,3,0,0,0,85,5902.3529411764705882352941176470588235294118,EUR
 Midland Safety Wear,New business,Negotiation,3,0.75,0,0,0,,
-Midland Safety Wear,New business,Closed Won,4,1,0,302,0,5676.8211920529801324503311258278145695364238,EUR
-Midland Safety Wear,New business,Closed Lost,5,0,0,0,60,5936.6666666666666666666666666666666666666667,EUR
+Midland Safety Wear,New business,Closed Won,4,1,0,292,0,5816.4383561643835616438356164383561643835616,EUR
+Midland Safety Wear,New business,Closed Lost,5,0,0,0,69,5976.8115942028985507246376811594202898550725,EUR
 Polder Packaging,New business,Prospecting,0,0.1,0,0,0,,
-Polder Packaging,Renewals,Renewal due,0,0.6,1,0,0,4200,EUR
-Polder Packaging,Renewals,Proposal sent,1,0.75,6,0,0,5466.6666666666666666666666666666666666666667,EUR
+Polder Packaging,Renewals,Renewal due,0,0.6,4,0,0,3325,EUR
+Polder Packaging,Renewals,Proposal sent,1,0.75,4,0,0,3925,EUR
 Polder Packaging,New business,Qualification,1,0.25,0,0,0,,
-Polder Packaging,New business,Proposal,2,0.5,1,0,0,5400,EUR
-Polder Packaging,Renewals,Renewed,2,1,0,101,0,6358.4158415841584158415841584158415841584158,EUR
-Polder Packaging,Renewals,Churned,3,0,0,0,23,7326.0869565217391304347826086956521739130435,EUR
-Polder Packaging,New business,Negotiation,3,0.75,0,0,0,,
-Polder Packaging,New business,Closed Won,4,1,0,113,0,5920.3539823008849557522123893805309734513274,EUR
-Polder Packaging,New business,Closed Lost,5,0,0,0,24,5345.8333333333333333333333333333333333333333,EUR
+Polder Packaging,New business,Proposal,2,0.5,0,0,0,,
+Polder Packaging,Renewals,Renewed,2,1,0,70,0,5774.2857142857142857142857142857142857142857,EUR
+Polder Packaging,Renewals,Churned,3,0,0,0,21,5285.7142857142857142857142857142857142857143,EUR
+Polder Packaging,New business,Negotiation,3,0.75,1,0,0,6900,EUR
+Polder Packaging,New business,Closed Won,4,1,0,89,0,5295.5056179775280898876404494382022471910112,EUR
+Polder Packaging,New business,Closed Lost,5,0,0,0,23,5639.1304347826086956521739130434782608695652,EUR

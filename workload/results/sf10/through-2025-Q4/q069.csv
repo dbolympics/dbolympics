@@ -1,7 +1,9 @@
-completed,access,202,202,0,0,0,30,
-completed,erasure,312,312,0,0,0,30,
-completed,rectification,46,46,0,0,0,30,
-in_progress,erasure,4,0,4,1,0,30,2025-11-13 08:11:56.437445
-received,access,4,0,4,2,0,30,2025-11-22 15:01:32.243510
-received,erasure,3,0,3,1,0,30,2025-11-28 02:39:37.114214
-rejected,erasure,27,0,27,26,0,30,2023-06-20 21:22:28.444243
+completed,access,213,213,0,0,0,30,
+completed,erasure,357,357,0,0,0,30,
+completed,rectification,56,56,0,0,0,30,
+in_progress,access,2,0,2,0,0,30,2025-12-18 06:54:00.097752
+in_progress,erasure,1,0,1,1,0,30,2025-11-23 07:27:54.488883
+in_progress,rectification,1,0,1,0,0,30,2025-12-26 19:00:52.893827
+received,erasure,1,0,1,0,0,30,2025-12-22 12:19:23.464882
+received,rectification,1,0,1,0,0,30,2025-12-14 02:51:43.767086
+rejected,erasure,21,0,21,20,0,30,2023-07-25 13:16:36.206999

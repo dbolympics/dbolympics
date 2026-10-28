@@ -1,10 +1,10 @@
-completed,access,2002,2002,0,0,0,30,
-completed,erasure,3339,3339,0,0,0,30,
-completed,rectification,483,483,0,0,0,30,
-in_progress,access,23,0,23,1,0,30,2025-11-26 11:22:51.948955
-in_progress,erasure,29,0,29,1,0,30,2025-11-17 22:13:17.308131
-in_progress,rectification,5,0,5,1,0,30,2025-11-25 14:25:12.716589
-received,access,23,0,23,1,0,30,2025-11-08 22:03:26.522356
-received,erasure,37,0,37,4,0,30,2025-11-11 13:56:19.802438
-received,rectification,4,0,4,1,0,30,2025-11-28 22:42:00.264822
-rejected,erasure,181,0,181,172,0,30,2023-01-05 14:22:42.592204
+completed,access,2081,2081,0,0,0,30,
+completed,erasure,3363,3363,0,0,0,30,
+completed,rectification,497,497,0,0,0,30,
+in_progress,access,25,0,25,1,0,30,2025-11-26 11:22:51.948955
+in_progress,erasure,28,0,28,4,0,30,2025-11-20 13:03:50.622074
+in_progress,rectification,4,0,4,0,0,30,2025-12-09 00:34:00.524247
+received,access,21,0,21,0,0,30,2025-12-02 06:49:37.005779
+received,erasure,29,0,29,1,0,30,2025-11-25 08:32:21.794105
+received,rectification,5,0,5,0,0,30,2025-12-06 17:44:05.050335
+rejected,erasure,175,0,175,168,0,30,2023-01-05 14:22:42.592204

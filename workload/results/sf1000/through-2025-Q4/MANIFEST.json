@@ -1,11 +1,10 @@
 {
   "config": "sf1000-reference",
-  "date": "2026-10-19",
-  "engine": "Umbra v0.2-3416-ga7efd9981 (bin/server), debug.semana.exactarithmetic",
+  "date": "2026-10-27",
+  "engine": "Umbra v0.2-3416-ga7efd9981 (bin/server, Umbra version v0.2-3416-ga7efd9981 (2026-10-09, format 42)), debug.semana.exactarithmetic",
   "format": "CSV, no header, rows in query order, NULL as an empty field; compare with dbo-bench check",
   "loaded": "2025-Q4",
   "queries": 409,
   "scale_factor": "1000",
-  "seed": 42,
-  "notes": "Identical, file for file, to the results of the earlier Umbra build v0.2-3358-g5d24a4c08 with q139 run unoptimized (optimized, that build and the benchmark's Umbra image lose q139's rows of product_sales). Cross-checked against the SF1000 runs on c8a.16xlarge of 2026-10-18: DuckDB 407 of 407 equal (q139 included), Hyper 403 of 403, the benchmark's Umbra 407 of 408 (q139 differs); every query agrees with at least one other system."
+  "seed": 42
 }
