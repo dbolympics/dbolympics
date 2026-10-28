@@ -2118,8 +2118,8 @@
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
   },
   {
-   "from": "  ROUND(CAST(AVG(CASE WHEN is_fully_delivered=1 THEN EXTRACT(EPOCH FROM (max_delivered_at - placed_at))/86400.0 END) AS numeric), 2) AS avg_delivery_days,\n  ROUND(100.0 * SUM(CASE WHEN is_fully_delivered=1 AND max_delivered_at <= placed_at + INTERVAL '5' DAY THEN 1 ELSE 0 END) / NULLIF(SUM(is_fully_delivered),0), 1) AS pct_within_5_days",
-   "to": "  AVG(CASE WHEN is_fully_delivered=1 THEN EXTRACT(EPOCH FROM (max_delivered_at - placed_at))/86400.0 END) AS avg_delivery_days,\n  100.0 * SUM(CASE WHEN is_fully_delivered=1 AND max_delivered_at <= placed_at + INTERVAL '5' DAY THEN 1 ELSE 0 END) / NULLIF(SUM(is_fully_delivered),0) AS pct_within_5_days",
+   "from": "  ROUND(CAST(AVG(CASE WHEN is_fully_delivered=1 THEN EXTRACT(EPOCH FROM (max_delivered_at - placed_at))/86400.0 END) AS numeric), 2) AS avg_delivery_days,\n  ROUND(100.0 * SUM(CASE WHEN is_fully_delivered=1 AND max_delivered_at <= placed_at + INTERVAL '5 days' THEN 1 ELSE 0 END) / NULLIF(SUM(is_fully_delivered),0), 1) AS pct_within_5_days",
+   "to": "  AVG(CASE WHEN is_fully_delivered=1 THEN EXTRACT(EPOCH FROM (max_delivered_at - placed_at))/86400.0 END) AS avg_delivery_days,\n  100.0 * SUM(CASE WHEN is_fully_delivered=1 AND max_delivered_at <= placed_at + INTERVAL '5 days' THEN 1 ELSE 0 END) / NULLIF(SUM(is_fully_delivered),0) AS pct_within_5_days",
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; bare NUMERIC cast that only served the rounding removed"
   }
  ],
@@ -2565,8 +2565,8 @@
  ],
  "q288": [
   {
-   "from": "  ROUND(100.0 * COUNT(*) FILTER (WHERE c.status = 'converted') / COUNT(*), 1) AS overall_conversion_pct,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '1' HOUR) / COUNT(*), 1) AS pct_resolved_within_1_hour,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) > c.created_at + INTERVAL '1' HOUR AND COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '7' DAY) / COUNT(*), 1) AS pct_resolved_1_7_days,\n  ROUND(CAST(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (c.converted_at - c.created_at))/86400.0) FILTER (WHERE c.status = 'converted') AS numeric), 1) AS median_days_to_convert",
-   "to": "  100.0 * COUNT(*) FILTER (WHERE c.status = 'converted') / COUNT(*) AS overall_conversion_pct,\n  100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '1' HOUR) / COUNT(*) AS pct_resolved_within_1_hour,\n  100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) > c.created_at + INTERVAL '1' HOUR AND COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '7' DAY) / COUNT(*) AS pct_resolved_1_7_days,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (c.converted_at - c.created_at))/86400.0) FILTER (WHERE c.status = 'converted') AS median_days_to_convert",
+   "from": "  ROUND(100.0 * COUNT(*) FILTER (WHERE c.status = 'converted') / COUNT(*), 1) AS overall_conversion_pct,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '1 hour') / COUNT(*), 1) AS pct_resolved_within_1_hour,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) > c.created_at + INTERVAL '1 hour' AND COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '7 days') / COUNT(*), 1) AS pct_resolved_1_7_days,\n  ROUND(CAST(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (c.converted_at - c.created_at))/86400.0) FILTER (WHERE c.status = 'converted') AS numeric), 1) AS median_days_to_convert",
+   "to": "  100.0 * COUNT(*) FILTER (WHERE c.status = 'converted') / COUNT(*) AS overall_conversion_pct,\n  100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '1 hour') / COUNT(*) AS pct_resolved_within_1_hour,\n  100.0 * COUNT(*) FILTER (WHERE COALESCE(c.converted_at, c.abandoned_at, c.expires_at) > c.created_at + INTERVAL '1 hour' AND COALESCE(c.converted_at, c.abandoned_at, c.expires_at) <= c.created_at + INTERVAL '7 days') / COUNT(*) AS pct_resolved_1_7_days,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (c.converted_at - c.created_at))/86400.0) FILTER (WHERE c.status = 'converted') AS median_days_to_convert",
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; bare NUMERIC cast that only served the rounding removed"
   }
  ],
@@ -2700,13 +2700,13 @@
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; bare NUMERIC cast that only served the rounding removed"
   },
   {
-   "from": "         ROUND(100.0 * SUM(CASE WHEN p3.captured_at <= o3.placed_at + INTERVAL '7' DAY THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct_captured_within_7_days",
-   "to": "         100.0 * SUM(CASE WHEN p3.captured_at <= o3.placed_at + INTERVAL '7' DAY THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_7_days",
+   "from": "         ROUND(100.0 * SUM(CASE WHEN p3.captured_at <= o3.placed_at + INTERVAL '7 days' THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct_captured_within_7_days",
+   "to": "         100.0 * SUM(CASE WHEN p3.captured_at <= o3.placed_at + INTERVAL '7 days' THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_7_days",
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
   },
   {
-   "from": "         ROUND(100.0 * SUM(CASE WHEN p4.captured_at <= o4.placed_at + INTERVAL '14' DAY THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct_captured_within_14_days",
-   "to": "         100.0 * SUM(CASE WHEN p4.captured_at <= o4.placed_at + INTERVAL '14' DAY THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_14_days",
+   "from": "         ROUND(100.0 * SUM(CASE WHEN p4.captured_at <= o4.placed_at + INTERVAL '14 days' THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct_captured_within_14_days",
+   "to": "         100.0 * SUM(CASE WHEN p4.captured_at <= o4.placed_at + INTERVAL '14 days' THEN 1 ELSE 0 END) / COUNT(*) AS pct_captured_within_14_days",
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
   }
  ],
@@ -3468,8 +3468,8 @@
  ],
  "q404": [
   {
-   "from": "  round(100.0 * count(*) / sum(count(*)) over (partition by t.name), 1) AS pct_of_tenant_shipments,\n  round(avg(extract(epoch from (s.delivered_at - s.shipped_at)) / 86400.0) filter (where s.delivered_at is not null and s.shipped_at is not null), 1) AS avg_delivery_days,\n  round(100.0 * count(*) filter (where s.delivered_at is not null and s.shipped_at is not null and s.delivered_at <= s.shipped_at + INTERVAL '3' DAY)\n        / nullif(count(*) filter (where s.delivered_at is not null and s.shipped_at is not null), 0), 1) AS pct_delivered_within_3_days",
-   "to": "  100.0 * count(*) / sum(count(*)) over (partition by t.name) AS pct_of_tenant_shipments,\n  avg(extract(epoch from (s.delivered_at - s.shipped_at)) / 86400.0) filter (where s.delivered_at is not null and s.shipped_at is not null) AS avg_delivery_days,\n  100.0 * count(*) filter (where s.delivered_at is not null and s.shipped_at is not null and s.delivered_at <= s.shipped_at + INTERVAL '3' DAY)\n  / nullif(count(*) filter (where s.delivered_at is not null and s.shipped_at is not null), 0) AS pct_delivered_within_3_days",
+   "from": "  round(100.0 * count(*) / sum(count(*)) over (partition by t.name), 1) AS pct_of_tenant_shipments,\n  round(avg(extract(epoch from (s.delivered_at - s.shipped_at)) / 86400.0) filter (where s.delivered_at is not null and s.shipped_at is not null), 1) AS avg_delivery_days,\n  round(100.0 * count(*) filter (where s.delivered_at is not null and s.shipped_at is not null and s.delivered_at <= s.shipped_at + INTERVAL '3 days')\n        / nullif(count(*) filter (where s.delivered_at is not null and s.shipped_at is not null), 0), 1) AS pct_delivered_within_3_days",
+   "to": "  100.0 * count(*) / sum(count(*)) over (partition by t.name) AS pct_of_tenant_shipments,\n  avg(extract(epoch from (s.delivered_at - s.shipped_at)) / 86400.0) filter (where s.delivered_at is not null and s.shipped_at is not null) AS avg_delivery_days,\n  100.0 * count(*) filter (where s.delivered_at is not null and s.shipped_at is not null and s.delivered_at <= s.shipped_at + INTERVAL '3 days')\n  / nullif(count(*) filter (where s.delivered_at is not null and s.shipped_at is not null), 0) AS pct_delivered_within_3_days",
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
   }
  ],
@@ -3489,8 +3489,8 @@
  ],
  "q408": [
   {
-   "from": "  ROUND(AVG(EXTRACT(EPOCH FROM (s.delivered_at - s.shipped_at)) / 86400.0) FILTER (WHERE s.delivered_at IS NOT NULL), 1) AS avg_delivery_days,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '3' DAY)\n        / NULLIF(COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL), 0), 1) AS pct_delivered_within_3_days",
-   "to": "  AVG(EXTRACT(EPOCH FROM (s.delivered_at - s.shipped_at)) / 86400.0) FILTER (WHERE s.delivered_at IS NOT NULL) AS avg_delivery_days,\n  100.0 * COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '3' DAY)\n  / NULLIF(COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL), 0) AS pct_delivered_within_3_days",
+   "from": "  ROUND(AVG(EXTRACT(EPOCH FROM (s.delivered_at - s.shipped_at)) / 86400.0) FILTER (WHERE s.delivered_at IS NOT NULL), 1) AS avg_delivery_days,\n  ROUND(100.0 * COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '3 days')\n        / NULLIF(COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL), 0), 1) AS pct_delivered_within_3_days",
+   "to": "  AVG(EXTRACT(EPOCH FROM (s.delivered_at - s.shipped_at)) / 86400.0) FILTER (WHERE s.delivered_at IS NOT NULL) AS avg_delivery_days,\n  100.0 * COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '3 days')\n  / NULLIF(COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL), 0) AS pct_delivered_within_3_days",
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
   }
  ],

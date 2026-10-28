@@ -24,7 +24,7 @@ ship AS (
   SELECT o.tenant_id AS tenant_id,
     CAST(DATE_TRUNC('month', s.shipped_at) AS date) AS month_start,
     COUNT(*) AS shipments_count,
-    SUM(CASE WHEN s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '5' DAY THEN 1 ELSE 0 END) AS delivered_within_5,
+    SUM(CASE WHEN s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '5 days' THEN 1 ELSE 0 END) AS delivered_within_5,
     SUM(CASE WHEN s.delivered_at IS NOT NULL THEN 1 ELSE 0 END) AS delivered_known,
     SUM(CASE WHEN s.carrier = 'Albion Parcel' THEN 1 ELSE 0 END) AS albion_count
   FROM shipments s

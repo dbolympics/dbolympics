@@ -25,7 +25,7 @@ agg AS (
     period,
     COUNT(*) AS shipments_shipped,
     AVG({{seconds_between(shipped_at, delivered_at)}} / 86400.0) FILTER (WHERE delivered_at IS NOT NULL) AS avg_transit_days_raw,
-    100.0 * COUNT(*) FILTER (WHERE delivered_at IS NOT NULL AND delivered_at <= shipped_at + INTERVAL '3' DAY)
+    100.0 * COUNT(*) FILTER (WHERE delivered_at IS NOT NULL AND delivered_at <= shipped_at + INTERVAL '3 days')
       / NULLIF(COUNT(*) FILTER (WHERE delivered_at IS NOT NULL), 0) AS pct_within_3_days_raw
   FROM base
   WHERE period IS NOT NULL
