@@ -45,8 +45,6 @@
   .hero-svg .lb { font-size: 12.5px; stroke-width: 3px; }
 }
 
-.aside { font-size: 15px; color: var(--ink-2); margin: 22px 0 0; }
-.aside b { color: var(--ink); font-weight: 600; }
 
 /* Settings */
 .settings {
@@ -91,7 +89,7 @@ table.board { width: 100%; border-collapse: collapse; font-size: 15px; }
 .board .sys { width: 170px; white-space: nowrap; }
 .board .sys .glyph { margin-right: 9px; vertical-align: -1px; color: var(--ink-2); }
 .board .r { text-align: right; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; padding-left: 18px; }
-.board .barcell { width: 40%; }
+.board .barcell { width: 40%; padding-left: 18px; }
 .bar { position: relative; height: 7px; }
 .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink-2); border-radius: 0 2px 2px 0; }
 .bar.fail i { background: none; }
@@ -200,7 +198,7 @@ canvas { display: block; }
   .board tbody tr:hover td.sys, .board tbody tr.sel td.sys { background: linear-gradient(var(--accent-wash), var(--accent-wash)), var(--paper); }
   .board th:nth-child(2) { position: sticky; left: 0; z-index: 1; background: var(--paper); }
   .board .r { padding-left: 14px; }
-  .board .barcell { width: 72px; min-width: 72px; }
+  .board .barcell { width: 72px; min-width: 72px; padding-left: 14px; }
   .board th .long { display: none; }
   .barx { gap: 5px; }
   .barx i { height: 3px; }
@@ -248,26 +246,19 @@ canvas { display: block; }
   <figure>
     <div class="board-wrap"><table class="board">
       <thead><tr>
-        <th class="rank"></th><th>System</th><th class="barcell">Slowdown<span class="long">, relative to the fastest</span></th>
-        <th class="r fig1">QPS</th><th class="r fig1">Cost</th><th class="r">Correct</th><th class="r load">Load</th>
+        <th class="rank"></th><th>System</th><th class="r fig1">QPS</th><th class="r fig1">Cost</th>
+        <th class="barcell">Slowdown<span class="long">, relative to the fastest</span></th><th class="r">Correct</th><th class="r load">Load</th>
       </tr></thead>
       <tbody id="board"></tbody>
     </table></div>
-    <figcaption><b>Table 1.</b> Systems ranked by the geometric mean, over all 409 queries, of each query's time relative to the
-      fastest correct system (plus 10&#8202;ms), the bar on a log scale. A timed-out query counts as taking the full timeout
+    <figcaption><b>Table 1.</b> Systems ordered by cost, the cheapest first. <i>Slowdown</i> is the geometric mean, over all
+      409 queries, of each query's time relative to the fastest correct system (plus 10&#8202;ms), the bar on a log scale. A timed-out query counts as taking the full timeout
       ({{TIMEOUT}}); a failed or wrong one as taking twice the slowest correct time of that query.
       <i>QPS</i> (queries per second) and <i>Cost</i> as in Figure 1. <i>Correct</i> is out of 409 after the last load. <i>Load</i> is the
       total of all five loads.
       <b id="unchecked" hidden>There are no reference results at this scale factor yet: every result that came back counts
       as correct, without being checked.</b></figcaption>
   </figure>
-  <p class="aside measure"><b>Figure 1 and Table 1 can rank systems differently.</b> Figure 1 rewards robustness:
-    being consistently fast and having no unusually slow queries. Table 1 rewards all-round speed: being close to the
-    fastest on every query. The difference comes from how each combines the queries: Figure 1 adds up their times,
-    Table 1 multiplies their factors. Take a system that runs two queries in
-    100&#8202;ms and 1000&#8202;ms. Making either one twice as fast, to 50&#8202;ms and 1000&#8202;ms or to
-    100&#8202;ms and 500&#8202;ms, improves Table 1's geometric mean about equally. Only the second saves real time in
-    Figure 1's sum: 500&#8202;ms instead of 50&#8202;ms.</p>
 </section>
 
 <!--SECTION:distribution-->
@@ -518,35 +509,35 @@ function failure(f) {
   return `${what}${at} in the ${ROUNDS[f.run - 1] || `${f.run}th`} round`;
 }
 function renderBoard() {
-  // a run that did not finish has no last round to rank: it goes below the others, with what ended it;
-  // a system disabled at this scale factor goes last
+  // as in Figure 1: all queries once after the last load, a timeout as the timeout, a failed or wrong query as twice
+  // the slowest correct time of that query; the cost at the machine's price per hour
+  const c = cfg();
+  const secs = s => Q.reduce((sum, _, k) => sum + (s.status[k] === 0 ? s.times[k] : s.status[k] === 3 ? c.timeout : 2 * c.worst[k]), 0);
+  // by cost, the cheapest first; a run that did not finish has no last round to cost: it goes below the others, with
+  // what ended it; a system disabled at this scale factor goes last
   const last = s => !s.failed ? 0 : s.failed.status === "disabled" ? 2 : 1;
-  const rows = ranked().sort((a, b) => last(a[1]) - last(b[1]));
+  const rows = ranked().map(([name, s]) => [name, s, secs(s)]).sort((a, b) => last(a[1]) - last(b[1]) || a[2] - b[2]);
   const max = Math.log(Math.max(...rows.filter(r => !r[1].failed).map(r => r[1].score)));
   const tb = document.getElementById("board");
   tb.innerHTML = "";
-  document.getElementById("unchecked").hidden = !cfg().unchecked;
-  rows.forEach(([name, s], i) => {
+  document.getElementById("unchecked").hidden = !c.unchecked;
+  rows.forEach(([name, s, t], i) => {
     const tr = document.createElement("tr");
     if (state.sel === name) tr.className = "sel";
     const failed = !!s.failed;
     const w = Math.max(0.5, (Math.log(s.score) / max) * 100);
     // a run that did not finish all five loads has no comparable load time
     const loaded = s.load.every(v => v != null) && !s.failed;
-    // as in Figure 1: all queries once after the last load, a timeout as the timeout, a failed or wrong query as twice
-    // the slowest correct time of that query; the cost at the machine's price per hour
-    const c = cfg();
-    const secs = Q.reduce((sum, _, k) => sum + (s.status[k] === 0 ? s.times[k] : s.status[k] === 3 ? c.timeout : 2 * c.worst[k]), 0);
-    const qps = Q.length / secs, usd = PRICES[c.machine] / 3600 * secs;
+    const qps = Q.length / t, usd = PRICES[c.machine] / 3600 * t;
     tr.innerHTML = `
       <td class="rank">${failed ? "" : i + 1}</td>
       <td class="sys">${glyph(name, 13)}${NAMES[name] || name}</td>
       ${failed
         // what ended the run, across the columns it leaves without a value
         ? `<td class="barcell" colspan="3"><span class="note">${failure(s.failed)}</span></td>`
-        : `<td class="barcell"><div class="barx"><i style="width:max(2px, calc((100% - 50px) * ${(w / 100).toFixed(4)}))"></i><span>${fmtX(s.score)}×</span></div></td>
-      <td class="r fig1">${fmtN(qps)}</td>
-      <td class="r fig1">${fmtUsd(usd)}</td>`}
+        : `<td class="r fig1">${fmtN(qps)}</td>
+      <td class="r fig1">${fmtUsd(usd)}</td>
+      <td class="barcell"><div class="barx"><i style="width:max(2px, calc((100% - 50px) * ${(w / 100).toFixed(4)}))"></i><span>${fmtX(s.score)}×</span></div></td>`}
       <td class="r">${s.correct}<span class="frac"><i style="width:${s.correct / 409 * 100}%"></i></span></td>
       <td class="r load">${loaded ? `${s.load.reduce((a, b) => a + b, 0).toFixed(0)} s` : "–"}</td>`;
     tr.onclick = () => select(name);
