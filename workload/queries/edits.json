@@ -115,7 +115,7 @@
  "q114": [
   {
    "from": "(timestamp '2026-01-05' - occurred_at) > interval '30 days'",
-   "to": "occurred_at < TIMESTAMP '2026-01-05' - INTERVAL '30' DAY",
+   "to": "occurred_at < TIMESTAMP '2026-01-05' - INTERVAL '30 days'",
    "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp minus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
   }
  ],

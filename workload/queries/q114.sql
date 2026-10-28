@@ -7,7 +7,7 @@ SELECT
   ({{percentile_cont_filter(0.5, {{seconds_between(occurred_at, resolved_at)}}/86400.0, resolved)}}) as median_days_to_resolve,
   count(*) filter (
     where not resolved
-      and occurred_at < TIMESTAMP '2026-01-05' - INTERVAL '30' DAY
+      and occurred_at < TIMESTAMP '2026-01-05' - INTERVAL '30 days'
   ) as unresolved_over_30d
 FROM compliance_events
 WHERE occurred_at >= timestamp '2023-01-01'

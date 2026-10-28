@@ -73,7 +73,7 @@ Renaming an alias at all its uses is simple too.
      that. Examples: `DATE(x)` to `CAST(x AS DATE)`, `DISTINCT ON` to `ROW_NUMBER() ... = 1`,
      `NULLS LAST` and `NULLS FIRST` on every sort key (as in the reference results),
      `unnest(ARRAY[...])` in a select list to a `VALUES` list, `x->>'key'` to
-     `JSON_VALUE(x, '$.key')`, `(t - x) > interval '30 days'` to `x < t - INTERVAL '30' DAY`.
+     `JSON_VALUE(x, '$.key')`, `(t - x) > interval '30 days'` to `x < t - INTERVAL '30 days'`.
    - Otherwise a placeholder. Its default is the standard's Y where the standard has one that a
      reference dialect supports, else X. With X: `STRING_AGG`, `BOOL_OR`,
      `EXTRACT(EPOCH FROM ...)`, `date - date`, `to_char`, the day field and the midpoint of a
