@@ -1,7 +1,7 @@
 //! DuckDB-based validation of the schema and of generated data.
 
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use anyhow::{Context, Result, bail};
@@ -40,10 +40,25 @@ pub fn check_schema() -> Result<()> {
     Ok(())
 }
 
-/// Load a generated dataset into DuckDB with every FK, unique and check constraint enabled.
+/// Load a generated dataset into DuckDB with every FK, unique and check constraint enabled, in a
+/// database file next to the dataset (removed afterwards), so DuckDB can spill to disk.
 pub fn validate(dir: &Path) -> Result<()> {
     let t0 = Instant::now();
-    let conn = Connection::open_in_memory()?;
+    let db = PathBuf::from(format!("{}.validate.duckdb", dir.display()));
+    let wal = PathBuf::from(format!("{}.wal", db.display()));
+    let remove = || {
+        let _ = fs::remove_file(&db);
+        let _ = fs::remove_file(&wal);
+    };
+    remove();
+    let conn = Connection::open(&db)?;
+    let result = validate_into(&conn, dir, t0);
+    drop(conn);
+    remove();
+    result
+}
+
+fn validate_into(conn: &Connection, dir: &Path, t0: Instant) -> Result<()> {
     let ddl = fs::read_to_string("schema/ddl/duckdb_constraints.sql").context("reading duckdb_constraints.sql")?;
     let mut order = Vec::new();
     for stmt in statements(&ddl) {
@@ -93,7 +108,7 @@ pub fn validate(dir: &Path) -> Result<()> {
         }
     }
     println!("loaded {total} rows into {} tables with all constraints ({} empty)", order.len(), empty.len());
-    println!("ran {} rule queries: all clean", run_rules(&conn)?);
+    println!("ran {} rule queries: all clean", run_rules(conn)?);
     println!("validated in {:.1}s", t0.elapsed().as_secs_f64());
     Ok(())
 }
