@@ -111,28 +111,41 @@ impl Podman {
         self.run(&["image", "inspect", image, "--format", "{{if .RepoDigests}}{{index .RepoDigests 0}}{{else}}{{.Id}}{{end}}"])
     }
 
-    /// Remove a pod with its containers, then the volumes no container uses any more. A removal that
-    /// fails is tried again (a pod whose container wrote hundreds of GB has been seen to stay), and
-    /// says why: a pod left behind keeps its database's disk space.
+    /// Remove a pod with its containers, then the volumes no container uses any more.
     pub fn cleanup(&self, pod: &str) {
-        for attempt in 1..=3 {
-            match self.run(&["pod", "rm", "--ignore", "-f", "-t", "0", pod]) {
-                Ok(_) => break,
-                Err(e) if attempt < 3 => {
-                    eprintln!("removing pod {pod} failed, trying again in 30 s: {e:#}");
-                    std::thread::sleep(Duration::from_secs(30));
-                }
-                Err(e) => eprintln!("removing pod {pod} failed, it is left behind: {e:#}"),
-            }
+        if let Err(e) = self.run(&["pod", "rm", "--ignore", "-f", "-t", "0", pod]) {
+            eprintln!("removing pod {pod} failed: {e:#}");
         }
         if let Err(e) = self.run(&["volume", "prune", "-f"]) {
             eprintln!("removing unused volumes failed: {e:#}");
         }
     }
 
-    /// The pods of earlier runs (all are named dbo-...).
-    fn pods(&self) -> Vec<String> {
-        self.run(&["pod", "ps", "--format", "{{.Name}}"]).map(|o| o.lines().filter(|n| n.starts_with("dbo-")).map(String::from).collect()).unwrap_or_default()
+    /// Remove every pod, container and volume, the databases' files with them (the images stay),
+    /// and check that none is left: a configuration starts on an empty storage, and its data does
+    /// not stay after it. A removal that fails is tried again (a pod whose container wrote
+    /// hundreds of GB has been seen to stay).
+    pub fn clear(&self) -> Result<()> {
+        let mut left = String::new();
+        for attempt in 1..=3 {
+            if attempt > 1 {
+                eprintln!("the containers' storage is not empty, trying again in 30 s: {left}");
+                std::thread::sleep(Duration::from_secs(30));
+            }
+            for args in [&["pod", "rm", "--all", "-f", "-t", "0"][..], &["rm", "--all", "-f", "-t", "0"], &["volume", "prune", "-f"]] {
+                if let Err(e) = self.run(args) {
+                    eprintln!("{e:#}");
+                }
+            }
+            let pods = self.run(&["pod", "ps", "--format", "{{.Name}}"]).unwrap_or_else(|e| format!("{e:#}"));
+            let containers = self.run(&["ps", "-a", "--format", "{{.Names}}"]).unwrap_or_else(|e| format!("{e:#}"));
+            let volumes = self.run(&["volume", "ls", "--format", "{{.Name}}"]).unwrap_or_else(|e| format!("{e:#}"));
+            if pods.is_empty() && containers.is_empty() && volumes.is_empty() {
+                return Ok(());
+            }
+            left = format!("pods [{}], containers [{}], volumes [{}]", pods.replace('\n', " "), containers.replace('\n', " "), volumes.replace('\n', " "));
+        }
+        bail!("cannot empty the containers' storage ({}): {left}", self.root.display())
     }
 }
 
@@ -167,14 +180,8 @@ impl Pod {
     /// Create the pod and start its containers: first the ones of the system file, then the
     /// system's own container from `image`.
     pub fn start(podman: &Podman, name: &str, image: &str, sys: &System, limits: &Limits, mounts: &Mounts, env: &BTreeMap<String, String>, vars: &BTreeMap<String, String>) -> Result<Pod> {
-        // a run has the machine to itself: every pod an earlier run left behind goes, not only this one's
-        let mut pods = podman.pods();
-        if !pods.iter().any(|p| p == name) {
-            pods.push(name.to_string());
-        }
-        for p in &pods {
-            podman.cleanup(p);
-        }
+        // a run has the machine to itself: whatever an earlier run left behind goes first
+        podman.clear()?;
         // no network but the pod's loopback; the limits are each container's own (`container`)
         // shared memory (/dev/shm) is part of a container's memory limit, so it needs no smaller one of its own
         podman.run(&["pod", "create", "--name", name, "--network", "none", "--shm-size", &limits.memory.to_string()])?;

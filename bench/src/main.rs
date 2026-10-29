@@ -169,6 +169,7 @@ fn run_cmd(repo: &Path, benchmark: &Path, only_systems: &[String], only_configs:
                 println!("{}: {outcome}", sys.name);
                 all_ok &= o.failure.is_none();
                 clean(o.failure.is_none());
+                ctx.podman.clear()?;
                 continue;
             }
             results::write(&result_file, &o.rows)?;
@@ -177,6 +178,8 @@ fn run_cmd(repo: &Path, benchmark: &Path, only_systems: &[String], only_configs:
             all_ok &= o.failure.is_none();
             clean(o.failure.is_none());
             eprintln!("{} / {}: results in {}", sys.name, cfg.name, result_file.display());
+            // the configuration's databases go before the next configuration starts
+            ctx.podman.clear()?;
         }
     }
     Ok(all_ok)

@@ -116,7 +116,8 @@ Without `--bot`, nothing of the bot is installed. That is the default for every 
 ## Limits
 
 - **One run at a time.** Further runs wait in the queue. The queue survives restarts (`<work>/state.json`).
-- **The bot's user is the bot's alone.** After a run, the bot removes all of the user's containers
-  (`podman rm --all`).
+- **Nothing of a run stays.** After a run, the bot resets the runner's containers' storage
+  (`podman system reset` on `bench/containers`): the pods, containers, volumes and images go, the databases' files with
+  them. The next run builds the images again.
 - **A pull request's workflow file is its own.** A pull request can change `systems.yml` and pass its own check. The
   bot does not rely on the check: it applies the same rules itself before it runs anything.

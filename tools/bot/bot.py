@@ -653,8 +653,17 @@ class Bot:
                 self.save()
 
     def cleanup(self):
-        """No container of a run is left (this user is the bot's alone)."""
-        sh(["podman", "rm", "--all", "--force", "--time", "0"])
+        """Nothing of a run is left: the runner's containers' storage (bench/containers) is reset, its pods, containers,
+        volumes and images with the databases' files go (the next run builds the images again)."""
+        storage = self.run_dir / "bench" / "containers" / "storage"
+        if not storage.is_dir():
+            return
+        podman = ["podman", "--root", str(storage), "--runroot", f"/run/user/{os.getuid()}/dbo-containers"]
+        r = subprocess.run(podman + ["system", "reset", "--force"], capture_output=True, text=True)
+        left = [f"{d}/{p.name}" for d in ("overlay", "volumes") if (storage / d).is_dir() for p in (storage / d).iterdir()
+                if p.name != "l" and not p.name.startswith(".")]  # overlay/l and podman's marker files stay
+        if r.returncode or left:
+            log(f"resetting the containers' storage {storage}: {(r.stdout + r.stderr).strip()[-2000:]}; left: {', '.join(left[:20]) or 'nothing'}")
 
     def sh_logged(self, job, cmd):
         """Run `cmd` in the checkout, its output into the run's log; its exit status. A cancel stops it."""
