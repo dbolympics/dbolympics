@@ -5862,13 +5862,20 @@
  ],
  "q173": [
   {
-   "kind": "hard",
-   "step": "cast",
-   "count": 2
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "The day field of the difference of two timestamps: the standard needs an interval qualifier that none of the reference dialects supports, so a placeholder with the original as default. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "kind": "manual",
+   "step": "edit",
+   "count": 1,
+   "note": "The day field of the difference of two timestamps: the standard needs an interval qualifier that none of the reference dialects supports, so a placeholder with the original as default. (docs/RUNNER.md, Dialects)"
   },
   {
    "kind": "hard",
-   "step": "extract",
+   "step": "cast",
    "count": 2
   },
   {

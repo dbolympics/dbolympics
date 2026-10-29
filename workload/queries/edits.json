@@ -217,5 +217,17 @@
    "to": "s.delivered_at <= s.shipped_at + INTERVAL '3 days'",
    "note": "Subtracting two timestamps without an interval qualifier is not standard; the same condition as a timestamp plus a standard interval literal, which PostgreSQL and MySQL support. (docs/RUNNER.md, Dialects)"
   }
+ ],
+ "q173": [
+  {
+   "from": "avg(DATE_PART('day', o.closed_at - o.created_at))",
+   "to": "avg({{whole_days_between(o.created_at, o.closed_at)}})",
+   "note": "The day field of the difference of two timestamps: the standard needs an interval qualifier that none of the reference dialects supports, so a placeholder with the original as default. (docs/RUNNER.md, Dialects)"
+  },
+  {
+   "from": "(ORDER BY DATE_PART('day', o.closed_at - o.created_at))",
+   "to": "(ORDER BY {{whole_days_between(o.created_at, o.closed_at)}})",
+   "note": "The day field of the difference of two timestamps: the standard needs an interval qualifier that none of the reference dialects supports, so a placeholder with the original as default. (docs/RUNNER.md, Dialects)"
+  }
  ]
 }
