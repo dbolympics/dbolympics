@@ -4,8 +4,8 @@ SELECT
   count(*) FILTER (WHERE o.is_won) AS closed_won,
   count(*) FILTER (WHERE NOT o.is_won) AS closed_lost,
   100.0 * count(*) FILTER (WHERE o.is_won) / NULLIF(count(*), 0) AS win_rate_pct,
-  avg(EXTRACT(DAY FROM o.closed_at - o.created_at)) AS avg_cycle_days,
-  {{percentile_cont(0.5, EXTRACT(DAY FROM o.closed_at - o.created_at))}} AS median_cycle_days
+  avg({{whole_days_between(o.created_at, o.closed_at)}}) AS avg_cycle_days,
+  {{percentile_cont(0.5, {{whole_days_between(o.created_at, o.closed_at)}})}} AS median_cycle_days
 FROM opportunities o
 JOIN accounts a ON a.id = o.account_id
 JOIN tenants t ON t.id = a.tenant_id

@@ -1596,8 +1596,8 @@
  ],
  "q173": [
   {
-   "from": "  round(100.0 * count(*) FILTER (WHERE o.is_won) / NULLIF(count(*), 0), 1) AS win_rate_pct,\n  round(CAST(avg(EXTRACT(DAY FROM o.closed_at - o.created_at)) AS numeric), 1) AS avg_cycle_days,\n  round(CAST(percentile_cont(0.5) WITHIN GROUP (ORDER BY EXTRACT(DAY FROM o.closed_at - o.created_at)) AS numeric), 1) AS median_cycle_days",
-   "to": "  100.0 * count(*) FILTER (WHERE o.is_won) / NULLIF(count(*), 0) AS win_rate_pct,\n  avg(EXTRACT(DAY FROM o.closed_at - o.created_at)) AS avg_cycle_days,\n  percentile_cont(0.5) WITHIN GROUP (ORDER BY EXTRACT(DAY FROM o.closed_at - o.created_at)) AS median_cycle_days",
+   "from": "  round(100.0 * count(*) FILTER (WHERE o.is_won) / NULLIF(count(*), 0), 1) AS win_rate_pct,\n  round(CAST(avg({{whole_days_between(o.created_at, o.closed_at)}}) AS numeric), 1) AS avg_cycle_days,\n  round(CAST(percentile_cont(0.5) WITHIN GROUP (ORDER BY {{whole_days_between(o.created_at, o.closed_at)}}) AS numeric), 1) AS median_cycle_days",
+   "to": "  100.0 * count(*) FILTER (WHERE o.is_won) / NULLIF(count(*), 0) AS win_rate_pct,\n  avg({{whole_days_between(o.created_at, o.closed_at)}}) AS avg_cycle_days,\n  percentile_cont(0.5) WITHIN GROUP (ORDER BY {{whole_days_between(o.created_at, o.closed_at)}}) AS median_cycle_days",
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; bare NUMERIC cast that only served the rounding removed"
   }
  ],
