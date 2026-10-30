@@ -4,7 +4,7 @@ WITH months AS (
   WHERE calendar_date BETWEEN DATE '2023-01-01' AND DATE '2025-12-31'
 ),
 login_month AS (
-  SELECT CAST(date_trunc('month', occurred_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', occurred_at)}} AS date) AS month_start,
          email,
          succeeded
   FROM login_attempts
@@ -33,7 +33,7 @@ audit_combined AS (
   SELECT occurred_at, action FROM audit_log_archive WHERE action = 'access_denied'
 ),
 audit_agg AS (
-  SELECT CAST(date_trunc('month', occurred_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', occurred_at)}} AS date) AS month_start,
          COUNT(*) AS audit_access_denied_events
   FROM audit_combined
   GROUP BY month_start

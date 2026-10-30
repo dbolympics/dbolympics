@@ -339,6 +339,22 @@ def placeholder_date_diff(toks):
         n += 1
 
 
+def placeholder_date_trunc(toks):
+    """date_trunc('unit', x) -> {{date_trunc('unit', x)}}: not in the standard, and of the reference dialects only
+    PostgreSQL has it (with a timestamp as its result)."""
+    n = 0
+    while True:
+        sites = call_sites(toks, "date_trunc")
+        if not sites:
+            return toks, n
+        i, lp, rp = sites[0]
+        args = [text(a).strip() for a in split_args(toks[lp + 1:rp])]
+        if len(args) != 2 or args[0].lower() not in ("'hour'", "'month'", "'quarter'"):
+            raise ValueError(f"unsupported date_trunc {text(toks[i:rp + 1])}")
+        toks = tokenize(text(toks[:i]) + "{{date_trunc(" + args[0].lower() + ", " + args[1] + ")}}" + text(toks[rp + 1:]))
+        n += 1
+
+
 def placeholder_count_distinct_over(toks):
     n = 0
     for i, lp, rp in call_sites(toks, "count"):
@@ -572,7 +588,8 @@ def placeholder_count_distinct_pair(toks):
 DIALECT_LAST = [("bool_or", placeholder_bool_or), ("percentile_cont", placeholder_percentile_cont),
                 ("string_agg", placeholder_string_agg),
                 ("seconds_between", placeholder_seconds_between), ("date_diff_days", placeholder_date_minus),
-                ("equals_any", placeholder_equals_any), ("count_distinct_pair", placeholder_count_distinct_pair)]
+                ("equals_any", placeholder_equals_any), ("count_distinct_pair", placeholder_count_distinct_pair),
+                ("date_trunc", placeholder_date_trunc)]
 
 
 # --- ORDER BY tie-breakers (determinism) ------------------------------------------------

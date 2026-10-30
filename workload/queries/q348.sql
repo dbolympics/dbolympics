@@ -7,7 +7,7 @@ tenant AS (
   SELECT id AS tenant_id FROM tenants WHERE name = 'Cragsley Outfitters'
 ),
 reviews AS (
-  SELECT CAST(date_trunc('month', pr.created_at) AS date) AS month,
+  SELECT CAST({{date_trunc('month', pr.created_at)}} AS date) AS month,
          count(*) AS review_count,
          avg(cast(pr.rating as numeric(18,6))) AS avg_rating,
          100.0 * count(*) FILTER (WHERE pr.rating <= 2) / NULLIF(count(*), 0) AS pct_1_2_star
@@ -17,7 +17,7 @@ reviews AS (
   GROUP BY 1
 ),
 orders_agg AS (
-  SELECT CAST(date_trunc('month', o.placed_at) AS date) AS month,
+  SELECT CAST({{date_trunc('month', o.placed_at)}} AS date) AS month,
          count(*) AS orders_count,
          sum(
            CASE WHEN o.currency_code = 'EUR' THEN o.grand_total

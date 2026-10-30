@@ -5,7 +5,7 @@ WITH months AS (
 ),
 payout_agg AS (
   SELECT
-    CAST(date_trunc('month', COALESCE(p.paid_at, CAST(p.arrival_date AS timestamp))) AS date) AS month,
+    CAST({{date_trunc('month', COALESCE(p.paid_at, CAST(p.arrival_date AS timestamp)))}} AS date) AS month,
     SUM(CAST(p.gross_amount / er.rate AS NUMERIC(18,6))) AS gross_eur,
     SUM(CAST(p.fee_amount / er.rate AS NUMERIC(18,6))) AS fee_eur,
     SUM(CAST(p.net_amount / er.rate AS NUMERIC(18,6))) AS net_eur
@@ -19,7 +19,7 @@ payout_agg AS (
 ),
 refund_agg AS (
   SELECT
-    CAST(date_trunc('month', pr.processed_at) AS date) AS month,
+    CAST({{date_trunc('month', pr.processed_at)}} AS date) AS month,
     SUM(CAST(pr.amount / er.rate AS NUMERIC(18,6))) AS refunds_eur
   FROM payment_refunds pr
   JOIN exchange_rates er

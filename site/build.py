@@ -596,6 +596,7 @@ def ai_facts():
 POINT_MEANING = {
     "date_diff_days": "the days from a to b; the difference of two dates is a number of days in PostgreSQL and an interval in the standard",
     "year_month": "a timestamp as a 'YYYY-MM' string",
+    "date_trunc": "the start of a timestamp's hour, month or quarter, a timestamp (PostgreSQL's date_trunc)",
     "fetch_first": "the first n rows (the standard's FETCH FIRST n ROWS ONLY)",
     "bool_or": "whether any value is true (PostgreSQL's aggregate)",
     "percentile_cont": "the p-th percentile of x, interpolated between the closest values",

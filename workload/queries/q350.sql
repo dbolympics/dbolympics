@@ -10,7 +10,7 @@ base AS (
 ),
 reviews AS (
   SELECT tenant_id,
-    CAST(DATE_TRUNC('month', created_at) AS date) AS month_start,
+    CAST({{date_trunc('month', created_at)}} AS date) AS month_start,
     COUNT(*) AS review_count,
     AVG(CAST(rating AS NUMERIC(18,6))) AS avg_rating,
     SUM(CASE WHEN rating IN (1,2) THEN 1 ELSE 0 END) AS cnt_low
@@ -18,11 +18,11 @@ reviews AS (
   WHERE is_approved = true
     AND tenant_id IN (SELECT tenant_id FROM tenants_filtered)
     AND created_at >= DATE '2025-07-01' AND created_at < DATE '2026-01-01'
-  GROUP BY tenant_id, CAST(DATE_TRUNC('month', created_at) AS date)
+  GROUP BY tenant_id, CAST({{date_trunc('month', created_at)}} AS date)
 ),
 ship AS (
   SELECT o.tenant_id AS tenant_id,
-    CAST(DATE_TRUNC('month', s.shipped_at) AS date) AS month_start,
+    CAST({{date_trunc('month', s.shipped_at)}} AS date) AS month_start,
     COUNT(*) AS shipments_count,
     SUM(CASE WHEN s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '5 days' THEN 1 ELSE 0 END) AS delivered_within_5,
     SUM(CASE WHEN s.delivered_at IS NOT NULL THEN 1 ELSE 0 END) AS delivered_known,
@@ -32,7 +32,7 @@ ship AS (
   JOIN orders o ON o.id = f.order_id
   WHERE o.tenant_id IN (SELECT tenant_id FROM tenants_filtered)
     AND s.shipped_at >= DATE '2025-07-01' AND s.shipped_at < DATE '2026-01-01'
-  GROUP BY o.tenant_id, CAST(DATE_TRUNC('month', s.shipped_at) AS date)
+  GROUP BY o.tenant_id, CAST({{date_trunc('month', s.shipped_at)}} AS date)
 )
 SELECT
   b.merchant_name AS merchant_name,

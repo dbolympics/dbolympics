@@ -1,5 +1,5 @@
 SELECT 
-  date_trunc('hour', checked_at) + (CAST(floor(extract(minute from checked_at)/30) AS int) * interval '30 minute') AS interval_start,
+  {{date_trunc('hour', checked_at)}} + (CAST(floor(extract(minute from checked_at)/30) AS int) * interval '30 minute') AS interval_start,
   component,
   count(*) AS total_checks,
   count(*) FILTER (WHERE is_healthy = false) AS unhealthy_checks,

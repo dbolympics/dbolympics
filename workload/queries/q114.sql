@@ -1,5 +1,5 @@
 SELECT
-  {{year_month(date_trunc('month', occurred_at))}} as month,
+  {{year_month({{date_trunc('month', occurred_at)}})}} as month,
   severity,
   count(*) as incidents_detected,
   count(*) filter (where resolved) as resolved_count,

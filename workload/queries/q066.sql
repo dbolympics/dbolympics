@@ -17,36 +17,36 @@ ELSE 100.0*COALESCE(ot.completed_on_time,0)/(COALESCE(ot.completed_on_time,0)+CO
 END AS pct_on_time
 FROM months m
 LEFT JOIN (
-  SELECT CAST(DATE_TRUNC('month', t1.received_at) AS date) AS month_start, COUNT(*) AS requests_received
+  SELECT CAST({{date_trunc('month', t1.received_at)}} AS date) AS month_start, COUNT(*) AS requests_received
   FROM data_subject_requests t1
   GROUP BY 1
 ) r ON r.month_start = m.month_start
 LEFT JOIN (
-  SELECT CAST(DATE_TRUNC('month', t2.received_at) AS date) AS month_start, COUNT(*) AS completed_on_time
+  SELECT CAST({{date_trunc('month', t2.received_at)}} AS date) AS month_start, COUNT(*) AS completed_on_time
   FROM data_subject_requests t2
   WHERE t2.completed_at IS NOT NULL AND t2.completed_at <= t2.due_at
   GROUP BY 1
 ) ot ON ot.month_start = m.month_start
 LEFT JOIN (
-  SELECT CAST(DATE_TRUNC('month', t3.received_at) AS date) AS month_start, COUNT(*) AS completed_late
+  SELECT CAST({{date_trunc('month', t3.received_at)}} AS date) AS month_start, COUNT(*) AS completed_late
   FROM data_subject_requests t3
   WHERE t3.completed_at IS NOT NULL AND (t3.completed_at > t3.due_at OR t3.due_at IS NULL)
   GROUP BY 1
 ) lt ON lt.month_start = m.month_start
 LEFT JOIN (
-  SELECT CAST(DATE_TRUNC('month', t4.received_at) AS date) AS month_start, COUNT(*) AS still_open_not_due
+  SELECT CAST({{date_trunc('month', t4.received_at)}} AS date) AS month_start, COUNT(*) AS still_open_not_due
   FROM data_subject_requests t4
   WHERE t4.completed_at IS NULL AND (t4.due_at IS NULL OR t4.due_at >= DATE '2025-12-31')
   GROUP BY 1
 ) nd ON nd.month_start = m.month_start
 LEFT JOIN (
-  SELECT CAST(DATE_TRUNC('month', t5.received_at) AS date) AS month_start, COUNT(*) AS still_open_overdue
+  SELECT CAST({{date_trunc('month', t5.received_at)}} AS date) AS month_start, COUNT(*) AS still_open_overdue
   FROM data_subject_requests t5
   WHERE t5.completed_at IS NULL AND t5.due_at < DATE '2025-12-31'
   GROUP BY 1
 ) od ON od.month_start = m.month_start
 LEFT JOIN (
-  SELECT CAST(DATE_TRUNC('month', t6.received_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', t6.received_at)}} AS date) AS month_start,
     AVG({{seconds_between(t6.received_at, t6.completed_at)}}/86400.0) AS avg_days_to_complete
   FROM data_subject_requests t6
   WHERE t6.completed_at IS NOT NULL
@@ -55,7 +55,7 @@ LEFT JOIN (
 LEFT JOIN (
   SELECT month_start, {{percentile_cont(0.5, days)}} AS median_days_to_complete
   FROM (
-    SELECT CAST(DATE_TRUNC('month', t7.received_at) AS date) AS month_start,
+    SELECT CAST({{date_trunc('month', t7.received_at)}} AS date) AS month_start,
       {{seconds_between(t7.received_at, t7.completed_at)}}/86400.0 AS days
     FROM data_subject_requests t7
     WHERE t7.completed_at IS NOT NULL

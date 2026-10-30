@@ -12,6 +12,7 @@ points as JSON; `dbo-bench render` writes the queries as a system gets them.
 |---|---|
 | `date_diff_days(a, b)` | `(CAST({b} AS DATE) - CAST({a} AS DATE))` |
 | `year_month(x)` | `to_char({x}, 'YYYY-MM')` |
+| `date_trunc(unit, x)` | `date_trunc({unit}, {x})`, the start of x's `'hour'`, `'month'` or `'quarter'`, a timestamp (PostgreSQL's; the standard has no truncation) |
 | `fetch_first(n)` | `FETCH FIRST {n} ROWS ONLY` (standard; for a system that rejects it, `LIMIT {n}`) |
 | `count_distinct_over(x, window)` | `COUNT(DISTINCT {x}) OVER ({window})`, without a window ORDER BY or frame; `{window}` is the specification without its parentheses. Systems without DISTINCT window aggregates use two dense ranks (`bench/src/dialect.rs`) |
 | `bool_or(x)` | `BOOL_OR({x})` (PostgreSQL's; the standard's `SOME` and `ANY` aggregates are hardly implemented) |
@@ -76,7 +77,7 @@ Renaming an alias at all its uses is simple too.
      `JSON_VALUE(x, '$.key')`, `(t - x) > interval '30 days'` to `x < t - INTERVAL '30 days'`.
    - Otherwise a placeholder. Its default is the standard's Y where the standard has one that a
      reference dialect supports, else X. With X: `STRING_AGG`, `BOOL_OR`,
-     `EXTRACT(EPOCH FROM ...)`, `date - date`, `to_char`, the day field and the midpoint of a
+     `EXTRACT(EPOCH FROM ...)`, `date - date`, `to_char`, `date_trunc`, the day field and the midpoint of a
      difference of timestamps. With Y: `add_minutes` and `equals_any`, both supported only by
      PostgreSQL among the four.
 

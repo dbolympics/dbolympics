@@ -8,12 +8,12 @@ SELECT
   rm.median_days_requested_to_refunded AS median_days_requested_to_refunded,
   CASE WHEN rm.returns_requested > 0 THEN rm.returns_rejected * 100.0 / rm.returns_requested ELSE NULL END AS returns_rejected_pct
 FROM
-  (SELECT {{year_month(date_trunc('month', placed_at))}} AS month, count(*) AS orders_placed
+  (SELECT {{year_month({{date_trunc('month', placed_at)}})}} AS month, count(*) AS orders_placed
    FROM orders
    WHERE placed_at >= DATE '2023-01-01' AND placed_at < DATE '2026-01-01'
    GROUP BY 1) om
 FULL OUTER JOIN
-  (SELECT {{year_month(date_trunc('month', requested_at))}} AS month,
+  (SELECT {{year_month({{date_trunc('month', requested_at)}})}} AS month,
           count(*) AS returns_requested,
           count(*) FILTER (WHERE status = 'refunded') AS returns_refunded,
           count(*) FILTER (WHERE status = 'rejected') AS returns_rejected,
