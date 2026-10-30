@@ -1,0 +1,823 @@
+run,loaded,query,median_s,status,message
+1,2024-and-earlier,load,52.117569,ok,
+1,2024-and-earlier,q001,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q002,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.fee_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q003,0.164303,ok,
+1,2024-and-earlier,q004,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.fee_amount Decimal(14, 4) Decimal64(size = 0), __table1.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q005,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table15.grand_total Decimal(14, 4) Decimal64(size = 0), __table16.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q006,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q007,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.gross_amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q008,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q009,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.fee_amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q010,0.016191,ok,
+1,2024-and-earlier,q011,0.084057,ok,
+1,2024-and-earlier,q012,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table7.amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q013,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.gross_amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q014,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table12.gross_amount Decimal(14, 4) Decimal64(size = 0), if(equals(__table12.currency_code, 'EUR'_String), 1_UInt8, __table13.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, "
+1,2024-and-earlier,q015,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q016,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.gross_amount Decimal(14, 4) Decimal64(size = 0), __table2.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q017,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q018,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q019,0.103390,ok,
+1,2024-and-earlier,q020,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q021,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q022,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q023,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q024,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.amount_refunded Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q025,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table5.id' in current header: __table5.placed_at. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q026,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table7.id' in current header: __table7.tenant_id, __table7.placed_at. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q027,0.496296,ok,
+1,2024-and-earlier,q028,0.242354,ok,
+1,2024-and-earlier,q029,0.406981,ok,
+1,2024-and-earlier,q030,0.225600,ok,
+1,2024-and-earlier,q031,0.056315,ok,
+1,2024-and-earlier,q032,0.143301,ok,
+1,2024-and-earlier,q033,0.927125,ok,
+1,2024-and-earlier,q034,0.021504,ok,
+1,2024-and-earlier,q035,0.032669,ok,
+1,2024-and-earlier,q036,0.128148,ok,
+1,2024-and-earlier,q037,0.557452,ok,
+1,2024-and-earlier,q038,0.073612,ok,
+1,2024-and-earlier,q039,0.086553,ok,
+1,2024-and-earlier,q040,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: __table6.created_at, __table6.first_response_at, __table6.resolved_at. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q041,0.066711,ok,
+1,2024-and-earlier,q042,0.260532,ok,
+1,2024-and-earlier,q043,0.336515,ok,
+1,2024-and-earlier,q044,0.059815,ok,
+1,2024-and-earlier,q045,0.024334,ok,
+1,2024-and-earlier,q046,0.049795,ok,
+1,2024-and-earlier,q047,0.074103,ok,
+1,2024-and-earlier,q048,0.085251,ok,
+1,2024-and-earlier,q049,0.119114,ok,
+1,2024-and-earlier,q050,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.attributed_revenue Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table2.fx_rate Nullable(Decimal(18, 6)) Nullable(size = 0, Decima"
+1,2024-and-earlier,q051,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table5.currency_code, 'EUR'_String), 1_UInt8, __table6.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+1,2024-and-earlier,q052,0.220577,ok,
+1,2024-and-earlier,q053,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table2.currency_code, 'EUR'_String), 1_UInt8, __table3.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+1,2024-and-earlier,q054,0.057141,ok,
+1,2024-and-earlier,q055,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.grand_total Decimal(14, 4) Decimal64(size = 0), __table1.eur_rate Nullable(Decimal(18, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOU"
+1,2024-and-earlier,q056,0.098600,ok,
+1,2024-and-earlier,q057,,error,Code: 48. DB::Exception: Correlated subqueries in aggregation keys are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q058,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table1.currency_code, 'EUR'_String), 1_UInt8, __table5.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+1,2024-and-earlier,q059,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q060,0.008901,ok,
+1,2024-and-earlier,q061,0.090378,ok,
+1,2024-and-earlier,q062,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q063,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q064,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), coalesce(__table6.rate, 1_UInt8) Decimal(18, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q065,0.097756,ok,
+1,2024-and-earlier,q066,0.186318,ok,
+1,2024-and-earlier,q067,0.024363,ok,
+1,2024-and-earlier,q068,0.090485,ok,
+1,2024-and-earlier,q069,0.054100,ok,
+1,2024-and-earlier,q070,0.021239,ok,
+1,2024-and-earlier,q071,0.027350,ok,
+1,2024-and-earlier,q072,0.018142,ok,
+1,2024-and-earlier,q073,0.023640,ok,
+1,2024-and-earlier,q074,0.223380,ok,
+1,2024-and-earlier,q075,0.004678,ok,
+1,2024-and-earlier,q076,0.162232,ok,
+1,2024-and-earlier,q077,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table16.user_id' in current header: __table16.id, __table16.tenant_id, __table16.subtotal. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q078,,error,"Code: 386. DB::Exception: There is no supertype for types String, Date because some of them are String/FixedString/Enum and some of them are not: while executing 'FUNCTION greaterOrEquals(formatDateTime(CAST(CAST(dateTrunc('month'_String, __table2.first_placed_at), 'DateTime64(6)'_String... : 2, _CA"
+1,2024-and-earlier,q079,0.098233,ok,
+1,2024-and-earlier,q080,0.119591,ok,
+1,2024-and-earlier,q081,0.072582,ok,
+1,2024-and-earlier,q082,0.102749,ok,
+1,2024-and-earlier,q083,0.072698,ok,
+1,2024-and-earlier,q084,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q085,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q086,0.364559,ok,
+1,2024-and-earlier,q087,0.432596,ok,
+1,2024-and-earlier,q088,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q089,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q090,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q091,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q092,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.total Decimal(14, 4) Decimal64(size = 0), __table2.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q093,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.gross_amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q094,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q095,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q096,0.396804,ok,
+1,2024-and-earlier,q097,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), __table3.eur_rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q098,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q099,0.012877,ok,
+1,2024-and-earlier,q100,0.172892,ok,
+1,2024-and-earlier,q101,0.056721,ok,
+1,2024-and-earlier,q102,0.037950,ok,
+1,2024-and-earlier,q103,25.699151,ok,
+1,2024-and-earlier,q104,0.021116,ok,
+1,2024-and-earlier,q105,0.035373,ok,
+1,2024-and-earlier,q106,0.274190,ok,
+1,2024-and-earlier,q107,0.007560,ok,
+1,2024-and-earlier,q108,0.024439,ok,
+1,2024-and-earlier,q109,0.082056,ok,
+1,2024-and-earlier,q110,0.006473,ok,
+1,2024-and-earlier,q111,0.003072,ok,
+1,2024-and-earlier,q112,0.148033,ok,
+1,2024-and-earlier,q113,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table15.month_end' in current header: __table13.purpose, __table15.month_start, __table15.month_label. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q114,0.008312,ok,
+1,2024-and-earlier,q115,0.058196,ok,
+1,2024-and-earlier,q116,4.057992,ok,
+1,2024-and-earlier,q117,0.003695,ok,
+1,2024-and-earlier,q118,0.004661,ok,
+1,2024-and-earlier,q119,0.003106,ok,
+1,2024-and-earlier,q120,0.004283,ok,
+1,2024-and-earlier,q121,0.013375,ok,
+1,2024-and-earlier,q122,0.066114,ok,
+1,2024-and-earlier,q123,0.010683,ok,
+1,2024-and-earlier,q124,0.006194,ok,
+1,2024-and-earlier,q125,0.055468,ok,
+1,2024-and-earlier,q126,0.005721,ok,
+1,2024-and-earlier,q127,0.067962,ok,
+1,2024-and-earlier,q128,0.076956,ok,
+1,2024-and-earlier,q129,0.016427,ok,
+1,2024-and-earlier,q130,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q131,0.022695,ok,
+1,2024-and-earlier,q132,0.054017,ok,
+1,2024-and-earlier,q133,0.100587,ok,
+1,2024-and-earlier,q134,0.071257,ok,
+1,2024-and-earlier,q135,0.072686,ok,
+1,2024-and-earlier,q136,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q137,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table9.line_total Decimal(14, 4) Decimal64(size = 0), __table12.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q138,0.107818,ok,
+1,2024-and-earlier,q139,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table32.line_total Decimal(14, 4) Decimal64(size = 0), __table35.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q140,0.069226,ok,
+1,2024-and-earlier,q141,0.049224,ok,
+1,2024-and-earlier,q142,0.065394,ok,
+1,2024-and-earlier,q143,0.097251,ok,
+1,2024-and-earlier,q144,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q145,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table4.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+1,2024-and-earlier,q146,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.line_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q147,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q148,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.discount_amount_local Decimal(14, 4) Decimal64(size = 0), __table16.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q149,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q150,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Decimal(14, 4) Decimal64(size = 0), nullIf(__table4.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (AR"
+1,2024-and-earlier,q151,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.subtotal Decimal(14, 4) Decimal64(size = 0), __table9.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q152,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.discount_amount Decimal(14, 4) Decimal64(size = 0), coalesce(__table6.rate, 1_UInt8) Decimal(18, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q153,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.discount_amount Decimal(14, 4) Decimal64(size = 0), nullIf(__table8.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (AR"
+1,2024-and-earlier,q154,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table45.discount_amount Decimal(14, 4) Decimal64(size = 0), __table54.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q155,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.subtotal Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q156,,error,"Code: 62. DB::Exception: Syntax error: failed at position 3545 (c) (line 86, col 10): c.code AS code FROM coupons c WHERE c.discount_id = d.id ORDER BY c.id NULLS LAST FETCH FIRST 1 ROWS ONLY"
+1,2024-and-earlier,q157,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table58.discount_amount Decimal(14, 4) Decimal64(size = 0), __table68.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_B"
+1,2024-and-earlier,q158,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.subtotal Decimal(14, 4) Decimal64(size = 0), __table21.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q159,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.refund_total Decimal(14, 4) Decimal64(size = 0), __table21.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q160,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.reward_amount Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), coalesce(__table15.rate, if(equals(__table13.currency_code, 'EUR'_Strin"
+1,2024-and-earlier,q161,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.grand_total Decimal(14, 4) Decimal64(size = 0), __table16.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+1,2024-and-earlier,q162,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table21.id' in current header: . (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q163,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: __table6.created_at. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q164,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table15.grand_total Decimal(14, 4) Decimal64(size = 0), nullIf(__table21.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGU"
+1,2024-and-earlier,q165,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.reward_amount Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size"
+1,2024-and-earlier,q166,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table13.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q167,3.174952,ok,
+1,2024-and-earlier,q168,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.total Decimal(14, 4) Decimal64(size = 0), nullIf(__table9.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT"
+1,2024-and-earlier,q169,0.716533,ok,
+1,2024-and-earlier,q170,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table40.grand_total Decimal(14, 4) Decimal64(size = 0), __table49.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+1,2024-and-earlier,q171,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table16.grand_total Decimal(14, 4) Decimal64(size = 0), coalesce(__table17.rate, if(equals(__table16.currency_code, 'EUR'_String), 1_UInt8, _CAST(NULL_Nullable(Nothing), 'Nulla"
+1,2024-and-earlier,q172,0.057564,ok,
+1,2024-and-earlier,q173,0.031899,ok,
+1,2024-and-earlier,q174,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q175,0.081721,ok,
+1,2024-and-earlier,q176,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q177,0.042370,ok,
+1,2024-and-earlier,q178,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q179,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q180,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q181,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q182,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q183,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q184,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table1.quantity), __table1.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table1.rate Nullable(Decimal(12, 6)) Nul"
+1,2024-and-earlier,q185,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table2.quantity), __table6.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), if(equals(__table6.currency_code, 'EUR'_St"
+1,2024-and-earlier,q186,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.unit_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table11.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = "
+1,2024-and-earlier,q187,0.034279,ok,
+1,2024-and-earlier,q188,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table7.quantity), __table10.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table13.rate Nullable(Decimal(12, 6)) N"
+1,2024-and-earlier,q189,0.038960,ok,
+1,2024-and-earlier,q190,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.unit_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0"
+1,2024-and-earlier,q191,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table2.quantity_signed), __table10.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), nullIf(__table13.rate, 0_UInt8) Nu"
+1,2024-and-earlier,q192,0.023297,ok,
+1,2024-and-earlier,q193,0.005231,ok,
+1,2024-and-earlier,q194,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q195,0.005615,ok,
+1,2024-and-earlier,q196,0.039748,ok,
+1,2024-and-earlier,q197,0.065706,ok,
+1,2024-and-earlier,q198,0.116035,ok,
+1,2024-and-earlier,q199,0.086857,ok,
+1,2024-and-earlier,q200,0.073142,ok,
+1,2024-and-earlier,q201,0.045497,ok,
+1,2024-and-earlier,q202,0.012015,ok,
+1,2024-and-earlier,q203,0.058709,ok,
+1,2024-and-earlier,q204,0.024946,ok,
+1,2024-and-earlier,q205,0.010025,ok,
+1,2024-and-earlier,q206,0.054763,ok,
+1,2024-and-earlier,q207,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table5.id' in current header: __table5.created_at, __table5.resolved_at, __table6.score. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q208,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.gross_amount Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q209,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q210,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table4.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Decim"
+1,2024-and-earlier,q211,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q212,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table4.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Decim"
+1,2024-and-earlier,q213,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.shipping_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size"
+1,2024-and-earlier,q214,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.fee_amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q215,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.shipping_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size"
+1,2024-and-earlier,q216,0.151715,ok,
+1,2024-and-earlier,q217,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.gross_amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q218,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.gross_amount Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q219,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.shipping_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q220,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.payment_amount Decimal(14, 4) Decimal64(size = 0), __table10.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOU"
+1,2024-and-earlier,q221,0.438976,ok,
+1,2024-and-earlier,q222,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q223,2.468555,ok,
+1,2024-and-earlier,q224,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q225,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q226,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q227,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q228,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q229,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q230,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q231,0.678194,ok,
+1,2024-and-earlier,q232,0.502011,ok,
+1,2024-and-earlier,q233,0.269295,ok,
+1,2024-and-earlier,q234,0.723354,ok,
+1,2024-and-earlier,q235,0.025936,ok,
+1,2024-and-earlier,q236,0.007130,ok,
+1,2024-and-earlier,q237,0.764179,ok,
+1,2024-and-earlier,q238,0.515000,ok,
+1,2024-and-earlier,q239,0.233588,ok,
+1,2024-and-earlier,q240,0.228105,ok,
+1,2024-and-earlier,q241,0.851731,ok,
+1,2024-and-earlier,q242,0.619978,ok,
+1,2024-and-earlier,q243,0.500392,ok,
+1,2024-and-earlier,q244,0.007567,ok,
+1,2024-and-earlier,q245,0.005033,ok,
+1,2024-and-earlier,q246,0.024555,ok,
+1,2024-and-earlier,q247,0.031533,ok,
+1,2024-and-earlier,q248,0.174389,ok,
+1,2024-and-earlier,q249,0.014699,ok,
+1,2024-and-earlier,q250,0.046366,ok,
+1,2024-and-earlier,q251,0.038225,ok,
+1,2024-and-earlier,q252,0.032621,ok,
+1,2024-and-earlier,q253,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table5.id' in current header: __table5.created_at, __table5.resolved_at, __table6.name. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q254,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q255,0.109889,ok,
+1,2024-and-earlier,q256,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.subtotal Decimal(14, 4) Decimal64(size = 0), __table10.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q257,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.discount_amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q258,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.discount_total Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUN"
+1,2024-and-earlier,q259,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table5.eur_rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOU"
+1,2024-and-earlier,q260,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table8.tenant_id' in current header: __table8.user_id, __table8.placed_at, __table8.currency_code, __table9.industry. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q261,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table27.grand_total Decimal(14, 4) Decimal64(size = 0), __table28.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q262,0.106953,ok,
+1,2024-and-earlier,q263,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table10.id' in current header: __table10.placed_at, __table10.currency_code, __table10.grand_total, __table11.industry. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q264,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table3.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q265,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.attributed_revenue Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64"
+1,2024-and-earlier,q266,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.attributed_revenue Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64"
+1,2024-and-earlier,q267,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q268,0.205558,ok,
+1,2024-and-earlier,q269,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q270,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q271,1.484785,ok,
+1,2024-and-earlier,q272,0.994628,ok,
+1,2024-and-earlier,q273,0.195990,ok,
+1,2024-and-earlier,q274,4.082150,ok,
+1,2024-and-earlier,q275,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q276,0.032807,ok,
+1,2024-and-earlier,q277,0.019379,ok,
+1,2024-and-earlier,q278,0.007488,ok,
+1,2024-and-earlier,q279,0.031296,ok,
+1,2024-and-earlier,q280,0.012769,ok,
+1,2024-and-earlier,q281,0.045039,ok,
+1,2024-and-earlier,q282,0.008876,ok,
+1,2024-and-earlier,q283,0.118288,ok,
+1,2024-and-earlier,q284,0.136990,ok,
+1,2024-and-earlier,q285,0.004317,ok,
+1,2024-and-earlier,q286,0.058665,ok,
+1,2024-and-earlier,q287,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.subtotal Decimal(14, 4) Decimal64(size = 0), nullIf(__table3.eur_rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUM"
+1,2024-and-earlier,q288,0.073733,ok,
+1,2024-and-earlier,q289,0.600250,ok,
+1,2024-and-earlier,q290,0.077416,ok,
+1,2024-and-earlier,q291,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.subtotal Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q292,0.249212,ok,
+1,2024-and-earlier,q293,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.tenant_id' in current header: __table6.user_id, __table6.status, __table6.created_at, __table6.converted_at. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q294,0.060138,ok,
+1,2024-and-earlier,q295,0.235740,ok,
+1,2024-and-earlier,q296,0.085996,ok,
+1,2024-and-earlier,q297,0.166451,ok,
+1,2024-and-earlier,q298,0.071097,ok,
+1,2024-and-earlier,q299,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q300,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q301,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.amount Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q302,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.contract_value Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q303,0.005185,ok,
+1,2024-and-earlier,q304,1.873780,ok,
+1,2024-and-earlier,q305,0.095810,ok,
+1,2024-and-earlier,q306,0.021947,ok,
+1,2024-and-earlier,q307,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q308,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table7.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q309,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q310,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q311,0.043844,ok,
+1,2024-and-earlier,q312,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q313,,error,Code: 48. DB::Exception: Correlated subqueries in ORDER BY are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q314,0.169425,ok,
+1,2024-and-earlier,q315,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q316,0.061149,ok,
+1,2024-and-earlier,q317,0.096075,ok,
+1,2024-and-earlier,q318,0.117900,ok,
+1,2024-and-earlier,q319,0.007539,ok,
+1,2024-and-earlier,q320,0.004720,ok,
+1,2024-and-earlier,q321,0.016763,ok,
+1,2024-and-earlier,q322,0.005227,ok,
+1,2024-and-earlier,q323,0.064016,ok,
+1,2024-and-earlier,q324,0.006793,ok,
+1,2024-and-earlier,q325,0.309189,ok,
+1,2024-and-earlier,q326,0.013522,ok,
+1,2024-and-earlier,q327,0.004048,ok,
+1,2024-and-earlier,q328,0.657626,ok,
+1,2024-and-earlier,q329,0.215643,ok,
+1,2024-and-earlier,q330,0.805992,ok,
+1,2024-and-earlier,q331,0.339641,ok,
+1,2024-and-earlier,q332,0.828008,ok,
+1,2024-and-earlier,q333,0.109415,ok,
+1,2024-and-earlier,q334,0.039493,ok,
+1,2024-and-earlier,q335,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.grand_total Decimal(14, 4) Decimal64(size = 0), __table14.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+1,2024-and-earlier,q336,0.058413,ok,
+1,2024-and-earlier,q337,0.016063,ok,
+1,2024-and-earlier,q338,0.068416,ok,
+1,2024-and-earlier,q339,0.004972,ok,
+1,2024-and-earlier,q340,0.064527,ok,
+1,2024-and-earlier,q341,,error,"Code: 43. DB::Exception: Illegal types Int32 and IntervalMinute of arguments of function multiply: In scope SELECT CAST(date_trunc('hour', checked_at), 'DateTime64(6)') + (CAST(floor(toMinute(checked_at) / 30), 'int') * toIntervalMinute(30)) AS interval_start, component, count(*) AS total_checks, co"
+1,2024-and-earlier,q342,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.grand_total Decimal(14, 4) Decimal64(size = 0), __table2.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q343,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing 'FUNCTION divide(__table3.grand_total :: 3, coalesce(__table4.rate, 1_UInt8) :: 7) -> divide(__table3.grand_total, coalesce(__table4.rate, 1_UInt8)) Nullable(Decimal(18, 4)) : 5'. (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q344,,error,"Code: 62. DB::Exception: Syntax error: failed at position 974 ('14:00:00') (line 25, col 43): '14:00:00'"
+1,2024-and-earlier,q345,0.005920,ok,
+1,2024-and-earlier,q346,0.034099,ok,
+1,2024-and-earlier,q347,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table9.line_total Decimal(14, 4) Decimal64(size = 0), __table13.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q348,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.grand_total Decimal(14, 4) Decimal64(size = 0), __table11.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q349,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.line_total Decimal(14, 4) Decimal64(size = 0), __table26.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q350,0.146762,ok,
+1,2024-and-earlier,q351,0.249458,ok,
+1,2024-and-earlier,q352,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table16.grand_total Decimal(14, 4) Decimal64(size = 0), __table17.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q353,,error,"Code: 48. DB::Exception: Correlated subqueries are not supported as IN function arguments yet, but found in expression: oi.product_variant_id IN (SELECT pv.id FROM product_variants AS pv WHERE pv.product_id = p.id). (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q354,0.068199,ok,
+1,2024-and-earlier,q355,0.096086,ok,
+1,2024-and-earlier,q356,0.005445,ok,
+1,2024-and-earlier,q357,0.225788,ok,
+1,2024-and-earlier,q358,,error,"Code: 48. DB::Exception: Correlated subqueries are not supported as IN function arguments yet, but found in expression: oi.product_variant_id IN (SELECT pv.id FROM product_variants AS pv WHERE pv.product_id = p.id). (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q359,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Decimal(14, 4) Decimal64(size = 0), __table28.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q360,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q361,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table33.refund_amount Decimal(14, 4) Decimal64(size = 0), nullIf(__table33.eur_rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0))."
+1,2024-and-earlier,q362,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Nullable(Decimal(38, 4)) Nullable(size = 0, Decimal128(size = 0), UInt8(size = 0)), nullIf(__table22.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(siz"
+1,2024-and-earlier,q363,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table18.id' in current header: __table18.currency_code, __table18.subtotal. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q364,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Window' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q365,,error,"Code: 62. DB::Exception: Syntax error: failed at position 786 (sub) (line 21, col 12): sub.*"
+1,2024-and-earlier,q366,0.006628,ok,
+1,2024-and-earlier,q367,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q368,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: __table6.tenant_id, __table6.user_id, __table6.discount_total, __table6.currency_code, __table6.placed_at. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q369,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_total Decimal(14, 4) Decimal64(size = 0), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUN"
+1,2024-and-earlier,q370,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q371,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments divide(__table12.points, __table7.points_per_currency) Decimal(14, 4) Decimal64(size = 0), __table13.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(s"
+1,2024-and-earlier,q372,0.139193,ok,
+1,2024-and-earlier,q373,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table26.grand_total Decimal(14, 4) Decimal64(size = 0), __table33.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+1,2024-and-earlier,q374,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.subtotal Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table10.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Decima"
+1,2024-and-earlier,q375,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table11.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+1,2024-and-earlier,q376,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table37.grand_total Decimal(14, 4) Decimal64(size = 0), __table45.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+1,2024-and-earlier,q377,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table18.id' in current header: . (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q378,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table18.grand_total Decimal(14, 4) Decimal64(size = 0), __table28.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+1,2024-and-earlier,q379,2.154676,ok,
+1,2024-and-earlier,q380,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.grand_total Decimal(14, 4) Decimal64(size = 0), __table21.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+1,2024-and-earlier,q381,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table19.grand_total Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), nullIf(__table20.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = "
+1,2024-and-earlier,q382,0.314403,ok,
+1,2024-and-earlier,q383,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q384,0.046136,ok,
+1,2024-and-earlier,q385,0.065731,ok,
+1,2024-and-earlier,q386,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table4.closed_at' in current header: __table4.tenant_id, __table4.owner_user_id, __table4.is_won, __table4.currency_code, __table4.amount. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q387,0.039264,ok,
+1,2024-and-earlier,q388,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q389,0.030150,ok,
+1,2024-and-earlier,q390,0.055837,ok,
+1,2024-and-earlier,q391,0.012330,ok,
+1,2024-and-earlier,q392,0.108170,ok,
+1,2024-and-earlier,q393,,error,"Code: 48. DB::Exception: Correlated subqueries are not supported as IN function arguments yet, but found in expression: sa2.stock_location_id IN (SELECT sl3.id FROM stock_locations AS sl3 WHERE sl3.warehouse_id = w.id). (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q394,0.073580,ok,
+1,2024-and-earlier,q395,0.133429,ok,
+1,2024-and-earlier,q396,,error,Code: 48. DB::Exception: Correlated subqueries in ORDER BY are not supported. (NOT_IMPLEMENTED)
+1,2024-and-earlier,q397,0.009414,ok,
+1,2024-and-earlier,q398,0.183607,ok,
+1,2024-and-earlier,q399,0.025230,ok,
+1,2024-and-earlier,q400,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: . (NOT_IMPLEMENTED)"
+1,2024-and-earlier,q401,0.092165,ok,
+1,2024-and-earlier,q402,0.022652,ok,
+1,2024-and-earlier,q403,0.534415,ok,
+1,2024-and-earlier,q404,0.041951,ok,
+1,2024-and-earlier,q405,0.082498,ok,
+1,2024-and-earlier,q406,0.156318,ok,
+1,2024-and-earlier,q407,0.094606,ok,
+1,2024-and-earlier,q408,0.163874,ok,
+1,2024-and-earlier,q409,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,load,15.483296,ok,
+2,2025-Q1,q001,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q002,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.fee_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q003,0.048205,ok,
+2,2025-Q1,q004,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.fee_amount Decimal(14, 4) Decimal64(size = 0), __table1.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q005,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table15.grand_total Decimal(14, 4) Decimal64(size = 0), __table16.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q006,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q007,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.gross_amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q008,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q009,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.fee_amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q010,0.006571,ok,
+2,2025-Q1,q011,0.059519,ok,
+2,2025-Q1,q012,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table7.amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q013,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.gross_amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q014,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table12.gross_amount Decimal(14, 4) Decimal64(size = 0), if(equals(__table12.currency_code, 'EUR'_String), 1_UInt8, __table13.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, "
+2,2025-Q1,q015,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q016,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.gross_amount Decimal(14, 4) Decimal64(size = 0), __table2.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q017,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q018,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q019,0.059133,ok,
+2,2025-Q1,q020,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q021,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q022,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q023,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q024,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.amount_refunded Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q025,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table5.id' in current header: __table5.placed_at. (NOT_IMPLEMENTED)"
+2,2025-Q1,q026,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table7.id' in current header: __table7.tenant_id, __table7.placed_at. (NOT_IMPLEMENTED)"
+2,2025-Q1,q027,0.047951,ok,
+2,2025-Q1,q028,0.262010,ok,
+2,2025-Q1,q029,0.576360,ok,
+2,2025-Q1,q030,0.520273,ok,
+2,2025-Q1,q031,0.046143,ok,
+2,2025-Q1,q032,0.145251,ok,
+2,2025-Q1,q033,1.017363,ok,
+2,2025-Q1,q034,0.031764,ok,
+2,2025-Q1,q035,0.048853,ok,
+2,2025-Q1,q036,0.096100,ok,
+2,2025-Q1,q037,0.493841,ok,
+2,2025-Q1,q038,0.316924,ok,
+2,2025-Q1,q039,0.111374,ok,
+2,2025-Q1,q040,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: __table6.created_at, __table6.first_response_at, __table6.resolved_at. (NOT_IMPLEMENTED)"
+2,2025-Q1,q041,0.063280,ok,
+2,2025-Q1,q042,0.490411,ok,
+2,2025-Q1,q043,,timeout,no result within 30 s
+2,2025-Q1,q044,0.412080,ok,
+2,2025-Q1,q045,0.021641,ok,
+2,2025-Q1,q046,0.069222,ok,
+2,2025-Q1,q047,0.086638,ok,
+2,2025-Q1,q048,0.069964,ok,
+2,2025-Q1,q049,0.140436,ok,
+2,2025-Q1,q050,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.attributed_revenue Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table2.fx_rate Nullable(Decimal(18, 6)) Nullable(size = 0, Decima"
+2,2025-Q1,q051,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table5.currency_code, 'EUR'_String), 1_UInt8, __table6.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+2,2025-Q1,q052,0.211080,ok,
+2,2025-Q1,q053,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table2.currency_code, 'EUR'_String), 1_UInt8, __table3.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+2,2025-Q1,q054,0.084248,ok,
+2,2025-Q1,q055,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.grand_total Decimal(14, 4) Decimal64(size = 0), __table1.eur_rate Nullable(Decimal(18, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOU"
+2,2025-Q1,q056,0.137073,ok,
+2,2025-Q1,q057,,error,Code: 48. DB::Exception: Correlated subqueries in aggregation keys are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q058,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table1.currency_code, 'EUR'_String), 1_UInt8, __table5.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+2,2025-Q1,q059,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q060,0.009619,ok,
+2,2025-Q1,q061,0.107425,ok,
+2,2025-Q1,q062,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q063,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q064,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), coalesce(__table6.rate, 1_UInt8) Decimal(18, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q065,0.180355,ok,
+2,2025-Q1,q066,0.150674,ok,
+2,2025-Q1,q067,0.021164,ok,
+2,2025-Q1,q068,0.088506,ok,
+2,2025-Q1,q069,0.081408,ok,
+2,2025-Q1,q070,0.021759,ok,
+2,2025-Q1,q071,0.023406,ok,
+2,2025-Q1,q072,0.024399,ok,
+2,2025-Q1,q073,0.039697,ok,
+2,2025-Q1,q074,0.301801,ok,
+2,2025-Q1,q075,0.004871,ok,
+2,2025-Q1,q076,0.122007,ok,
+2,2025-Q1,q077,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table16.user_id' in current header: __table16.id, __table16.tenant_id, __table16.subtotal. (NOT_IMPLEMENTED)"
+2,2025-Q1,q078,,error,"Code: 386. DB::Exception: There is no supertype for types String, Date because some of them are String/FixedString/Enum and some of them are not: while executing 'FUNCTION greaterOrEquals(formatDateTime(CAST(CAST(dateTrunc('month'_String, __table2.first_placed_at), 'DateTime64(6)'_String... : 2, _CA"
+2,2025-Q1,q079,0.285035,ok,
+2,2025-Q1,q080,0.104283,ok,
+2,2025-Q1,q081,0.025838,ok,
+2,2025-Q1,q082,0.083903,ok,
+2,2025-Q1,q083,0.035863,ok,
+2,2025-Q1,q084,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q085,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q086,0.354973,ok,
+2,2025-Q1,q087,0.823519,ok,
+2,2025-Q1,q088,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q089,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q090,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.gross_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q091,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q092,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.total Decimal(14, 4) Decimal64(size = 0), __table2.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q093,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.gross_amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q094,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q095,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q096,0.595225,ok,
+2,2025-Q1,q097,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), __table3.eur_rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q098,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q099,0.009692,ok,
+2,2025-Q1,q100,0.212982,ok,
+2,2025-Q1,q101,0.050331,ok,
+2,2025-Q1,q102,0.035136,ok,
+2,2025-Q1,q103,5.824273,ok,
+2,2025-Q1,q104,0.049085,ok,
+2,2025-Q1,q105,0.046030,ok,
+2,2025-Q1,q106,0.035645,ok,
+2,2025-Q1,q107,0.019489,ok,
+2,2025-Q1,q108,0.032819,ok,
+2,2025-Q1,q109,0.066669,ok,
+2,2025-Q1,q110,0.007107,ok,
+2,2025-Q1,q111,0.003395,ok,
+2,2025-Q1,q112,0.105675,ok,
+2,2025-Q1,q113,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table15.month_end' in current header: __table13.purpose, __table15.month_start, __table15.month_label. (NOT_IMPLEMENTED)"
+2,2025-Q1,q114,0.019627,ok,
+2,2025-Q1,q115,0.069205,ok,
+2,2025-Q1,q116,4.377199,ok,
+2,2025-Q1,q117,0.004153,ok,
+2,2025-Q1,q118,0.005305,ok,
+2,2025-Q1,q119,0.003567,ok,
+2,2025-Q1,q120,0.004540,ok,
+2,2025-Q1,q121,0.013966,ok,
+2,2025-Q1,q122,0.076788,ok,
+2,2025-Q1,q123,0.011600,ok,
+2,2025-Q1,q124,0.006055,ok,
+2,2025-Q1,q125,0.035414,ok,
+2,2025-Q1,q126,0.005878,ok,
+2,2025-Q1,q127,0.085719,ok,
+2,2025-Q1,q128,0.077755,ok,
+2,2025-Q1,q129,0.017687,ok,
+2,2025-Q1,q130,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q131,0.017464,ok,
+2,2025-Q1,q132,0.033563,ok,
+2,2025-Q1,q133,0.100190,ok,
+2,2025-Q1,q134,0.520313,ok,
+2,2025-Q1,q135,0.066268,ok,
+2,2025-Q1,q136,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q137,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table9.line_total Decimal(14, 4) Decimal64(size = 0), __table12.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q138,0.071124,ok,
+2,2025-Q1,q139,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table32.line_total Decimal(14, 4) Decimal64(size = 0), __table35.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q140,0.062845,ok,
+2,2025-Q1,q141,0.046622,ok,
+2,2025-Q1,q142,0.071877,ok,
+2,2025-Q1,q143,0.879964,ok,
+2,2025-Q1,q144,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q145,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.grand_total Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table4.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Deci"
+2,2025-Q1,q146,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.line_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q147,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q148,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.discount_amount_local Decimal(14, 4) Decimal64(size = 0), __table16.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q149,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q150,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Decimal(14, 4) Decimal64(size = 0), nullIf(__table4.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (AR"
+2,2025-Q1,q151,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.subtotal Decimal(14, 4) Decimal64(size = 0), __table9.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q152,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.discount_amount Decimal(14, 4) Decimal64(size = 0), coalesce(__table6.rate, 1_UInt8) Decimal(18, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q153,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.discount_amount Decimal(14, 4) Decimal64(size = 0), nullIf(__table8.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (AR"
+2,2025-Q1,q154,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table45.discount_amount Decimal(14, 4) Decimal64(size = 0), __table54.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q155,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.subtotal Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q156,,error,"Code: 62. DB::Exception: Syntax error: failed at position 3545 (c) (line 86, col 10): c.code AS code FROM coupons c WHERE c.discount_id = d.id ORDER BY c.id NULLS LAST FETCH FIRST 1 ROWS ONLY"
+2,2025-Q1,q157,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table58.discount_amount Decimal(14, 4) Decimal64(size = 0), __table68.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_B"
+2,2025-Q1,q158,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.subtotal Decimal(14, 4) Decimal64(size = 0), __table21.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q159,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.refund_total Decimal(14, 4) Decimal64(size = 0), __table21.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q160,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.reward_amount Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), coalesce(__table15.rate, if(equals(__table13.currency_code, 'EUR'_Strin"
+2,2025-Q1,q161,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.grand_total Decimal(14, 4) Decimal64(size = 0), __table16.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+2,2025-Q1,q162,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table21.id' in current header: . (NOT_IMPLEMENTED)"
+2,2025-Q1,q163,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: __table6.created_at. (NOT_IMPLEMENTED)"
+2,2025-Q1,q164,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table15.grand_total Decimal(14, 4) Decimal64(size = 0), nullIf(__table21.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGU"
+2,2025-Q1,q165,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.reward_amount Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size"
+2,2025-Q1,q166,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table13.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q167,3.610059,ok,
+2,2025-Q1,q168,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.total Decimal(14, 4) Decimal64(size = 0), nullIf(__table9.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT"
+2,2025-Q1,q169,0.717905,ok,
+2,2025-Q1,q170,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table40.grand_total Decimal(14, 4) Decimal64(size = 0), __table49.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+2,2025-Q1,q171,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table16.grand_total Decimal(14, 4) Decimal64(size = 0), coalesce(__table17.rate, if(equals(__table16.currency_code, 'EUR'_String), 1_UInt8, _CAST(NULL_Nullable(Nothing), 'Nulla"
+2,2025-Q1,q172,0.044491,ok,
+2,2025-Q1,q173,0.043268,ok,
+2,2025-Q1,q174,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q175,0.049638,ok,
+2,2025-Q1,q176,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q177,0.037892,ok,
+2,2025-Q1,q178,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q179,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q180,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q181,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q182,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q183,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q184,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table1.quantity), __table1.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table1.rate Nullable(Decimal(12, 6)) Nul"
+2,2025-Q1,q185,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table2.quantity), __table6.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), if(equals(__table6.currency_code, 'EUR'_St"
+2,2025-Q1,q186,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.unit_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table11.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = "
+2,2025-Q1,q187,0.093679,ok,
+2,2025-Q1,q188,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table7.quantity), __table10.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table13.rate Nullable(Decimal(12, 6)) N"
+2,2025-Q1,q189,0.365414,ok,
+2,2025-Q1,q190,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.unit_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0"
+2,2025-Q1,q191,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments multiply(abs(__table2.quantity_signed), __table10.unit_cost) Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), nullIf(__table13.rate, 0_UInt8) Nu"
+2,2025-Q1,q192,0.016665,ok,
+2,2025-Q1,q193,0.007638,ok,
+2,2025-Q1,q194,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q195,0.006693,ok,
+2,2025-Q1,q196,0.203720,ok,
+2,2025-Q1,q197,0.154765,ok,
+2,2025-Q1,q198,0.117696,ok,
+2,2025-Q1,q199,0.187797,ok,
+2,2025-Q1,q200,0.251498,ok,
+2,2025-Q1,q201,0.099850,ok,
+2,2025-Q1,q202,0.015066,ok,
+2,2025-Q1,q203,0.115227,ok,
+2,2025-Q1,q204,0.022184,ok,
+2,2025-Q1,q205,0.010481,ok,
+2,2025-Q1,q206,0.216904,ok,
+2,2025-Q1,q207,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table5.id' in current header: __table5.created_at, __table5.resolved_at, __table6.score. (NOT_IMPLEMENTED)"
+2,2025-Q1,q208,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.gross_amount Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q209,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q210,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table4.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Decim"
+2,2025-Q1,q211,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q212,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table4.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Decim"
+2,2025-Q1,q213,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.shipping_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size"
+2,2025-Q1,q214,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.fee_amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q215,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.shipping_cost Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size"
+2,2025-Q1,q216,0.106962,ok,
+2,2025-Q1,q217,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.gross_amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q218,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.gross_amount Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q219,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.shipping_total Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q220,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.payment_amount Decimal(14, 4) Decimal64(size = 0), __table10.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOU"
+2,2025-Q1,q221,0.478910,ok,
+2,2025-Q1,q222,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Decimal(14, 4) Decimal64(size = 0), __table5.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q223,3.314604,ok,
+2,2025-Q1,q224,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q225,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q226,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q227,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q228,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q229,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q230,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table7.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q231,0.712891,ok,
+2,2025-Q1,q232,1.344199,ok,
+2,2025-Q1,q233,0.628974,ok,
+2,2025-Q1,q234,,timeout,no result within 30 s
+2,2025-Q1,q235,0.222706,ok,
+2,2025-Q1,q236,0.007609,ok,
+2,2025-Q1,q237,1.389305,ok,
+2,2025-Q1,q238,1.052640,ok,
+2,2025-Q1,q239,1.206464,ok,
+2,2025-Q1,q240,2.164364,ok,
+2,2025-Q1,q241,,timeout,no result within 30 s
+2,2025-Q1,q242,2.361068,ok,
+2,2025-Q1,q243,2.805533,ok,
+2,2025-Q1,q244,0.011717,ok,
+2,2025-Q1,q245,0.012356,ok,
+2,2025-Q1,q246,0.147036,ok,
+2,2025-Q1,q247,0.093440,ok,
+2,2025-Q1,q248,0.240602,ok,
+2,2025-Q1,q249,0.009112,ok,
+2,2025-Q1,q250,0.068689,ok,
+2,2025-Q1,q251,0.038428,ok,
+2,2025-Q1,q252,0.058960,ok,
+2,2025-Q1,q253,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table5.id' in current header: __table5.created_at, __table5.resolved_at, __table6.name. (NOT_IMPLEMENTED)"
+2,2025-Q1,q254,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q255,0.130946,ok,
+2,2025-Q1,q256,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.subtotal Decimal(14, 4) Decimal64(size = 0), __table10.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q257,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.discount_amount Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q258,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.discount_total Decimal(14, 4) Decimal64(size = 0), __table5.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUN"
+2,2025-Q1,q259,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table5.eur_rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOU"
+2,2025-Q1,q260,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table8.tenant_id' in current header: __table8.user_id, __table8.placed_at, __table8.currency_code, __table9.industry. (NOT_IMPLEMENTED)"
+2,2025-Q1,q261,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table27.grand_total Decimal(14, 4) Decimal64(size = 0), __table28.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q262,0.133728,ok,
+2,2025-Q1,q263,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table10.id' in current header: __table10.placed_at, __table10.currency_code, __table10.grand_total, __table11.industry. (NOT_IMPLEMENTED)"
+2,2025-Q1,q264,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table3.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q265,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.attributed_revenue Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64"
+2,2025-Q1,q266,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.attributed_revenue Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64"
+2,2025-Q1,q267,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q268,0.225284,ok,
+2,2025-Q1,q269,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table6.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q270,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.grand_total Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q271,0.894500,ok,
+2,2025-Q1,q272,1.054475,ok,
+2,2025-Q1,q273,0.197232,ok,
+2,2025-Q1,q274,4.685368,ok,
+2,2025-Q1,q275,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.grand_total Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q276,0.486312,ok,
+2,2025-Q1,q277,0.373015,ok,
+2,2025-Q1,q278,0.009011,ok,
+2,2025-Q1,q279,0.511066,ok,
+2,2025-Q1,q280,0.014143,ok,
+2,2025-Q1,q281,0.052927,ok,
+2,2025-Q1,q282,0.013730,ok,
+2,2025-Q1,q283,0.297000,ok,
+2,2025-Q1,q284,0.150115,ok,
+2,2025-Q1,q285,0.004646,ok,
+2,2025-Q1,q286,0.062518,ok,
+2,2025-Q1,q287,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.subtotal Decimal(14, 4) Decimal64(size = 0), nullIf(__table3.eur_rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUM"
+2,2025-Q1,q288,0.207506,ok,
+2,2025-Q1,q289,0.727034,ok,
+2,2025-Q1,q290,0.077955,ok,
+2,2025-Q1,q291,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.subtotal Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q292,1.783223,ok,
+2,2025-Q1,q293,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.tenant_id' in current header: __table6.user_id, __table6.status, __table6.created_at, __table6.converted_at. (NOT_IMPLEMENTED)"
+2,2025-Q1,q294,0.005093,ok,
+2,2025-Q1,q295,0.071448,ok,
+2,2025-Q1,q296,0.037839,ok,
+2,2025-Q1,q297,8.463698,ok,
+2,2025-Q1,q298,0.006754,ok,
+2,2025-Q1,q299,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table7.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q300,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table4.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q301,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.amount Decimal(14, 4) Decimal64(size = 0), __table3.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q302,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.contract_value Decimal(14, 4) Decimal64(size = 0), __table6.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q303,0.005762,ok,
+2,2025-Q1,q304,2.203710,ok,
+2,2025-Q1,q305,0.096041,ok,
+2,2025-Q1,q306,0.016174,ok,
+2,2025-Q1,q307,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q308,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table7.amount Decimal(14, 4) Decimal64(size = 0), __table8.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q309,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.amount Decimal(14, 4) Decimal64(size = 0), __table4.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q310,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.amount_due Decimal(14, 4) Decimal64(size = 0), __table6.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q311,0.033405,ok,
+2,2025-Q1,q312,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q313,,error,Code: 48. DB::Exception: Correlated subqueries in ORDER BY are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q314,0.173720,ok,
+2,2025-Q1,q315,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q316,0.056551,ok,
+2,2025-Q1,q317,0.109186,ok,
+2,2025-Q1,q318,0.148262,ok,
+2,2025-Q1,q319,0.008236,ok,
+2,2025-Q1,q320,0.004748,ok,
+2,2025-Q1,q321,0.008100,ok,
+2,2025-Q1,q322,0.005956,ok,
+2,2025-Q1,q323,0.063537,ok,
+2,2025-Q1,q324,0.010406,ok,
+2,2025-Q1,q325,0.275418,ok,
+2,2025-Q1,q326,0.011580,ok,
+2,2025-Q1,q327,0.004983,ok,
+2,2025-Q1,q328,0.676874,ok,
+2,2025-Q1,q329,0.229501,ok,
+2,2025-Q1,q330,1.138898,ok,
+2,2025-Q1,q331,0.401388,ok,
+2,2025-Q1,q332,1.032739,ok,
+2,2025-Q1,q333,0.138351,ok,
+2,2025-Q1,q334,0.011878,ok,
+2,2025-Q1,q335,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table13.grand_total Decimal(14, 4) Decimal64(size = 0), __table14.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+2,2025-Q1,q336,0.056958,ok,
+2,2025-Q1,q337,0.020977,ok,
+2,2025-Q1,q338,0.513976,ok,
+2,2025-Q1,q339,0.004553,ok,
+2,2025-Q1,q340,0.086345,ok,
+2,2025-Q1,q341,,error,"Code: 43. DB::Exception: Illegal types Int32 and IntervalMinute of arguments of function multiply: In scope SELECT CAST(date_trunc('hour', checked_at), 'DateTime64(6)') + (CAST(floor(toMinute(checked_at) / 30), 'int') * toIntervalMinute(30)) AS interval_start, component, count(*) AS total_checks, co"
+2,2025-Q1,q342,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table1.grand_total Decimal(14, 4) Decimal64(size = 0), __table2.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q343,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing 'FUNCTION divide(__table3.grand_total :: 3, coalesce(__table4.rate, 1_UInt8) :: 7) -> divide(__table3.grand_total, coalesce(__table4.rate, 1_UInt8)) Nullable(Decimal(18, 4)) : 5'. (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q344,,error,"Code: 62. DB::Exception: Syntax error: failed at position 974 ('14:00:00') (line 25, col 43): '14:00:00'"
+2,2025-Q1,q345,0.005986,ok,
+2,2025-Q1,q346,0.004431,ok,
+2,2025-Q1,q347,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table9.line_total Decimal(14, 4) Decimal64(size = 0), __table13.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q348,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table8.grand_total Decimal(14, 4) Decimal64(size = 0), __table11.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q349,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.line_total Decimal(14, 4) Decimal64(size = 0), __table26.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q350,0.072888,ok,
+2,2025-Q1,q351,0.175052,ok,
+2,2025-Q1,q352,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table16.grand_total Decimal(14, 4) Decimal64(size = 0), __table17.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q353,,error,"Code: 48. DB::Exception: Correlated subqueries are not supported as IN function arguments yet, but found in expression: oi.product_variant_id IN (SELECT pv.id FROM product_variants AS pv WHERE pv.product_id = p.id). (NOT_IMPLEMENTED)"
+2,2025-Q1,q354,0.064721,ok,
+2,2025-Q1,q355,0.025093,ok,
+2,2025-Q1,q356,0.005450,ok,
+2,2025-Q1,q357,1.212570,ok,
+2,2025-Q1,q358,,error,"Code: 48. DB::Exception: Correlated subqueries are not supported as IN function arguments yet, but found in expression: oi.product_variant_id IN (SELECT pv.id FROM product_variants AS pv WHERE pv.product_id = p.id). (NOT_IMPLEMENTED)"
+2,2025-Q1,q359,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Decimal(14, 4) Decimal64(size = 0), __table28.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q360,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.amount Decimal(14, 4) Decimal64(size = 0), __table9.rate Decimal(12, 6) Decimal64(size = 0). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q361,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table33.refund_amount Decimal(14, 4) Decimal64(size = 0), nullIf(__table33.eur_rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0))."
+2,2025-Q1,q362,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_amount Nullable(Decimal(38, 4)) Nullable(size = 0, Decimal128(size = 0), UInt8(size = 0)), nullIf(__table22.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(siz"
+2,2025-Q1,q363,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table18.id' in current header: __table18.currency_code, __table18.subtotal. (NOT_IMPLEMENTED)"
+2,2025-Q1,q364,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Window' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q365,,error,"Code: 62. DB::Exception: Syntax error: failed at position 786 (sub) (line 21, col 12): sub.*"
+2,2025-Q1,q366,0.006923,ok,
+2,2025-Q1,q367,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q368,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: __table6.tenant_id, __table6.user_id, __table6.discount_total, __table6.currency_code, __table6.placed_at. (NOT_IMPLEMENTED)"
+2,2025-Q1,q369,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table2.discount_total Decimal(14, 4) Decimal64(size = 0), __table9.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUN"
+2,2025-Q1,q370,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q371,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments divide(__table12.points, __table7.points_per_currency) Decimal(14, 4) Decimal64(size = 0), __table13.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(s"
+2,2025-Q1,q372,0.135250,ok,
+2,2025-Q1,q373,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table26.grand_total Decimal(14, 4) Decimal64(size = 0), __table33.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+2,2025-Q1,q374,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table3.subtotal Decimal(14, 4) Decimal64(size = 0), if(equals(__table3.currency_code, 'EUR'_String), 1_UInt8, __table10.rate) Nullable(Decimal(18, 6)) Nullable(size = 0, Decima"
+2,2025-Q1,q375,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table5.grand_total Decimal(14, 4) Decimal64(size = 0), __table11.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND)"
+2,2025-Q1,q376,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table37.grand_total Decimal(14, 4) Decimal64(size = 0), __table45.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+2,2025-Q1,q377,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table18.id' in current header: . (NOT_IMPLEMENTED)"
+2,2025-Q1,q378,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table18.grand_total Decimal(14, 4) Decimal64(size = 0), __table28.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+2,2025-Q1,q379,3.301819,ok,
+2,2025-Q1,q380,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table20.grand_total Decimal(14, 4) Decimal64(size = 0), __table21.rate Nullable(Decimal(12, 6)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)). (ARGUMENT_OUT_OF_BOUND"
+2,2025-Q1,q381,,error,"Code: 69. DB::Exception: Decimal result's scale is less than argument's one: while executing function divide on arguments __table19.grand_total Nullable(Decimal(14, 4)) Nullable(size = 0, Decimal64(size = 0), UInt8(size = 0)), nullIf(__table20.rate, 0_UInt8) Nullable(Decimal(12, 6)) Nullable(size = "
+2,2025-Q1,q382,0.243052,ok,
+2,2025-Q1,q383,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q384,0.030688,ok,
+2,2025-Q1,q385,0.019975,ok,
+2,2025-Q1,q386,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table4.closed_at' in current header: __table4.tenant_id, __table4.owner_user_id, __table4.is_won, __table4.currency_code, __table4.amount. (NOT_IMPLEMENTED)"
+2,2025-Q1,q387,0.023713,ok,
+2,2025-Q1,q388,,error,"Code: 48. DB::Exception: Cannot decorrelate query, because 'Limit' step is not supported. (NOT_IMPLEMENTED)"
+2,2025-Q1,q389,0.044942,ok,
+2,2025-Q1,q390,0.081329,ok,
+2,2025-Q1,q391,0.015806,ok,
+2,2025-Q1,q392,0.097865,ok,
+2,2025-Q1,q393,,error,"Code: 48. DB::Exception: Correlated subqueries are not supported as IN function arguments yet, but found in expression: sa2.stock_location_id IN (SELECT sl3.id FROM stock_locations AS sl3 WHERE sl3.warehouse_id = w.id). (NOT_IMPLEMENTED)"
+2,2025-Q1,q394,0.082632,ok,
+2,2025-Q1,q395,0.130954,ok,
+2,2025-Q1,q396,,error,Code: 48. DB::Exception: Correlated subqueries in ORDER BY are not supported. (NOT_IMPLEMENTED)
+2,2025-Q1,q397,0.013927,ok,
+2,2025-Q1,q398,0.215194,ok,
+2,2025-Q1,q399,0.021039,ok,
+2,2025-Q1,q400,,error,"Code: 48. DB::Exception: Current query is not supported yet, because can't find correlated column '__table6.id' in current header: . (NOT_IMPLEMENTED)"
+2,2025-Q1,q401,0.149438,ok,
+2,2025-Q1,q402,0.103628,ok,
+2,2025-Q1,q403,0.625208,ok,
+2,2025-Q1,q404,0.096897,ok,
+2,2025-Q1,q405,0.114704,ok,
+2,2025-Q1,q406,0.145870,ok,
+2,2025-Q1,q407,0.163063,ok,
+2,2025-Q1,q408,0.244825,ok,
+2,2025-Q1,q409,,error,Code: 48. DB::Exception: Correlated subqueries in aggregate function argument are not supported. (NOT_IMPLEMENTED)
+3,2025-Q2,load,15.866275,ok,
+3,2025-Q2,q043,,failed_stuck,q043: no answer within 60 s

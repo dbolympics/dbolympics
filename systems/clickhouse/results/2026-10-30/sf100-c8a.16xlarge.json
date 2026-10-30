@@ -1,0 +1,33 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "commit": "ec86a4e823316a375b03b3b9938a320bca0cdf44",
+  "complete": true,
+  "config": "sf100-c8a.16xlarge",
+  "cpuset": "0-63",
+  "date": "2026-10-30",
+  "dirty": false,
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-clickhouse@sha256:f61391a956993049e8c3ddae60f1861c06ce22fa172fc4cc409d8e67a483e59c"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "128GB",
+  "memory_peak_bytes": 43555282944,
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 0.344601118,
+  "sf": 100.0,
+  "storage_bytes": 33180771215,
+  "system": "clickhouse",
+  "threads": 64,
+  "timeout_check": "cancelled",
+  "version": "26.9.22.3"
+}
