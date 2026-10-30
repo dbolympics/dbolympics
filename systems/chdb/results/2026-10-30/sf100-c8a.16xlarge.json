@@ -1,0 +1,35 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "commit": "ec86a4e823316a375b03b3b9938a320bca0cdf44",
+  "complete": false,
+  "config": "sf100-c8a.16xlarge",
+  "cpuset": "0-63",
+  "date": "2026-10-30",
+  "dirty": false,
+  "failure": {
+    "detail": "q240: no answer within 20 s",
+    "status": "failed_stuck"
+  },
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-chdb@sha256:eae504c84da36a1dab84b7af803cafa23c42512338a27ae5dca319dbfceea5cc"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "128GB",
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 0.3484219760000001,
+  "sf": 100.0,
+  "system": "chdb",
+  "threads": 64,
+  "timeout_check": "cancelled",
+  "version": "26.9.2.1"
+}
