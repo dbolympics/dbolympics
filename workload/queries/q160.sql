@@ -19,7 +19,7 @@ loyalty_tx_eur AS (
   SELECT
     lt.direction AS direction,
     CAST(lt.amount_in_currency / COALESCE(er.rate, CASE WHEN lt.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6)) AS amount_eur,
-    CAST(date_trunc('month', lt.occurred_at) AS date) AS month_start
+    CAST({{date_trunc('month', lt.occurred_at)}} AS date) AS month_start
   FROM loyalty_tx lt
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -46,7 +46,7 @@ referral_tx AS (
 referral_tx_eur AS (
   SELECT
     CAST(rt.reward_amount / COALESCE(er.rate, CASE WHEN rt.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6)) AS amount_eur,
-    CAST(date_trunc('month', rt.redeemed_at) AS date) AS month_start
+    CAST({{date_trunc('month', rt.redeemed_at)}} AS date) AS month_start
   FROM referral_tx rt
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -63,11 +63,11 @@ referral_monthly AS (
 ),
 enrollments_monthly AS (
   SELECT
-    CAST(date_trunc('month', enrolled_at) AS date) AS month_start,
+    CAST({{date_trunc('month', enrolled_at)}} AS date) AS month_start,
     COUNT(*) AS new_enrollments
   FROM loyalty_accounts
   WHERE enrolled_at >= TIMESTAMP '2023-01-01' AND enrolled_at < TIMESTAMP '2026-01-01'
-  GROUP BY CAST(date_trunc('month', enrolled_at) AS date)
+  GROUP BY CAST({{date_trunc('month', enrolled_at)}} AS date)
 ),
 combined AS (
   SELECT

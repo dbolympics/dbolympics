@@ -749,6 +749,11 @@
    "note": "a selected t.col gets AS col, its standard name made explicit"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 3,
@@ -1282,6 +1287,11 @@
    "count": 4
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 8
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 2,
@@ -1404,6 +1414,11 @@
    "count": 4
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 3
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 1,
@@ -1502,6 +1517,11 @@
   {
    "kind": "dialect",
    "step": "seconds_between",
+   "count": 2
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
    "count": 2
   },
   {
@@ -1644,6 +1664,11 @@
    "count": 1
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 1,
@@ -1782,6 +1807,11 @@
   {
    "kind": "dialect",
    "step": "percentile_cont",
+   "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
    "count": 1
   },
   {
@@ -2364,6 +2394,11 @@
    "count": 2
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 7
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 2,
@@ -2429,6 +2464,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; bare NUMERIC cast that only served the rounding removed; intended fraction: integer numerator cast to NUMERIC(18,6) before the division"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 5
   },
   {
    "kind": "determinism",
@@ -2552,6 +2592,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
   },
   {
    "kind": "determinism",
@@ -2719,6 +2764,11 @@
   {
    "kind": "dialect",
    "step": "date_diff_days",
+   "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
    "count": 1
   },
   {
@@ -3120,6 +3170,11 @@
    "note": "docs/NUMERICS.md: x / exchange rate cast to NUMERIC(18,6)"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 5
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 2,
@@ -3205,6 +3260,11 @@
    "note": "docs/NUMERICS.md: x / exchange rate cast to NUMERIC(18,6)"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 1,
@@ -3265,6 +3325,11 @@
    "step": "rate_conversion",
    "count": 6,
    "note": "docs/NUMERICS.md: x / exchange rate cast to NUMERIC(18,6)"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 3
   },
   {
    "kind": "determinism",
@@ -3827,6 +3892,11 @@
    "count": 1
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 18
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 2,
@@ -3896,6 +3966,11 @@
   {
    "kind": "dialect",
    "step": "seconds_between",
+   "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
    "count": 1
   },
   {
@@ -4052,6 +4127,11 @@
    "count": 1
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 1,
@@ -4068,6 +4148,11 @@
    "kind": "dialect",
    "step": "year_month",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 5
   },
   {
    "kind": "determinism",
@@ -4109,6 +4194,11 @@
    "kind": "dialect",
    "step": "seconds_between",
    "count": 2
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 1
   },
   {
    "kind": "determinism",
@@ -4181,6 +4271,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 1
   },
   {
    "kind": "determinism",
@@ -4371,6 +4466,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; AVG over an integer computed as a decimal: AVG(CAST(x AS NUMERIC(18,6)))"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
   },
   {
    "kind": "determinism",
@@ -4636,6 +4736,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: AVG over an integer computed as a decimal: AVG(CAST(x AS NUMERIC(18,6)))"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 4
   },
   {
    "kind": "determinism",
@@ -5482,6 +5587,11 @@
    "step": "explicit_column_alias",
    "count": 10,
    "note": "a selected t.col gets AS col, its standard name made explicit"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 4
   },
   {
    "kind": "determinism",
@@ -6580,6 +6690,11 @@
    "note": "a selected t.col gets AS col, its standard name made explicit"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 1
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 4,
@@ -6641,6 +6756,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; AVG over an integer computed as a decimal: AVG(CAST(x AS NUMERIC(18,6)))"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
   },
   {
    "kind": "determinism",
@@ -11096,6 +11216,11 @@
    "note": "a selected t.col gets AS col, its standard name made explicit"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 1,
@@ -11130,6 +11255,11 @@
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 3
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 2,
@@ -11142,6 +11272,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; AVG over an integer computed as a decimal: AVG(CAST(x AS NUMERIC(18,6)))"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 1
   },
   {
    "kind": "determinism",
@@ -11169,6 +11304,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; AVG over an integer computed as a decimal: AVG(CAST(x AS NUMERIC(18,6)))"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 1
   },
   {
    "kind": "determinism",
@@ -11259,6 +11399,11 @@
    "step": "edit",
    "count": 1,
    "note": "docs/NUMERICS.md: rounding removed; results keep full precision; AVG over an integer computed as a decimal: AVG(CAST(x AS NUMERIC(18,6)))"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
   },
   {
    "kind": "determinism",
@@ -11383,6 +11528,11 @@
    "note": "docs/NUMERICS.md: x / exchange rate cast to NUMERIC(18,6)"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 1,
@@ -11424,6 +11574,11 @@
    "step": "explicit_column_alias",
    "count": 8,
    "note": "a selected t.col gets AS col, its standard name made explicit"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 1
   },
   {
    "kind": "determinism",
@@ -11473,6 +11628,11 @@
    "step": "explicit_column_alias",
    "count": 6,
    "note": "a selected t.col gets AS col, its standard name made explicit"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 4
   },
   {
    "kind": "determinism",
@@ -11657,6 +11817,11 @@
   {
    "kind": "dialect",
    "step": "year_month",
+   "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
    "count": 1
   },
   {
@@ -12623,6 +12788,11 @@
    "note": "tie-breaker: month_label is not a function of month_start by schema"
   },
   {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
+  },
+  {
    "kind": "determinism",
    "step": "null_order",
    "count": 2,
@@ -12763,6 +12933,11 @@
    "step": "explicit_column_alias",
    "count": 2,
    "note": "a selected t.col gets AS col, its standard name made explicit"
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 3
   },
   {
    "kind": "determinism",
@@ -13279,6 +13454,11 @@
    "kind": "dialect",
    "step": "seconds_between",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "date_trunc",
+   "count": 2
   },
   {
    "kind": "determinism",

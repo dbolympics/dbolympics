@@ -1,13 +1,13 @@
 WITH periods AS (
   SELECT DISTINCT
-    CAST(date_trunc('month', calendar_date) AS date) AS month_start,
+    CAST({{date_trunc('month', calendar_date)}} AS date) AS month_start,
     CASE WHEN day_of_month <= 15 THEN 1 ELSE 2 END AS half
   FROM calendar_days
   WHERE calendar_date >= DATE '2025-01-01' AND calendar_date < DATE '2026-01-01'
 ),
 adj AS (
   SELECT
-    CAST(date_trunc('month', sa.created_at) AS date) AS month_start,
+    CAST({{date_trunc('month', sa.created_at)}} AS date) AS month_start,
     CASE WHEN CAST(EXTRACT(day FROM sa.created_at) AS int) <= 15 THEN 1 ELSE 2 END AS half,
     sa.stock_location_id AS stock_location_id,
     sa.quantity_delta AS quantity_delta
@@ -27,7 +27,7 @@ adj_agg AS (
 ),
 wh AS (
   SELECT
-    CAST(date_trunc('month', w.created_at) AS date) AS month_start,
+    CAST({{date_trunc('month', w.created_at)}} AS date) AS month_start,
     CASE WHEN CAST(EXTRACT(day FROM w.created_at) AS int) <= 15 THEN 1 ELSE 2 END AS half,
     COUNT(*) AS new_warehouses
   FROM warehouses w

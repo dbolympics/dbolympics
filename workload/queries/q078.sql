@@ -19,7 +19,7 @@ joined AS (
     f.user_id AS user_id,
     f.first_placed_at AS first_placed_at,
     s.second_placed_at AS second_placed_at,
-    CAST(DATE_TRUNC('month', f.first_placed_at) AS date) AS cohort_month,
+    CAST({{date_trunc('month', f.first_placed_at)}} AS date) AS cohort_month,
     CASE WHEN s.second_placed_at IS NOT NULL
          THEN ({{date_diff_days(f.first_placed_at, s.second_placed_at)}})
     END AS days_to_second

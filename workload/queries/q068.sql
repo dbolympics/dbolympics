@@ -4,7 +4,7 @@ WITH months AS (
   WHERE month_start >= DATE '2023-01-01' AND month_start <= DATE '2025-12-01'
 ),
 live AS (
-  SELECT CAST(date_trunc('month', occurred_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', occurred_at)}} AS date) AS month_start,
          count(*) AS live_events,
          count(*) FILTER (WHERE actor_user_id IS NULL) AS live_null_actor,
          count(*) FILTER (WHERE actor_type IN ('system','api_key','service_account')) AS live_system_api
@@ -12,7 +12,7 @@ live AS (
   GROUP BY 1
 ),
 archive AS (
-  SELECT CAST(date_trunc('month', occurred_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', occurred_at)}} AS date) AS month_start,
          count(*) AS archived_events,
          count(*) FILTER (WHERE actor_user_id IS NULL) AS archived_null_actor,
          count(*) FILTER (WHERE actor_type IN ('system','api_key','service_account')) AS archived_system_api
@@ -22,9 +22,9 @@ archive AS (
 actor_types AS (
   SELECT month_start, actor_type
   FROM (
-    SELECT CAST(date_trunc('month', occurred_at) AS date) AS month_start, actor_type FROM audit_log
+    SELECT CAST({{date_trunc('month', occurred_at)}} AS date) AS month_start, actor_type FROM audit_log
     UNION ALL
-    SELECT CAST(date_trunc('month', occurred_at) AS date) AS month_start, actor_type FROM audit_log_archive
+    SELECT CAST({{date_trunc('month', occurred_at)}} AS date) AS month_start, actor_type FROM audit_log_archive
   ) t
   GROUP BY month_start, actor_type
 ),
@@ -34,7 +34,7 @@ distinct_actor_types AS (
   GROUP BY month_start
 ),
 access AS (
-  SELECT CAST(date_trunc('month', occurred_at) AS date) AS month_start, count(*) AS access_events
+  SELECT CAST({{date_trunc('month', occurred_at)}} AS date) AS month_start, count(*) AS access_events
   FROM access_log
   GROUP BY 1
 )

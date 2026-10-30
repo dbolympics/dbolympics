@@ -1,6 +1,6 @@
 with checks_2025 as (
   select
-    date_trunc('month', checked_at) as month_start,
+    {{date_trunc('month', checked_at)}} as month_start,
     is_healthy,
     latency_ms,
     component

@@ -23,7 +23,7 @@ months AS (
 ),
 line_items AS (
   SELECT
-    CAST(date_trunc('month', o.placed_at) AS date) AS month,
+    CAST({{date_trunc('month', o.placed_at)}} AS date) AS month,
     pv.product_id AS product_id,
     oi.quantity AS quantity,
     oi.line_total AS line_total,

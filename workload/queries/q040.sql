@@ -1,5 +1,5 @@
 SELECT
-  {{year_month(date_trunc('month', x.created_at))}} AS month,
+  {{year_month({{date_trunc('month', x.created_at)}})}} AS month,
   count(*) AS tickets_total,
   count(*) FILTER (WHERE x.is_delivery) AS tickets_delivery_related,
   100.0 * count(*) FILTER (WHERE x.is_delivery) / count(*) AS delivery_share_pct,
@@ -26,5 +26,5 @@ FROM (
   WHERE t.created_at >= timestamp '2024-07-01'
     AND t.created_at < timestamp '2026-01-01'
 ) x
-GROUP BY date_trunc('month', x.created_at)
-ORDER BY date_trunc('month', x.created_at) NULLS LAST
+GROUP BY {{date_trunc('month', x.created_at)}}
+ORDER BY {{date_trunc('month', x.created_at)}} NULLS LAST

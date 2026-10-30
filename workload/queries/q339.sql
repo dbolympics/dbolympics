@@ -1,5 +1,5 @@
 SELECT
-  date_trunc('hour', checked_at) AS hour,
+  {{date_trunc('hour', checked_at)}} AS hour,
   component,
   count(*) AS total_checks,
   count(*) FILTER (WHERE is_healthy = false) AS unhealthy_checks,

@@ -4,39 +4,39 @@ WITH month_dim AS (
   WHERE cd.calendar_date >= DATE '2023-01-01' AND cd.calendar_date <= DATE '2025-12-31'
 ),
 t0 AS (
-  SELECT CAST(date_trunc('month', tk.created_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', tk.created_at)}} AS date) AS month_start,
          COUNT(*) AS tickets_created
   FROM tickets tk
   WHERE tk.created_at >= TIMESTAMP '2023-01-01' AND tk.created_at < TIMESTAMP '2026-01-01'
-  GROUP BY CAST(date_trunc('month', tk.created_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tk.created_at)}} AS date)
 ),
 t1 AS (
-  SELECT CAST(date_trunc('month', tk.created_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', tk.created_at)}} AS date) AS month_start,
          COUNT(*) AS tickets_with_first_response,
          AVG({{seconds_between(tk.created_at, tk.first_response_at)}} / 3600.0) AS avg_first_response_hours,
          {{percentile_cont(0.5, {{seconds_between(tk.created_at, tk.first_response_at)}} / 3600.0)}} AS median_first_response_hours
   FROM tickets tk
   WHERE tk.created_at >= TIMESTAMP '2023-01-01' AND tk.created_at < TIMESTAMP '2026-01-01'
     AND tk.first_response_at IS NOT NULL
-  GROUP BY CAST(date_trunc('month', tk.created_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tk.created_at)}} AS date)
 ),
 t2 AS (
-  SELECT CAST(date_trunc('month', tk.created_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', tk.created_at)}} AS date) AS month_start,
          COUNT(*) AS tickets_resolved,
          AVG({{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0) AS avg_resolution_hours,
          {{percentile_cont(0.5, {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0)}} AS median_resolution_hours
   FROM tickets tk
   WHERE tk.created_at >= TIMESTAMP '2023-01-01' AND tk.created_at < TIMESTAMP '2026-01-01'
     AND tk.resolved_at IS NOT NULL
-  GROUP BY CAST(date_trunc('month', tk.created_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tk.created_at)}} AS date)
 ),
 t3 AS (
-  SELECT CAST(date_trunc('month', tk.created_at) AS date) AS month_start,
+  SELECT CAST({{date_trunc('month', tk.created_at)}} AS date) AS month_start,
          COUNT(DISTINCT tk.id) AS tickets_with_breach
   FROM tickets tk
   JOIN sla_breaches sb ON sb.ticket_id = tk.id
   WHERE tk.created_at >= TIMESTAMP '2023-01-01' AND tk.created_at < TIMESTAMP '2026-01-01'
-  GROUP BY CAST(date_trunc('month', tk.created_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tk.created_at)}} AS date)
 )
 SELECT
   md.month_label AS month,

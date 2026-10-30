@@ -22,6 +22,9 @@ struct Point {
 const POINTS: &[Point] = &[
     Point { name: "date_diff_days", params: &["a", "b"], default: "(CAST({b} AS DATE) - CAST({a} AS DATE))" },
     Point { name: "year_month", params: &["x"], default: "to_char({x}, 'YYYY-MM')" },
+    // the timestamp x truncated to the start of its hour, month or quarter (PostgreSQL's; the
+    // standard has no truncation); `{unit}` is the quoted unit
+    Point { name: "date_trunc", params: &["unit", "x"], default: "date_trunc({unit}, {x})" },
     // the first n rows (the standard's clause)
     Point { name: "fetch_first", params: &["n"], default: "FETCH FIRST {n} ROWS ONLY" },
     // PostgreSQL's spelling; not in the SQL standard, which has no boolean OR aggregate most

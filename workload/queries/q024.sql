@@ -5,7 +5,7 @@ with quarters as (
 ),
 payments_in_2025 as (
   select
-    CAST(date_trunc('quarter', p.captured_at) AS date) as quarter_start,
+    CAST({{date_trunc('quarter', p.captured_at)}} AS date) as quarter_start,
     CAST(p.amount_refunded / er.rate AS NUMERIC(18,6)) as amount_refunded_eur
   from payments p
   join exchange_rates er
@@ -22,7 +22,7 @@ payments_by_quarter as (
 ),
 returns_in_2025 as (
   select
-    CAST(date_trunc('quarter', r.refunded_at) AS date) as quarter_start,
+    CAST({{date_trunc('quarter', r.refunded_at)}} AS date) as quarter_start,
     CAST(r.refund_total / er.rate AS NUMERIC(18,6)) as refund_total_eur
   from order_returns r
   join exchange_rates er

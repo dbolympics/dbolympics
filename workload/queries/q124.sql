@@ -1,5 +1,5 @@
 select
-  CAST(date_trunc('month', queued_at) AS date) as month,
+  CAST({{date_trunc('month', queued_at)}} AS date) as month,
   count(*) as total_job_runs,
   count(*) filter (where status = 'failed') as failed_runs,
   100.0 * count(*) filter (where status = 'failed') / nullif(count(*), 0) as failure_rate_pct,

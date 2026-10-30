@@ -8,76 +8,76 @@ WITH t0 AS (
 ),
 t1 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS requests_received
   FROM data_subject_requests tdsr
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t2 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS access_requests_received
   FROM data_subject_requests tdsr
   WHERE tdsr.request_type = 'access'
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t3 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS erasure_requests_received
   FROM data_subject_requests tdsr
   WHERE tdsr.request_type = 'erasure'
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t4 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS portability_requests_received
   FROM data_subject_requests tdsr
   WHERE tdsr.request_type = 'portability'
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t5 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS rectification_restriction_requests_received
   FROM data_subject_requests tdsr
   WHERE tdsr.request_type IN ('rectification', 'restriction')
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t6 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS completed_count
   FROM data_subject_requests tdsr
   WHERE tdsr.completed_at IS NOT NULL
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t7 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     {{percentile_cont(0.5, {{seconds_between(tdsr.received_at, tdsr.completed_at)}} / 86400.0)}} AS median_days_to_close
   FROM data_subject_requests tdsr
   WHERE tdsr.completed_at IS NOT NULL
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t8 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS still_open_count
   FROM data_subject_requests tdsr
   WHERE tdsr.completed_at IS NULL
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 ),
 t9 AS (
   SELECT
-    CAST(date_trunc('month', tdsr.received_at) AS date) AS month_start,
+    CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
     COUNT(*) AS overdue_count
   FROM data_subject_requests tdsr
   WHERE tdsr.completed_at IS NULL
     AND tdsr.due_at IS NOT NULL
     AND tdsr.due_at < TIMESTAMP '2026-01-05 00:00:00'
-  GROUP BY CAST(date_trunc('month', tdsr.received_at) AS date)
+  GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)
 )
 SELECT
   t0.month_label AS month,

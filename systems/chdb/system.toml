@@ -45,6 +45,8 @@ uuid = "UUID"
 "add_minutes(ts, n)" = "addMinutes({ts}, {n})"
 "date_diff_days(a, b)" = "dateDiff('day', {a}, {b})"
 "year_month(x)" = "formatDateTime({x}, '%Y-%m')"
+# date_trunc of a month or quarter returns a date; the standard's result is a timestamp
+"date_trunc(unit, x)" = "CAST(date_trunc({unit}, {x}) AS DateTime64(6))"
 # as for ClickHouse (../clickhouse)
 "bool_or(x)" = "max({x})"
 "percentile_cont(p, x)" = "quantileExactInclusive({p})(toFloat64({x}))"

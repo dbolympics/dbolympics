@@ -5,7 +5,7 @@ WITH months AS (
 ),
 bundles AS (
   SELECT
-    CAST(DATE_TRUNC('month', created_at) AS date) AS month_start,
+    CAST({{date_trunc('month', created_at)}} AS date) AS month_start,
     COUNT(*) AS bundles_created_count,
     COUNT(DISTINCT tenant_id) AS distinct_tenants_creating_a_bundle
   FROM product_bundles

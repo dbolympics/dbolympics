@@ -1,6 +1,6 @@
 WITH base AS (
   SELECT
-    date_trunc('month', t.created_at) AS month_start,
+    {{date_trunc('month', t.created_at)}} AS month_start,
     t.rating AS rating,
     t.is_verified_purchase AS is_verified_purchase
   FROM product_reviews t

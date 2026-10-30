@@ -9,14 +9,14 @@ months AS (
   SELECT DISTINCT month_start, month_label FROM calendar_days WHERE calendar_date BETWEEN DATE '2023-01-01' AND DATE '2025-12-31'
 ),
 created AS (
-  SELECT CAST(date_trunc('month', o.created_at) AS date) AS month_start, count(*) AS cnt
+  SELECT CAST({{date_trunc('month', o.created_at)}} AS date) AS month_start, count(*) AS cnt
   FROM opportunities o
   JOIN target_pipelines tp ON tp.pipeline_id = o.pipeline_id AND tp.tenant_id = o.tenant_id
   WHERE o.created_at >= DATE '2023-01-01' AND o.created_at < DATE '2026-01-01'
   GROUP BY 1
 ),
 closed AS (
-  SELECT CAST(date_trunc('month', o.closed_at) AS date) AS month_start, count(*) AS cnt
+  SELECT CAST({{date_trunc('month', o.closed_at)}} AS date) AS month_start, count(*) AS cnt
   FROM opportunities o
   JOIN target_pipelines tp ON tp.pipeline_id = o.pipeline_id AND tp.tenant_id = o.tenant_id
   WHERE o.is_closed = true AND o.closed_at >= DATE '2023-01-01' AND o.closed_at < DATE '2026-01-01'
