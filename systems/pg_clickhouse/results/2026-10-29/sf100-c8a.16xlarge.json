@@ -1,0 +1,36 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "commit": "0ba4fa776910a524e349bbb3fa142649f8131903",
+  "complete": false,
+  "config": "sf100-c8a.16xlarge",
+  "cpuset": "0-63",
+  "date": "2026-10-29",
+  "dirty": false,
+  "failure": {
+    "detail": "q049: the system does not answer any more (connection closed)",
+    "status": "failed_crash"
+  },
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "pg": "ghcr.io/clickhouse/pg_clickhouse@sha256:ce7a2b4bc7ee899fc1b87c82c87435acc8ede0903b138c66a580ccd197f88b29",
+    "system": "localhost/dbo-pg_clickhouse@sha256:7fa17b4f7ed90f4e4b4d4c61f877c473deee84054eab264b4cfcdb32e27c9e0e"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "128GB",
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 2.049590932,
+  "sf": 100.0,
+  "system": "pg_clickhouse",
+  "threads": 64,
+  "timeout_check": "cancelled",
+  "version": "0.11 (PostgreSQL 18.6, ClickHouse 26.9.22.3)"
+}
