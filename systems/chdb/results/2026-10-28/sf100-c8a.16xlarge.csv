@@ -1,0 +1,3 @@
+run,loaded,query,median_s,status,message
+1,2024-and-earlier,load,13.980622,ok,
+1,2024-and-earlier,q240,,failed_stuck,q240: no answer within 20 s

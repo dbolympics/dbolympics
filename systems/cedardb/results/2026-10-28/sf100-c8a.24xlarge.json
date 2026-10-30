@@ -1,0 +1,36 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "commit": "5926bd60da5edab0934f90538eb0a03ffc427110",
+  "complete": false,
+  "config": "sf100-c8a.24xlarge",
+  "cpuset": "0-95",
+  "date": "2026-10-28",
+  "dirty": false,
+  "failure": {
+    "detail": "q293: no answer within 20 s",
+    "status": "failed_stuck"
+  },
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "db": "docker.io/cedardb/cedardb@sha256:b973be2595534f99081415c286ed1f6f389616ce4fa9c048b0c7fed9244e17a6",
+    "system": "localhost/dbo-cedardb@sha256:8c5a24e43e1a65b06cdbb4859ab493d8a9bd3fc9d50e1bcc8a6fb0922be8782d"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "192GB",
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 2.9998390499999985,
+  "sf": 100.0,
+  "system": "cedardb",
+  "threads": 96,
+  "timeout_check": "cancelled",
+  "version": "v2026-10-08"
+}

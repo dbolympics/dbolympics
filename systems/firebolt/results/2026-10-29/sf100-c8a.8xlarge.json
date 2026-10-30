@@ -1,0 +1,34 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "commit": "5926bd60da5edab0934f90538eb0a03ffc427110",
+  "complete": true,
+  "config": "sf100-c8a.8xlarge",
+  "cpuset": "0-31",
+  "date": "2026-10-29",
+  "dirty": false,
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "db": "ghcr.io/firebolt-db/engine@sha256:15c9ca7b584885cff8b9dd67a0b56cbea75b24855d4c1c00453a4828e712ccab",
+    "system": "localhost/dbo-firebolt@sha256:c2a27080cb5b59963a7ca12f912c887ba78e451ba31cdb817afb37dba9c37590"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "64GB",
+  "memory_peak_bytes": 28294922240,
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 0.7960040260000003,
+  "sf": 100.0,
+  "storage_bytes": 17332447016,
+  "system": "firebolt",
+  "threads": 32,
+  "timeout_check": "not tested: { \"errors\": [ { \"description\": \"Line 1, Column 16: syntax error, unexpected identifier, expecting AS\\nWITH RECURSIVE r AS (SELECT 1 AS n UNION ALL SELECT n + 1 FROM r WHERE n < 1000000000000) SELEC...\\n ^\", \"location\": { \"failing_line\": 1, \"start_offset\": 16 } } ], \"query\": { \"query_id\": \"5fef7db1-e",
+  "version": "5.0.0-pre.0.20261013125703"
+}

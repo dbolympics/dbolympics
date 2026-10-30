@@ -1,0 +1,36 @@
+{
+  "benchmark": "bench/benchmark_sf1000.toml",
+  "commit": "5926bd60da5edab0934f90538eb0a03ffc427110",
+  "complete": false,
+  "config": "sf1000-c8a.12xlarge",
+  "cpuset": "0-47",
+  "date": "2026-10-28",
+  "dirty": false,
+  "failure": {
+    "detail": "load 2024-and-earlier events: in Umbra: unable to write columns to file /var/db/umbra.db.0_191/0/000000000CB80000",
+    "status": "failed_load"
+  },
+  "grace_period": 30,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-clickhouse_brew@sha256:5fcaefcfc4b17a3420ecd0aab7fa61eea6bf6aa5f3c55f404644db8b984a399d",
+    "umbra": "docker.io/umbradb/umbra@sha256:63263956c50d742f7d632507c6f3203c6a8c4a368da7152b503000f14ff8607a"
+  },
+  "keys": "none",
+  "load_timeout": 7200,
+  "memory": "96GB",
+  "queries": null,
+  "query_timeout": 30,
+  "repetitions": 1,
+  "schema_seconds": 5.0241182140000005,
+  "sf": 1000.0,
+  "system": "clickhouse_brew",
+  "threads": 48,
+  "timeout_check": "cancelled",
+  "version": "experimental (ClickHouse 26.9.22.3)"
+}
