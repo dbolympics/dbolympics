@@ -34,17 +34,23 @@ Each command goes at the start of a line. Edited comments do not count.
 
 1. **Approval.** The bot takes the pull request as it is when it reads the comment. If commits arrive before the run
    starts, it refuses, and the maintainer approves again.
-2. **Checks.** The bot runs the pull request's systems on main: main's files, with the directories of the systems
-   the pull request changes as they are in it. So it needs no rebase when main has moved on, but:
-   - The pull request may change nothing outside its systems' directories, since that would not be in the run. The
-     exceptions are documentation (`*.md`, `docs/`), `site/` and `.github/`, which never run on the server.
-   - If main changed one of the pull request's systems since the pull request branched off, the bot asks for a
-     rebase onto main: the run would leave main's change out.
+2. **Checks.** What the bot runs depends on where the pull request's branch is.
+   - **A branch of the repository itself** (only maintainers can push one): the bot runs all of the pull request,
+     merged into main: its runner, queries, generator and systems. A change to the queries or the runner is
+     benchmarked this way. If the pull request does not merge into main without conflicts, the bot asks for a
+     rebase onto main.
+   - **A fork:** the bot runs the pull request's systems on main: main's files, with the directories of the systems
+     the pull request changes as they are in it. So it needs no rebase when main has moved on, but:
+     - The pull request may change nothing outside its systems' directories, since that would not be in the run.
+       The exceptions are documentation (`*.md`, `docs/`), `site/` and `.github/`, which never run on the server.
+     - If main changed one of the pull request's systems since the pull request branched off, the bot asks for a
+       rebase onto main: the run would leave main's change out.
+     - The pull request needs "Allow edits by maintainers", and the fork must be a user's: GitHub does not let us
+       push the results commit to the branch of an organization's fork. The pull requests' check fails for one.
    - The systems' own code only runs inside their containers. It may not contain symbolic links or submodules.
-   - A pull request from a fork needs "Allow edits by maintainers", and the fork must be a user's: GitHub does not
-     let us push the results commit to the branch of an organization's fork. The pull requests' check fails for one.
 3. **Build.** `cargo build --release --workspace` runs in the bot's checkout of that tree (a commit on main of the
    bot's own, not pushed), which keeps the generated data and the build from run to run.
+   - The results in that tree are main's, whatever the pull request has.
 4. **The machine.** The bot waits until nobody holds the machine. Then it reserves it with `reserve-machine`, which
    ends the other users' sessions and processes.
    - It schedules `release-machine 24h --kill` at the same time: each system gets 24 hours (`reserve_hours`).

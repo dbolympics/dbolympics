@@ -5,7 +5,7 @@ may run it, and that the bot's results commit is the last one and of the code as
     python3 tools/bot/check_pr.py --repo-dir PR --main origin/main --head HEAD [--fork-owner Organization]
 
 --fork-owner is the type of the account that owns the pull request's repository if that is a fork (User or
-Organization), empty for a branch of the repository itself.
+Organization), empty for a branch of the repository itself, which the bot runs all of (common.run_tree).
 
 Writes the systems to $GITHUB_OUTPUT (systems=...) and a summary to $GITHUB_STEP_SUMMARY when they are set; fails
 (exit status 1) on an error.
@@ -28,6 +28,7 @@ def main():
     ap.add_argument("--fork-owner", default="")
     a = ap.parse_args()
     repo, head = a.repo_dir, git(a.repo_dir, "rev-parse", a.head)
+    own_branch = not a.fork_owner  # a branch of the repository itself
     errors, notes = [], []
     if a.fork_owner == "Organization":
         errors.append(ORGANIZATION_FORK)
@@ -49,9 +50,9 @@ def main():
         notes.append("The pull request changes results (" + ", ".join(f"`{f}`" for f in own[:10])
                      + (" ..." if len(own) > 10 else "") + "): the bot's results commit undoes that.")
 
-    for error, p in problems(repo, a.main, base, tip):
+    for error, p in problems(repo, a.main, base, tip, own_branch):
         (errors if error else notes).append(p if error else f"The bot does not run this pull request: {p}")
-    if shared:
+    if shared and not own_branch:
         notes.append("The pull request changes `systems/dbo`, which every system uses: the bot does not run it, "
                      "the benchmark is run by hand.")
     for s in systems:

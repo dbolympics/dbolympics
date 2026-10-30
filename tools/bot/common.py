@@ -83,26 +83,34 @@ def changed_systems(repo, base, tip):
     return sorted(names - {SHARED}), SHARED in names
 
 
-def problems(repo, main, base, tip):
+def problems(repo, main, base, tip, own=False):
     """Why the bot must not run the pull request's tip, as (error, sentence) pairs; none if it may. An error is
     wrong in any pull request; the rest only keeps the bot from running it:
-    - the pull request changes a file that runs on the host (not NOT_RUN, not a system's directory): the bot runs the
-      systems on main's, so the change would not be in the run;
-    - main changed one of the pull request's systems since the merge base: the run would leave that change out;
+    - from a fork: the pull request changes a file that runs on the host (not NOT_RUN, not a system's directory): the
+      bot runs the systems on main's, so the change would not be in the run;
+    - from a fork: main changed one of the pull request's systems since the merge base: the run would leave that
+      change out;
+    - from a branch of the repository itself (`own`, pushed by a maintainer): the pull request and main do not merge
+      without conflicts, so there is no tree to run (run_tree);
     - a system's directory has a symbolic link or a submodule, or a name that is not a plain one (errors).
     What main changed elsewhere since the merge base is no reason: the run has it. Results the pull request changes
     itself are none either: the bot's results commit undoes them (user_results)."""
     out = []
-    outside = [f for f in git(repo, "diff", "--name-only", base, tip).splitlines()
-               if not NOT_RUN.search(f) and not ((m := SYSTEM_PATH.match(f)) and m.group(1) != SHARED)]
-    if outside:
-        out.append((False, "The pull request changes files that run outside the containers: "
-                   + ", ".join(f"`{f}`" for f in outside[:20]) + (" ..." if len(outside) > 20 else "")
-                   + ". The bot runs the systems on main's runner, so keep these changes for a separate pull request."))
     systems, _ = changed_systems(repo, base, tip)
-    if both := sorted(set(systems) & set(changed_systems(repo, base, main)[0])):
-        out.append((False, f"Main changed {', '.join(f'`systems/{s}`' for s in both)} since the pull request branched off, "
-                   "and the run would leave that out: rebase the pull request onto main."))
+    if own:
+        if merged_tree(repo, main, tip) is None:
+            out.append((False, "The pull request does not merge into main without conflicts: rebase it onto main."))
+    else:
+        outside = [f for f in git(repo, "diff", "--name-only", base, tip).splitlines()
+                   if not NOT_RUN.search(f) and not ((m := SYSTEM_PATH.match(f)) and m.group(1) != SHARED)]
+        if outside:
+            out.append((False, "The pull request changes files that run outside the containers: "
+                       + ", ".join(f"`{f}`" for f in outside[:20]) + (" ..." if len(outside) > 20 else "")
+                       + ". From a fork, the bot runs the systems on main's runner, so keep these changes for a "
+                       "separate pull request."))
+        if both := sorted(set(systems) & set(changed_systems(repo, base, main)[0])):
+            out.append((False, f"Main changed {', '.join(f'`systems/{s}`' for s in both)} since the pull request branched off, "
+                       "and the run would leave that out: rebase the pull request onto main."))
     for s in systems:
         if not SYSTEM_NAME.match(s):
             out.append((True, f"`systems/{s}`: a system's name has lower-case letters, digits, `-` and `_` only."))
@@ -114,9 +122,29 @@ def problems(repo, main, base, tip):
     return out
 
 
-def run_tree(repo, main, base, tip, env):
-    """The tree the bot runs a pull request in: main's, with the directories of the systems the pull request changes
-    as they are at its tip (their results as on main). The index of $GIT_INDEX_FILE (in `env`) is used for it."""
+def merged_tree(repo, main, tip):
+    """The tree of the pull request merged into main, None if they conflict."""
+    r = subprocess.run(["git", "-C", str(repo), "merge-tree", "--write-tree", "--no-messages", main, tip],
+                       capture_output=True, text=True)
+    return r.stdout.split()[0] if r.returncode == 0 else None
+
+
+def run_tree(repo, main, base, tip, env, own=False):
+    """The tree the bot runs a pull request in, the results as on main. From a branch of the repository itself
+    (`own`): the pull request merged into main, its runner, queries and everything else included. From a fork:
+    main's, with the directories of the systems the pull request changes as they are at its tip. The index of
+    $GIT_INDEX_FILE (in `env`) is used for it."""
+    if own:
+        git(repo, "read-tree", merged_tree(repo, main, tip), env=env)
+        lines = []
+        for line in git(repo, "diff-index", "--cached", "-r", main, "--", "systems/", env=env).splitlines():
+            meta, path = line.split("\t", 1)
+            if RESULTS_PATH.match(path):
+                mode, blob = meta.split()[0].lstrip(":"), meta.split()[2]  # main's side
+                lines.append(f"{mode} {blob}\t{path}\n" if mode != "000000" else f"0 {'0' * 40}\t{path}\n")
+        if lines:
+            git(repo, "update-index", "--index-info", env=env, input="".join(lines))
+        return git(repo, "write-tree", env=env)
     git(repo, "read-tree", main, env=env)
     systems, _ = changed_systems(repo, base, tip)
     entries = lambda rev, s: {line.split("\t", 1)[1]: line.split()[:3] for line in git(repo, "ls-tree", "-r", rev, "--", f"systems/{s}/").splitlines()

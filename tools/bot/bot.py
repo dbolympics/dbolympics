@@ -232,15 +232,15 @@ class Bot:
                          env=dict(self.identity(), GIT_AUTHOR_NAME=name, GIT_AUTHOR_EMAIL=email, GIT_AUTHOR_DATE=date))
         return new[head]
 
-    def run_commit(self, pr, base, tip):
+    def run_commit(self, pr, base, tip, own):
         """A commit on main of the tree a run of the pull request has (run_tree); not pushed anywhere."""
         index = self.work / "index"
         env = dict(self.identity(), GIT_INDEX_FILE=str(index))
         index.unlink(missing_ok=True)
-        tree = run_tree(self.mirror, "main", base, tip, env)
+        tree = run_tree(self.mirror, "main", base, tip, env, own)
         index.unlink()
         return git(self.mirror, "commit-tree", "-p", "main", "-F", "-", tree, env=env,
-                   input=f"The systems of pull request #{pr} at {tip[:10]} on main, as the bot runs them\n")
+                   input=f"Pull request #{pr} at {tip[:10]} {'merged into' if own else 'on'} main, as the bot runs it\n")
 
     def write_commit(self, parent, changes, message):
         """A commit on `parent` with `changes` [(mode, blob, path)] (blob None: removed)."""
@@ -386,7 +386,7 @@ class Bot:
                 sha, base, _, tip, _ = self.pr_tip(n)
                 if pin and not (sha.startswith(pin) or tip.startswith(pin)):
                     raise Refused(f"The pull request is at `{sha[:10]}`, not `{pin}`.")
-                if errs := [p for _, p in problems(self.mirror, "main", base, tip)]:
+                if errs := [p for _, p in problems(self.mirror, "main", base, tip, own(pr, self.cfg))]:
                     raise Refused("The bot does not run this pull request:\n" + "\n".join(f"- {e}" for e in errs))
                 changed, _ = changed_systems(self.mirror, base, tip)
                 # the systems of the run (run_tree): main's, and the pull request's own, without those it removes
@@ -516,12 +516,13 @@ class Bot:
             head, base, results, tip, rebased = self.pr_tip(n)
             if git(self.mirror, "rev-parse", f"{tip}^{{tree}}") != job["tree"]:
                 raise Refused("The pull request has new commits since the approval: approve again with `/benchmark`.")
-            if errs := [p for _, p in problems(self.mirror, "main", base, tip)]:
-                raise Refused("The bot does not run this pull request:\n" + "\n".join(f"- {e}" for e in errs))
             pr = self.gh.get(f"/repos/{self.cfg['repo']}/pulls/{n}")
+            if errs := [p for _, p in problems(self.mirror, "main", base, tip, own(pr, self.cfg))]:
+                raise Refused("The bot does not run this pull request:\n" + "\n".join(f"- {e}" for e in errs))
             job["commit"] = tip
-            # the pull request's systems on main (run_tree): main's runner, whatever main the branch started from
-            git(self.run_dir, "checkout", "--quiet", "--detach", "--force", self.run_commit(n, base, tip))
+            # run_tree: a branch of the repository merged into main; a fork's systems on main's runner, whatever main
+            # the branch started from
+            git(self.run_dir, "checkout", "--quiet", "--detach", "--force", self.run_commit(n, base, tip, own(pr, self.cfg)))
             git(self.run_dir, "clean", "-ffdq")  # untracked files go, the ignored ones (data/, target/) stay
 
         self.stage(job, "Building the runner ...")
@@ -732,6 +733,12 @@ class Bot:
 
 REBASED = ("Commits after the earlier results commit were rebased without it: update your branch with "
            "`git pull --rebase`.")
+
+
+def own(pr, cfg):
+    """Whether the pull request's branch is in the repository itself: pushed by a maintainer, so the bot runs all of
+    it (run_tree), not only its systems."""
+    return (pr["head"]["repo"] or {}).get("full_name") == cfg["repo"]
 
 
 def quote(c):
