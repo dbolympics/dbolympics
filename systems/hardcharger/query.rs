@@ -1,4 +1,4 @@
-//! Hardcharger's own CLI executes every statement over Warp SQL, in one process and
+//! Hardcharger's own CLI executes every statement over Chargewire, in one process and
 //! session for the whole run. Local .once/.echo commands frame its CSV output; they
 //! do not send SQL or start a process. HTTP is used only for cancellation.
 
@@ -8,7 +8,7 @@ use std::process::{Child, ChildStdin, Command, Stdio};
 
 use serde_json::json;
 
-const API: &str = "http://127.0.0.1:31337/warp/v1";
+const API: &str = "http://127.0.0.1:31337/chargewire/v1";
 const CSV: &str = "/run/dbo/hardcharger.csv";
 const BARRIER: &str = "echo: off\n";
 

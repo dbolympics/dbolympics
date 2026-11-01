@@ -1,6 +1,6 @@
-# Hardcharger: DuckDB served over Warp SQL, queried by the released hardcharger CLI.
+# Hardcharger: DuckDB served over Chargewire, queried by the released hardcharger CLI.
 name = "hardcharger"
-version = "2.0.0 (DuckDB 2.0.0)"
+version = "2.4.1 (DuckDB 2.0.0)"
 
 [load]
 statement = "COPY {table} FROM '{file}' (FORMAT parquet)"
