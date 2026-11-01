@@ -1,8 +1,8 @@
 # Hardcharger
 
-[Hardcharger](https://github.com/gizmodata/hardcharger) 2.0.0 serves DuckDB 2.0.0
-through Warp SQL. `install` uses the [official Hardcharger installer](https://gizmodata.com/hardcharger/install),
-pinned to `--version 2.0.0`, to install the server and `hardcharger` CLI under
+[Hardcharger](https://github.com/gizmodata/hardcharger) 2.4.1 serves DuckDB 2.0.0
+through Chargewire. `install` uses the [official Hardcharger installer](https://gizmodata.com/hardcharger/install),
+pinned to `--version 2.4.1`, to install the server and `hardcharger` CLI under
 `/opt/hardcharger`. The installer selects the architecture, verifies the release
 checksums and checks both binaries before making them current. The runner adapter
 is built with a pinned Rust toolchain and lockfile. JSON and Parquet support are
@@ -19,7 +19,7 @@ Update acknowledgements are ignored by the runner, as for other systems.
 At startup, the CLI identifies its own session with
 `SELECT session_id FROM hardcharger_active_connections() WHERE is_current`.
 The adapter authenticates a separate HTTP **control channel**, used only to send
-Warp SQL's session-cancel request at a timeout. Waiting for its acknowledgement
+Chargewire's session-cancel request at a timeout. Waiting for its acknowledgement
 and the CLI's completion barrier keeps cancellation from reaching the next
 statement. All schema creation, data loading and benchmark queries go through the
 CLI; the control channel never executes SQL. This also avoids sending SIGINT to

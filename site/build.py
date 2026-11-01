@@ -467,7 +467,7 @@ def example_run():
 SYSTEM_INFO = {
     "duckdb": ("DuckDB", "embedded"),
     "hyper": ("Hyper", "Tableau's engine, its own server"),
-    "hardcharger": ("Hardcharger", "DuckDB behind a Warp SQL server, queried through its CLI"),
+    "hardcharger": ("Hardcharger", "DuckDB behind a Chargewire server, queried through its CLI"),
     "cedardb": ("CedarDB", "its own server"),
     "umbra": ("Umbra", "its own server"),
     "pg_duckdb": ("pg_duckdb on PostgreSQL", "PostgreSQL tables, DuckDB runs the queries"),
