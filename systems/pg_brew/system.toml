@@ -9,8 +9,8 @@
 # So the schema, the load statement and the queries below are Umbra's; the query program makes
 # PostgreSQL's DDL and load from them.
 name = "pg_brew"
-# its mother: the website shows it under PostgreSQL, when PostgreSQL is opened
-mother = "postgres"
+# runs on PostgreSQL (docs/RUNNER.md): the website shows it under PostgreSQL, when PostgreSQL is opened
+based_on = "postgres"
 # the version, kept with the results (by hand)
 version = "experimental (PostgreSQL 18.1)"
 # disabled from this scale factor on, and why (shown on the website)

@@ -1,5 +1,7 @@
 # Hardcharger: DuckDB served over Chargewire, queried by the released hardcharger CLI.
 name = "hardcharger"
+# runs on DuckDB (docs/RUNNER.md): the website shows it under DuckDB, when DuckDB is opened
+based_on = "duckdb"
 version = "2.4.1 (DuckDB 2.0.0)"
 
 [load]

@@ -67,9 +67,9 @@ pub struct Container {
 #[serde(deny_unknown_fields)]
 pub struct System {
     pub name: String,
-    /// the system this one runs inside or on, e.g. "postgres" for an extension of PostgreSQL: the website shows it under
-    /// its mother, and only when asked to
-    pub mother: Option<String>,
+    /// the system of the benchmark this one is based on (docs/RUNNER.md), e.g. "postgres" for an extension of
+    /// PostgreSQL: the website shows it under its base, and only when asked to
+    pub based_on: Option<String>,
     #[serde(default = "native")]
     pub arrays: Arrays,
     /// the `keys` settings the system can run (default: all)
@@ -113,9 +113,15 @@ impl System {
         if s.scale_limit.is_some() != s.scale_limit_message.is_some() {
             bail!("{}: scale_limit and scale_limit_message go together", file.display());
         }
-        if let Some(m) = &s.mother {
-            if m.contains('/') || !dir.with_file_name(m).join("system.toml").is_file() {
-                bail!("{}: no system {m} to be the mother of", file.display());
+        if let Some(b) = &s.based_on {
+            let base = dir.with_file_name(b).join("system.toml");
+            if b.contains('/') || !base.is_file() {
+                bail!("{}: based_on: no system {b}", file.display());
+            }
+            // one level: the website shows a system under its base, and the base among the others
+            let base: toml::Table = toml::from_str(&std::fs::read_to_string(&base)?).with_context(|| format!("system file {}", base.display()))?;
+            if base.contains_key("based_on") {
+                bail!("{}: based_on: {b} is itself based on another system", file.display());
             }
         }
         if !dir.join("start").is_file() {

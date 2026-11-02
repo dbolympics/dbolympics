@@ -9,6 +9,8 @@
 # So the schema, the load statement and the queries below are Umbra's; the query program makes
 # ClickHouse's DDL and load from them.
 name = "clickhouse_brew"
+# runs on ClickHouse (docs/RUNNER.md): the website shows it under ClickHouse, when ClickHouse is opened
+based_on = "clickhouse"
 # the version, kept with the results (by hand)
 version = "experimental (ClickHouse 26.9.22.3)"
 # for Umbra, which does not read list columns from Parquet; ClickHouse reads the original files

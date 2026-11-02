@@ -38,9 +38,10 @@ for path in sorted(glob.glob(f"{ROOT}/systems/*/results/????-??-??/*.csv")):
     LATEST[(system, cfg)] = path  # sorted: a later date replaces an earlier one
 DATES = sorted({path.split("/")[-2] for path in LATEST.values()})
 
-# a system's mother (mother in its system.toml, e.g. PostgreSQL of its extensions): the site shows a child under its
-# mother, when asked to, and leaves the children out where systems are compared (the fastest system, the Pareto front)
-MOTHER = {f.split("/")[-2]: tomllib.load(open(f, "rb")).get("mother") for f in glob.glob(f"{ROOT}/systems/*/system.toml")}
+# the system a system is based on (based_on in its system.toml, docs/RUNNER.md, e.g. PostgreSQL of its extensions):
+# the site shows a variant under its base, when asked to, and leaves the variants out where systems are compared (the
+# fastest system, the Pareto front)
+BASED_ON = {f.split("/")[-2]: tomllib.load(open(f, "rb")).get("based_on") for f in glob.glob(f"{ROOT}/systems/*/system.toml")}
 
 records, bench = {}, {}
 for (system, cfg), path in sorted(LATEST.items()):
@@ -156,7 +157,7 @@ roles = {m["id"]: m["title"] for m in personas["managers"]}
 # a result not checked (no reference results for the scale factor) counts as correct; the configuration says so
 STATUS = {"ok": 0, "unchecked": 0, "wrong_result": 1, "error": 2, "timeout": 3}
 
-out = {"dates": DATES, "roles": roles, "queries": queries, "mothers": {s: m for s, m in sorted(MOTHER.items()) if m}, "configs": {}}
+out = {"dates": DATES, "roles": roles, "queries": queries, "based_on": {s: b for s, b in sorted(BASED_ON.items()) if b}, "configs": {}}
 for cfg, systems in configs.items():
     m = re.match(r"sf(\d+)-(.*)", cfg)
     REPS, TIMEOUT = bench[cfg]["repetitions"], float(bench[cfg]["query_timeout"])
@@ -176,11 +177,11 @@ for cfg, systems in configs.items():
     # per-query best correct time across systems (without the children)
     best = []
     for i in range(len(qids)):
-        ok = [last[n][0][i] for n in last if not MOTHER.get(n) and last[n][1][i] == 0 and last[n][0][i] is not None]
+        ok = [last[n][0][i] for n in last if not BASED_ON.get(n) and last[n][1][i] == 0 and last[n][0][i] is not None]
         best.append(min(ok) if ok else None)
     # what a query without a correct result counts as: a timeout the timeout; an error, a wrong result or a query not
     # run twice the slowest correct time of that query (the timeout if no system answered it)
-    worst = [max((last[n][0][i] for n in last if not MOTHER.get(n) and last[n][1][i] == 0 and last[n][0][i] is not None), default=TIMEOUT / 2)
+    worst = [max((last[n][0][i] for n in last if not BASED_ON.get(n) and last[n][1][i] == 0 and last[n][0][i] is not None), default=TIMEOUT / 2)
              for i in range(len(qids))]
     cost = lambda t, st, i: t[i] if st[i] == 0 else TIMEOUT if st[i] == 3 else 2 * worst[i]
     sysout = {}

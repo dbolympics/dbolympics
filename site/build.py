@@ -12,10 +12,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))  # site/: the scripts, templat
 ROOT = os.path.dirname(HERE)                         # the repository
 OUT = os.path.join(HERE, "out")                      # everything built; not checked in
 D = json.load(open(os.path.join(OUT, "data.json")))
-# the children of a system (mother in their system files, extract.py): shown under their mother when it is opened,
+# the variants of a system (based_on in their system files, extract.py): shown under their base when it is opened,
 # never on the Pareto front
-MOTHERS = D["mothers"]
-FAMILIES = sorted(set(MOTHERS.values()))
+BASED_ON = D["based_on"]
+BASES = sorted(set(BASED_ON.values()))
 # the scale factor shown first: the largest in the results
 DEFAULT_SF = max(c["sf"] for c in D["configs"].values())
 NQ = len(D["queries"])
@@ -163,8 +163,8 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
     """With best_only, a system shows only its most efficient machine; its other marks, and the line joining them, are
     drawn hidden (class alt), for hovering and selecting. The axes are the same either way. Queries per second on a
     log scale (ylog) or a linear one, from 0, and the cost likewise (xlog); the page switches each axis between the two
-    by a click on its title. A child system is drawn only if its mother is in `opened`, and never on the front."""
-    pts = [p for p in points(sf) if MOTHERS.get(p["name"]) in (None, *opened)]
+    by a click on its title. A variant is drawn only if its base is in `opened`, and never on the front."""
+    pts = [p for p in points(sf) if BASED_ON.get(p["name"]) in (None, *opened)]
     by = {}
     for p in pts:
         by.setdefault(p["name"], []).append(p)
@@ -172,7 +172,7 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
     # the Pareto front of all systems on all machines: no cheaper mark answers more queries per second; with best_only
     # a system shows its most efficient machine and those of its machines on the front, the others drawn hidden
     front = []
-    for p in sorted((p for p in pts if p["name"] not in MOTHERS), key=lambda p: (p["dollars"], -p["qps"])):
+    for p in sorted((p for p in pts if p["name"] not in BASED_ON), key=lambda p: (p["dollars"], -p["qps"])):
         if not front or p["qps"] > front[-1]["qps"]:
             front.append(p)
     keep = {id(p) for p in front} | {id(p) for p in top.values()}
@@ -336,16 +336,16 @@ def tip(name, ps, best=None):
 
 def hero():
     """Figure 1 in every view, each a file of its own
-    (out/fig1/<sf>-<best|all>-<x log|lin>-<y log|lin>[-<opened mothers, joined by +>]-<wide|narrow>.svg), the page
+    (out/fig1/<sf>-<best|all>-<x log|lin>-<y log|lin>[-<opened bases, joined by +>]-<wide|narrow>.svg), the page
     loading a view when it is first shown; the first view (the largest scale factor, the most efficient machines, both
-    axes linear, no mother opened), for a large screen and a phone, is in the page itself."""
+    axes linear, no base opened), for a large screen and a phone, is in the page itself."""
     d = os.path.join(OUT, "fig1")
     shutil.rmtree(d, ignore_errors=True)
     os.makedirs(d)
     first = f"{DEFAULT_SF}-best-lin-lin"
     inline = ""
-    # every set of opened mothers
-    openings = [o for k in range(len(FAMILIES) + 1) for o in itertools.combinations(FAMILIES, k)]
+    # every set of opened bases
+    openings = [o for k in range(len(BASES) + 1) for o in itertools.combinations(BASES, k)]
     for sf, m, xlog, ylog, opened in itertools.product(scale_factors(), ("best", "all"), (True, False), (True, False), openings):
         key = f"{sf}-{m}-{'log' if xlog else 'lin'}-{'log' if ylog else 'lin'}" + (f"-{'+'.join(opened)}" if opened else "")
         for width, args in (("wide", (1000, 540, 15, 15, 22)), ("narrow", (420, 450, 12.5, 12, 17))):

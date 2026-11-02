@@ -183,6 +183,7 @@ The files of `systems/<name>/` and the protocol its query program speaks are in
 name = "umbra"
 version = "experimental"   # the version, set by hand, kept with the results: without the
                            # name; another database it needs in parentheses
+based_on = "postgres"      # the system of the benchmark it is based on (default: none), see below
 arrays = "text"                # default "native"
 keys = ["none", "primary"]     # the `keys` settings the system can run (default: both)
 scale_limit = 1000             # disabled from this scale factor on (default: never): a configuration
@@ -215,6 +216,17 @@ data_writable = false          # see below
 - **`data_writable`** mounts the data writable in that container, for a system that only
   opens files for writing. The runner then compares size and modification time of every data
   file before and after the run and fails the run if one changed.
+- **`based_on`** names another system of the benchmark when this one has no query engine of its
+  own: it runs that system's engine, repackaged (chDB is ClickHouse as a library, Hardcharger is
+  DuckDB behind a server), extended (pg_duckdb and pg_clickhouse are extensions of PostgreSQL), or
+  behind a front end that rewrites the queries (pg_brew, clickhouse_brew). A system with an engine
+  of its own is not based on another, even when it started as one: Firebolt, a fork of ClickHouse
+  developed on its own, and CedarDB, which comes from Umbra's research, stand alone.
+  - **The base** is the system it runs on: the database it is installed into or packages, which
+    holds the data. pg_duckdb's base is PostgreSQL, though DuckDB runs its queries.
+  - The base is not based on another system itself.
+  - The website shows such a system under its base, when the base is opened, and leaves it out
+    where systems are compared (the fastest system, the Pareto front).
 - **`scale_limit`** is set only where the system itself is the limit (a license, a load that
   takes hours), not for a bug: a system that gets stuck or crashes on a query keeps running,
   since that is a finding.

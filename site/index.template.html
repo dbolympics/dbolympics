@@ -88,12 +88,12 @@ table.board { width: 100%; border-collapse: collapse; font-size: 15px; }
 .board .rank { width: 28px; color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
 .board .sys { width: 170px; white-space: nowrap; }
 .board .sys .glyph { margin-right: 9px; vertical-align: -1px; color: var(--ink-2); }
-/* a mother's children (PostgreSQL's extensions): the triangle before the mother shows them beneath it, indented */
+/* the variants of a base (e.g. PostgreSQL's extensions): the triangle before the base shows them beneath it, indented */
 .board .twist { font: inherit; font-size: 11px; color: var(--muted); background: none; border: 0; padding: 0 6px 0 0; margin-left: -17px;
   width: 17px; cursor: pointer; }
 .board .twist:hover { color: var(--ink); }
-.board tr.child td.sys { padding-left: 22px; }
-.board tr.child td { color: var(--ink-2); }
+.board tr.variant td.sys { padding-left: 22px; }
+.board tr.variant td { color: var(--ink-2); }
 .board .r { text-align: right; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; padding-left: 18px; }
 .board .barcell { width: 40%; padding-left: 18px; }
 .bar { position: relative; height: 7px; }
@@ -370,9 +370,9 @@ const PERIODS = ["2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4"];
 const STATUS = ["ok", "wrong result", "error", "timeout", "not run"];
 
 const state = { sf: /*DEFAULT_SF*/, marks: "best", machine: null, order: "id", sel: null, query: 0, keys: false, open: new Set() };
-// a child system (D.mothers: its mother, e.g. PostgreSQL of its extensions) is shown only while its mother is open
-const shown = name => !D.mothers[name] || state.open.has(D.mothers[name]);
-const children = name => Object.keys(D.mothers).filter(n => D.mothers[n] === name && n in cfg().systems);
+// a variant (D.based_on: its base, e.g. PostgreSQL of its extensions) is shown only while its base is open
+const shown = name => !D.based_on[name] || state.open.has(D.based_on[name]);
+const variants = name => Object.keys(D.based_on).filter(n => D.based_on[n] === name && n in cfg().systems);
 const cfg = () => Object.values(D.configs).find(c => c.sf === state.sf && c.machine === state.machine);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmtT = s => s == null ? "–" : s < 1 ? `${(s * 1000).toPrecision(s < 0.01 ? 2 : 3)} ms` : `${s.toPrecision(3)} s`;
@@ -529,10 +529,10 @@ function renderBoard() {
   // what ended it; a system disabled at this scale factor goes last
   const last = s => !s.failed ? 0 : s.failed.status === "disabled" ? 2 : 1;
   const order = rs => rs.sort((a, b) => last(a[1]) - last(b[1]) || a[2] - b[2]);
-  // by cost without the children; an open mother's children right beneath it, by their own cost
+  // by cost without the variants; an open base's variants right beneath it, by their own cost
   const all = ranked().map(([name, s]) => [name, s, secs(s)]);
-  const rows = order(all.filter(([n]) => !D.mothers[n]))
-    .flatMap(r => [r, ...order(all.filter(([n]) => D.mothers[n] === r[0]))]);
+  const rows = order(all.filter(([n]) => !D.based_on[n]))
+    .flatMap(r => [r, ...order(all.filter(([n]) => D.based_on[n] === r[0]))]);
   const max = Math.log(Math.max(...rows.filter(r => !r[1].failed).map(r => r[1].score)));
   const tb = document.getElementById("board");
   tb.innerHTML = "";
@@ -540,9 +540,9 @@ function renderBoard() {
   let rank = 0;
   rows.forEach(([name, s, t]) => {
     const tr = document.createElement("tr");
-    const child = !!D.mothers[name], kids = child ? [] : children(name);
-    tr.className = [state.sel === name ? "sel" : "", child ? "child" : ""].join(" ").trim();
-    if (!child && !s.failed) rank++;
+    const variant = !!D.based_on[name], kids = variant ? [] : variants(name);
+    tr.className = [state.sel === name ? "sel" : "", variant ? "variant" : ""].join(" ").trim();
+    if (!variant && !s.failed) rank++;
     const twist = kids.length ? `<button class="twist" type="button" aria-expanded="${state.open.has(name)}" title="${state.open.has(name) ? "Hide" : "Show"} ${kids.map(n => NAMES[n] || n).join(", ")}">${state.open.has(name) ? "▾" : "▸"}</button>` : "";
     const failed = !!s.failed;
     const w = Math.max(0.5, (Math.log(s.score) / max) * 100);
@@ -550,7 +550,7 @@ function renderBoard() {
     const loaded = s.load.every(v => v != null) && !s.failed;
     const qps = Q.length / t, usd = PRICES[c.machine] / 3600 * t;
     tr.innerHTML = `
-      <td class="rank">${failed || child ? "" : rank}</td>
+      <td class="rank">${failed || variant ? "" : rank}</td>
       <td class="sys">${twist}${glyph(name, 13)}${NAMES[name] || name}</td>
       ${failed
         // what ended the run, across the columns it leaves without a value
@@ -561,7 +561,7 @@ function renderBoard() {
       <td class="r">${s.correct}<span class="frac"><i style="width:${s.correct / 409 * 100}%"></i></span></td>
       <td class="r load">${loaded ? `${s.load.reduce((a, b) => a + b, 0).toFixed(0)} s` : "–"}</td>`;
     tr.onclick = () => select(name);
-    // the triangle opens or closes the mother (its children here and in the figures), without selecting it
+    // the triangle opens or closes the base (its variants here and in the figures), without selecting it
     const tw = tr.querySelector(".twist");
     if (tw) tw.onclick = e => { e.stopPropagation(); state.open.has(name) ? state.open.delete(name) : state.open.add(name); render(); };
     tr.onmousemove = e => tip(e, `<div class="t">${NAMES[name]}</div>
