@@ -7,6 +7,7 @@ import io
 import math
 import re
 import subprocess
+import tomllib
 
 # The bot's results commit: one commit, the last of the pull request, only files in systems/<name>/results/, with
 #   DB-Olympics-Results: <system> ...           the systems it has results of
@@ -24,7 +25,8 @@ SYSTEM_NAME = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 # queries, the schema, the shared systems/dbo, Cargo's files) would not be in the run.
 NOT_RUN = re.compile(r"^(docs/|site/|\.github/)|\.md$|^LICENSE$")
 SHARED = "dbo"  # systems/dbo: the library every system's query program uses, not a system
-# a system's files (systems/README.md); logo.svg is optional
+# a system's files (systems/README.md); logo.svg is optional. A variant (base = ... in its system.toml, e.g. a system on
+# the Parquet files) has only its system.toml: it runs its base's files
 SYSTEM_FILES = {"system.toml": "100644", "install": "100755", "start": "100755", "stop": "100755", "query.rs": "100644"}
 
 
@@ -59,10 +61,23 @@ def split(repo, main, head):
     return base, results, tip
 
 
-def code_hash(repo, rev, system):
-    """The code of a system at a commit: a hash of its files, without its results. None if it has none."""
+def base_of(repo, rev, system):
+    """The system a variant runs the files of (base = ... in its system.toml), None for a system of its own."""
+    r = subprocess.run(["git", "-C", str(repo), "show", f"{rev}:systems/{system}/system.toml"], capture_output=True, text=True)
+    try:
+        base = tomllib.loads(r.stdout).get("base") if r.returncode == 0 else None
+    except tomllib.TOMLDecodeError:
+        return None
+    return base if isinstance(base, str) and SYSTEM_NAME.match(base) and base != system else None
+
+
+def code_hash(repo, rev, system, seen=()):
+    """The code of a system at a commit: a hash of its files, without its results, and a variant's with its base's,
+    which it runs. None if it has none."""
     listing = [line for line in git(repo, "ls-tree", "-r", rev, "--", f"systems/{system}/").splitlines()
                if not RESULTS_PATH.match(line.split("\t", 1)[1])]
+    if listing and (base := base_of(repo, rev, system)) and base not in seen:
+        listing.append(f"base {code_hash(repo, rev, base, (*seen, system))}")
     return hashlib.sha1("\n".join(listing).encode()).hexdigest() if listing else None
 
 
@@ -173,7 +188,11 @@ def user_results(repo, base, rev):
 
 
 def missing_files(repo, tip, system):
-    """The files a system needs (SYSTEM_FILES) that it does not have, or not with the right mode."""
+    """The files a system needs (SYSTEM_FILES) that it does not have, or not with the right mode; a variant's base's."""
+    if base := base_of(repo, tip, system):
+        if not git(repo, "ls-tree", tip, "--", f"systems/{base}/system.toml"):
+            return [f"its base `systems/{base}`"]
+        return missing_files(repo, tip, base) if base_of(repo, tip, base) is None else [f"a base that is no variant itself (`systems/{base}` is one)"]
     have = {line.split("\t", 1)[1].rsplit("/", 1)[1]: line.split()[0]
             for line in git(repo, "ls-tree", tip, "--", f"systems/{system}/").splitlines()}
     return [f"`{f}`" + (" (not executable)" if f in have else "") for f, mode in SYSTEM_FILES.items() if have.get(f) != mode]
