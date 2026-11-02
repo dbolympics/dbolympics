@@ -1,0 +1,36 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "category": "parquet",
+  "commit": "93e83c0b2624920f9041ea2104bbeaaa74f8c06b",
+  "complete": false,
+  "config": "sf100-c8a.12xlarge",
+  "cpuset": "0-47",
+  "date": "2026-11-02",
+  "dirty": false,
+  "failure": {
+    "detail": "q089: no answer within 20 s",
+    "status": "failed_stuck"
+  },
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-duckdb@sha256:21317ed7d3014a9e5b81f2e8387c5d5ea5bee346adf4e333adff2b7892475475"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "96GB",
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 0.0,
+  "sf": 100.0,
+  "system": "duckdb-parquet",
+  "threads": 48,
+  "timeout_check": "cancelled",
+  "version": "2.0.0"
+}
