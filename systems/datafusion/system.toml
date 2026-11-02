@@ -1,14 +1,15 @@
 # Apache DataFusion, embedded in the query program (Rust, query/), which lives for the whole run.
-# DataFusion has no storage of its own: it queries the Parquet files where they are, so a load only
-# adds a file to a table (a command of the query program, not SQL).
+# DataFusion has no storage of its own: it queries the Parquet files where they are, every table an
+# external table over the directory with a link to each of its files so far, made again at every load.
 name = "datafusion"
 # the version, kept with the results (by hand)
 version = "55.0.0"
 keys = ["none"]
+category = "parquet"
 
 
 [load]
-statement = "LOAD {table} '{file}'"
+statement = ["DROP TABLE IF EXISTS {table}", "CREATE EXTERNAL TABLE {table} STORED AS PARQUET LOCATION '{dir}/'"]
 
 [dialect.types]
 uuid = "varchar"

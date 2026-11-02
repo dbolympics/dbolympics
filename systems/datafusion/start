@@ -3,8 +3,7 @@
 # default) and a memory pool of 80% of its memory (room left for what the pool does not track):
 # DataFusion's default pool has no limit.
 set -e
-mkdir -p db
 
 # the query program, for the whole run: the runner's protocol on /run/dbo/dbo.sock
-nohup ./query /system/db $((DBO_MEMORY_BYTES * 8 / 10)) >/run/dbo/query.log 2>&1 &
+nohup ./query $((DBO_MEMORY_BYTES * 8 / 10)) >/run/dbo/query.log 2>&1 &
 echo $! > query.pid

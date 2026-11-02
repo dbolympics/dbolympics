@@ -33,6 +33,9 @@ NAMES = {
     "pg_duckdb": "pg_duckdb", "postgres": "PostgreSQL", "datafusion": "DataFusion", "firebolt": "Firebolt",
     "clickhouse": "ClickHouse", "chdb": "chDB", "pg_clickhouse": "pg_clickhouse",
     "pg_brew": "pg_brew", "clickhouse_brew": "clickhouse_brew",
+    # on the Parquet files, named as their base systems: the category says the rest
+    "duckdb-parquet": "DuckDB", "clickhouse-parquet": "ClickHouse", "chdb-parquet": "chDB",
+    "hyper-parquet": "Hyper", "cedardb-parquet": "CedarDB",
 }
 # in the view of all systems, a system on the Parquet files is named "(Parquet)": DuckDB (Parquet) next to DuckDB
 PARQUET = {s for c in D["categories"].get("parquet", {}).values() for s in c["systems"]}
@@ -503,6 +506,11 @@ SYSTEM_INFO = {
     "pg_clickhouse": ("pg_clickhouse on PostgreSQL", "PostgreSQL passes the queries to ClickHouse"),
     "pg_brew": ("Querybrew on PostgreSQL", "Umbra writes every query for PostgreSQL, which runs it"),
     "clickhouse_brew": ("Querybrew on ClickHouse", "Umbra writes every query for ClickHouse, which runs it"),
+    "duckdb-parquet": ("DuckDB", "embedded, queries the Parquet files in place"),
+    "clickhouse-parquet": ("ClickHouse", "its own server, queries the Parquet files in place"),
+    "chdb-parquet": ("chDB", "ClickHouse as a library, embedded, queries the Parquet files in place"),
+    "hyper-parquet": ("Hyper", "Tableau's engine, its own server, queries the Parquet files in place"),
+    "cedardb-parquet": ("CedarDB", "its own server, queries the Parquet files in place"),
 }
 
 PAGES = [("index", "Results", "index.html"), ("queries", "Queries", "queries/index.html"),

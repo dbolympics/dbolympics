@@ -1,0 +1,9 @@
+# CedarDB on the Parquet files where they are: every table is a view over its files so far, nothing
+# is loaded. The system and the rest of its system file are CedarDB's (../cedardb).
+name = "cedardb-parquet"
+base = "cedardb"
+keys = ["none"]
+category = "parquet"
+
+[load]
+statement = "CREATE OR REPLACE VIEW {table} AS SELECT * FROM '{dir}/*.parquet'"
