@@ -15,7 +15,6 @@ D = json.load(open(os.path.join(OUT, "data.json")))
 # the variants of a system (based_on in their system files, extract.py): shown under their base when it is opened,
 # never on the Pareto front
 BASED_ON = D["based_on"]
-BASES = sorted(set(BASED_ON.values()))
 # the scale factor shown first: the largest in the results
 DEFAULT_SF = max(c["sf"] for c in D["configs"].values())
 NQ = len(D["queries"])
@@ -159,12 +158,16 @@ def nice_step(v):
     e = 10 ** math.floor(math.log10(v))
     return next(m * e for m in (1, 2, 5, 10) if m * e >= v * (1 - 1e-9))
 
-def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=True, opened=()):
+def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=True):
     """With best_only, a system shows only its most efficient machine; its other marks, and the line joining them, are
     drawn hidden (class alt), for hovering and selecting. The axes are the same either way. Queries per second on a
     log scale (ylog) or a linear one, from 0, and the cost likewise (xlog); the page switches each axis between the two
-    by a click on its title. A variant is drawn only if its base is in `opened`, and never on the front."""
-    pts = [p for p in points(sf) if BASED_ON.get(p["name"]) in (None, *opened)]
+    by a click on its title. A variant is never on the front; it is drawn with its base in data-base, and the page shows
+    it only while its base is opened. The axes and the labels' places are those with every variant shown, so that one
+    figure serves whichever bases are opened."""
+    pts = points(sf)
+    # a variant's marks, line and label carry its base
+    vb = lambda name: f' data-base="{BASED_ON[name]}"' if name in BASED_ON else ""
     by = {}
     for p in pts:
         by.setdefault(p["name"], []).append(p)
@@ -226,7 +229,7 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
     for name, ps in by.items():  # a system's machines joined by a line, from the smallest to the largest
         if len(ps) > 1:
             line = " ".join(f'{X(p["dollars"]):.1f},{Y(p["qps"]):.1f}' for p in sorted(ps, key=lambda p: p["rank"]))
-            o.append(f'<polyline class="pr s-{name}{" alt" if best_only else ""}" fill="none" points="{line}"/>')
+            o.append(f'<polyline class="pr s-{name}{" alt" if best_only else ""}"{vb(name)} fill="none" points="{line}"/>')
     # Labels: one per system, next to its most efficient mark (in both views), away from the marks and
     # from each other. Every label has its places, each scored on its own: the nearer the text looks, the better,
     # then right of the mark, then level with it. A label goes only where its own system's mark is clearly the nearest, so it cannot be read
@@ -300,14 +303,14 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
                 ex, ey = px, pos[2] - 3 if py < pos[2] else pos[3] + 1
             else:
                 ex, ey = (pos[0] - 3 if px < pos[0] else pos[1] + 3), (pos[2] + pos[3]) / 2
-            labels.append(f'<line class="leader s-{name}" x1="{px:.1f}" y1="{py:.1f}" x2="{ex:.1f}" y2="{ey:.1f}"/>')
-        labels.append(f'<text class="lb hit s-{name}" x="{pos[0]:.1f}" y="{pos[3] - h * 0.22:.1f}" data-tip="{tip(name, by[name])}">{NAMES[name]}</text>')
+            labels.append(f'<line class="leader s-{name}"{vb(name)} x1="{px:.1f}" y1="{py:.1f}" x2="{ex:.1f}" y2="{ey:.1f}"/>')
+        labels.append(f'<text class="lb hit s-{name}"{vb(name)} x="{pos[0]:.1f}" y="{pos[3] - h * 0.22:.1f}" data-tip="{tip(name, by[name])}">{NAMES[name]}</text>')
     for p in pts:
         z = size(p)
-        o.append(f'<circle class="halo s-{p["name"]}{alt(p)}" cx="{X(p["dollars"]):.1f}" cy="{Y(p["qps"]):.1f}" r="{z / 2 + 2.5}"/>')
+        o.append(f'<circle class="halo s-{p["name"]}{alt(p)}"{vb(p["name"])} cx="{X(p["dollars"]):.1f}" cy="{Y(p["qps"]):.1f}" r="{z / 2 + 2.5}"/>')
     for p in pts:
         z = size(p)
-        o.append(f'<g class="mk s-{p["name"]}{alt(p)}" transform="translate({X(p["dollars"]) - z / 2:.1f},{Y(p["qps"]) - z / 2:.1f}) scale({z / 16:g})">'
+        o.append(f'<g class="mk s-{p["name"]}{alt(p)}"{vb(p["name"])} transform="translate({X(p["dollars"]) - z / 2:.1f},{Y(p["qps"]) - z / 2:.1f}) scale({z / 16:g})">'
                  f'{GLYPHS[p["name"]]}</g>')
     o.append("</g>")
     o += labels
@@ -315,7 +318,7 @@ def hero_svg(sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True, xlog=Tru
     for p in pts:
         # the most efficient mark tells about all of the system's machines, which it shows when hovered
         about = sorted(by[p["name"]], key=lambda q: q["rank"]) if best_only else [p]
-        o.append(f'<circle class="hit s-{p["name"]}{alt(p)}" cx="{X(p["dollars"]):.1f}" cy="{Y(p["qps"]):.1f}" r="{size(p) / 2 + 5}" '
+        o.append(f'<circle class="hit s-{p["name"]}{alt(p)}"{vb(p["name"])} cx="{X(p["dollars"]):.1f}" cy="{Y(p["qps"]):.1f}" r="{size(p) / 2 + 5}" '
                  f'data-tip="{tip(p["name"], about, top[p["name"]] if best_only else None)}"/>')
     o.append("</g>")
     return "".join(o) + "</svg>"
@@ -336,20 +339,18 @@ def tip(name, ps, best=None):
 
 def hero():
     """Figure 1 in every view, each a file of its own
-    (out/fig1/<sf>-<best|all>-<x log|lin>-<y log|lin>[-<opened bases, joined by +>]-<wide|narrow>.svg), the page
+    (out/fig1/<sf>-<best|all>-<x log|lin>-<y log|lin>-<wide|narrow>.svg), the page
     loading a view when it is first shown; the first view (the largest scale factor, the most efficient machines, both
-    axes linear, no base opened), for a large screen and a phone, is in the page itself."""
+    axes linear), for a large screen and a phone, is in the page itself."""
     d = os.path.join(OUT, "fig1")
     shutil.rmtree(d, ignore_errors=True)
     os.makedirs(d)
     first = f"{DEFAULT_SF}-best-lin-lin"
     inline = ""
-    # every set of opened bases
-    openings = [o for k in range(len(BASES) + 1) for o in itertools.combinations(BASES, k)]
-    for sf, m, xlog, ylog, opened in itertools.product(scale_factors(), ("best", "all"), (True, False), (True, False), openings):
-        key = f"{sf}-{m}-{'log' if xlog else 'lin'}-{'log' if ylog else 'lin'}" + (f"-{'+'.join(opened)}" if opened else "")
+    for sf, m, xlog, ylog in itertools.product(scale_factors(), ("best", "all"), (True, False), (True, False)):
+        key = f"{sf}-{m}-{'log' if xlog else 'lin'}-{'log' if ylog else 'lin'}"
         for width, args in (("wide", (1000, 540, 15, 15, 22)), ("narrow", (420, 450, 12.5, 12, 17))):
-            svg = hero_svg(sf, *args, f"v-{width}", m == "best", ylog, xlog, opened)
+            svg = hero_svg(sf, *args, f"v-{width}", m == "best", ylog, xlog)
             open(os.path.join(d, f"{key}-{width}.svg"), "w").write(svg)
             if key == first:
                 inline += svg

@@ -35,6 +35,7 @@
 /* a system's other configurations on the Pareto front, next to its most efficient one */
 .hero-svg .mk.extra { color: var(--muted); }
 .hero-svg circle.hit { fill: transparent; }
+.hero-svg .closed { display: none; }
 .hero svg:has(.hit:hover) .mk { color: var(--rule-strong); }
 .hero svg:has(.hit:hover) .lb { fill: var(--muted); }
 /*HERO_CSS*/
@@ -450,12 +451,14 @@ function heroCorner(el) {
 // the first view is in the page, every other loaded when first shown (build.py, hero) and kept
 const heroPlot = document.getElementById("hero-plot"), heroViews = { [heroPlot.dataset.key]: heroPlot.innerHTML };
 const heroKey = () => {
-  const h = document.querySelector(".hero"), open = [...state.open].sort().join("+");
-  return `${state.sf}-${state.marks}-${h.dataset.xscale}-${h.dataset.yscale}${open ? `-${open}` : ""}`;
+  const h = document.querySelector(".hero");
+  return `${state.sf}-${state.marks}-${h.dataset.xscale}-${h.dataset.yscale}`;
 };
+// a variant (data-base) is shown only while its base is opened
+const heroOpen = () => heroPlot.querySelectorAll("[data-base]").forEach(el => el.classList.toggle("closed", !state.open.has(el.dataset.base)));
 async function showHero() {
   const key = heroKey();
-  if (heroPlot.dataset.key === key) return;
+  if (heroPlot.dataset.key === key) return heroOpen();
   if (!(key in heroViews)) {
     const [wide, narrow] = await Promise.all(["wide", "narrow"].map(w =>
       fetch(`fig1/${key}-${w}.svg?v=/*DATA_VERSION*/`).then(r => r.ok ? r.text() : Promise.reject(r.status))));
@@ -464,6 +467,7 @@ async function showHero() {
   if (key !== heroKey()) return;  // another view was asked for meanwhile
   heroPlot.innerHTML = heroViews[key];
   heroPlot.dataset.key = key;
+  heroOpen();
   bindHero();
 }
 // a system drawn on top in Figure 1: its lines, marks and label last in their groups (SVG paints in order); the
@@ -495,6 +499,7 @@ function bindHero() {
       showHero();
     }));
 }
+heroOpen();
 bindHero();
 
 // ---------- selection: one system highlighted in every figure ----------
