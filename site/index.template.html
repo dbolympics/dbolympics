@@ -505,6 +505,9 @@ bindHero();
 // ---------- selection: one system highlighted in every figure ----------
 function select(name) {
   state.sel = name && state.sel !== name ? name : null;
+  // the selected system's variants are shown, or, of a variant, its base's: a base is open while it or one of its
+  // variants is selected
+  state.open = new Set(state.sel ? [D.based_on[state.sel] || state.sel] : []);
   // the selected system is Figure 4's first; if it was the second, the two change places
   if (state.sel && state.vsA !== state.sel) {
     if (state.vsB === state.sel) state.vsB = state.vsA;
@@ -566,9 +569,6 @@ function renderBoard() {
       <td class="r">${s.correct}<span class="frac"><i style="width:${s.correct / 409 * 100}%"></i></span></td>
       <td class="r load">${loaded ? `${s.load.reduce((a, b) => a + b, 0).toFixed(0)} s` : "–"}</td>`;
     tr.onclick = () => select(name);
-    // the triangle opens or closes the base (its variants here and in the figures), without selecting it
-    const tw = tr.querySelector(".twist");
-    if (tw) tw.onclick = e => { e.stopPropagation(); state.open.has(name) ? state.open.delete(name) : state.open.add(name); render(); };
     tr.onmousemove = e => tip(e, `<div class="t">${NAMES[name]}</div>
       <div>${s.correct} correct · ${s.wrong} wrong · ${s.error} error · ${s.timeout} timeout</div>
       <div class="m">first load ${fmtT(s.load[0])}</div>`);
