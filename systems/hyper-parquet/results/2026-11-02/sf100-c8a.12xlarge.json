@@ -1,0 +1,34 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "category": "parquet",
+  "commit": "93e83c0b2624920f9041ea2104bbeaaa74f8c06b",
+  "complete": true,
+  "config": "sf100-c8a.12xlarge",
+  "cpuset": "0-47",
+  "date": "2026-11-02",
+  "dirty": false,
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-hyper@sha256:cec43b1ede1bbbb8a1494e6ce86b58e0333766d6c26a331292d68eea4e500d7a"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "96GB",
+  "memory_peak_bytes": 8761446400,
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 0.0,
+  "sf": 100.0,
+  "storage_bytes": 25879556,
+  "system": "hyper-parquet",
+  "threads": 48,
+  "timeout_check": "cancelled",
+  "version": "0.0.26784"
+}

@@ -1,0 +1,36 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "category": "parquet",
+  "commit": "93e83c0b2624920f9041ea2104bbeaaa74f8c06b",
+  "complete": false,
+  "config": "sf100-c8a.24xlarge",
+  "cpuset": "0-95",
+  "date": "2026-11-02",
+  "dirty": false,
+  "failure": {
+    "detail": "q240: no answer within 20 s",
+    "status": "failed_stuck"
+  },
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-clickhouse@sha256:41964baa0c9096b5fc76b3c2178710612dc5869ab166fbe16693112904c46bc3"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "192GB",
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 0.0,
+  "sf": 100.0,
+  "system": "clickhouse-parquet",
+  "threads": 96,
+  "timeout_check": "cancelled",
+  "version": "26.9.22.3"
+}
