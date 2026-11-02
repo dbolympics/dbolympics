@@ -1,0 +1,14 @@
+# DuckDB on the Parquet files where they are: every table is a view over its files so far, nothing
+# is loaded. The system and the rest of its system file are DuckDB's (../duckdb).
+name = "duckdb-parquet"
+base = "duckdb"
+keys = ["none"]
+category = "parquet"
+
+[load]
+statement = "CREATE OR REPLACE VIEW {table} AS SELECT * FROM read_parquet([{files}])"
+
+[dialect]
+# as DuckDB's, and the Parquet files' metadata kept between queries (DuckDB reads it at every
+# query by default)
+settings = ["SET integer_division = true", "SET parquet_metadata_cache = true"]

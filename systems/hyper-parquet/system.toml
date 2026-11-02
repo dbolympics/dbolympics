@@ -1,0 +1,12 @@
+# Hyper on the Parquet files where they are: every table is a temporary external table over its
+# files so far (Hyper has no views), made again at every load; nothing is loaded. The system and
+# the rest of its system file are Hyper's (../hyper).
+name = "hyper-parquet"
+base = "hyper"
+keys = ["none"]
+category = "parquet"
+# the arrays as Parquet lists: an external table keeps the text of the converted copy as text
+arrays = "native"
+
+[load]
+statement = ["DROP EXTERNAL TABLE IF EXISTS {table}", "CREATE TEMPORARY EXTERNAL TABLE {table} FOR ARRAY[{files}] WITH (FORMAT => 'parquet')"]

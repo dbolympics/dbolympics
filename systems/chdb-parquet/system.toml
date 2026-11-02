@@ -1,0 +1,11 @@
+# chDB on the Parquet files where they are: every table is a view over its files so far, nothing is
+# loaded. The system and the rest of its system file are chDB's (../chdb).
+name = "chdb-parquet"
+base = "chdb"
+# runs on ClickHouse (docs/RUNNER.md): the website shows it under ClickHouse, when ClickHouse is opened
+based_on = "clickhouse-parquet"
+keys = ["none"]
+category = "parquet"
+
+[load]
+statement = "CREATE OR REPLACE VIEW {table} AS SELECT * FROM file('{glob}', Parquet)"
