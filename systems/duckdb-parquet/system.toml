@@ -5,6 +5,11 @@ base = "duckdb"
 keys = ["none"]
 category = "parquet"
 
+# how the website shows it
+[site]
+name = "DuckDB"
+description = "embedded, queries the Parquet files in place"
+
 [load]
 statement = "CREATE OR REPLACE VIEW {table} AS SELECT * FROM read_parquet([{files}])"
 

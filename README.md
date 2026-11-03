@@ -34,7 +34,7 @@ from it and does the rest (schema, loads, queries, timing, checking).
 
 | File | Purpose |
 |---|---|
-| `system.toml` | the load statement for a Parquet file, the SQL spellings that differ, session settings, extra containers |
+| `system.toml` | the load statement for a Parquet file, the SQL spellings that differ, session settings, extra containers, the name the website shows |
 | `install` | installs the system and builds the query program; runs once, when the image is built |
 | `start`, `stop` | start and stop the system's servers and the query program |
 | `query.rs` | a small Rust program that keeps one connection to the system and runs each statement it gets, unchanged |

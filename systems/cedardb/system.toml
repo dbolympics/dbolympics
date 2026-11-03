@@ -8,6 +8,11 @@ scale_limit_message = "Exceeds CedarDB's license limit at SF1000."
 arrays = "text"
 
 
+# how the website shows it
+[site]
+name = "CedarDB"
+description = "its own server"
+
 [load]
 statement = "COPY {table} FROM '{file}' (FORMAT parquet)"
 

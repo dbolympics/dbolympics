@@ -17,6 +17,12 @@ version = "experimental (ClickHouse 26.9.22.3)"
 arrays = "text"
 
 
+# how the website shows it
+[site]
+name = "clickhouse_brew"
+long_name = "Querybrew on ClickHouse"
+description = "Umbra writes every query for ClickHouse, which runs it"
+
 [load]
 statement = "COPY {table} FROM '{file}' WITH (FORMAT parquet)"
 

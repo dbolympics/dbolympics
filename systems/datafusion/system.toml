@@ -8,6 +8,11 @@ keys = ["none"]
 category = "parquet"
 
 
+# how the website shows it
+[site]
+name = "DataFusion"
+description = "embedded, queries the Parquet files in place"
+
 [load]
 statement = ["DROP TABLE IF EXISTS {table}", "CREATE EXTERNAL TABLE {table} STORED AS PARQUET LOCATION '{dir}/'"]
 

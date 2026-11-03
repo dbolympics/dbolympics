@@ -4,6 +4,11 @@ name = "clickhouse"
 version = "26.9.22.3"
 
 
+# how the website shows it
+[site]
+name = "ClickHouse"
+description = "its own server"
+
 [load]
 statement = "INSERT INTO {table} SELECT * FROM file('{file}', Parquet)"
 

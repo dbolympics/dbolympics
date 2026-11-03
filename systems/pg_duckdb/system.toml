@@ -12,6 +12,12 @@ scale_limit = 1000
 scale_limit_message = "Gets stuck at SF1000 on every machine."
 
 
+# how the website shows it
+[site]
+name = "pg_duckdb"
+long_name = "pg_duckdb on PostgreSQL"
+description = "PostgreSQL tables, DuckDB runs the queries"
+
 [load]
 statement = "COPY (SELECT * FROM read_parquet('{file}')) TO '/tmp/dbo_stage.csv' (FORMAT csv, HEADER false); COPY {table} FROM '/tmp/dbo_stage.csv' (FORMAT csv)"
 

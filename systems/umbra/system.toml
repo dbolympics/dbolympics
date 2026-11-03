@@ -7,6 +7,11 @@ version = "experimental"
 arrays = "text"
 
 
+# how the website shows it
+[site]
+name = "Umbra"
+description = "its own server"
+
 [load]
 statement = "COPY {table} FROM '{file}' WITH (FORMAT parquet)"
 

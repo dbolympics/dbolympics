@@ -8,5 +8,10 @@ category = "parquet"
 # the arrays as Parquet lists: an external table keeps the text of the converted copy as text
 arrays = "native"
 
+# how the website shows it
+[site]
+name = "Hyper"
+description = "Tableau's engine, its own server, queries the Parquet files in place"
+
 [load]
 statement = ["DROP EXTERNAL TABLE IF EXISTS {table}", "CREATE TEMPORARY EXTERNAL TABLE {table} FOR ARRAY[{files}] WITH (FORMAT => 'parquet')"]

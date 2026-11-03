@@ -20,6 +20,12 @@ scale_limit_message = "Loading takes longer than 2 hours at SF1000."
 arrays = "text"
 
 
+# how the website shows it
+[site]
+name = "pg_brew"
+long_name = "Querybrew on PostgreSQL"
+description = "Umbra writes every query for PostgreSQL, which runs it"
+
 [load]
 statement = "COPY {table} FROM '{file}' WITH (FORMAT parquet)"
 

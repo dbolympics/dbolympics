@@ -7,5 +7,10 @@ based_on = "clickhouse-parquet"
 keys = ["none"]
 category = "parquet"
 
+# how the website shows it
+[site]
+name = "chDB"
+description = "ClickHouse as a library, embedded, queries the Parquet files in place"
+
 [load]
 statement = "CREATE OR REPLACE VIEW {table} AS SELECT * FROM file('{glob}', Parquet)"

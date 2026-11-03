@@ -4,6 +4,11 @@ name = "hardcharger"
 based_on = "duckdb"
 version = "2.4.1 (DuckDB 2.0.0)"
 
+# how the website shows it
+[site]
+name = "Hardcharger"
+description = "DuckDB behind a Chargewire server, queried through its CLI"
+
 [load]
 statement = "COPY {table} FROM '{file}' (FORMAT parquet)"
 

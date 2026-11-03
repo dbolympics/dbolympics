@@ -28,15 +28,16 @@ DEFAULT_CATEGORY = "all"
 DEFAULT_SF = max(c["sf"] for c in D["categories"][DEFAULT_CATEGORY].values())
 NQ = len(D["queries"])
 
-NAMES = {
-    "duckdb": "DuckDB", "hyper": "Hyper", "hardcharger": "Hardcharger", "cedardb": "CedarDB", "umbra": "Umbra",
-    "pg_duckdb": "pg_duckdb", "postgres": "PostgreSQL", "datafusion": "DataFusion", "firebolt": "Firebolt",
-    "clickhouse": "ClickHouse", "chdb": "chDB", "pg_clickhouse": "pg_clickhouse",
-    "pg_brew": "pg_brew", "clickhouse_brew": "clickhouse_brew",
-    # on the Parquet files, named as their base systems: the category says the rest
-    "duckdb-parquet": "DuckDB", "clickhouse-parquet": "ClickHouse", "chdb-parquet": "chDB",
-    "hyper-parquet": "Hyper", "cedardb-parquet": "CedarDB",
-}
+# How the website shows each system: the [site] table of its system file. NAMES: the name shown, in the order of the
+# lists of systems, the systems by name, each followed by the systems under it in the view of all systems.
+# SYSTEM_INFO: the full name, shown where its results recorded no version, and how it runs.
+SITE = {os.path.basename(os.path.dirname(f)): tomllib.load(open(f, "rb"))["site"]
+        for f in glob.glob(os.path.join(ROOT, "systems", "*", "system.toml"))}
+_by_name = lambda ns: sorted(ns, key=lambda n: SITE[n]["name"].lower())
+_under = VARIANTS.get("all", {})
+NAMES = {n: SITE[n]["name"] for b in _by_name(n for n in SITE if n not in _under)
+         for n in [b, *_by_name(v for v, base in _under.items() if base == b)]}
+SYSTEM_INFO = {n: (s.get("long_name", s["name"]), s["description"]) for n, s in SITE.items()}
 # in the view of all systems, a system on the Parquet files is named "(Parquet)": DuckDB (Parquet) next to DuckDB
 PARQUET = {s for c in D["categories"].get("parquet", {}).values() for s in c["systems"]}
 NAMES_IN = {"all": {n: f"{NAMES[n]} (Parquet)" for n in PARQUET}}
@@ -489,29 +490,6 @@ def example_run():
     """A run command for one configuration of the results, as the reproduce section shows it."""
     c = min(D["categories"][DEFAULT_CATEGORY].items(), key=lambda kv: (kv[1]["sf"], machine_order(kv[1]["machine"])))
     return f'./target/release/dbo-bench run --benchmark {c[1]["benchmark"]} --system duckdb --config {c[0]}'
-
-# What every system is and how it runs; the name shown where its results recorded no version.
-SYSTEM_INFO = {
-    "duckdb": ("DuckDB", "embedded"),
-    "hyper": ("Hyper", "Tableau's engine, its own server"),
-    "hardcharger": ("Hardcharger", "DuckDB behind a Chargewire server, queried through its CLI"),
-    "cedardb": ("CedarDB", "its own server"),
-    "umbra": ("Umbra", "its own server"),
-    "pg_duckdb": ("pg_duckdb on PostgreSQL", "PostgreSQL tables, DuckDB runs the queries"),
-    "postgres": ("PostgreSQL", "its own server"),
-    "datafusion": ("DataFusion", "embedded, queries the Parquet files in place"),
-    "firebolt": ("Firebolt Core", "its own server"),
-    "clickhouse": ("ClickHouse", "its own server"),
-    "chdb": ("chDB", "ClickHouse as a library, embedded"),
-    "pg_clickhouse": ("pg_clickhouse on PostgreSQL", "PostgreSQL passes the queries to ClickHouse"),
-    "pg_brew": ("Querybrew on PostgreSQL", "Umbra writes every query for PostgreSQL, which runs it"),
-    "clickhouse_brew": ("Querybrew on ClickHouse", "Umbra writes every query for ClickHouse, which runs it"),
-    "duckdb-parquet": ("DuckDB", "embedded, queries the Parquet files in place"),
-    "clickhouse-parquet": ("ClickHouse", "its own server, queries the Parquet files in place"),
-    "chdb-parquet": ("chDB", "ClickHouse as a library, embedded, queries the Parquet files in place"),
-    "hyper-parquet": ("Hyper", "Tableau's engine, its own server, queries the Parquet files in place"),
-    "cedardb-parquet": ("CedarDB", "its own server, queries the Parquet files in place"),
-}
 
 PAGES = [("index", "Results", "index.html"), ("queries", "Queries", "queries/index.html"),
          ("methodology", "Methodology", "methodology.html"), ("add-a-system", "Add a system", "add-a-system.html")]

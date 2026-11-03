@@ -28,8 +28,9 @@ directory's files and the protocol.
    fixed defaults), size it from `DBO_THREADS` and `DBO_MEMORY_BYTES` (or `DBO_MEMORY_MB`)
    ([RUNNER.md](RUNNER.md#containers), Limits).
 5. **`system.toml`**: the load statement for a Parquet file, the SQL spellings that differ from
-   the defaults ([RUNNER.md](RUNNER.md#dialects)), type names, session settings, and any
-   container that has to run next to the system's own.
+   the defaults ([RUNNER.md](RUNNER.md#dialects)), type names, session settings, any
+   container that has to run next to the system's own, and under `[site]` the name and a few
+   words on how it runs, as the website shows them.
 6. **Try it:**
 
 ```bash

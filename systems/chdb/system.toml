@@ -7,6 +7,11 @@ based_on = "clickhouse"
 version = "26.9.2.1"
 
 
+# how the website shows it
+[site]
+name = "chDB"
+description = "ClickHouse as a library, embedded"
+
 [load]
 statement = "INSERT INTO {table} SELECT * FROM file('{file}', Parquet)"
 

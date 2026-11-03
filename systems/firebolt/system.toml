@@ -5,6 +5,12 @@ name = "firebolt"
 version = "5.0.0-pre.0.20261013125703"
 
 
+# how the website shows it
+[site]
+name = "Firebolt"
+long_name = "Firebolt Core"
+description = "its own server"
+
 [load]
 statement = "INSERT INTO {table} SELECT * FROM read_parquet(URL => 'file://{file}')"
 

@@ -88,6 +88,20 @@ pub struct Container {
     pub data_writable: bool,
 }
 
+/// How the website shows a system: its `[site]` table. site/build.py reads it; the runner only
+/// checks that it is there and complete.
+#[allow(dead_code)]
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Site {
+    /// the name the website shows
+    pub name: String,
+    /// the full name, shown where the results recorded no version (default: `name`)
+    pub long_name: Option<String>,
+    /// how the system runs, in a few words
+    pub description: String,
+}
+
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct System {
@@ -119,6 +133,9 @@ pub struct System {
     pub scale_limit: Option<f64>,
     /// why the system does not run from `scale_limit` on, as the website shows it
     pub scale_limit_message: Option<String>,
+    /// how the website shows the system
+    #[allow(dead_code)]
+    pub site: Site,
     #[serde(skip)]
     pub dir: PathBuf,
 }

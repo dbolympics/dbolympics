@@ -193,6 +193,12 @@ scale_limit = 1000             # disabled from this scale factor on (default: ne
                                # at or above it is skipped, no results written
 scale_limit_message = "..."    # why, shown on the website in place of any results there
 
+[site]                         # how the website shows the system
+name = "Umbra"                 # its name
+description = "its own server" # how it runs, in a few words
+                               # long_name: the full name, shown where the results recorded no
+                               # version (default: name), e.g. "Querybrew on PostgreSQL" of pg_brew
+
 [load]
 statement = "COPY {table} FROM '{file}' WITH (FORMAT parquet)"   # once per table and load
 

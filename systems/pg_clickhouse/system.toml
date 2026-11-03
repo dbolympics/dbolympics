@@ -12,6 +12,12 @@ scale_limit = 1000
 scale_limit_message = "Crashes at SF1000 on every machine."
 
 
+# how the website shows it
+[site]
+name = "pg_clickhouse"
+long_name = "pg_clickhouse on PostgreSQL"
+description = "PostgreSQL passes the queries to ClickHouse"
+
 [load]
 statement = "INSERT INTO {table} SELECT * FROM file('{file}', Parquet)"
 

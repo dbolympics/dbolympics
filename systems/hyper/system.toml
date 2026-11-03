@@ -9,6 +9,11 @@ arrays = "text"
 keys = ["none"]
 
 
+# how the website shows it
+[site]
+name = "Hyper"
+description = "Tableau's engine, its own server"
+
 [load]
 statement = "INSERT INTO {table} SELECT * FROM external('{file}')"
 

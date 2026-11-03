@@ -6,7 +6,7 @@ One directory per database system, self-contained: it uses nothing from the repo
 
 | File | Purpose |
 |---|---|
-| `system.toml` | the dialect, the load statement, other containers ([RUNNER.md](../docs/RUNNER.md#a-system-directory)) |
+| `system.toml` | the dialect, the load statement, other containers, the name and description on the website ([RUNNER.md](../docs/RUNNER.md#a-system-directory)) |
 | `install` | installs the system and builds its query program to `/system/query`; runs once, when the image is built (again when a file of the directory changes) |
 | `start` | starts the system's servers (if any) and its query program, in the background |
 | `query.rs`, `Cargo.toml`, `Cargo.lock` | the query program: serves the runner's protocol (below) and runs the statements on the system, or holds it embedded |

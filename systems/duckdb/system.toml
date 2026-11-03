@@ -4,6 +4,11 @@ name = "duckdb"
 version = "2.0.0"
 
 
+# how the website shows it
+[site]
+name = "DuckDB"
+description = "embedded"
+
 [load]
 statement = "COPY {table} FROM '{file}' (FORMAT parquet)"
 
