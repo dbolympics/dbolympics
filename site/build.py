@@ -211,9 +211,11 @@ def hero_svg(category, sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True
     Y = lambda v: T + (1 - (math.log10(v) - y0) / (y1 - y0)) * (H - T - B)
     yticks = list(ticks(y0, y1))
     xticks = list(ticks(x0, x1, (W - L - R) / (x1 - x0)))
-    if not xlog:  # from $0 to the first round step above the dearest, but at most 1.5 times the dearest of the most
-        # efficient machines (a costlier machine of a system falls outside the frame), as many round steps as fit
-        most = min(max(p["dollars"] for p in pts), 1.5 * max(p["dollars"] for p in top.values())) * (1 + 24 / (W - L - R))
+    if not xlog:  # from $0 to the first round step above 1.1 times the most expensive mark, but at most 10 times the
+        # cheapest; and at least 1.5 times the most expensive of the most efficient machines, so that every system's
+        # most efficient machine is in the frame (a costlier machine may fall outside); as many round steps as fit
+        costs = [p["dollars"] for p in pts]
+        most = max(1.5 * max(p["dollars"] for p in top.values()), min(1.1 * max(costs), 10 * min(costs)))
         xstep = nice_step(most / max(3, (W - L - R) / 110))
         top_x = math.ceil(most / xstep - 1e-9) * xstep
         X = lambda v: L + v / top_x * (W - L - R)
