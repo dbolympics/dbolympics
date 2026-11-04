@@ -1,7 +1,7 @@
 # CedarDB, from its image, in a container next to the system's own.
 name = "cedardb"
 # the version, kept with the results (by hand)
-version = "v2026-10-08"
+version = "v2026-11-04"
 arrays = "text"
 
 
@@ -21,9 +21,9 @@ statement = "COPY {table} FROM '{file}' (FORMAT parquet)"
 
 [[container]]
 name = "db"
-image = "docker.io/cedardb/cedardb:v2026-10-08"
-# CedarDB sizes itself for the container: as many threads as its cores, and 45% of its memory limit
-# each for its buffers and its queries.
+image = "docker.io/cedardb/cedardb:v2026-11-04"
+# CedarDB sizes itself for the container: as many threads as its cores, and 90% of its memory limit
+# shared by its buffers (at least a quarter of it) and its queries (at most three quarters).
 env = { CEDAR_PASSWORD = "Dbolympics-Bench-2026!" }
 secrets = { LICENSE_KEY = "CEDARDB_LICENSE_KEY" }
 ulimits = ["nofile=524288:524288"]
