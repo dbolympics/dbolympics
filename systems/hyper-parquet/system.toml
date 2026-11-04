@@ -5,7 +5,7 @@ name = "hyper-parquet"
 base = "hyper"
 keys = ["none"]
 category = "parquet"
-# the arrays as Parquet lists: an external table keeps the text of the converted copy as text
+# external tables expose the Parquet lists as native arrays
 arrays = "native"
 
 # how the website shows it
@@ -15,3 +15,7 @@ description = "Tableau's engine, its own server, queries the Parquet files in pl
 
 [load]
 statement = ["DROP EXTERNAL TABLE IF EXISTS {table}", "CREATE TEMPORARY EXTERNAL TABLE {table} FOR ARRAY[{files}] WITH (FORMAT => 'parquet')"]
+
+[dialect.functions]
+# native arrays need no conversion from the base system's text representation
+"equals_any(x, arr)" = "{x} = ANY({arr})"
