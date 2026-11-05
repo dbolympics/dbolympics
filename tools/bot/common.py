@@ -98,6 +98,14 @@ def changed_systems(repo, base, tip):
     return sorted(names - {SHARED}), SHARED in names
 
 
+def with_variants(repo, rev, systems):
+    """`systems` and their variants at `rev` (base = ... in a system.toml): a variant runs its base's files, so a
+    change of the base is one of the variant too."""
+    names = {path.split("/")[1] for path in git(repo, "ls-tree", "-r", "--name-only", rev, "--", "systems/").splitlines()
+             if path.count("/") == 2 and path.endswith("/system.toml")}
+    return sorted(set(systems) | {s for s in names if base_of(repo, rev, s) in systems})
+
+
 def problems(repo, main, base, tip, own=False):
     """Why the bot must not run the pull request's tip, as (error, sentence) pairs; none if it may. An error is
     wrong in any pull request; the rest only keeps the bot from running it:

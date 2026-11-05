@@ -35,7 +35,8 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import (APPROVED_TRAILER, ORGANIZATION_FORK, RESULTS_PATH, RESULTS_TRAILER, SYSTEM_NAME, SYSTEM_TRAILER, benchmarked,  # noqa: E402
-                    changed_systems, code_hash, git, problems, run_tree, split, summary, table, trailers, user_results)
+                    changed_systems, code_hash, git, problems, run_tree, split, summary, table, trailers, user_results,
+                    with_variants)
 
 DEFAULTS = {
     "repo": "dbolympics/dbolympics",
@@ -389,6 +390,7 @@ class Bot:
                 if errs := [p for _, p in problems(self.mirror, "main", base, tip, own(pr, self.cfg))]:
                     raise Refused("The bot does not run this pull request:\n" + "\n".join(f"- {e}" for e in errs))
                 changed, _ = changed_systems(self.mirror, base, tip)
+                changed = with_variants(self.mirror, tip, changed)  # a variant runs what its base changes
                 # the systems of the run (run_tree): main's, and the pull request's own, without those it removes
                 has = lambda rev, s: bool(git(self.mirror, "ls-tree", rev, "--", f"systems/{s}/system.toml"))
                 on_main = {path.split("/")[1] for path in git(self.mirror, "ls-tree", "-r", "--name-only", "main", "--", "systems/").splitlines()

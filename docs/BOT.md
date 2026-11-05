@@ -4,7 +4,7 @@ A pull request that adds or changes a system is benchmarked on our server when a
 results become the pull request's last commit, so that they are reviewed with it.
 
 1. **The check** (`.github/workflows/systems.yml`, `tools/bot/check_pr.py`) runs on every pull request. It lists the
-   systems the pull request changes, renders their queries, and fails if:
+   systems the pull request changes (with the variants of a changed system: `cedardb-parquet` runs `cedardb`'s files), renders their queries, and fails if:
    - the bot's results commit is not the last commit, or
    - the results are of older code of a system than the pull request has.
 
@@ -19,7 +19,7 @@ results become the pull request's last commit, so that they are reviewed with it
 
 | Comment | What the bot does |
 |---|---|
-| `/benchmark` | runs the systems the pull request changes on all benchmark files, `bench/benchmark_sf{1,10,100,1000}.toml` |
+| `/benchmark` | runs the systems the pull request changes, and their variants, on all benchmark files, `bench/benchmark_sf{1,10,100,1000}.toml` |
 | `/benchmark duckdb sf10` | runs the named systems on the named benchmark files |
 | `/benchmark all` | runs every system: main's and the pull request's own (with `sf10` etc. on those files only) |
 | `/benchmark sf1-c8a.large` | runs only that configuration of the file |

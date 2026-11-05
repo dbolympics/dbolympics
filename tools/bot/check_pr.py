@@ -17,7 +17,7 @@ import tomllib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import (ORGANIZATION_FORK, changed_systems, git, missing_files, problems, split, stale, SYSTEM_NAME,  # noqa: E402
-                    user_results)
+                    user_results, with_variants)
 
 
 def main():
@@ -35,6 +35,7 @@ def main():
 
     base, results, tip = split(repo, a.main, head)
     systems, shared = changed_systems(repo, base, tip)
+    systems = with_variants(repo, tip, systems)  # a variant runs what its base changes
     if results:
         r = results[-1]
         if len(results) > 1 or r != head:
