@@ -17,6 +17,9 @@ description = "Tableau's engine, its own server"
 [load]
 statement = "INSERT INTO {table} SELECT * FROM external('{file}')"
 
+[dialect]
+settings = ["SET enable_row_types = true"]
+
 [dialect.functions]
 # no DISTINCT in window aggregates: the distinct non-NULL values from two dense ranks
 "count_distinct_over(x, window)" = "(DENSE_RANK() OVER ({window} ORDER BY {x} ASC NULLS FIRST) + DENSE_RANK() OVER ({window} ORDER BY {x} DESC NULLS LAST) - 1 - MAX(CASE WHEN {x} IS NULL THEN 1 ELSE 0 END) OVER ({window}))"
