@@ -1,0 +1,413 @@
+run,loaded,query,median_s,status,message
+1,2024-and-earlier,load,2.739328,ok,
+1,2024-and-earlier,q001,0.010751,ok,
+1,2024-and-earlier,q002,0.012900,ok,
+1,2024-and-earlier,q003,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q004,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q005,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q006,0.015180,ok,
+1,2024-and-earlier,q007,0.010645,ok,
+1,2024-and-earlier,q008,0.010896,ok,
+1,2024-and-earlier,q009,0.014373,ok,
+1,2024-and-earlier,q010,0.004291,ok,
+1,2024-and-earlier,q011,0.011487,ok,
+1,2024-and-earlier,q012,0.074826,ok,
+1,2024-and-earlier,q013,0.018683,ok,
+1,2024-and-earlier,q014,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q015,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q016,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q017,0.009964,ok,
+1,2024-and-earlier,q018,0.019079,ok,
+1,2024-and-earlier,q019,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q020,0.014254,ok,
+1,2024-and-earlier,q021,0.048724,ok,
+1,2024-and-earlier,q022,0.012273,ok,
+1,2024-and-earlier,q023,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q024,0.013497,ok,
+1,2024-and-earlier,q025,0.266374,ok,
+1,2024-and-earlier,q026,0.040336,ok,
+1,2024-and-earlier,q027,0.050211,ok,
+1,2024-and-earlier,q028,0.019118,ok,
+1,2024-and-earlier,q029,0.025144,ok,
+1,2024-and-earlier,q030,0.022388,ok,
+1,2024-and-earlier,q031,0.009150,ok,
+1,2024-and-earlier,q032,0.011557,ok,
+1,2024-and-earlier,q033,0.030842,ok,
+1,2024-and-earlier,q034,0.005878,ok,
+1,2024-and-earlier,q035,0.004881,ok,
+1,2024-and-earlier,q036,0.021800,ok,
+1,2024-and-earlier,q037,0.108961,ok,
+1,2024-and-earlier,q038,0.007926,ok,
+1,2024-and-earlier,q039,0.025221,ok,
+1,2024-and-earlier,q040,0.021639,ok,
+1,2024-and-earlier,q041,0.012976,ok,
+1,2024-and-earlier,q042,0.065386,ok,
+1,2024-and-earlier,q043,0.044600,ok,
+1,2024-and-earlier,q044,0.010920,ok,
+1,2024-and-earlier,q045,0.009788,ok,
+1,2024-and-earlier,q046,0.005635,ok,
+1,2024-and-earlier,q047,0.019008,ok,
+1,2024-and-earlier,q048,0.011417,ok,
+1,2024-and-earlier,q049,0.009711,ok,
+1,2024-and-earlier,q050,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q051,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q052,0.016346,ok,
+1,2024-and-earlier,q053,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q054,0.007816,ok,
+1,2024-and-earlier,q055,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q056,0.013962,ok,
+1,2024-and-earlier,q057,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q058,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q059,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q060,0.002819,ok,
+1,2024-and-earlier,q061,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q062,0.015636,ok,
+1,2024-and-earlier,q063,0.029631,ok,
+1,2024-and-earlier,q064,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q065,0.018919,ok,
+1,2024-and-earlier,q066,0.010779,ok,
+1,2024-and-earlier,q067,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q068,0.019427,ok,
+1,2024-and-earlier,q069,0.002488,ok,
+1,2024-and-earlier,q070,0.010169,ok,
+1,2024-and-earlier,q071,0.006783,ok,
+1,2024-and-earlier,q072,0.011462,ok,
+1,2024-and-earlier,q073,0.009075,ok,
+1,2024-and-earlier,q074,0.025550,ok,
+1,2024-and-earlier,q075,0.006477,ok,
+1,2024-and-earlier,q076,0.020412,ok,
+1,2024-and-earlier,q077,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q078,0.053005,ok,
+1,2024-and-earlier,q079,0.018917,ok,
+1,2024-and-earlier,q080,0.012978,ok,
+1,2024-and-earlier,q081,0.013748,ok,
+1,2024-and-earlier,q082,0.032991,ok,
+1,2024-and-earlier,q083,0.016984,ok,
+1,2024-and-earlier,q084,0.043188,ok,
+1,2024-and-earlier,q085,0.038181,ok,
+1,2024-and-earlier,q086,0.067573,ok,
+1,2024-and-earlier,q087,0.038723,ok,
+1,2024-and-earlier,q088,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q089,0.137898,ok,
+1,2024-and-earlier,q090,0.030819,ok,
+1,2024-and-earlier,q091,0.072990,ok,
+1,2024-and-earlier,q092,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q093,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q094,0.066911,ok,
+1,2024-and-earlier,q095,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q096,0.079021,ok,
+1,2024-and-earlier,q097,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q098,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q099,0.010278,ok,
+1,2024-and-earlier,q100,0.012796,ok,
+1,2024-and-earlier,q101,0.014545,ok,
+1,2024-and-earlier,q102,0.011328,ok,
+1,2024-and-earlier,q103,0.026006,ok,
+1,2024-and-earlier,q104,0.028955,ok,
+1,2024-and-earlier,q105,0.022751,ok,
+1,2024-and-earlier,q106,0.016764,ok,
+1,2024-and-earlier,q107,0.004197,ok,
+1,2024-and-earlier,q108,0.011877,ok,
+1,2024-and-earlier,q109,0.019756,ok,
+1,2024-and-earlier,q110,0.003109,ok,
+1,2024-and-earlier,q111,0.001361,ok,
+1,2024-and-earlier,q112,0.010229,ok,
+1,2024-and-earlier,q113,2.334807,ok,
+1,2024-and-earlier,q114,0.004348,ok,
+1,2024-and-earlier,q115,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q116,0.470559,ok,
+1,2024-and-earlier,q117,0.003430,ok,
+1,2024-and-earlier,q118,0.002445,ok,
+1,2024-and-earlier,q119,0.003246,ok,
+1,2024-and-earlier,q120,0.002736,ok,
+1,2024-and-earlier,q121,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q122,0.008112,ok,
+1,2024-and-earlier,q123,0.007288,ok,
+1,2024-and-earlier,q124,0.002137,ok,
+1,2024-and-earlier,q125,0.003405,ok,
+1,2024-and-earlier,q126,0.001367,ok,
+1,2024-and-earlier,q127,0.003907,ok,
+1,2024-and-earlier,q128,0.003550,ok,
+1,2024-and-earlier,q129,0.002129,ok,
+1,2024-and-earlier,q130,0.009299,ok,
+1,2024-and-earlier,q131,0.006551,ok,
+1,2024-and-earlier,q132,0.007868,ok,
+1,2024-and-earlier,q133,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q134,0.008588,ok,
+1,2024-and-earlier,q135,0.010065,ok,
+1,2024-and-earlier,q136,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q137,0.141285,ok,
+1,2024-and-earlier,q138,0.013679,ok,
+1,2024-and-earlier,q139,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q140,0.014527,ok,
+1,2024-and-earlier,q141,0.017931,ok,
+1,2024-and-earlier,q142,0.012004,ok,
+1,2024-and-earlier,q143,0.030188,ok,
+1,2024-and-earlier,q144,0.043349,ok,
+1,2024-and-earlier,q145,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q146,0.024136,ok,
+1,2024-and-earlier,q147,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q148,0.027483,ok,
+1,2024-and-earlier,q149,0.045519,ok,
+1,2024-and-earlier,q150,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q151,0.016971,ok,
+1,2024-and-earlier,q152,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q153,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q154,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q155,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q156,,error,"Assertion `pathMin >= 0` failed. /cedardb/plan/infra/ValueDistribution.cpp:204: cedar::FiniteDouble cedar::getMinPathCardinality(const algebra::Operator*, const algebra::Operator*)"
+1,2024-and-earlier,q157,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q158,0.031886,ok,
+1,2024-and-earlier,q159,0.037388,ok,
+1,2024-and-earlier,q160,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q161,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q162,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q163,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q164,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q165,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q166,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q167,2.030436,ok,
+1,2024-and-earlier,q168,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q169,0.123893,ok,
+1,2024-and-earlier,q170,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q171,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q172,0.005207,ok,
+1,2024-and-earlier,q173,0.007550,ok,
+1,2024-and-earlier,q174,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q175,,error,unnest needs array arguments
+1,2024-and-earlier,q176,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q177,0.005657,ok,
+1,2024-and-earlier,q178,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q179,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q180,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q181,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q182,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q183,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q184,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q185,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q186,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q187,0.005648,ok,
+1,2024-and-earlier,q188,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q189,0.007948,ok,
+1,2024-and-earlier,q190,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q191,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q192,0.011071,ok,
+1,2024-and-earlier,q193,0.006315,ok,
+1,2024-and-earlier,q194,0.025534,ok,
+1,2024-and-earlier,q195,0.006062,ok,
+1,2024-and-earlier,q196,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q197,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q198,0.024690,ok,
+1,2024-and-earlier,q199,0.026452,ok,
+1,2024-and-earlier,q200,0.024360,ok,
+1,2024-and-earlier,q201,0.017726,ok,
+1,2024-and-earlier,q202,0.006518,ok,
+1,2024-and-earlier,q203,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q204,0.005293,ok,
+1,2024-and-earlier,q205,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q206,0.027083,ok,
+1,2024-and-earlier,q207,0.016648,ok,
+1,2024-and-earlier,q208,0.007390,ok,
+1,2024-and-earlier,q209,0.013838,ok,
+1,2024-and-earlier,q210,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q211,0.010181,ok,
+1,2024-and-earlier,q212,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q213,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q214,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q215,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q216,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q217,0.057979,ok,
+1,2024-and-earlier,q218,0.030799,ok,
+1,2024-and-earlier,q219,0.046084,ok,
+1,2024-and-earlier,q220,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q221,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q222,0.012595,ok,
+1,2024-and-earlier,q223,0.034661,ok,
+1,2024-and-earlier,q224,0.035288,ok,
+1,2024-and-earlier,q225,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q226,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q227,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q228,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q229,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q230,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q231,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q232,0.029581,ok,
+1,2024-and-earlier,q233,0.014483,ok,
+1,2024-and-earlier,q234,0.133978,ok,
+1,2024-and-earlier,q235,0.009843,ok,
+1,2024-and-earlier,q236,0.004259,ok,
+1,2024-and-earlier,q237,0.065320,ok,
+1,2024-and-earlier,q238,0.057970,ok,
+1,2024-and-earlier,q239,0.027347,ok,
+1,2024-and-earlier,q240,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q241,0.041342,ok,
+1,2024-and-earlier,q242,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q243,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q244,0.006157,ok,
+1,2024-and-earlier,q245,0.005025,ok,
+1,2024-and-earlier,q246,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q247,0.005996,ok,
+1,2024-and-earlier,q248,0.010518,ok,
+1,2024-and-earlier,q249,0.005826,ok,
+1,2024-and-earlier,q250,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q251,0.009642,ok,
+1,2024-and-earlier,q252,0.008897,ok,
+1,2024-and-earlier,q253,0.014151,ok,
+1,2024-and-earlier,q254,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q255,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q256,0.033762,ok,
+1,2024-and-earlier,q257,0.020825,ok,
+1,2024-and-earlier,q258,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q259,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q260,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q261,0.012880,ok,
+1,2024-and-earlier,q262,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q263,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q264,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q265,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q266,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q267,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q268,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q269,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q270,0.013191,ok,
+1,2024-and-earlier,q271,0.033375,ok,
+1,2024-and-earlier,q272,0.037552,ok,
+1,2024-and-earlier,q273,0.024550,ok,
+1,2024-and-earlier,q274,0.141648,ok,
+1,2024-and-earlier,q275,0.022713,ok,
+1,2024-and-earlier,q276,0.034777,ok,
+1,2024-and-earlier,q277,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q278,0.001688,ok,
+1,2024-and-earlier,q279,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q280,0.002758,ok,
+1,2024-and-earlier,q281,0.010325,ok,
+1,2024-and-earlier,q282,0.006864,ok,
+1,2024-and-earlier,q283,0.009493,ok,
+1,2024-and-earlier,q284,0.016891,ok,
+1,2024-and-earlier,q285,0.003994,ok,
+1,2024-and-earlier,q286,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q287,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q288,0.012765,ok,
+1,2024-and-earlier,q289,0.039490,ok,
+1,2024-and-earlier,q290,0.013480,ok,
+1,2024-and-earlier,q291,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q292,0.029393,ok,
+1,2024-and-earlier,q293,0.025906,ok,
+1,2024-and-earlier,q294,0.015710,ok,
+1,2024-and-earlier,q295,0.028202,ok,
+1,2024-and-earlier,q296,0.014927,ok,
+1,2024-and-earlier,q297,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q298,0.007748,ok,
+1,2024-and-earlier,q299,0.048053,ok,
+1,2024-and-earlier,q300,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q301,0.009760,ok,
+1,2024-and-earlier,q302,0.020512,ok,
+1,2024-and-earlier,q303,0.004164,ok,
+1,2024-and-earlier,q304,0.159952,ok,
+1,2024-and-earlier,q305,0.020382,ok,
+1,2024-and-earlier,q306,0.013518,ok,
+1,2024-and-earlier,q307,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q308,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q309,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q310,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q311,0.019393,ok,
+1,2024-and-earlier,q312,0.021118,ok,
+1,2024-and-earlier,q313,0.012309,ok,
+1,2024-and-earlier,q314,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q315,0.013393,ok,
+1,2024-and-earlier,q316,0.007685,ok,
+1,2024-and-earlier,q317,0.012714,ok,
+1,2024-and-earlier,q318,0.043226,ok,
+1,2024-and-earlier,q319,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q320,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q321,0.005471,ok,
+1,2024-and-earlier,q322,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q323,0.003568,ok,
+1,2024-and-earlier,q324,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q325,0.027031,ok,
+1,2024-and-earlier,q326,0.015072,ok,
+1,2024-and-earlier,q327,0.002379,ok,
+1,2024-and-earlier,q328,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q329,0.092590,ok,
+1,2024-and-earlier,q330,0.052566,ok,
+1,2024-and-earlier,q331,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q332,0.019549,ok,
+1,2024-and-earlier,q333,0.019441,ok,
+1,2024-and-earlier,q334,0.004019,ok,
+1,2024-and-earlier,q335,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q336,0.007316,ok,
+1,2024-and-earlier,q337,0.003630,ok,
+1,2024-and-earlier,q338,0.007802,ok,
+1,2024-and-earlier,q339,0.002765,ok,
+1,2024-and-earlier,q340,0.010818,ok,
+1,2024-and-earlier,q341,0.002220,ok,
+1,2024-and-earlier,q342,0.008258,ok,
+1,2024-and-earlier,q343,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q344,0.012651,ok,
+1,2024-and-earlier,q345,0.002638,ok,
+1,2024-and-earlier,q346,0.004886,ok,
+1,2024-and-earlier,q347,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q348,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q349,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q350,0.028320,ok,
+1,2024-and-earlier,q351,0.037320,ok,
+1,2024-and-earlier,q352,0.033902,ok,
+1,2024-and-earlier,q353,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q354,0.014148,ok,
+1,2024-and-earlier,q355,0.019481,ok,
+1,2024-and-earlier,q356,0.002931,ok,
+1,2024-and-earlier,q357,0.030403,ok,
+1,2024-and-earlier,q358,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q359,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q360,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q361,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q362,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q363,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q364,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q365,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q366,0.002923,ok,
+1,2024-and-earlier,q367,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q368,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q369,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q370,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q371,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q372,0.013241,ok,
+1,2024-and-earlier,q373,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q374,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q375,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q376,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q377,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q378,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q379,0.130560,ok,
+1,2024-and-earlier,q380,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q381,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q382,0.010051,ok,
+1,2024-and-earlier,q383,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q384,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q385,0.005821,ok,
+1,2024-and-earlier,q386,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q387,0.004555,ok,
+1,2024-and-earlier,q388,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q389,0.005169,ok,
+1,2024-and-earlier,q390,,error,"Assertion `parquetType.isOptional()` failed. /cedardb/codegen/algebra/ParquetScanTranslator.cpp:62: virtual cedar::codegen::CompositeValue cedar::codegen::{anonymous}::IUProvider::access(cedar::codegen::ConsumerContext&, const cedar::algebra::IU*) const"
+1,2024-and-earlier,q391,0.005222,ok,
+1,2024-and-earlier,q392,0.014456,ok,
+1,2024-and-earlier,q393,0.014336,ok,
+1,2024-and-earlier,q394,0.014122,ok,
+1,2024-and-earlier,q395,0.019884,ok,
+1,2024-and-earlier,q396,0.017374,ok,
+1,2024-and-earlier,q397,0.005816,ok,
+1,2024-and-earlier,q398,0.020132,ok,
+1,2024-and-earlier,q399,,error,unnest needs array arguments
+1,2024-and-earlier,q400,0.016539,ok,
+1,2024-and-earlier,q401,0.007725,ok,
+1,2024-and-earlier,q402,0.008922,ok,
+1,2024-and-earlier,q403,1.159003,ok,
+1,2024-and-earlier,q404,0.016729,ok,
+1,2024-and-earlier,q405,0.022788,ok,
+1,2024-and-earlier,q406,0.014545,ok,
+1,2024-and-earlier,q407,0.014307,ok,
+1,2024-and-earlier,q408,0.023359,ok,
+1,2024-and-earlier,q409,0.013808,ok,
+2,2025-Q1,load,2.748225,ok,
+2,2025-Q1,q039,,failed_stuck,q039: no answer within 20 s

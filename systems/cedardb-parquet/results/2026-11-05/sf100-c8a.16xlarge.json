@@ -1,0 +1,37 @@
+{
+  "benchmark": "bench/benchmark_sf100.toml",
+  "category": "parquet",
+  "commit": "b12d9e2f7bbbbbe35731ddd9389a9e9dd19c4383",
+  "complete": false,
+  "config": "sf100-c8a.16xlarge",
+  "cpuset": "0-63",
+  "date": "2026-11-05",
+  "dirty": false,
+  "failure": {
+    "detail": "q039: no answer within 20 s",
+    "status": "failed_stuck"
+  },
+  "grace_period": 10,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "db": "docker.io/cedardb/cedardb@sha256:737ce1bf2ef3c9f2ba7e599ae4b2a0ae0399125e3f63a417a51141976a40518e",
+    "system": "localhost/dbo-cedardb@sha256:d8f0dbfab6cac1d2d299a721e3c0bfe6ff8e5dc6bd19ba1ca34ef026bda1c43b"
+  },
+  "keys": "none",
+  "load_timeout": 1800,
+  "memory": "128GB",
+  "queries": null,
+  "query_timeout": 10,
+  "repetitions": 1,
+  "schema_seconds": 0.0,
+  "sf": 100.0,
+  "system": "cedardb-parquet",
+  "threads": 64,
+  "timeout_check": "cancelled",
+  "version": "v2026-11-04"
+}
