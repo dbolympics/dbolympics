@@ -1,0 +1,36 @@
+{
+  "benchmark": "bench/benchmark_sf1.toml",
+  "category": "native",
+  "commit": "0bb81ff0164e844b287b1e0bd8b8b04d218b7ab2",
+  "complete": false,
+  "config": "sf1-c8a.medium",
+  "cpuset": "0",
+  "date": "2026-11-05",
+  "dirty": false,
+  "failure": {
+    "detail": "load 2025-Q2 login_attempts: the system does not answer any more (connection closed)",
+    "status": "failed_crash"
+  },
+  "grace_period": 5,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-hyper@sha256:136525350f00b249d44051ca3037d5e4a05142822a59562467d58432b5cdf810"
+  },
+  "keys": "none",
+  "load_timeout": 300,
+  "memory": "2GB",
+  "queries": null,
+  "query_timeout": 5,
+  "repetitions": 1,
+  "schema_seconds": 1.9595213750000005,
+  "sf": 1.0,
+  "system": "hyper",
+  "threads": 1,
+  "timeout_check": "cancelled",
+  "version": "0.0.26784"
+}
