@@ -218,6 +218,7 @@ env = { PARALLEL = "{threads}", MEMORY = "{memory_mb}M", PGHOST = "/run/dbo" }
 ulimits = ["nofile=524288:524288"]
 user = "root"                  # the user in the container instead of the image's (default: the image's)
 data_writable = false          # see below
+secrets = { LICENSE_KEY = "CEDARDB_LICENSE_KEY" }   # variables from secrets, see below (CedarDB's)
 ```
 
 - **Placeholders** in a container's `command` and `env` and the settings: `{threads}`,
@@ -232,6 +233,8 @@ data_writable = false          # see below
 - **A variant** (`base = "duckdb"`) is another system that runs the base system's directory
   (scripts, query program, image). Its system file is the base's, with what it sets itself in
   place (a table key by key): `duckdb-parquet` is DuckDB on the files in place.
+- **`secrets`** set a container's variables to values that are not in the repository, such as a
+  license key: the variable and the secret's name, whose value is in the repository's `.env`.
 - **`data_writable`** mounts the data writable in that container, for a system that only
   opens files for writing. The runner then compares size and modification time of every data
   file before and after the run and fails the run if one changed.

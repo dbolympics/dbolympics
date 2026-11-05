@@ -2,6 +2,7 @@
 /systems/*/target
 /tmp
 __pycache__/
+/.env
 /.claude
 /data
 /rendered

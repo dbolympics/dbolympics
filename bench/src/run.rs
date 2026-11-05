@@ -56,6 +56,40 @@ pub struct Failed {
     pub detail: String,
 }
 
+/// The secrets the system's containers ask for (`secrets` in the system file), by name: from the
+/// environment, else from the repository's `.env`, which git ignores. One that is in neither is
+/// left out, and its container runs without it.
+fn secrets(repo: &Path, sys: &System) -> Result<BTreeMap<String, String>> {
+    let file = repo.join(".env");
+    let dotenv = if file.is_file() { parse_dotenv(&std::fs::read_to_string(&file)?).with_context(|| file.display().to_string())? } else { BTreeMap::new() };
+    let mut out = BTreeMap::new();
+    for name in sys.containers.iter().flat_map(|c| c.secrets.values()) {
+        match std::env::var(name).ok().or_else(|| dotenv.get(name).cloned()) {
+            Some(v) => { out.insert(name.clone(), v); }
+            None => eprintln!("{}: secret {name} is not set (in the environment or {}), its container runs without it", sys.name, file.display()),
+        }
+    }
+    Ok(out)
+}
+
+/// `NAME=value` lines (`export ` before them, quotes around the value and `#` comments are fine).
+/// An error names the line, not its text, which may be a secret.
+fn parse_dotenv(text: &str) -> Result<BTreeMap<String, String>> {
+    let mut out = BTreeMap::new();
+    for (i, line) in text.lines().enumerate() {
+        let line = line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let line = line.strip_prefix("export ").unwrap_or(line);
+        let Some((k, v)) = line.split_once('=') else { bail!("line {}: no NAME=value", i + 1) };
+        let v = v.trim();
+        let v = [('"', '"'), ('\'', '\'')].iter().find_map(|&(a, b)| v.strip_prefix(a)?.strip_suffix(b)).unwrap_or(v);
+        out.insert(k.trim().to_string(), v.to_string());
+    }
+    Ok(out)
+}
+
 fn setup<T>(r: Result<T>) -> Result<T, Failed> {
     r.map_err(|e| Failed { kind: Failure::Setup, detail: format!("{e:#}") })
 }
@@ -353,7 +387,8 @@ fn procedure(ctx: &Ctx, bench: &Benchmark, sys: &System, cfg: &Config, out: &Pat
     let name = format!("dbo-{}-{}", sys.name, cfg.name).to_lowercase().replace('.', "-");
     let limits = Limits { cpuset: cfg.cpuset(), memory };
     eprintln!("{} / {}: sf {}, {} threads (cores {}), {} memory, keys {}", sys.name, cfg.name, sf_name(cfg.sf), cfg.threads, limits.cpuset, cfg.memory, keys.name());
-    let pod = setup(Pod::start(&ctx.podman, &name, &image, sys, &limits, &mounts, &env, &vars))?;
+    let secrets = setup(secrets(&ctx.repo, sys))?;
+    let pod = setup(Pod::start(&ctx.podman, &name, &image, sys, &limits, &mounts, &env, &vars, &secrets))?;
     // which images ran: a tag like umbradb/umbra:experimental moves, and the systems' images are rebuilt
     summary["images"] = sys.containers.iter().map(|c| (c.name.clone(), c.image.as_str())).chain([("system".to_string(), image.as_str())])
         .map(|(n, i)| Ok((n, setup(ctx.podman.identity(i))?.into())))
@@ -551,4 +586,17 @@ fn procedure(ctx: &Ctx, bench: &Benchmark, sys: &System, cfg: &Config, out: &Pat
         }
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn dotenv() {
+        let env = parse_dotenv("# CedarDB's\nCEDARDB_LICENSE_KEY=abc=def\n\nexport A = \"b c\"\nB='d'\n").unwrap();
+        assert_eq!(env, BTreeMap::from([("CEDARDB_LICENSE_KEY".into(), "abc=def".into()), ("A".into(), "b c".into()), ("B".into(), "d".into())]));
+        let err = parse_dotenv("A=1\nsecret").unwrap_err().to_string();
+        assert!(err.contains("line 2") && !err.contains("secret"), "{err}");
+    }
 }

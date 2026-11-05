@@ -2,9 +2,6 @@
 name = "cedardb"
 # the version, kept with the results (by hand)
 version = "v2026-10-08"
-# disabled from this scale factor on, and why (shown on the website)
-scale_limit = 1000
-scale_limit_message = "Exceeds CedarDB's license limit at SF1000."
 arrays = "text"
 
 
@@ -28,4 +25,5 @@ image = "docker.io/cedardb/cedardb:v2026-10-08"
 # CedarDB sizes itself for the container: as many threads as its cores, and 45% of its memory limit
 # each for its buffers and its queries.
 env = { CEDAR_PASSWORD = "Dbolympics-Bench-2026!" }
+secrets = { LICENSE_KEY = "CEDARDB_LICENSE_KEY" }
 ulimits = ["nofile=524288:524288"]

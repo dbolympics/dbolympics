@@ -524,6 +524,7 @@ class Bot:
             # the branch started from
             git(self.run_dir, "checkout", "--quiet", "--detach", "--force", self.run_commit(n, base, tip, own(pr, self.cfg)))
             git(self.run_dir, "clean", "-ffdq")  # untracked files go, the ignored ones (data/, target/) stay
+            self.copy_secrets()
 
         self.stage(job, "Building the runner ...")
         if self.sh_logged(job, ["cargo", "build", "--release", "--workspace", "--locked"]):
@@ -652,6 +653,14 @@ class Bot:
             sh(["release-machine", "-y"], check=True)
             with self.state_lock:
                 self.save()
+
+    def copy_secrets(self):
+        """The runner's secrets (docs/RUNNER.md): the .env of the bot's own checkout, as it is now, into the runs'."""
+        src, dst = Path(__file__).resolve().parents[2] / ".env", self.run_dir / ".env"
+        dst.unlink(missing_ok=True)
+        if src.is_file():
+            with os.fdopen(os.open(dst, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as f:
+                f.write(src.read_bytes())
 
     def cleanup(self):
         """Nothing of a run is left: the runner's containers' storage (bench/containers) is reset, its pods, containers,

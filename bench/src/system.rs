@@ -76,6 +76,10 @@ pub struct Container {
     pub command: Vec<String>,
     #[serde(default)]
     pub env: BTreeMap<String, String>,
+    /// environment variables from secrets, which are not in the repository: the variable in the
+    /// container and the secret's name, e.g. { LICENSE_KEY = "CEDARDB_LICENSE_KEY" }
+    #[serde(default)]
+    pub secrets: BTreeMap<String, String>,
     /// resource limits, e.g. "nofile=524288:524288"
     #[serde(default)]
     pub ulimits: Vec<String>,

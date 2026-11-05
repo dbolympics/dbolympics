@@ -180,7 +180,8 @@ pub struct Pod {
 impl Pod {
     /// Create the pod and start its containers: first the ones of the system file, then the
     /// system's own container from `image`.
-    pub fn start(podman: &Podman, name: &str, image: &str, sys: &System, limits: &Limits, mounts: &Mounts, env: &BTreeMap<String, String>, vars: &BTreeMap<String, String>) -> Result<Pod> {
+    #[allow(clippy::too_many_arguments)]
+    pub fn start(podman: &Podman, name: &str, image: &str, sys: &System, limits: &Limits, mounts: &Mounts, env: &BTreeMap<String, String>, vars: &BTreeMap<String, String>, secrets: &BTreeMap<String, String>) -> Result<Pod> {
         // a run has the machine to itself: whatever an earlier run left behind goes first
         podman.clear()?;
         // no network but the pod's loopback; the limits are each container's own (`container`)
@@ -198,18 +199,20 @@ impl Pod {
             // {threads}, {memory_bytes} ... in the command and environment
             let command: Vec<String> = c.command.iter().map(|a| subst(a, vars)).collect::<Result<_>>()?;
             let own: BTreeMap<String, String> = c.env.iter().map(|(k, v)| Ok((k.clone(), subst(v, vars)?))).collect::<Result<_>>()?;
-            pod.container(&format!("{name}-{}", c.name), &c.image, &command, &own, &c.ulimits, c.user.as_deref(), c.data_writable, limits, mounts, env)?;
+            // the secrets it asks for that are set, by the container's variable
+            let secret: BTreeMap<String, String> = c.secrets.iter().filter_map(|(k, s)| Some((k.clone(), secrets.get(s)?.clone()))).collect();
+            pod.container(&format!("{name}-{}", c.name), &c.image, &command, &own, &secret, &c.ulimits, c.user.as_deref(), c.data_writable, limits, mounts, env)?;
         }
         let main = format!("{name}-system");
         let command: Vec<String> = ["sleep", "infinity"].iter().map(|s| s.to_string()).collect();
-        pod.container(&main, image, &command, &BTreeMap::new(), &[], None, false, limits, mounts, env)?;
+        pod.container(&main, image, &command, &BTreeMap::new(), &BTreeMap::new(), &[], None, false, limits, mounts, env)?;
         // an out-of-memory kill takes the whole container, not one process
         pod.oom_group().context("setting memory.oom.group")?;
         Ok(pod)
     }
 
     #[allow(clippy::too_many_arguments)]
-    fn container(&mut self, name: &str, image: &str, command: &[String], own_env: &BTreeMap<String, String>, ulimits: &[String], user: Option<&str>, data_writable: bool, limits: &Limits, mounts: &Mounts, env: &BTreeMap<String, String>) -> Result<()> {
+    fn container(&mut self, name: &str, image: &str, command: &[String], own_env: &BTreeMap<String, String>, secrets: &BTreeMap<String, String>, ulimits: &[String], user: Option<&str>, data_writable: bool, limits: &Limits, mounts: &Mounts, env: &BTreeMap<String, String>) -> Result<()> {
         let mem = limits.memory.to_string();
         let mut c = self.podman.cmd();
         c.args(["run", "-d", "--init", "--pod", &self.name, "--name", name]);
@@ -234,6 +237,10 @@ impl Pod {
         }
         for (k, v) in env.iter().chain(own_env) {
             c.arg("-e").arg(format!("{k}={v}"));
+        }
+        // a secret by name only, its value from podman's environment: not on podman's command line
+        for (k, v) in secrets {
+            c.env(k, v).arg("-e").arg(k);
         }
         c.arg(image).args(command);
         let o = c.stdin(Stdio::null()).output().context("running podman")?;
