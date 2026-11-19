@@ -12,9 +12,9 @@ WITH filtered_tickets AS (
 SELECT merchant_name,
   CAST(yr AS text) || '-Q' || CAST(qtr AS text) AS quarter,
   count(*) AS tickets_created,
-  avg({{seconds_between(created_at, resolved_at)}}/3600) FILTER (WHERE resolved_at IS NOT NULL) AS avg_resolution_hours,
-  {{percentile_cont_filter(0.5, {{seconds_between(created_at, resolved_at)}}/3600, resolved_at IS NOT NULL)}} AS median_resolution_hours,
-  100.0 * count(*) FILTER (WHERE has_breach) / count(*) AS sla_breach_rate_pct
+  avg({{divide_decimal({{seconds_between(created_at, resolved_at)}}, 3600)}}) FILTER (WHERE resolved_at IS NOT NULL) AS avg_resolution_hours,
+  {{percentile_cont_filter(0.5, {{divide_decimal({{seconds_between(created_at, resolved_at)}}, 3600)}}, resolved_at IS NOT NULL)}} AS median_resolution_hours,
+  {{divide_decimal(100.0 * count(*) FILTER (WHERE has_breach), count(*))}} AS sla_breach_rate_pct
 FROM filtered_tickets
 GROUP BY merchant_name, yr, qtr
 ORDER BY merchant_name NULLS LAST, yr NULLS LAST, qtr NULLS LAST

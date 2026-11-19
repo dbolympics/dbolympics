@@ -25,7 +25,7 @@ t3 AS (
     t2.shipping_cost AS shipping_cost,
     CASE
       WHEN t2.ship_currency_code = 'EUR' THEN t2.shipping_cost
-      ELSE CAST(t2.shipping_cost / er.rate AS NUMERIC(18,6))
+      ELSE CAST({{divide_decimal(t2.shipping_cost, er.rate)}} AS NUMERIC(18,6))
     END AS shipping_cost_eur
   FROM t2
   LEFT JOIN exchange_rates er

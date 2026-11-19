@@ -17,9 +17,9 @@ user_segment AS (
 ),
 fx_converted AS (
   SELECT us.segment AS segment,
-    us.subtotal / CASE WHEN us.currency_code = 'EUR' THEN 1 ELSE er.rate END AS subtotal_eur,
-    us.discount_total / CASE WHEN us.currency_code = 'EUR' THEN 1 ELSE er.rate END AS discount_total_eur,
-    us.grand_total / CASE WHEN us.currency_code = 'EUR' THEN 1 ELSE er.rate END AS grand_total_eur
+    {{divide_decimal(us.subtotal, CASE WHEN us.currency_code = 'EUR' THEN 1 ELSE er.rate END)}} AS subtotal_eur,
+    {{divide_decimal(us.discount_total, CASE WHEN us.currency_code = 'EUR' THEN 1 ELSE er.rate END)}} AS discount_total_eur,
+    {{divide_decimal(us.grand_total, CASE WHEN us.currency_code = 'EUR' THEN 1 ELSE er.rate END)}} AS grand_total_eur
   FROM user_segment us
   LEFT JOIN exchange_rates er ON er.base_code = 'EUR' AND er.quote_code = us.currency_code AND er.as_of = CAST(us.placed_at AS DATE)
 ),

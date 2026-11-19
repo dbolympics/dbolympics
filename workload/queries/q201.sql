@@ -53,10 +53,10 @@ SELECT
   day_name AS day_of_week,
   time_of_day_bucket,
   COUNT(*) AS ticket_count,
-  100.0 * SUM(fr_breach) / COUNT(*) AS first_response_breach_rate,
-  100.0 * SUM(res_breach) / COUNT(*) AS resolution_breach_rate,
+  {{divide_decimal(100.0 * SUM(fr_breach), COUNT(*))}} AS first_response_breach_rate,
+  {{divide_decimal(100.0 * SUM(res_breach), COUNT(*))}} AS resolution_breach_rate,
   AVG(CASE WHEN first_response_at IS NOT NULL
-           THEN {{seconds_between(created_at, first_response_at)}} / 60.0
+           THEN {{divide_decimal({{seconds_between(created_at, first_response_at)}}, 60.0)}}
       END) AS avg_first_response_minutes
 FROM joined
 GROUP BY day_name, iso_day_of_week, time_of_day_bucket, bucket_order

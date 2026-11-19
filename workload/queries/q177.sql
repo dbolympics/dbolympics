@@ -31,7 +31,7 @@ opportunities_with_month AS (
     so.id AS id,
     so.is_won AS is_won,
     cd.month_label AS month_label,
-    {{seconds_between(so.created_at, so.closed_at)}} / 86400.0 AS cycle_days
+    {{divide_decimal({{seconds_between(so.created_at, so.closed_at)}}, 86400.0)}} AS cycle_days
   FROM scoped_opportunities so
   JOIN calendar_days cd ON cd.calendar_date = CAST(so.closed_at AS DATE)
 ),
@@ -51,7 +51,7 @@ SELECT
   opportunities_closed,
   closed_won,
   closed_lost,
-  100.0 * closed_won / NULLIF(opportunities_closed, 0) AS win_rate_pct,
+  {{divide_decimal(100.0 * closed_won, NULLIF(opportunities_closed, 0))}} AS win_rate_pct,
   avg_cycle_days_raw AS avg_cycle_days,
   median_cycle_days_raw AS median_cycle_days
 FROM monthly_stats

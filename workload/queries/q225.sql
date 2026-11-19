@@ -32,7 +32,7 @@ pay_eur AS (
     pf.*,
     CASE
       WHEN pf.currency_code = 'EUR' THEN pf.amount
-      ELSE CAST(pf.amount / er.rate AS NUMERIC(18,6))
+      ELSE CAST({{divide_decimal(pf.amount, er.rate)}} AS NUMERIC(18,6))
     END AS amount_eur
   FROM pay_flagged pf
   LEFT JOIN exchange_rates er
@@ -45,7 +45,7 @@ by_tenant AS (
     t.name AS merchant_name,
     COUNT(*) AS total_payments_2025,
     SUM(pe.no_ledger) AS payments_without_ledger_entries,
-    100.0 * SUM(pe.no_ledger) / COUNT(*) AS pct_without_ledger_entries,
+    {{divide_decimal(100.0 * SUM(pe.no_ledger), COUNT(*))}} AS pct_without_ledger_entries,
     SUM(CASE WHEN pe.no_ledger = 1 THEN pe.amount_eur ELSE 0 END) AS amount_at_risk_eur
   FROM pay_eur pe
   JOIN tenants t ON t.id = pe.tenant_id

@@ -10,7 +10,7 @@ orders_2025 AS (
   SELECT o.currency_code AS currency_code,
     SUM(
       CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-           ELSE CAST(o.grand_total / er.rate AS NUMERIC(18,6)) END
+           ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END
     ) AS orders_2025_total_eur
   FROM orders o
   LEFT JOIN exchange_rates er
@@ -42,7 +42,7 @@ SELECT
   CASE WHEN cu.currency_code='EUR' THEN 1.0 ELSE r23.rate_early END AS rate_eur_to_currency_2023_01_02,
   CASE WHEN cu.currency_code='EUR' THEN 1.0 ELSE r25.rate_late END AS rate_eur_to_currency_2025_12_31,
   CASE WHEN cu.currency_code='EUR' THEN 0
-  ELSE ( (r25.rate_late - r23.rate_early) / NULLIF(r23.rate_early,0) ) * 100
+  ELSE ( {{divide_decimal((r25.rate_late - r23.rate_early), NULLIF(r23.rate_early,0))}} ) * 100
   END AS pct_rate_change
 FROM currencies_used cu
 LEFT JOIN tenant_counts tc ON tc.currency_code = cu.currency_code

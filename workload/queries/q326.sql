@@ -6,7 +6,7 @@ SELECT
   t0.received_at AS received_at,
   t0.completed_at AS completed_at,
   t0.created_at AS created_at,
-  {{seconds_between(t0.received_at, t0.created_at)}} / 86400.0 AS days_received_to_created,
+  {{divide_decimal({{seconds_between(t0.received_at, t0.created_at)}}, 86400.0)}} AS days_received_to_created,
   LEFT(COALESCE(t0.notes, ''), 200) AS notes
 FROM data_subject_requests t0
 JOIN tenants t1 ON t1.id = t0.tenant_id

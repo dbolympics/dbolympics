@@ -32,7 +32,7 @@ order_amounts_eur AS (
   SELECT
     o.id AS id,
     o.placed_at AS placed_at,
-    CAST(o.grand_total / er.rate AS NUMERIC(18,6)) AS amount_eur
+    CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) AS amount_eur
   FROM orders o
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -59,7 +59,7 @@ SELECT
   cm.cumulative_active_merchants AS cumulative_active_merchants,
   oiq.order_count AS order_count,
   oiq.gmv_eur AS gmv_eur,
-  oiq.gmv_eur / NULLIF(oiq.order_count, 0) AS avg_order_value_eur
+  {{divide_decimal(oiq.gmv_eur, NULLIF(oiq.order_count, 0))}} AS avg_order_value_eur
 FROM quarters q
 JOIN new_merchants nm ON nm.quarter_start = q.quarter_start
 JOIN cumulative_merchants cm ON cm.quarter_start = q.quarter_start

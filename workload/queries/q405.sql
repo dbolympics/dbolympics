@@ -15,8 +15,8 @@ SELECT
   te.name AS tenant_name,
   {{year_month({{date_trunc('month', tt.created_at)}})}} AS month_label,
   COUNT(*) AS ticket_count,
-  AVG({{seconds_between(tt.created_at, tt.resolved_at)}}/60) FILTER (WHERE tt.resolved_at IS NOT NULL) AS avg_resolution_minutes,
-  100.0 * COUNT(*) FILTER (WHERE b.ticket_id IS NOT NULL) / COUNT(*) AS resolution_breach_rate
+  AVG({{divide_decimal({{seconds_between(tt.created_at, tt.resolved_at)}}, 60)}}) FILTER (WHERE tt.resolved_at IS NOT NULL) AS avg_resolution_minutes,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE b.ticket_id IS NOT NULL), COUNT(*))}} AS resolution_breach_rate
 FROM tagged_tickets tt
 JOIN tenants te ON te.id = tt.tenant_id
 LEFT JOIN breaches b ON b.ticket_id = tt.ticket_id

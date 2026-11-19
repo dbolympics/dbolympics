@@ -63,10 +63,10 @@ SELECT
   t_weeks.week_start AS week_start,
   COALESCE(t1.total_job_runs, 0) AS total_job_runs,
   COALESCE(t2.failed_runs, 0) AS failed_runs,
-  CAST(COALESCE(t2.failed_runs, 0) AS numeric(18,6)) * 100.0 / NULLIF(t1.total_job_runs, 0) AS failure_rate_pct,
+  {{divide_decimal(CAST(COALESCE(t2.failed_runs, 0) AS numeric(18,6)) * 100.0, NULLIF(t1.total_job_runs, 0))}} AS failure_rate_pct,
   COALESCE(t3.avg_queue_delay_seconds, 0) AS avg_queue_delay_seconds,
   COALESCE(t4.p95_queue_delay_seconds, 0) AS p95_queue_delay_seconds,
-  CAST(COALESCE(t5.over_5min_count, 0) AS numeric(18,6)) * 100.0 / NULLIF(t5.delay_denom, 0) AS pct_jobs_queue_delay_over_5min,
+  {{divide_decimal(CAST(COALESCE(t5.over_5min_count, 0) AS numeric(18,6)) * 100.0, NULLIF(t5.delay_denom, 0))}} AS pct_jobs_queue_delay_over_5min,
   COALESCE(t6.avg_duration_seconds, 0) AS avg_duration_seconds
 FROM t_weeks
 LEFT JOIN t1 ON t1.week_start = t_weeks.week_start

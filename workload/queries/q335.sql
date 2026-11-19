@@ -18,8 +18,8 @@ delivery_stats AS (
   SELECT
     tenant_id,
     COUNT(*) AS total_sync_deliveries_2025,
-    100.0 * SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) / COUNT(*) AS success_rate_pct,
-    100.0 * SUM(CASE WHEN status IN ('pending','retrying') THEN 1 ELSE 0 END) / COUNT(*) AS pending_or_retrying_rate_pct
+    {{divide_decimal(100.0 * SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END), COUNT(*))}} AS success_rate_pct,
+    {{divide_decimal(100.0 * SUM(CASE WHEN status IN ('pending','retrying') THEN 1 ELSE 0 END), COUNT(*))}} AS pending_or_retrying_rate_pct
   FROM sync_deliveries_2025
   GROUP BY tenant_id
 ),
@@ -28,7 +28,7 @@ order_eur_amounts AS (
     o.tenant_id AS tenant_id,
     o.id AS order_id,
     CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-         ELSE CAST(o.grand_total / er.rate AS NUMERIC(18,6)) END AS revenue_eur
+         ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS revenue_eur
   FROM orders o
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

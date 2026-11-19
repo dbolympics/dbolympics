@@ -54,7 +54,7 @@ bucket_list AS (
 SELECT
   b.outcome_bucket AS outcome_bucket,
   COUNT(c.tenant_id) AS pair_count,
-  100.0 * COUNT(c.tenant_id) / NULLIF(cs.n, 0) AS pct_of_cohort,
+  {{divide_decimal(100.0 * COUNT(c.tenant_id), NULLIF(cs.n, 0))}} AS pct_of_cohort,
   CASE
     WHEN b.outcome_bucket = 'never_succeeded_in_month' THEN NULL
     ELSE AVG(CAST(c.failed_count AS NUMERIC(18,6)))

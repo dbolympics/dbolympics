@@ -25,7 +25,7 @@ rated AS (
     opp.is_lost AS is_lost,
     CASE
       WHEN opp.currency_code = 'EUR' THEN opp.amount
-      ELSE opp.amount / (
+      ELSE {{divide_decimal(opp.amount, (
         SELECT er.rate
         FROM exchange_rates er
         WHERE er.base_code = 'EUR'
@@ -33,7 +33,7 @@ rated AS (
           AND er.as_of <= CAST(opp.closed_at AS date)
         ORDER BY er.as_of DESC NULLS FIRST
         {{fetch_first(1)}}
-      )
+      ))}}
     END AS amount_eur
   FROM opp
 ),
@@ -50,11 +50,11 @@ agg AS (
 SELECT
   merchant,
   opportunities_closed,
-  100.0 * won_count / opportunities_closed AS count_win_rate_pct,
+  {{divide_decimal(100.0 * won_count, opportunities_closed)}} AS count_win_rate_pct,
   total_amount_won_eur AS total_amount_won_eur,
   total_amount_lost_eur AS total_amount_lost_eur,
   100.0 * total_amount_won_eur / NULLIF(total_amount_won_eur + total_amount_lost_eur, 0) AS dollar_weighted_win_rate_pct,
-  (100.0 * won_count / opportunities_closed)
+  ({{divide_decimal(100.0 * won_count, opportunities_closed)}})
   - (100.0 * total_amount_won_eur / NULLIF(total_amount_won_eur + total_amount_lost_eur, 0)) AS gap_pct_points
 FROM agg
 ORDER BY gap_pct_points DESC NULLS FIRST, merchant ASC NULLS LAST

@@ -53,8 +53,8 @@ SELECT
   COALESCE(md.shipments_delivered, 0) AS shipments_delivered,
   ma.avg_transit_days AS avg_transit_days,
   mm.median_transit_days AS median_transit_days,
-  100.0 * COALESCE(mw.delivered_within_3,0) / NULLIF(md.shipments_delivered,0) AS pct_within_3_days,
-  100.0 * COALESCE(md.shipments_delivered,0) / NULLIF(ms.shipments_shipped,0) AS pct_delivered
+  {{divide_decimal(100.0 * COALESCE(mw.delivered_within_3,0), NULLIF(md.shipments_delivered,0))}} AS pct_within_3_days,
+  {{divide_decimal(100.0 * COALESCE(md.shipments_delivered,0), NULLIF(ms.shipments_shipped,0))}} AS pct_delivered
 FROM grain g
 LEFT JOIN m_shipped ms ON ms.carrier = g.carrier AND ms.quarter_start = g.quarter_start
 LEFT JOIN m_delivered md ON md.carrier = g.carrier AND md.quarter_start = g.quarter_start

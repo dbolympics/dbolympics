@@ -33,7 +33,7 @@ combined as (
     case
       when fa.shipment_count is not null and fa.shipment_count > 0
            and fa.shipment_count = fa.delivered_shipment_count
-      then {{seconds_between(b.placed_at, fa.max_delivered_at)}} / 86400.0
+      then {{divide_decimal({{seconds_between(b.placed_at, fa.max_delivered_at)}}, 86400.0)}}
       else null
     end as delivery_days
   from base b
@@ -44,8 +44,7 @@ select
   count(*) as orders_placed,
   count(*) filter (where is_fully_delivered) as orders_delivered,
   avg(delivery_days) filter (where is_fully_delivered) as avg_delivery_days,
-  100.0 * count(*) filter (where is_fully_delivered and delivery_days <= 5)
-  / nullif(count(*) filter (where is_fully_delivered), 0) as pct_within_5_days,
+  {{divide_decimal(100.0 * count(*) filter (where is_fully_delivered and delivery_days <= 5), nullif(count(*) filter (where is_fully_delivered), 0))}} as pct_within_5_days,
   count(*) filter (where status <> 'fulfilled' or not is_fully_delivered) as orders_still_undelivered
 from combined
 group by week_start

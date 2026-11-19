@@ -9,7 +9,7 @@ loyalty_tx AS (
     lt.direction AS direction,
     lt.occurred_at AS occurred_at,
     lp.currency_code AS currency_code,
-    (CAST(lt.points AS numeric(18,6)) / lp.points_per_currency) AS amount_in_currency
+    ({{divide_decimal(CAST(lt.points AS numeric(18,6)), lp.points_per_currency)}}) AS amount_in_currency
   FROM loyalty_transactions lt
   JOIN loyalty_accounts la ON la.id = lt.loyalty_account_id
   JOIN loyalty_programs lp ON lp.id = la.loyalty_program_id
@@ -45,7 +45,7 @@ referral_tx AS (
 ),
 referral_tx_eur AS (
   SELECT
-    CAST(rt.reward_amount / COALESCE(er.rate, CASE WHEN rt.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6)) AS amount_eur,
+    CAST({{divide_decimal(rt.reward_amount, COALESCE(er.rate, CASE WHEN rt.currency_code = 'EUR' THEN 1 END))}} AS NUMERIC(18,6)) AS amount_eur,
     CAST({{date_trunc('month', rt.redeemed_at)}} AS date) AS month_start
   FROM referral_tx rt
   LEFT JOIN exchange_rates er

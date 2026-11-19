@@ -13,14 +13,14 @@ WITH classified AS (
 converted AS (
   SELECT c.*,
     CASE WHEN c.currency_code = 'EUR' THEN c.grand_total
-         ELSE CAST(c.grand_total / er.rate AS NUMERIC(18,6)) END AS grand_total_eur
+         ELSE CAST({{divide_decimal(c.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS grand_total_eur
   FROM classified c
   LEFT JOIN exchange_rates er ON er.base_code = 'EUR' AND er.quote_code = c.currency_code AND er.as_of = CAST(c.placed_at AS date)
 )
 SELECT segment,
   COUNT(DISTINCT tenant_id || ':' || user_id) AS users_count,
   COUNT(*) AS orders_count_2025,
-  CAST(COUNT(*) AS numeric(18,6)) / NULLIF(COUNT(DISTINCT tenant_id || ':' || user_id),0) AS avg_orders_per_user,
+  {{divide_decimal(CAST(COUNT(*) AS numeric(18,6)), NULLIF(COUNT(DISTINCT tenant_id || ':' || user_id),0))}} AS avg_orders_per_user,
   AVG(grand_total_eur) AS avg_order_value_eur,
   SUM(grand_total_eur) AS total_revenue_eur
 FROM converted

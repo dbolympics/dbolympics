@@ -1,6 +1,6 @@
 WITH tenant_revenue AS (
   SELECT o.tenant_id AS tenant_id,
-         SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS revenue_eur,
+         SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS revenue_eur,
          COUNT(*) AS orders_cnt
   FROM orders o
   JOIN exchange_rates er
@@ -50,11 +50,11 @@ bundle_counts AS (
 SELECT t.name AS merchant_name,
        t.industry AS industry,
        COALESCE(cc.active_collection_count,0) AS active_collection_count,
-       100.0 * COALESCE(pic.cnt,0) / NULLIF(ap.active_product_count,0) AS pct_active_products_in_a_collection,
+       {{divide_decimal(100.0 * COALESCE(pic.cnt,0), NULLIF(ap.active_product_count,0))}} AS pct_active_products_in_a_collection,
        COALESCE(bc.active_bundle_count,0) AS active_bundle_count,
-       100.0 * COALESCE(pib.cnt,0) / NULLIF(ap.active_product_count,0) AS pct_active_products_in_a_bundle,
+       {{divide_decimal(100.0 * COALESCE(pib.cnt,0), NULLIF(ap.active_product_count,0))}} AS pct_active_products_in_a_bundle,
        tr.revenue_eur AS revenue_eur_last_12mo,
-       tr.revenue_eur / NULLIF(tr.orders_cnt,0) AS avg_order_value_eur_last_12mo
+       {{divide_decimal(tr.revenue_eur, NULLIF(tr.orders_cnt,0))}} AS avg_order_value_eur_last_12mo
 FROM tenant_revenue tr
 JOIN tenants t ON t.id = tr.tenant_id
 LEFT JOIN active_products ap ON ap.tenant_id = tr.tenant_id

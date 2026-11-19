@@ -1,7 +1,7 @@
 WITH gross_by_tenant AS (
   SELECT
     p.tenant_id AS tenant_id,
-    SUM(p.gross_amount / CASE WHEN p.currency_code = 'EUR' THEN 1 ELSE er.rate END) AS gross_volume_eur
+    SUM({{divide_decimal(p.gross_amount, CASE WHEN p.currency_code = 'EUR' THEN 1 ELSE er.rate END)}}) AS gross_volume_eur
   FROM payouts p
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -15,7 +15,7 @@ WITH gross_by_tenant AS (
 fee_by_tenant AS (
   SELECT
     p.tenant_id AS tenant_id,
-    SUM(p.fee_amount / CASE WHEN p.currency_code = 'EUR' THEN 1 ELSE er.rate END) AS fee_revenue_eur
+    SUM({{divide_decimal(p.fee_amount, CASE WHEN p.currency_code = 'EUR' THEN 1 ELSE er.rate END)}}) AS fee_revenue_eur
   FROM payouts p
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

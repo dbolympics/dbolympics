@@ -2,7 +2,7 @@ WITH reviews AS (
   SELECT product_id,
          count(*) AS review_count,
          avg(cast(rating as numeric(18,6))) AS avg_rating,
-         CAST(sum(case when rating in (1,2) then 1 else 0 end) AS numeric(18,6)) / count(*) * 100 AS pct_1_2
+         {{divide_decimal(CAST(sum(case when rating in (1,2) then 1 else 0 end) AS numeric(18,6)), count(*))}} * 100 AS pct_1_2
   FROM product_reviews
   WHERE is_approved = true
   GROUP BY product_id

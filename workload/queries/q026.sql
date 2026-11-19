@@ -11,10 +11,10 @@ JOIN (
   SELECT
     o.tenant_id AS tenant_id,
     COUNT(*) AS orders_delivered,
-    AVG({{seconds_between(o.placed_at, o.delivered_at)}} / 86400.0) AS avg_delivery_days,
-    {{percentile_cont(0.5, {{seconds_between(o.placed_at, o.delivered_at)}} / 86400.0)}} AS median_delivery_days,
-    {{percentile_cont(0.9, {{seconds_between(o.placed_at, o.delivered_at)}} / 86400.0)}} AS p90_delivery_days,
-    AVG(CASE WHEN {{seconds_between(o.placed_at, o.delivered_at)}} / 86400.0 <= 5 THEN 1.0 ELSE 0.0 END) AS pct_within_5_days
+    AVG({{divide_decimal({{seconds_between(o.placed_at, o.delivered_at)}}, 86400.0)}}) AS avg_delivery_days,
+    {{percentile_cont(0.5, {{divide_decimal({{seconds_between(o.placed_at, o.delivered_at)}}, 86400.0)}})}} AS median_delivery_days,
+    {{percentile_cont(0.9, {{divide_decimal({{seconds_between(o.placed_at, o.delivered_at)}}, 86400.0)}})}} AS p90_delivery_days,
+    AVG(CASE WHEN {{divide_decimal({{seconds_between(o.placed_at, o.delivered_at)}}, 86400.0)}} <= 5 THEN 1.0 ELSE 0.0 END) AS pct_within_5_days
   FROM (
     SELECT
       ord.id AS id,

@@ -50,8 +50,8 @@ opp_final AS (
     owr.account_id AS account_id,
     owr.owner_user_id AS owner_user_id,
     owr.is_won AS is_won,
-    CAST(owr.amount / owr.eur_rate AS NUMERIC(18,6)) AS amount_eur,
-    {{seconds_between(owr.created_at, owr.closed_at)}} / 86400.0 AS days_open,
+    CAST({{divide_decimal(owr.amount, owr.eur_rate)}} AS NUMERIC(18,6)) AS amount_eur,
+    {{divide_decimal({{seconds_between(owr.created_at, owr.closed_at)}}, 86400.0)}} AS days_open,
     COALESCE(ac.activity_count, 0) AS activity_count
   FROM opp_with_rate owr
   LEFT JOIN activities_before_close ac

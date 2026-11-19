@@ -39,10 +39,10 @@ SELECT
   b.month_label AS month,
   COALESCE(r.review_count,0) AS review_count,
   r.avg_rating AS avg_rating,
-  CASE WHEN r.review_count > 0 THEN CAST(r.cnt_low AS numeric(18,6)) / r.review_count * 100 ELSE NULL END AS pct_1_2_star,
+  CASE WHEN r.review_count > 0 THEN {{divide_decimal(CAST(r.cnt_low AS numeric(18,6)), r.review_count)}} * 100 ELSE NULL END AS pct_1_2_star,
   COALESCE(sh.shipments_count,0) AS shipments_count,
-  CASE WHEN sh.delivered_known > 0 THEN CAST(sh.delivered_within_5 AS numeric(18,6)) / sh.delivered_known * 100 ELSE NULL END AS pct_delivered_within_5_days,
-  CASE WHEN sh.shipments_count > 0 THEN CAST(sh.albion_count AS numeric(18,6)) / sh.shipments_count * 100 ELSE NULL END AS pct_shipped_via_albion_parcel
+  CASE WHEN sh.delivered_known > 0 THEN {{divide_decimal(CAST(sh.delivered_within_5 AS numeric(18,6)), sh.delivered_known)}} * 100 ELSE NULL END AS pct_delivered_within_5_days,
+  CASE WHEN sh.shipments_count > 0 THEN {{divide_decimal(CAST(sh.albion_count AS numeric(18,6)), sh.shipments_count)}} * 100 ELSE NULL END AS pct_shipped_via_albion_parcel
 FROM base b
 LEFT JOIN reviews r ON r.tenant_id = b.tenant_id AND r.month_start = b.month_start
 LEFT JOIN ship sh ON sh.tenant_id = b.tenant_id AND sh.month_start = b.month_start

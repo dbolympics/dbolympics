@@ -67,7 +67,7 @@ categorized AS (
     END AS status_category,
     CASE
       WHEN r.currency_code = 'EUR' THEN r.discount_amount
-      ELSE CAST(r.discount_amount / NULLIF(r.fx_rate, 0) AS NUMERIC(18,6))
+      ELSE CAST({{divide_decimal(r.discount_amount, NULLIF(r.fx_rate, 0))}} AS NUMERIC(18,6))
     END AS eur_amount
   FROM row_per_order r
 )

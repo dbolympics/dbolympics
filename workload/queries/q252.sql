@@ -1,21 +1,21 @@
 SELECT
   t.name AS merchant_name,
   COUNT(*) AS urgent_tickets_evaluated,
-  100.0 * SUM(CASE WHEN b.bucket = 1 THEN 1 ELSE 0 END) / COUNT(*) AS pct_within_8h,
-  100.0 * SUM(CASE WHEN b.bucket = 2 THEN 1 ELSE 0 END) / COUNT(*) AS pct_8h_24h,
-  100.0 * SUM(CASE WHEN b.bucket = 3 THEN 1 ELSE 0 END) / COUNT(*) AS pct_1d_3d,
-  100.0 * SUM(CASE WHEN b.bucket = 4 THEN 1 ELSE 0 END) / COUNT(*) AS pct_3d_7d,
-  100.0 * SUM(CASE WHEN b.bucket = 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_over_7d_or_unresolved
+  {{divide_decimal(100.0 * SUM(CASE WHEN b.bucket = 1 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_within_8h,
+  {{divide_decimal(100.0 * SUM(CASE WHEN b.bucket = 2 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_8h_24h,
+  {{divide_decimal(100.0 * SUM(CASE WHEN b.bucket = 3 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_1d_3d,
+  {{divide_decimal(100.0 * SUM(CASE WHEN b.bucket = 4 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_3d_7d,
+  {{divide_decimal(100.0 * SUM(CASE WHEN b.bucket = 5 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_over_7d_or_unresolved
 FROM (
   SELECT
     tk.id AS id,
     tk.tenant_id AS tenant_id,
     CASE
       WHEN tk.resolved_at IS NULL THEN 5
-      WHEN {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0 <= 8 THEN 1
-      WHEN {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0 <= 24 THEN 2
-      WHEN {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0 <= 72 THEN 3
-      WHEN {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0 <= 168 THEN 4
+      WHEN {{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}} <= 8 THEN 1
+      WHEN {{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}} <= 24 THEN 2
+      WHEN {{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}} <= 72 THEN 3
+      WHEN {{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}} <= 168 THEN 4
       ELSE 5
     END AS bucket
   FROM tickets tk

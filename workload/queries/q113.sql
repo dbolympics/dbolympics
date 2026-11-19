@@ -7,7 +7,7 @@ SELECT
   metrics.users_with_any_record AS users_with_any_record,
   metrics.net_active_optins AS net_active_optins,
   CASE WHEN metrics.users_with_any_record = 0 THEN NULL
-       ELSE 100.0 * metrics.net_active_optins / metrics.users_with_any_record
+       ELSE {{divide_decimal(100.0 * metrics.net_active_optins, metrics.users_with_any_record)}}
   END AS active_optin_rate_pct
 FROM (
   SELECT

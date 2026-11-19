@@ -19,11 +19,11 @@ SELECT
   status,
   COUNT(DISTINCT user_id) AS staff_user_count,
   COUNT(DISTINCT user_id) FILTER (WHERE user_role_id IS NOT NULL) AS users_with_any_role,
-  CAST(COUNT(DISTINCT user_id) FILTER (WHERE user_role_id IS NOT NULL) AS numeric(18,6)) / NULLIF(COUNT(DISTINCT user_id),0) AS pct_with_any_role,
+  {{divide_decimal(CAST(COUNT(DISTINCT user_id) FILTER (WHERE user_role_id IS NOT NULL) AS numeric(18,6)), NULLIF(COUNT(DISTINCT user_id),0))}} AS pct_with_any_role,
   COUNT(DISTINCT user_id) FILTER (WHERE is_system = true) AS users_with_system_role,
-  CAST(COUNT(user_role_id) AS numeric(18,6)) / NULLIF(COUNT(DISTINCT user_id),0) AS avg_roles_per_user,
+  {{divide_decimal(CAST(COUNT(user_role_id) AS numeric(18,6)), NULLIF(COUNT(DISTINCT user_id),0))}} AS avg_roles_per_user,
   {{percentile_cont_filter(0.5, (DATE '2025-12-31' - CAST(role_granted_at AS date)), user_role_id IS NOT NULL)}} AS median_days_since_role_granted,
-  CAST(COUNT(DISTINCT user_id) FILTER (WHERE last_login_at IS NULL) AS numeric(18,6)) / NULLIF(COUNT(DISTINCT user_id),0) AS pct_never_logged_in,
+  {{divide_decimal(CAST(COUNT(DISTINCT user_id) FILTER (WHERE last_login_at IS NULL) AS numeric(18,6)), NULLIF(COUNT(DISTINCT user_id),0))}} AS pct_never_logged_in,
   {{percentile_cont_filter(0.5, (DATE '2025-12-31' - CAST(last_login_at AS date)), last_login_at IS NOT NULL)}} AS median_days_since_last_login
 FROM joined
 GROUP BY status

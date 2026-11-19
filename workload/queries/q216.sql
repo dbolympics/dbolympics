@@ -18,7 +18,7 @@ m_merchants AS (
 m_fee AS (
   SELECT
     ti2.vertical AS vertical,
-    SUM(CAST(p0.fee_amount / COALESCE(er0.rate, CASE WHEN p0.currency_code = 'EUR' THEN 1.0 END) AS NUMERIC(18,6))) AS fee_revenue_eur
+    SUM(CAST({{divide_decimal(p0.fee_amount, COALESCE(er0.rate, CASE WHEN p0.currency_code = 'EUR' THEN 1.0 END))}} AS NUMERIC(18,6))) AS fee_revenue_eur
   FROM payouts p0
   JOIN t_industry ti2 ON ti2.tenant_id = p0.tenant_id
   LEFT JOIN exchange_rates er0
@@ -33,7 +33,7 @@ m_fee AS (
 m_shipping AS (
   SELECT
     ti3.vertical AS vertical,
-    SUM(CAST(s0.shipping_cost / COALESCE(er1.rate, CASE WHEN s0.currency_code = 'EUR' THEN 1.0 END) AS NUMERIC(18,6))) AS shipping_cost_eur
+    SUM(CAST({{divide_decimal(s0.shipping_cost, COALESCE(er1.rate, CASE WHEN s0.currency_code = 'EUR' THEN 1.0 END))}} AS NUMERIC(18,6))) AS shipping_cost_eur
   FROM shipments s0
   JOIN t_industry ti3 ON ti3.tenant_id = s0.tenant_id
   LEFT JOIN exchange_rates er1
@@ -48,7 +48,7 @@ m_shipping AS (
 m_refund AS (
   SELECT
     ti4.vertical AS vertical,
-    SUM(CAST(r0.refund_total / COALESCE(er2.rate, CASE WHEN r0.currency_code = 'EUR' THEN 1.0 END) AS NUMERIC(18,6))) AS refund_amount_eur
+    SUM(CAST({{divide_decimal(r0.refund_total, COALESCE(er2.rate, CASE WHEN r0.currency_code = 'EUR' THEN 1.0 END))}} AS NUMERIC(18,6))) AS refund_amount_eur
   FROM order_returns r0
   JOIN t_industry ti4 ON ti4.tenant_id = r0.tenant_id
   LEFT JOIN exchange_rates er2
@@ -79,7 +79,7 @@ SELECT
   COALESCE(mt0.ticket_count, 0) AS support_ticket_count,
   COALESCE(mf0.fee_revenue_eur, 0) - COALESCE(ms0.shipping_cost_eur, 0) - COALESCE(mr0.refund_amount_eur, 0) AS rough_net_contribution_eur,
   CASE WHEN COALESCE(mf0.fee_revenue_eur, 0) = 0 THEN NULL
-  ELSE 100.0 * (COALESCE(mf0.fee_revenue_eur, 0) - COALESCE(ms0.shipping_cost_eur, 0) - COALESCE(mr0.refund_amount_eur, 0)) / mf0.fee_revenue_eur
+  ELSE {{divide_decimal(100.0 * (COALESCE(mf0.fee_revenue_eur, 0) - COALESCE(ms0.shipping_cost_eur, 0) - COALESCE(mr0.refund_amount_eur, 0)), mf0.fee_revenue_eur)}}
   END AS net_contribution_pct_of_fee_revenue
 FROM d_vertical d0
 LEFT JOIN m_merchants mm0 ON mm0.vertical = d0.vertical

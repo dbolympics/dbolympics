@@ -25,7 +25,7 @@ converted AS (
   SELECT
     s.*,
     CASE WHEN s.currency_code = 'EUR' THEN s.amount
-         ELSE CAST(s.amount / fx.rate AS NUMERIC(18,6)) END AS amount_eur
+         ELSE CAST({{divide_decimal(s.amount, fx.rate)}} AS NUMERIC(18,6)) END AS amount_eur
   FROM scoped s
   LEFT JOIN fx ON fx.quote_code = s.currency_code
 ),
@@ -53,7 +53,7 @@ bucketed AS (
 SELECT
   age_bucket,
   COUNT(*) AS opportunities_count,
-  100.0 * COUNT(*) / SUM(COUNT(*)) OVER () AS pct_of_open_pipeline,
+  {{divide_decimal(100.0 * COUNT(*), SUM(COUNT(*)) OVER ())}} AS pct_of_open_pipeline,
   AVG(amount_eur) AS avg_amount_eur,
   SUM(amount_eur) AS total_amount_eur
 FROM bucketed

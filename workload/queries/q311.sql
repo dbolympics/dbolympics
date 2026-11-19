@@ -41,7 +41,7 @@ SELECT
   sd.total_soft_deleted AS total_soft_deleted,
   COALESCE(ac.deleted_audit_rows, 0) AS matching_audit_rows,
   CASE WHEN sd.total_soft_deleted = 0 THEN NULL
-       ELSE 100.0 * COALESCE(ac.deleted_audit_rows, 0) / sd.total_soft_deleted
+       ELSE {{divide_decimal(100.0 * COALESCE(ac.deleted_audit_rows, 0), sd.total_soft_deleted)}}
   END AS coverage_rate_pct,
   sd.tenant_count AS tenants_with_soft_deleted
 FROM soft_deleted sd

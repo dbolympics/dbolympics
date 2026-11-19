@@ -1,7 +1,7 @@
 WITH shipment_costs AS (
   SELECT o.tenant_id AS tenant_id,
          COUNT(*) AS shipment_count,
-         SUM(CAST(s.shipping_cost / er.rate AS NUMERIC(18,6))) AS shipping_cost_eur
+         SUM(CAST({{divide_decimal(s.shipping_cost, er.rate)}} AS NUMERIC(18,6))) AS shipping_cost_eur
   FROM shipments s
   JOIN fulfillments f ON f.id = s.fulfillment_id
   JOIN orders o ON o.id = f.order_id
@@ -21,7 +21,7 @@ returns_counts AS (
 ),
 refund_amounts AS (
   SELECT pr.tenant_id AS tenant_id,
-         SUM(CAST(pr.amount / er.rate AS NUMERIC(18,6))) AS refund_amount_eur
+         SUM(CAST({{divide_decimal(pr.amount, er.rate)}} AS NUMERIC(18,6))) AS refund_amount_eur
   FROM payment_refunds pr
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

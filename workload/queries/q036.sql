@@ -22,9 +22,9 @@ SELECT
   t9.name AS tenant_name,
   t1.variants_tracked AS variants_tracked,
   COALESCE(t2.variants_out_of_stock, 0) AS variants_out_of_stock,
-  100.0 * COALESCE(t2.variants_out_of_stock, 0) / t1.variants_tracked AS pct_out_of_stock,
+  {{divide_decimal(100.0 * COALESCE(t2.variants_out_of_stock, 0), t1.variants_tracked)}} AS pct_out_of_stock,
   COALESCE(t3.variants_at_or_below_reorder_point, 0) AS variants_at_or_below_reorder_point,
-  100.0 * COALESCE(t3.variants_at_or_below_reorder_point, 0) / t1.variants_tracked AS pct_at_or_below_reorder
+  {{divide_decimal(100.0 * COALESCE(t3.variants_at_or_below_reorder_point, 0), t1.variants_tracked)}} AS pct_at_or_below_reorder
 FROM warehouses w0
 JOIN tenants t9 ON t9.id = w0.tenant_id
 JOIN (

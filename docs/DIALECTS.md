@@ -21,6 +21,7 @@ points as JSON; `dbo-bench render` writes the queries as a system gets them.
 | `string_agg_sorted(x, sep)` | `STRING_AGG({x}, {sep} ORDER BY {x})` (not standard; the standard has `LISTAGG`) |
 | `string_agg_distinct_sorted(x, sep)` | `STRING_AGG(DISTINCT {x}, {sep} ORDER BY {x})` |
 | `seconds_between(a, b)` | `CAST(EXTRACT(EPOCH FROM ({b} - {a})) AS NUMERIC(18,6))` (`EPOCH` is PostgreSQL's) |
+| `divide_int(a, b)`, `divide_decimal(a, b)` | `{a} / {b}`, a division by the types of its operands: two integers, or a decimal and a decimal or an integer. The types come from DuckDB on the empty schema (`tools/division_types.py`, `workload/queries/divisions.json`); a division with a double or an interval stays `a / b` |
 | `equals_any(x, arr)` | `{x} IN (SELECT dbo_unnest.dbo_element FROM UNNEST({arr}) AS dbo_unnest(dbo_element))`, the standard's membership test |
 | `count_distinct_pair(a, b)` | `COUNT(DISTINCT ({a}, {b}))` |
 | `add_minutes(ts, n)` | `{ts} + {n} * INTERVAL '1 minute'` (MySQL, T-SQL and SQLite have no interval type) |
@@ -59,14 +60,16 @@ Renaming an alias at all its uses is simple too.
    - A simple equivalent exists in the system's dialect: the construct becomes a placeholder
      with the standard construct as its default, and the system overrides it. Examples:
      Firebolt's sorted `string_agg` from a sorted array; the dense ranks for
-     `COUNT(DISTINCT x) OVER (...)`; ClickHouse's `addMinutes`. If the change costs nothing on
+     `COUNT(DISTINCT x) OVER (...)`; ClickHouse's `addMinutes`; ClickHouse's division of
+     decimals in double precision (as DuckDB's), where its own keeps the dividend's scale and
+     fails on a divisor of a larger one, and its `intDiv` for integers; DuckDB's `//` for
+     integers. If the change costs nothing on
      any system, it goes into the canonical query instead: an output alias that reuses the name
      of an input column the same block still uses is renamed, and so is a subquery alias
      `final` (non-reserved in the standard, ClickHouse's `FINAL` modifier).
    - Otherwise the system's error stays. Examples: correlated subqueries a system cannot
      decorrelate; Hyper's `(a, b) IN (VALUES ...)` (its equivalent repeats a pattern per list
-     element); ClickHouse's decimal division by a larger scale and its CASE over decimals of
-     different scales (finding them needs types); `COUNT(DISTINCT (a, b))` on Hyper, CedarDB
+     element); ClickHouse's CASE over decimals of different scales (finding them needs types); `COUNT(DISTINCT (a, b))` on Hyper, CedarDB
      and Firebolt (combining the two values into one is exact only within a range of values).
 3. **The query uses X, and the standard has no X** (implementation-defined or unspecified).
    - Enough reference dialects support another way to write it, two of the four for a standard

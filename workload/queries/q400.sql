@@ -26,7 +26,7 @@ grand_total AS (
 resolution_time AS (
     SELECT
         t4.coverage_status AS coverage_status,
-        AVG({{seconds_between(t4.created_at, t4.resolved_at)}} / 60.0) AS avg_resolution_minutes
+        AVG({{divide_decimal({{seconds_between(t4.created_at, t4.resolved_at)}}, 60.0)}}) AS avg_resolution_minutes
     FROM ticket_base t4
     WHERE t4.resolved_at IS NOT NULL
     GROUP BY t4.coverage_status
@@ -54,10 +54,10 @@ first_response_breaches AS (
 SELECT
     t9.coverage_status AS coverage_status,
     t9.ticket_count AS ticket_count,
-    100.0 * t9.ticket_count / NULLIF(t10.total_tickets, 0) AS pct_of_total_tickets,
+    {{divide_decimal(100.0 * t9.ticket_count, NULLIF(t10.total_tickets, 0))}} AS pct_of_total_tickets,
     COALESCE(t11.avg_resolution_minutes, 0) AS avg_resolution_minutes,
-    100.0 * COALESCE(t12.resolution_breach_count, 0) / NULLIF(t9.ticket_count, 0) AS resolution_breach_rate,
-    100.0 * COALESCE(t13.first_response_breach_count, 0) / NULLIF(t9.ticket_count, 0) AS first_response_breach_rate
+    {{divide_decimal(100.0 * COALESCE(t12.resolution_breach_count, 0), NULLIF(t9.ticket_count, 0))}} AS resolution_breach_rate,
+    {{divide_decimal(100.0 * COALESCE(t13.first_response_breach_count, 0), NULLIF(t9.ticket_count, 0))}} AS first_response_breach_rate
 FROM counts t9
 CROSS JOIN grand_total t10
 LEFT JOIN resolution_time t11 ON t11.coverage_status = t9.coverage_status

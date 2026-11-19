@@ -13,13 +13,13 @@ WITH po_quarters AS (
 ),
 received_lead AS (
   SELECT quarter_num,
-    {{seconds_between(ordered_at, received_at)}} / 86400.0 AS lead_days
+    {{divide_decimal({{seconds_between(ordered_at, received_at)}}, 86400.0)}} AS lead_days
   FROM po_quarters
   WHERE received_at IS NOT NULL
 ),
 late_subset AS (
   SELECT quarter_num,
-    {{seconds_between(expected_at, received_at)}} / 86400.0 AS days_late
+    {{divide_decimal({{seconds_between(expected_at, received_at)}}, 86400.0)}} AS days_late
   FROM po_quarters
   WHERE received_at IS NOT NULL AND expected_at IS NOT NULL AND received_at > expected_at
 ),
@@ -57,7 +57,7 @@ SELECT
   qs.pos_ordered AS pos_ordered,
   qs.pos_received AS pos_received,
   ls.avg_actual_lead_days AS avg_actual_lead_days,
-  (CAST(COALESCE(lt.late_count,0) AS numeric(18,6)) / NULLIF(bd.both_count,0)) * 100 AS pct_received_late,
+  ({{divide_decimal(CAST(COALESCE(lt.late_count,0) AS numeric(18,6)), NULLIF(bd.both_count,0))}}) * 100 AS pct_received_late,
   lt.avg_days_late AS avg_days_late,
   qs.pos_still_open_at_cutoff AS pos_still_open_at_cutoff
 FROM quarter_summary qs

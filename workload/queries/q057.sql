@@ -7,9 +7,9 @@ FROM (
     ) THEN 'loyalty member' ELSE 'non-member' END AS segment,
     COUNT(DISTINCT o.user_id) AS users_count,
     COUNT(*) AS orders_count_2025,
-    CAST(COUNT(*) AS numeric(18,6)) / COUNT(DISTINCT o.user_id) AS avg_orders_per_user,
-    AVG(CAST(o.grand_total / COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6))) AS avg_order_value_eur,
-    SUM(CAST(o.grand_total / COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6))) AS total_revenue_eur
+    {{divide_decimal(CAST(COUNT(*) AS numeric(18,6)), COUNT(DISTINCT o.user_id))}} AS avg_orders_per_user,
+    AVG(CAST({{divide_decimal(o.grand_total, COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END))}} AS NUMERIC(18,6))) AS avg_order_value_eur,
+    SUM(CAST({{divide_decimal(o.grand_total, COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END))}} AS NUMERIC(18,6))) AS total_revenue_eur
   FROM orders o
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

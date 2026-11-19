@@ -5,7 +5,7 @@ SELECT
   CAST(MAX(o.placed_at) AS date) AS last_order_date,
   (DATE '2026-01-05' - CAST(MAX(o.placed_at) AS date)) AS days_since_last_order,
   COUNT(*) AS lifetime_orders,
-  SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS lifetime_revenue_eur
+  SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS lifetime_revenue_eur
 FROM tenants t
 JOIN orders o
   ON o.tenant_id = t.id

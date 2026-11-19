@@ -89,6 +89,10 @@ checker absorbs only the digits the standard leaves to the engine.
 8. **Currency conversions are `NUMERIC(18,6)`:** `CAST(x / er.rate AS NUMERIC(18,6))`, 264
    sites in 146 queries (the `rate_conversions` step, which also covers `NULLIF`/`COALESCE`
    of a rate).
+   - The division is then the placeholder `{{divide_decimal(x, er.rate)}}`, as every division
+     becomes one by the types of its operands (the `divide` step, [DIALECTS.md](DIALECTS.md)).
+     Its default is `x / er.rate`; ClickHouse, whose division keeps the dividend's scale (4 for
+     amounts) and fails on the rate's 6, divides in double precision, as DuckDB does.
    - **Why:** DuckDB divides decimals in double precision; the standard requires an exact
      type when both operands are exact (6.30). In
      `CASE WHEN currency = 'EUR' THEN amount ELSE amount / rate END` the double branch made

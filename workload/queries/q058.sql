@@ -1,15 +1,13 @@
 SELECT t.industry AS industry,
   COUNT(DISTINCT CASE WHEN dla.user_id IS NOT NULL THEN o.user_id END) AS members_count,
   COUNT(DISTINCT CASE WHEN dla.user_id IS NULL THEN o.user_id END) AS nonmembers_count,
-  CAST(COUNT(CASE WHEN dla.user_id IS NOT NULL THEN o.id END) AS numeric(18,6))
-  / NULLIF(COUNT(DISTINCT CASE WHEN dla.user_id IS NOT NULL THEN o.user_id END), 0) AS avg_orders_per_member,
-  CAST(COUNT(CASE WHEN dla.user_id IS NULL THEN o.id END) AS numeric(18,6))
-  / NULLIF(COUNT(DISTINCT CASE WHEN dla.user_id IS NULL THEN o.user_id END), 0) AS avg_orders_per_nonmember,
+  {{divide_decimal(CAST(COUNT(CASE WHEN dla.user_id IS NOT NULL THEN o.id END) AS numeric(18,6)), NULLIF(COUNT(DISTINCT CASE WHEN dla.user_id IS NOT NULL THEN o.user_id END), 0))}} AS avg_orders_per_member,
+  {{divide_decimal(CAST(COUNT(CASE WHEN dla.user_id IS NULL THEN o.id END) AS numeric(18,6)), NULLIF(COUNT(DISTINCT CASE WHEN dla.user_id IS NULL THEN o.user_id END), 0))}} AS avg_orders_per_nonmember,
   AVG(CASE WHEN dla.user_id IS NOT NULL
-           THEN o.grand_total / (CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END)
+           THEN {{divide_decimal(o.grand_total, (CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END))}}
       END) AS avg_order_value_member_eur,
   AVG(CASE WHEN dla.user_id IS NULL
-           THEN o.grand_total / (CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END)
+           THEN {{divide_decimal(o.grand_total, (CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END))}}
       END) AS avg_order_value_nonmember_eur
 FROM orders o
 JOIN tenants t ON t.id = o.tenant_id

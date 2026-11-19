@@ -4,7 +4,7 @@ SELECT
   COALESCE(w.orders_cnt, 0) AS orders_14_to_16_utc,
   COALESCE(w.revenue_eur, 0) AS revenue_eur_14_to_16_utc,
   COALESCE(f.total_orders, 0) AS total_orders_full_day,
-  COALESCE(w.orders_cnt, 0) * 100.0 / NULLIF(f.total_orders, 0) AS pct_of_day_in_window
+  {{divide_decimal(COALESCE(w.orders_cnt, 0) * 100.0, NULLIF(f.total_orders, 0))}} AS pct_of_day_in_window
 FROM (VALUES
   (DATE '2025-11-21', 'Prior Friday'),
   (DATE '2025-11-28', 'Black Friday 2025'),
@@ -15,7 +15,7 @@ LEFT JOIN (
   SELECT
     CAST(o.placed_at AS date) AS d,
     COUNT(*) AS orders_cnt,
-    SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS revenue_eur
+    SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS revenue_eur
   FROM orders o
   JOIN exchange_rates er
     ON er.base_code = 'EUR'

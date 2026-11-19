@@ -3,9 +3,9 @@ WITH payout_eur AS (
     po.id AS payout_id,
     cd.month_start AS month_start,
     cd.month_label AS month_label,
-    CASE WHEN po.currency_code = 'EUR' THEN po.gross_amount ELSE CAST(po.gross_amount / er.rate AS NUMERIC(18,6)) END AS gross_eur,
-    CASE WHEN po.currency_code = 'EUR' THEN po.fee_amount ELSE CAST(po.fee_amount / er.rate AS NUMERIC(18,6)) END AS fee_eur,
-    CASE WHEN po.currency_code = 'EUR' THEN po.net_amount ELSE CAST(po.net_amount / er.rate AS NUMERIC(18,6)) END AS net_eur
+    CASE WHEN po.currency_code = 'EUR' THEN po.gross_amount ELSE CAST({{divide_decimal(po.gross_amount, er.rate)}} AS NUMERIC(18,6)) END AS gross_eur,
+    CASE WHEN po.currency_code = 'EUR' THEN po.fee_amount ELSE CAST({{divide_decimal(po.fee_amount, er.rate)}} AS NUMERIC(18,6)) END AS fee_eur,
+    CASE WHEN po.currency_code = 'EUR' THEN po.net_amount ELSE CAST({{divide_decimal(po.net_amount, er.rate)}} AS NUMERIC(18,6)) END AS net_eur
   FROM payouts po
   JOIN calendar_days cd ON cd.calendar_date = CAST(po.paid_at AS date)
   LEFT JOIN exchange_rates er
@@ -17,7 +17,7 @@ WITH payout_eur AS (
 refund_eur AS (
   SELECT
     po.id AS payout_id,
-    CASE WHEN pr.currency_code = 'EUR' THEN pr.amount ELSE CAST(pr.amount / er.rate AS NUMERIC(18,6)) END AS refund_eur
+    CASE WHEN pr.currency_code = 'EUR' THEN pr.amount ELSE CAST({{divide_decimal(pr.amount, er.rate)}} AS NUMERIC(18,6)) END AS refund_eur
   FROM payouts po
   JOIN payout_items pi ON pi.payout_id = po.id
   JOIN payment_refunds pr ON pr.payment_id = pi.payment_id AND pr.status = 'succeeded'
@@ -54,7 +54,7 @@ SELECT
   COALESCE(pg.payout_gross_eur,0) - COALESCE(pg.payout_fee_eur,0) - COALESCE(rf.linked_refunds_eur,0) AS implied_net_eur,
   COALESCE(pg.payout_net_eur,0) - (COALESCE(pg.payout_gross_eur,0) - COALESCE(pg.payout_fee_eur,0) - COALESCE(rf.linked_refunds_eur,0)) AS diff_eur,
   CASE WHEN COALESCE(pg.payout_net_eur,0) = 0 THEN NULL
-  ELSE (COALESCE(pg.payout_net_eur,0) - (COALESCE(pg.payout_gross_eur,0) - COALESCE(pg.payout_fee_eur,0) - COALESCE(rf.linked_refunds_eur,0))) / pg.payout_net_eur * 100
+  ELSE {{divide_decimal((COALESCE(pg.payout_net_eur,0) - (COALESCE(pg.payout_gross_eur,0) - COALESCE(pg.payout_fee_eur,0) - COALESCE(rf.linked_refunds_eur,0))), pg.payout_net_eur)}} * 100
   END AS diff_pct
 FROM months m
 LEFT JOIN payout_month_agg pg ON pg.month_start = m.month_start

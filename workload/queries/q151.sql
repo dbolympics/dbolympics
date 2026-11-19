@@ -12,11 +12,11 @@ WITH disc_orders AS (
 rated AS (
   SELECT dso.*,
          er.rate AS rate,
-         CAST(dso.subtotal / er.rate AS NUMERIC(18,6)) AS subtotal_eur,
-         CAST(dso.discount_total / er.rate AS NUMERIC(18,6)) AS discount_total_eur,
-         CAST(dso.tax_total / er.rate AS NUMERIC(18,6)) AS tax_total_eur,
-         CAST(dso.shipping_total / er.rate AS NUMERIC(18,6)) AS shipping_total_eur,
-         CAST(dso.grand_total / er.rate AS NUMERIC(18,6)) AS grand_total_eur,
+         CAST({{divide_decimal(dso.subtotal, er.rate)}} AS NUMERIC(18,6)) AS subtotal_eur,
+         CAST({{divide_decimal(dso.discount_total, er.rate)}} AS NUMERIC(18,6)) AS discount_total_eur,
+         CAST({{divide_decimal(dso.tax_total, er.rate)}} AS NUMERIC(18,6)) AS tax_total_eur,
+         CAST({{divide_decimal(dso.shipping_total, er.rate)}} AS NUMERIC(18,6)) AS shipping_total_eur,
+         CAST({{divide_decimal(dso.grand_total, er.rate)}} AS NUMERIC(18,6)) AS grand_total_eur,
          CASE WHEN EXISTS (
            SELECT 1 FROM subscriptions s
            WHERE s.tenant_id = dso.tenant_id
@@ -40,8 +40,8 @@ SELECT
   AVG(r.shipping_total_eur) AS avg_shipping_total_eur,
   AVG(r.tax_total_eur) AS avg_tax_total_eur,
   AVG(r.grand_total_eur) AS avg_grand_total_eur,
-  100.0 * SUM(CASE WHEN r.grand_total = 0 THEN 1 ELSE 0 END) / COUNT(*) AS pct_zero_grand_total,
-  100.0 * SUM(r.has_active_sub) / COUNT(*) AS pct_orders_with_active_subscription
+  {{divide_decimal(100.0 * SUM(CASE WHEN r.grand_total = 0 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_zero_grand_total,
+  {{divide_decimal(100.0 * SUM(r.has_active_sub), COUNT(*))}} AS pct_orders_with_active_subscription
 FROM rated r
 JOIN tenants t ON t.id = r.tenant_id
 GROUP BY t.name

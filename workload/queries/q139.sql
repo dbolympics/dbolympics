@@ -55,7 +55,7 @@ order_items_in_window AS (
 order_items_eur AS (
     SELECT oiw.product_variant_id AS product_variant_id,
            oiw.quantity AS quantity,
-           CAST(oiw.line_total / er.rate AS NUMERIC(18,6)) AS line_total_eur
+           CAST({{divide_decimal(oiw.line_total, er.rate)}} AS NUMERIC(18,6)) AS line_total_eur
     FROM order_items_in_window oiw
     JOIN exchange_rates er
            ON er.base_code = 'EUR'
@@ -101,7 +101,7 @@ product_metrics AS (
 SELECT
     image_count_bucket,
     COUNT(*) AS product_count,
-    100.0 * SUM(has_description) / COUNT(*) AS pct_with_description,
+    {{divide_decimal(100.0 * SUM(has_description), COUNT(*))}} AS pct_with_description,
     AVG(CAST(variant_count AS NUMERIC(18,6))) AS avg_variants_per_product,
     AVG(CAST(review_count AS NUMERIC(18,6))) AS avg_reviews_per_product,
     AVG(avg_rating_for_product) FILTER (WHERE review_count > 0) AS avg_rating,

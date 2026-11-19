@@ -2,7 +2,7 @@ WITH t0 AS (
   SELECT
     o0.id AS order_id,
     o0.status AS order_status,
-    CAST(o0.grand_total / er0.rate AS NUMERIC(18,6)) AS grand_total_eur
+    CAST({{divide_decimal(o0.grand_total, er0.rate)}} AS NUMERIC(18,6)) AS grand_total_eur
   FROM orders o0
   JOIN exchange_rates er0
     ON er0.base_code = 'EUR'
@@ -14,8 +14,8 @@ WITH t0 AS (
 t1 AS (
   SELECT
     p1.order_id AS order_id,
-    CAST(p1.amount / er1.rate AS NUMERIC(18,6)) AS gross_eur,
-    CAST((p1.amount - p1.amount_refunded) / er1.rate AS NUMERIC(18,6)) AS net_eur
+    CAST({{divide_decimal(p1.amount, er1.rate)}} AS NUMERIC(18,6)) AS gross_eur,
+    CAST({{divide_decimal((p1.amount - p1.amount_refunded), er1.rate)}} AS NUMERIC(18,6)) AS net_eur
   FROM payments p1
   JOIN exchange_rates er1
     ON er1.base_code = 'EUR'
@@ -59,7 +59,7 @@ SELECT
   t4.gross_collected_eur AS gross_collected_eur,
   t4.net_collected_eur AS net_collected_eur,
   t3.orders_grand_total_eur - t4.gross_collected_eur AS gap_vs_gross_eur,
-  (t3.orders_grand_total_eur - t4.gross_collected_eur) / NULLIF(t3.orders_grand_total_eur, 0) * 100 AS gap_vs_gross_pct
+  {{divide_decimal((t3.orders_grand_total_eur - t4.gross_collected_eur), NULLIF(t3.orders_grand_total_eur, 0))}} * 100 AS gap_vs_gross_pct
 FROM t3
 JOIN t4
   ON t4.order_status = t3.order_status

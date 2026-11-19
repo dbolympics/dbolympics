@@ -56,7 +56,7 @@ agg AS (
   SELECT ood.tenant_id AS tenant_id, ood.period AS period,
          COUNT(DISTINCT ood.order_id) AS orphan_orders,
          COUNT(DISTINCT ood.user_id) AS distinct_customers,
-         SUM(CAST(ood.discount_amount / COALESCE(er.rate,1) AS NUMERIC(18,6))) AS total_discount_eur
+         SUM(CAST({{divide_decimal(ood.discount_amount, COALESCE(er.rate,1))}} AS NUMERIC(18,6))) AS total_discount_eur
   FROM orphan_order_discounts ood
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

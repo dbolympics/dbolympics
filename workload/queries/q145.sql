@@ -2,7 +2,7 @@ WITH revenue AS (
   SELECT
     o.tenant_id AS tenant_id,
     SUM(
-      o.grand_total / CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END
+      {{divide_decimal(o.grand_total, CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END)}}
     ) AS revenue_eur
   FROM orders o
   LEFT JOIN exchange_rates er
@@ -47,7 +47,7 @@ SELECT
   COALESCE(ma.poor_rated_product_count, 0) AS poor_rated_product_count,
   CASE
     WHEN COALESCE(ma.products_with_5plus_reviews, 0) = 0 THEN NULL
-    ELSE CAST(ma.poor_rated_product_count AS numeric(18,6)) / ma.products_with_5plus_reviews * 100
+    ELSE {{divide_decimal(CAST(ma.poor_rated_product_count AS numeric(18,6)), ma.products_with_5plus_reviews)}} * 100
   END AS pct_poor_rated_products,
   r.revenue_eur AS revenue_eur_last_12mo
 FROM top50 r

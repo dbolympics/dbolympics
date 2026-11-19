@@ -5,9 +5,9 @@ SELECT
   m.payment_count AS payment_count,
   m.gross_captured_eur AS gross_captured_eur,
   m.amount_refunded_eur AS amount_refunded_eur,
-  100.0 * m.amount_refunded_eur / NULLIF(m.gross_captured_eur,0) AS refund_rate_pct,
+  {{divide_decimal(100.0 * m.amount_refunded_eur, NULLIF(m.gross_captured_eur,0))}} AS refund_rate_pct,
   100.0 * v.vertical_refund_rate AS vertical_avg_refund_rate_pct,
-  100.0 * m.amount_refunded_eur / NULLIF(m.gross_captured_eur,0) - 100.0 * v.vertical_refund_rate AS refund_rate_vs_vertical_avg_pp
+  {{divide_decimal(100.0 * m.amount_refunded_eur, NULLIF(m.gross_captured_eur,0))}} - 100.0 * v.vertical_refund_rate AS refund_rate_vs_vertical_avg_pp
 FROM (
   SELECT
     p.tenant_id AS tenant_id,
@@ -15,8 +15,8 @@ FROM (
     t.industry AS vertical,
     t.status AS tenant_status,
     COUNT(*) AS payment_count,
-    SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) AS gross_captured_eur,
-    SUM(CAST(p.amount_refunded / er.rate AS NUMERIC(18,6))) AS amount_refunded_eur
+    SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) AS gross_captured_eur,
+    SUM(CAST({{divide_decimal(p.amount_refunded, er.rate)}} AS NUMERIC(18,6))) AS amount_refunded_eur
   FROM payments p
   JOIN tenants t ON t.id = p.tenant_id
   JOIN exchange_rates er
@@ -31,7 +31,7 @@ FROM (
 JOIN (
   SELECT
     t.industry AS vertical,
-    SUM(CAST(p.amount_refunded / er.rate AS NUMERIC(18,6))) / NULLIF(SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))),0) AS vertical_refund_rate
+    {{divide_decimal(SUM(CAST({{divide_decimal(p.amount_refunded, er.rate)}} AS NUMERIC(18,6))), NULLIF(SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))),0))}} AS vertical_refund_rate
   FROM payments p
   JOIN tenants t ON t.id = p.tenant_id
   JOIN exchange_rates er

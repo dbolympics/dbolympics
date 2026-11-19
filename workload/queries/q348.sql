@@ -10,7 +10,7 @@ reviews AS (
   SELECT CAST({{date_trunc('month', pr.created_at)}} AS date) AS month,
          count(*) AS review_count,
          avg(cast(pr.rating as numeric(18,6))) AS avg_rating,
-         100.0 * count(*) FILTER (WHERE pr.rating <= 2) / NULLIF(count(*), 0) AS pct_1_2_star
+         {{divide_decimal(100.0 * count(*) FILTER (WHERE pr.rating <= 2), NULLIF(count(*), 0))}} AS pct_1_2_star
   FROM product_reviews pr
   JOIN tenant t ON pr.tenant_id = t.tenant_id
   WHERE pr.is_approved = true
@@ -21,7 +21,7 @@ orders_agg AS (
          count(*) AS orders_count,
          sum(
            CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-                ELSE CAST(o.grand_total / er.rate AS NUMERIC(18,6))
+                ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))
            END
          ) AS revenue_eur
   FROM orders o

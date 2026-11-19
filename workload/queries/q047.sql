@@ -2,7 +2,7 @@ with resolved_tickets_with_csat as (
     select
         t.id as ticket_id,
         c.score as csat_score,
-        {{seconds_between(t.created_at, t.resolved_at)}} / 3600.0 as resolution_hours
+        {{divide_decimal({{seconds_between(t.created_at, t.resolved_at)}}, 3600.0)}} as resolution_hours
     from tickets t
     join csat_responses c
         on c.ticket_id = t.id
@@ -36,8 +36,8 @@ bucket_summary as (
         bucket_sort_key,
         count(*) as ticket_count,
         avg(cast(csat_score as numeric(18,6))) as avg_csat_score,
-        100.0 * sum(case when csat_score >= 4 then 1 else 0 end) / count(*) as pct_satisfied,
-        100.0 * sum(case when csat_score <= 2 then 1 else 0 end) / count(*) as pct_dissatisfied
+        {{divide_decimal(100.0 * sum(case when csat_score >= 4 then 1 else 0 end), count(*))}} as pct_satisfied,
+        {{divide_decimal(100.0 * sum(case when csat_score <= 2 then 1 else 0 end), count(*))}} as pct_dissatisfied
     from bucketed_tickets
     group by resolution_bucket, bucket_sort_key
 )

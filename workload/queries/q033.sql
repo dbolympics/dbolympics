@@ -45,8 +45,7 @@ transit_stats AS (
     sb2.tenant_id AS tenant_id,
     sb2.carrier AS carrier,
     AVG(CASE WHEN sb2.delivered_at IS NOT NULL THEN {{whole_days_between(sb2.shipped_at, sb2.delivered_at)}} END) AS avg_transit_days,
-    100.0 * SUM(CASE WHEN sb2.delivered_at IS NOT NULL AND {{whole_days_between(sb2.shipped_at, sb2.delivered_at)}} <= 3 THEN 1 ELSE 0 END)
-      / NULLIF(SUM(CASE WHEN sb2.delivered_at IS NOT NULL THEN 1 ELSE 0 END), 0) AS pct_within_3_days
+    {{divide_decimal(100.0 * SUM(CASE WHEN sb2.delivered_at IS NOT NULL AND {{whole_days_between(sb2.shipped_at, sb2.delivered_at)}} <= 3 THEN 1 ELSE 0 END), NULLIF(SUM(CASE WHEN sb2.delivered_at IS NOT NULL THEN 1 ELSE 0 END), 0))}} AS pct_within_3_days
   FROM shipment_base sb2
   GROUP BY sb2.tenant_id, sb2.carrier
 )
@@ -55,7 +54,7 @@ SELECT
   st.performance_group AS performance_group,
   tcc.carrier AS carrier,
   tcc.shipments_count AS shipments_count,
-  100.0 * tcc.shipments_count / tt.total_shipments AS share_of_tenant_shipments_pct,
+  {{divide_decimal(100.0 * tcc.shipments_count, tt.total_shipments)}} AS share_of_tenant_shipments_pct,
   COALESCE(ts.avg_transit_days, 0) AS avg_transit_days,
   COALESCE(ts.pct_within_3_days, 0) AS pct_within_3_days
 FROM tenant_carrier_counts tcc

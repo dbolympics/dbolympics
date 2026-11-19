@@ -2,8 +2,8 @@ SELECT
   t0.name AS tenant_name,
   COALESCE(t1.total_sessions_2025, 0) AS total_sessions_2025,
   COALESCE(t2.direct_sessions_2025, 0) AS direct_sessions_2025,
-  COALESCE(t2.direct_sessions_2025, 0) * 100.0 / NULLIF(COALESCE(t1.total_sessions_2025, 0), 0) AS direct_share_of_tenant_pct,
-  COALESCE(t2.direct_sessions_2025, 0) * 100.0 / NULLIF(t3.platform_direct_sessions_2025, 0) AS pct_of_platform_direct_sessions
+  {{divide_decimal(COALESCE(t2.direct_sessions_2025, 0) * 100.0, NULLIF(COALESCE(t1.total_sessions_2025, 0), 0))}} AS direct_share_of_tenant_pct,
+  {{divide_decimal(COALESCE(t2.direct_sessions_2025, 0) * 100.0, NULLIF(t3.platform_direct_sessions_2025, 0))}} AS pct_of_platform_direct_sessions
 FROM tenants t0
 LEFT JOIN (
   SELECT tenant_id, COUNT(*) AS total_sessions_2025

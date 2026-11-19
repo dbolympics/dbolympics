@@ -31,7 +31,7 @@ SELECT
   mc.total_merchants AS total_merchants,
   mc.active_merchants AS active_merchants,
   mc.at_risk_merchants AS at_risk_merchants,
-  CAST(COALESCE(ti.ticket_count, 0) AS numeric(18,6)) / mc.total_merchants AS tickets_per_merchant,
+  {{divide_decimal(CAST(COALESCE(ti.ticket_count, 0) AS numeric(18,6)), mc.total_merchants)}} AS tickets_per_merchant,
   cw.avg_score AS avg_csat_score
 FROM merchant_counts mc
 LEFT JOIN tickets_in_window ti ON ti.vertical = mc.vertical

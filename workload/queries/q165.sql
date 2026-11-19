@@ -4,7 +4,7 @@ SELECT
   ra.redemption_count AS redemption_count,
   ra.distinct_referred_customers AS distinct_referred_customers,
   ra.total_reward_paid_eur AS total_reward_paid_eur,
-  100.0 * ra.redemption_count / SUM(ra.redemption_count) OVER () AS share_of_all_redemptions_pct,
+  {{divide_decimal(100.0 * ra.redemption_count, SUM(ra.redemption_count) OVER ())}} AS share_of_all_redemptions_pct,
   COALESCE(oa.lifetime_order_count, 0) AS referrer_lifetime_order_count,
   COALESCE(oa.lifetime_revenue_eur, 0) AS referrer_lifetime_revenue_eur
 FROM (
@@ -12,7 +12,7 @@ FROM (
            COUNT(*) AS redemption_count,
            COUNT(DISTINCT rr.referred_user_id) AS distinct_referred_customers,
            SUM(CASE WHEN rr.currency_code = 'EUR' THEN rr.reward_amount
-                    ELSE CAST(rr.reward_amount / er.rate AS NUMERIC(18,6)) END) AS total_reward_paid_eur
+                    ELSE CAST({{divide_decimal(rr.reward_amount, er.rate)}} AS NUMERIC(18,6)) END) AS total_reward_paid_eur
     FROM referral_redemptions rr
     JOIN referrals ref ON ref.id = rr.referral_id
     LEFT JOIN exchange_rates er
@@ -27,7 +27,7 @@ LEFT JOIN (
            COUNT(*) AS lifetime_order_count,
            SUM(CASE WHEN o.status <> 'cancelled' THEN
                     CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-                         ELSE CAST(o.grand_total / er.rate AS NUMERIC(18,6)) END
+                         ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END
                     ELSE 0 END) AS lifetime_revenue_eur
     FROM orders o
     LEFT JOIN exchange_rates er

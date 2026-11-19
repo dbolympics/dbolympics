@@ -34,8 +34,8 @@ SELECT
   cs.destination_country AS destination_country,
   cs.shipments_shipped AS shipments_shipped,
   cs.avg_transit_days AS avg_transit_days,
-  100.0 * cs.within_3_count / cs.shipments_shipped AS pct_within_3_days,
-  100.0 * cs.shipments_shipped / ct.carrier_shipments AS share_of_carrier_shipments_pct
+  {{divide_decimal(100.0 * cs.within_3_count, cs.shipments_shipped)}} AS pct_within_3_days,
+  {{divide_decimal(100.0 * cs.shipments_shipped, ct.carrier_shipments)}} AS share_of_carrier_shipments_pct
 FROM country_stats cs
 JOIN carrier_totals ct ON ct.carrier = cs.carrier
 WHERE cs.shipments_shipped >= 15

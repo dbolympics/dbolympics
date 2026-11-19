@@ -11,7 +11,7 @@ cart_population AS (
 cart_with_eur AS (
   SELECT cp.*,
     CASE WHEN cp.currency_code = 'EUR' THEN cp.subtotal
-         ELSE CAST(cp.subtotal / er.rate AS NUMERIC(18,6)) END AS subtotal_eur
+         ELSE CAST({{divide_decimal(cp.subtotal, er.rate)}} AS NUMERIC(18,6)) END AS subtotal_eur
   FROM cart_population cp
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -48,11 +48,11 @@ tier_aggregates AS (
 SELECT
   ta.price_tier AS price_tier,
   ta.cart_count AS cart_count,
-  100.0 * ta.cart_count / tt.total_carts AS pct_of_total_carts,
+  {{divide_decimal(100.0 * ta.cart_count, tt.total_carts)}} AS pct_of_total_carts,
   ta.avg_item_count AS avg_item_count,
-  100.0 * ta.converted_count / ta.cart_count AS overall_conversion_pct,
-  100.0 * ta.resolved_1h_count / ta.cart_count AS pct_resolved_within_1_hour,
-  100.0 * ta.resolved_1_7d_count / ta.cart_count AS pct_resolved_in_1_7_days
+  {{divide_decimal(100.0 * ta.converted_count, ta.cart_count)}} AS overall_conversion_pct,
+  {{divide_decimal(100.0 * ta.resolved_1h_count, ta.cart_count)}} AS pct_resolved_within_1_hour,
+  {{divide_decimal(100.0 * ta.resolved_1_7d_count, ta.cart_count)}} AS pct_resolved_in_1_7_days
 FROM tier_aggregates ta
 CROSS JOIN tier_totals tt
 ORDER BY

@@ -24,12 +24,12 @@ qualifying AS (
 SELECT
   name AS role_name,
   COUNT(DISTINCT tenant_id) AS tenant_count,
-  100.0 * SUM(CASE WHEN is_system THEN 1 ELSE 0 END) / COUNT(*) AS pct_is_system,
+  {{divide_decimal(100.0 * SUM(CASE WHEN is_system THEN 1 ELSE 0 END), COUNT(*))}} AS pct_is_system,
   AVG(CAST(perm_count AS NUMERIC(18,6))) AS avg_permission_count,
   MAX(perm_count) AS max_permission_count,
   SUM(assigned_users) AS total_users_assigned,
   SUM(dormant_users) AS total_users_dormant,
-  100.0 * SUM(dormant_users) / NULLIF(SUM(assigned_users), 0) AS dormant_rate_pct
+  {{divide_decimal(100.0 * SUM(dormant_users), NULLIF(SUM(assigned_users), 0))}} AS dormant_rate_pct
 FROM qualifying
 WHERE name <> 'Owner'
 GROUP BY name

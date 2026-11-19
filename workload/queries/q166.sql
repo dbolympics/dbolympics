@@ -43,7 +43,7 @@ classified AS (
 valued AS (
   SELECT
     c.*,
-    CASE WHEN c.status <> 'cancelled' THEN CAST(c.grand_total / er.rate AS NUMERIC(18,6)) ELSE NULL END AS grand_total_eur
+    CASE WHEN c.status <> 'cancelled' THEN CAST({{divide_decimal(c.grand_total, er.rate)}} AS NUMERIC(18,6)) ELSE NULL END AS grand_total_eur
   FROM classified c
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -54,7 +54,7 @@ SELECT
   order_type,
   COUNT(*) AS order_count,
   COUNT(DISTINCT user_id) AS distinct_customers,
-  100.0 * SUM(is_refunded) / COUNT(*) AS refund_rate_pct,
+  {{divide_decimal(100.0 * SUM(is_refunded), COUNT(*))}} AS refund_rate_pct,
   AVG(grand_total_eur) AS avg_order_value_eur,
   AVG(points_redeemed) AS avg_points_redeemed_per_order
 FROM valued

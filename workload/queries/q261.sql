@@ -3,7 +3,7 @@ WITH order_amounts AS (
     o.id AS order_id,
     o.tenant_id AS tenant_id,
     o.user_id AS user_id,
-    CAST(o.grand_total / er.rate AS NUMERIC(18,6)) AS grand_total_eur
+    CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) AS grand_total_eur
   FROM orders o
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -53,7 +53,7 @@ SELECT
   s.industry AS industry,
   s.segment AS segment,
   s.users_count AS users_count,
-  100.0 * s.users_count / t.total_users AS share_of_industry_users_pct,
+  {{divide_decimal(100.0 * s.users_count, t.total_users)}} AS share_of_industry_users_pct,
   s.avg_orders_per_user AS avg_orders_per_user,
   o.avg_order_value_eur AS avg_order_value_eur
 FROM segment_agg s

@@ -13,9 +13,9 @@ FROM (
     t.name AS tenant_name,
     tk.tenant_id AS tenant_id,
     tk.ticket_count AS ticket_count,
-    100.0 * tk.ticket_count / tot.total_tickets AS pct_of_total_tickets,
-    100.0 * coalesce(frb.breach_count, 0) / nullif(tk.sla_ticket_count, 0) AS first_response_breach_rate,
-    100.0 * coalesce(rb.breach_count, 0) / nullif(tk.sla_ticket_count, 0) AS resolution_breach_rate,
+    {{divide_decimal(100.0 * tk.ticket_count, tot.total_tickets)}} AS pct_of_total_tickets,
+    {{divide_decimal(100.0 * coalesce(frb.breach_count, 0), nullif(tk.sla_ticket_count, 0))}} AS first_response_breach_rate,
+    {{divide_decimal(100.0 * coalesce(rb.breach_count, 0), nullif(tk.sla_ticket_count, 0))}} AS resolution_breach_rate,
     tk.avg_resolution_minutes AS avg_resolution_minutes,
     (SELECT count(DISTINCT sa.id) FROM support_agents sa WHERE sa.tenant_id = tk.tenant_id) AS agent_count,
     tot.total_tickets AS total_tickets,
@@ -25,7 +25,7 @@ FROM (
       tenant_id,
       count(*) AS ticket_count,
       count(*) FILTER (WHERE sla_policy_id IS NOT NULL) AS sla_ticket_count,
-      avg({{seconds_between(created_at, resolved_at)}} / 60.0) FILTER (WHERE resolved_at IS NOT NULL) AS avg_resolution_minutes
+      avg({{divide_decimal({{seconds_between(created_at, resolved_at)}}, 60.0)}}) FILTER (WHERE resolved_at IS NOT NULL) AS avg_resolution_minutes
     FROM tickets
     WHERE created_at >= timestamp '2025-01-01' AND created_at < timestamp '2026-01-01'
     GROUP BY tenant_id

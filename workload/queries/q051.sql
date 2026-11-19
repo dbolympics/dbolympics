@@ -6,8 +6,8 @@ WITH months AS (
 order_calc AS (
   SELECT
     {{year_month(o.placed_at)}} AS month,
-    o.grand_total / CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END AS revenue_eur,
-    o.discount_total / CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END AS discount_eur,
+    {{divide_decimal(o.grand_total, CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END)}} AS revenue_eur,
+    {{divide_decimal(o.discount_total, CASE WHEN o.currency_code = 'EUR' THEN 1 ELSE er.rate END)}} AS discount_eur,
     CASE WHEN o.discount_total > 0 THEN 1 ELSE 0 END AS has_discount
   FROM orders o
   LEFT JOIN exchange_rates er
@@ -41,7 +41,7 @@ SELECT
   m.month AS month,
   COALESCE(oa.orders_count, 0) AS orders_count,
   COALESCE(oa.orders_with_discount_count, 0) AS orders_with_discount_count,
-  CAST(COALESCE(oa.orders_with_discount_count, 0) AS numeric(18,6)) * 100.0 / NULLIF(oa.orders_count,0) AS discount_rate_pct,
+  {{divide_decimal(CAST(COALESCE(oa.orders_with_discount_count, 0) AS numeric(18,6)) * 100.0, NULLIF(oa.orders_count,0))}} AS discount_rate_pct,
   COALESCE(oa.total_order_revenue_eur,0) AS total_order_revenue_eur,
   COALESCE(oa.total_discount_amount_eur,0) AS total_discount_amount_eur,
   COALESCE(oa.total_discount_amount_eur,0) * 100.0 / NULLIF(oa.total_order_revenue_eur + oa.total_discount_amount_eur, 0) AS discount_share_of_gmv_pct,

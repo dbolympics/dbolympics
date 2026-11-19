@@ -27,7 +27,7 @@ SELECT
   tenant_name,
   total_adjustments_at_site,
   theft_tagged_count,
-  theft_tagged_count * 100.0 / NULLIF(total_adjustments_at_site, 0) AS pct_theft_of_site_adjustments,
+  {{divide_decimal(theft_tagged_count * 100.0, NULLIF(total_adjustments_at_site, 0))}} AS pct_theft_of_site_adjustments,
   distinct_staff_logging_theft_here,
   COUNT(*) OVER () AS total_warehouses_with_adjustments_2025
 FROM agg

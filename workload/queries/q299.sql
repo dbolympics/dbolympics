@@ -27,7 +27,7 @@ order_count_agg AS (
   GROUP BY t0.age_bucket
 ),
 grand_total_agg AS (
-  SELECT t1.age_bucket AS age_bucket, SUM(CAST(t1.grand_total / t2.rate AS NUMERIC(18,6))) AS orders_grand_total_eur
+  SELECT t1.age_bucket AS age_bucket, SUM(CAST({{divide_decimal(t1.grand_total, t2.rate)}} AS NUMERIC(18,6))) AS orders_grand_total_eur
   FROM order_base t1
   JOIN exchange_rates t2
     ON t2.base_code = 'EUR'
@@ -36,7 +36,7 @@ grand_total_agg AS (
   GROUP BY t1.age_bucket
 ),
 payment_agg AS (
-  SELECT t3.age_bucket AS age_bucket, SUM(CAST(t4.amount / t5.rate AS NUMERIC(18,6))) AS matched_money_collected_eur
+  SELECT t3.age_bucket AS age_bucket, SUM(CAST({{divide_decimal(t4.amount, t5.rate)}} AS NUMERIC(18,6))) AS matched_money_collected_eur
   FROM order_base t3
   JOIN payments t4
     ON t4.order_id = t3.order_id
@@ -52,7 +52,7 @@ SELECT
   t6.order_count AS order_count,
   COALESCE(t7.orders_grand_total_eur, 0) AS orders_grand_total_eur,
   COALESCE(t8.matched_money_collected_eur, 0) AS matched_money_collected_eur,
-  COALESCE(t8.matched_money_collected_eur, 0) / NULLIF(t7.orders_grand_total_eur, 0) * 100 AS match_rate_pct
+  {{divide_decimal(COALESCE(t8.matched_money_collected_eur, 0), NULLIF(t7.orders_grand_total_eur, 0))}} * 100 AS match_rate_pct
 FROM order_count_agg t6
 LEFT JOIN grand_total_agg t7 ON t7.age_bucket = t6.age_bucket
 LEFT JOIN payment_agg t8 ON t8.age_bucket = t6.age_bucket

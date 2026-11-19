@@ -14,7 +14,7 @@ order_revenue_eur AS (
     SELECT
         eo.tenant_id AS tenant_id,
         eo.order_id AS order_id,
-        CAST(eo.grand_total / er.rate AS NUMERIC(18,6)) AS revenue_eur
+        CAST({{divide_decimal(eo.grand_total, er.rate)}} AS NUMERIC(18,6)) AS revenue_eur
     FROM eligible_orders eo
     JOIN exchange_rates er
       ON er.base_code = 'EUR'
@@ -33,7 +33,7 @@ discount_detail AS (
     SELECT
         od.tenant_id AS tenant_id,
         od.order_id AS order_id,
-        CAST(od.amount / er.rate AS NUMERIC(18,6)) AS discount_eur,
+        CAST({{divide_decimal(od.amount, er.rate)}} AS NUMERIC(18,6)) AS discount_eur,
         COALESCE(CAST(od.coupon_id AS varchar), od.code) AS discount_code_key
     FROM order_discounts od
     JOIN eligible_orders eo
@@ -69,10 +69,10 @@ SELECT
     vertical,
     discount_eur AS discount_amount_eur,
     revenue_eur AS order_revenue_eur,
-    discount_eur / NULLIF(revenue_eur, 0) * 100 AS discount_pct_of_revenue,
+    {{divide_decimal(discount_eur, NULLIF(revenue_eur, 0))}} * 100 AS discount_pct_of_revenue,
     order_count,
     distinct_discount_codes,
-    discount_eur / NULLIF(SUM(discount_eur) OVER (), 0) * 100 AS share_of_company_discount_pct
+    {{divide_decimal(discount_eur, NULLIF(SUM(discount_eur) OVER (), 0))}} * 100 AS share_of_company_discount_pct
 FROM combined
 ORDER BY discount_amount_eur DESC NULLS FIRST, tenant_name NULLS LAST, vertical NULLS LAST, order_revenue_eur NULLS LAST, discount_pct_of_revenue NULLS LAST, order_count NULLS LAST, distinct_discount_codes NULLS LAST, share_of_company_discount_pct NULLS LAST
 {{fetch_first(50)}}

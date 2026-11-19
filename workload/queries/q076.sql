@@ -49,9 +49,9 @@ SELECT
   carts_created,
   orders_placed,
   orders_paid,
-  CASE WHEN visits > 0 THEN 100.0 * carts_created / visits ELSE NULL END AS visit_to_cart_pct,
-  CASE WHEN carts_created > 0 THEN 100.0 * orders_placed / carts_created ELSE NULL END AS cart_to_order_pct,
-  CASE WHEN orders_placed > 0 THEN 100.0 * orders_paid / orders_placed ELSE NULL END AS order_to_paid_pct,
-  CASE WHEN visits > 0 THEN 100.0 * orders_paid / visits ELSE NULL END AS overall_visit_to_paid_pct
+  CASE WHEN visits > 0 THEN {{divide_decimal(100.0 * carts_created, visits)}} ELSE NULL END AS visit_to_cart_pct,
+  CASE WHEN carts_created > 0 THEN {{divide_decimal(100.0 * orders_placed, carts_created)}} ELSE NULL END AS cart_to_order_pct,
+  CASE WHEN orders_placed > 0 THEN {{divide_decimal(100.0 * orders_paid, orders_placed)}} ELSE NULL END AS order_to_paid_pct,
+  CASE WHEN visits > 0 THEN {{divide_decimal(100.0 * orders_paid, visits)}} ELSE NULL END AS overall_visit_to_paid_pct
 FROM assembled
 ORDER BY overall_visit_to_paid_pct DESC NULLS LAST, tenant_name ASC NULLS LAST, tenant_id NULLS LAST

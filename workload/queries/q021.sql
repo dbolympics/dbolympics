@@ -15,8 +15,8 @@ payment_eur AS (
     t.industry AS industry,
     cd.year_num AS year_num,
     cd.quarter_num AS quarter_num,
-    CAST(p.amount / er.rate AS NUMERIC(18,6)) AS amount_eur,
-    CAST(p.amount_refunded / er.rate AS NUMERIC(18,6)) AS amount_refunded_eur
+    CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6)) AS amount_eur,
+    CAST({{divide_decimal(p.amount_refunded, er.rate)}} AS NUMERIC(18,6)) AS amount_refunded_eur
   FROM payments p
   JOIN tenants t ON t.id = p.tenant_id
   JOIN calendar_days cd ON cd.calendar_date = CAST(p.captured_at AS date)
@@ -48,8 +48,8 @@ SELECT
   COALESCE(a.payment_count, 0) AS payment_count,
   COALESCE(a.gross_captured_eur,0) AS gross_captured_eur,
   COALESCE(a.amount_refunded_eur,0) AS amount_refunded_eur,
-  CASE WHEN COALESCE(a.gross_captured_eur,0) = 0 THEN NULL ELSE a.amount_refunded_eur / a.gross_captured_eur * 100 END AS refund_rate_pct,
-  CASE WHEN COALESCE(c.gross_captured_eur,0) = 0 THEN NULL ELSE c.amount_refunded_eur / c.gross_captured_eur * 100 END AS company_avg_refund_rate_pct
+  CASE WHEN COALESCE(a.gross_captured_eur,0) = 0 THEN NULL ELSE {{divide_decimal(a.amount_refunded_eur, a.gross_captured_eur)}} * 100 END AS refund_rate_pct,
+  CASE WHEN COALESCE(c.gross_captured_eur,0) = 0 THEN NULL ELSE {{divide_decimal(c.amount_refunded_eur, c.gross_captured_eur)}} * 100 END AS company_avg_refund_rate_pct
 FROM quarters q
 LEFT JOIN apparel_agg a ON a.year_num = q.year_num AND a.quarter_num = q.quarter_num
 LEFT JOIN company_agg c ON c.year_num = q.year_num AND c.quarter_num = q.quarter_num

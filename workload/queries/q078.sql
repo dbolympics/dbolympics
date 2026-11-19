@@ -30,9 +30,9 @@ joined AS (
 SELECT
   {{year_month(cohort_month)}} AS cohort_month,
   COUNT(*) AS first_time_buyers,
-  100.0 * COUNT(*) FILTER (WHERE days_to_second <= 30) / COUNT(*) AS repeat_within_30_pct,
-  100.0 * COUNT(*) FILTER (WHERE days_to_second <= 60) / COUNT(*) AS repeat_within_60_pct,
-  100.0 * COUNT(*) FILTER (WHERE days_to_second <= 90) / COUNT(*) AS repeat_within_90_pct,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE days_to_second <= 30), COUNT(*))}} AS repeat_within_30_pct,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE days_to_second <= 60), COUNT(*))}} AS repeat_within_60_pct,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE days_to_second <= 90), COUNT(*))}} AS repeat_within_90_pct,
   COUNT(*) FILTER (WHERE second_placed_at IS NOT NULL) AS repeat_buyers,
   {{percentile_cont(0.5, days_to_second)}} AS median_days_to_second_order
 FROM joined

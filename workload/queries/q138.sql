@@ -38,9 +38,9 @@ SELECT
   t0.month AS month,
   COALESCE(t1.review_count, 0) AS review_count,
   COALESCE(t2.avg_rating, 0) AS avg_rating,
-  100.0 * COALESCE(t3.low_count, 0) / NULLIF(t1.review_count, 0) AS pct_1_2_star,
-  100.0 * COALESCE(t4.five_count, 0) / NULLIF(t1.review_count, 0) AS pct_5_star,
-  100.0 * COALESCE(t5.verified_count, 0) / NULLIF(t1.review_count, 0) AS pct_verified_purchase
+  {{divide_decimal(100.0 * COALESCE(t3.low_count, 0), NULLIF(t1.review_count, 0))}} AS pct_1_2_star,
+  {{divide_decimal(100.0 * COALESCE(t4.five_count, 0), NULLIF(t1.review_count, 0))}} AS pct_5_star,
+  {{divide_decimal(100.0 * COALESCE(t5.verified_count, 0), NULLIF(t1.review_count, 0))}} AS pct_verified_purchase
 FROM months t0
 LEFT JOIN m_count t1 ON t1.month = t0.month
 LEFT JOIN m_avg t2 ON t2.month = t0.month
