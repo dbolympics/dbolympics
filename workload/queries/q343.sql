@@ -2,7 +2,7 @@ SELECT
   v.calendar_date AS date,
   v.label AS label,
   count(o.id) AS total_orders,
-  sum(CAST(o.grand_total / COALESCE(er.rate, 1) AS NUMERIC(18,6))) AS total_revenue_eur
+  sum(CAST({{divide_decimal(o.grand_total, COALESCE(er.rate, 1))}} AS NUMERIC(18,6))) AS total_revenue_eur
 FROM (VALUES
     (date '2025-11-21', 'Prior Friday'),
     (date '2025-11-28', 'Black Friday 2025'),

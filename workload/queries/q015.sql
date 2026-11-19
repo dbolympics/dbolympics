@@ -2,9 +2,9 @@ WITH payout_eur AS (
   SELECT p.tenant_id AS tenant_id,
          EXTRACT(YEAR FROM p.paid_at) AS yr,
          CASE WHEN p.currency_code = 'EUR' THEN p.gross_amount
-              ELSE CAST(p.gross_amount / er.rate AS NUMERIC(18,6)) END AS gross_eur,
+              ELSE CAST({{divide_decimal(p.gross_amount, er.rate)}} AS NUMERIC(18,6)) END AS gross_eur,
          CASE WHEN p.currency_code = 'EUR' THEN p.fee_amount
-              ELSE CAST(p.fee_amount / er.rate AS NUMERIC(18,6)) END AS fee_eur
+              ELSE CAST({{divide_decimal(p.fee_amount, er.rate)}} AS NUMERIC(18,6)) END AS fee_eur
   FROM payouts p
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -42,10 +42,10 @@ SELECT
   yt.active_merchants AS active_merchant_count,
   yt.total_gross_eur AS total_gross_volume_eur,
   ta.top5_gross AS top5_gross_volume_eur,
-  100.0 * ta.top5_gross / NULLIF(yt.total_gross_eur, 0) AS top5_share_pct,
+  {{divide_decimal(100.0 * ta.top5_gross, NULLIF(yt.total_gross_eur, 0))}} AS top5_share_pct,
   ta.top10_gross AS top10_gross_volume_eur,
-  100.0 * ta.top10_gross / NULLIF(yt.total_gross_eur, 0) AS top10_share_pct,
-  100.0 * ta.top10_fee / NULLIF(yt.total_fee_eur, 0) AS top10_fee_share_pct
+  {{divide_decimal(100.0 * ta.top10_gross, NULLIF(yt.total_gross_eur, 0))}} AS top10_share_pct,
+  {{divide_decimal(100.0 * ta.top10_fee, NULLIF(yt.total_fee_eur, 0))}} AS top10_fee_share_pct
 FROM year_totals yt
 JOIN top_agg ta ON ta.yr = yt.yr
 ORDER BY yt.yr ASC NULLS LAST

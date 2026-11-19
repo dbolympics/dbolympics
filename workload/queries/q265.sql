@@ -26,7 +26,7 @@ SELECT
   SUM(
 CASE
 WHEN COALESCE(b.currency_code, 'EUR') = 'EUR' THEN b.attributed_revenue
-ELSE CAST(b.attributed_revenue / er.rate AS NUMERIC(18,6))
+ELSE CAST({{divide_decimal(b.attributed_revenue, er.rate)}} AS NUMERIC(18,6))
 END
 ) AS attributed_revenue_eur
 FROM base b

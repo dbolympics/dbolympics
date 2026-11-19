@@ -2,11 +2,11 @@ SELECT
   {{year_month({{date_trunc('month', x.created_at)}})}} AS month,
   count(*) AS tickets_total,
   count(*) FILTER (WHERE x.is_delivery) AS tickets_delivery_related,
-  100.0 * count(*) FILTER (WHERE x.is_delivery) / count(*) AS delivery_share_pct,
-  avg({{seconds_between(x.created_at, x.first_response_at)}}/3600) FILTER (WHERE x.is_delivery AND x.first_response_at IS NOT NULL) AS avg_first_response_hours_delivery,
-  avg({{seconds_between(x.created_at, x.first_response_at)}}/3600) FILTER (WHERE NOT x.is_delivery AND x.first_response_at IS NOT NULL) AS avg_first_response_hours_other,
-  avg({{seconds_between(x.created_at, x.resolved_at)}}/3600) FILTER (WHERE x.is_delivery AND x.resolved_at IS NOT NULL) AS avg_resolution_hours_delivery,
-  avg({{seconds_between(x.created_at, x.resolved_at)}}/3600) FILTER (WHERE NOT x.is_delivery AND x.resolved_at IS NOT NULL) AS avg_resolution_hours_other
+  {{divide_decimal(100.0 * count(*) FILTER (WHERE x.is_delivery), count(*))}} AS delivery_share_pct,
+  avg({{divide_decimal({{seconds_between(x.created_at, x.first_response_at)}}, 3600)}}) FILTER (WHERE x.is_delivery AND x.first_response_at IS NOT NULL) AS avg_first_response_hours_delivery,
+  avg({{divide_decimal({{seconds_between(x.created_at, x.first_response_at)}}, 3600)}}) FILTER (WHERE NOT x.is_delivery AND x.first_response_at IS NOT NULL) AS avg_first_response_hours_other,
+  avg({{divide_decimal({{seconds_between(x.created_at, x.resolved_at)}}, 3600)}}) FILTER (WHERE x.is_delivery AND x.resolved_at IS NOT NULL) AS avg_resolution_hours_delivery,
+  avg({{divide_decimal({{seconds_between(x.created_at, x.resolved_at)}}, 3600)}}) FILTER (WHERE NOT x.is_delivery AND x.resolved_at IS NOT NULL) AS avg_resolution_hours_other
 FROM (
   SELECT
     t.id AS id,

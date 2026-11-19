@@ -5,7 +5,7 @@ select
   sum(fee_amount) as fee_native_total,
   sum(net_amount) as net_native_total,
   sum(net_amount) - (sum(gross_amount) - sum(fee_amount)) as net_check_diff_native,
-  (sum(net_amount) - (sum(gross_amount) - sum(fee_amount))) / nullif(sum(gross_amount), 0) * 100 as net_check_diff_pct
+  {{divide_decimal((sum(net_amount) - (sum(gross_amount) - sum(fee_amount))), nullif(sum(gross_amount), 0))}} * 100 as net_check_diff_pct
 from payouts
 where created_at >= timestamp '2023-01-01'
   and created_at < timestamp '2026-01-01'

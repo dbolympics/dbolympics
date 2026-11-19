@@ -48,7 +48,7 @@ orders_scoped AS (
     o.status AS status,
     CASE WHEN o.status <> 'cancelled' THEN
       CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-           ELSE CAST(o.grand_total / er.rate AS NUMERIC(18,6)) END
+           ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END
     ELSE NULL END AS revenue_eur,
     CASE WHEN o.status <> 'cancelled' THEN 1 ELSE 0 END AS is_noncancelled,
     CASE WHEN EXISTS (SELECT 1 FROM payments p WHERE p.order_id = o.id AND p.amount_refunded > 0)
@@ -90,8 +90,8 @@ SELECT
   COUNT(*) AS customer_count,
   AVG(CAST(lifetime_orders AS NUMERIC(18,6))) AS avg_lifetime_orders,
   AVG(lifetime_revenue_eur) AS avg_lifetime_revenue_eur,
-  (SUM(lifetime_revenue_eur) / NULLIF(SUM(noncancelled_orders), 0)) AS avg_order_value_eur,
-  (100.0 * SUM(refunded_orders) / NULLIF(SUM(lifetime_orders), 0)) AS refund_rate_pct
+  ({{divide_decimal(SUM(lifetime_revenue_eur), NULLIF(SUM(noncancelled_orders), 0))}}) AS avg_order_value_eur,
+  ({{divide_decimal(100.0 * SUM(refunded_orders), NULLIF(SUM(lifetime_orders), 0))}}) AS refund_rate_pct
 FROM user_level
 GROUP BY tenure_band, customer_group
 ORDER BY

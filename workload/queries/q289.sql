@@ -1,7 +1,7 @@
 SELECT t.name AS tenant_name,
   COUNT(*) AS customers,
-  100.0 * SUM(CASE WHEN cust.before_cnt > 0 THEN 1 ELSE 0 END) / COUNT(*) AS pct_with_session_before,
-  100.0 * SUM(CASE WHEN cust.after_cnt > 0 THEN 1 ELSE 0 END) / COUNT(*) AS pct_with_session_after,
+  {{divide_decimal(100.0 * SUM(CASE WHEN cust.before_cnt > 0 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_with_session_before,
+  {{divide_decimal(100.0 * SUM(CASE WHEN cust.after_cnt > 0 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_with_session_after,
   AVG(CAST(cust.after_cnt AS NUMERIC(18,6))) AS avg_sessions_after_first_order_per_customer
 FROM (
   SELECT fo.tenant_id AS tenant_id, fo.user_id AS user_id, fo.first_order_at AS first_order_at,

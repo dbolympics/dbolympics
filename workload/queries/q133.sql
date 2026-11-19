@@ -28,10 +28,10 @@ ticket_counts AS (
 SELECT
   tc.group_name AS group_name,
   tcn.tenant_count AS tenant_count,
-  CAST(tc.baseline_tickets AS numeric(18,6)) / tcn.tenant_count / (61/7.0) AS avg_weekly_tickets_per_tenant_baseline,
-  CAST(tc.incident_tickets AS numeric(18,6)) / tcn.tenant_count / (61/7.0) AS avg_weekly_tickets_per_tenant_incident,
-  (((CAST(tc.incident_tickets AS numeric(18,6)) / tcn.tenant_count) - (CAST(tc.baseline_tickets AS numeric(18,6)) / tcn.tenant_count))
-   / NULLIF(CAST(tc.baseline_tickets AS numeric(18,6)) / tcn.tenant_count, 0)) * 100 AS pct_change
+  {{divide_decimal(CAST(tc.baseline_tickets AS numeric(18,6)), tcn.tenant_count)}} / ({{divide_decimal(61, 7.0)}}) AS avg_weekly_tickets_per_tenant_baseline,
+  {{divide_decimal(CAST(tc.incident_tickets AS numeric(18,6)), tcn.tenant_count)}} / ({{divide_decimal(61, 7.0)}}) AS avg_weekly_tickets_per_tenant_incident,
+  ((({{divide_decimal(CAST(tc.incident_tickets AS numeric(18,6)), tcn.tenant_count)}}) - ({{divide_decimal(CAST(tc.baseline_tickets AS numeric(18,6)), tcn.tenant_count)}}))
+   / NULLIF({{divide_decimal(CAST(tc.baseline_tickets AS numeric(18,6)), tcn.tenant_count)}}, 0)) * 100 AS pct_change
 FROM ticket_counts tc
 JOIN tenant_counts tcn ON tcn.group_name = tc.group_name
 ORDER BY tc.group_name NULLS LAST

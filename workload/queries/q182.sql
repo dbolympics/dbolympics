@@ -4,7 +4,7 @@ SELECT
   COALESCE(s_counts.opportunities_closed, 0) AS opportunities_closed,
   COALESCE(s_counts.closed_won, 0) AS closed_won,
   COALESCE(s_counts.closed_lost, 0) AS closed_lost,
-  COALESCE(s_counts.closed_won, 0) * 100.0 / NULLIF(s_counts.opportunities_closed, 0) AS win_rate_pct,
+  {{divide_decimal(COALESCE(s_counts.closed_won, 0) * 100.0, NULLIF(s_counts.opportunities_closed, 0))}} AS win_rate_pct,
   s_days.avg_days_open AS avg_days_open,
   s_amt.avg_amount_eur AS avg_amount_eur
 FROM tenants t0
@@ -23,7 +23,7 @@ LEFT JOIN (
 LEFT JOIN (
   SELECT
     o.tenant_id AS tenant_id,
-    AVG({{seconds_between(o.created_at, o.closed_at)}} / 86400.0) AS avg_days_open
+    AVG({{divide_decimal({{seconds_between(o.created_at, o.closed_at)}}, 86400.0)}}) AS avg_days_open
   FROM opportunities o
   JOIN pipelines p ON p.id = o.pipeline_id AND p.tenant_id = o.tenant_id
   WHERE o.is_closed = true
@@ -36,7 +36,7 @@ LEFT JOIN (
     AVG(
       CASE
         WHEN o.currency_code = 'EUR' THEN o.amount
-        ELSE o.amount / (
+        ELSE {{divide_decimal(o.amount, (
           SELECT er.rate
           FROM exchange_rates er
           WHERE er.base_code = 'EUR'
@@ -44,7 +44,7 @@ LEFT JOIN (
             AND er.as_of <= CAST(o.closed_at AS date)
           ORDER BY er.as_of DESC NULLS FIRST
           {{fetch_first(1)}}
-        )
+        ))}}
       END
     ) AS avg_amount_eur
   FROM opportunities o

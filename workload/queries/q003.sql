@@ -40,14 +40,14 @@ merchant_counts AS (
 ),
 gross_volume AS (
   SELECT tv0.vertical AS vertical,
-         SUM(CAST(qp0.gross_amount / qp0.eur_rate AS NUMERIC(18,6))) AS gross_volume_eur
+         SUM(CAST({{divide_decimal(qp0.gross_amount, qp0.eur_rate)}} AS NUMERIC(18,6))) AS gross_volume_eur
   FROM qualifying_payouts qp0
   JOIN tenant_vertical tv0 ON tv0.tenant_id = qp0.tenant_id
   GROUP BY tv0.vertical
 ),
 fee_revenue AS (
   SELECT tv0.vertical AS vertical,
-         SUM(CAST(qp0.fee_amount / qp0.eur_rate AS NUMERIC(18,6))) AS fee_revenue_eur
+         SUM(CAST({{divide_decimal(qp0.fee_amount, qp0.eur_rate)}} AS NUMERIC(18,6))) AS fee_revenue_eur
   FROM qualifying_payouts qp0
   JOIN tenant_vertical tv0 ON tv0.tenant_id = qp0.tenant_id
   GROUP BY tv0.vertical
@@ -61,8 +61,8 @@ SELECT
   COALESCE(mc0.merchant_count, 0) AS merchant_count,
   COALESCE(gv0.gross_volume_eur, 0) AS gross_payment_volume_eur,
   COALESCE(fr0.fee_revenue_eur, 0) AS fee_revenue_eur,
-  COALESCE(fr0.fee_revenue_eur, 0) / NULLIF(COALESCE(mc0.merchant_count, 0), 0) AS avg_fee_revenue_per_merchant_eur,
-  100.0 * COALESCE(fr0.fee_revenue_eur, 0) / NULLIF(t0.total_fee_revenue_eur, 0) AS pct_of_total_fee_revenue
+  {{divide_decimal(COALESCE(fr0.fee_revenue_eur, 0), NULLIF(COALESCE(mc0.merchant_count, 0), 0))}} AS avg_fee_revenue_per_merchant_eur,
+  {{divide_decimal(100.0 * COALESCE(fr0.fee_revenue_eur, 0), NULLIF(t0.total_fee_revenue_eur, 0))}} AS pct_of_total_fee_revenue
 FROM verticals v0
 LEFT JOIN merchant_counts mc0 ON mc0.vertical = v0.vertical
 LEFT JOIN gross_volume gv0 ON gv0.vertical = v0.vertical

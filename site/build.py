@@ -624,6 +624,8 @@ POINT_MEANING = {
     "count_distinct_pair": "the number of distinct pairs (a, b)",
     "equals_any": "whether an array column contains x; the queries said PostgreSQL's = ANY(array), the default is the standard's membership test",
     "seconds_between": "the seconds from a to b, exactly (PostgreSQL's EXTRACT(EPOCH ...))",
+    "divide_int": "a divided by b, two integers (truncated toward zero)",
+    "divide_decimal": "a divided by b, a decimal and a decimal or an integer",
     "count_distinct_over": "the number of distinct values of x in a window",
     "add_minutes": "a timestamp plus n minutes; the default is the standard's interval, which of the four most used databases only PostgreSQL supports",
     "whole_days_between": "the whole days from a to b, two timestamps (PostgreSQL's day field of their difference)",

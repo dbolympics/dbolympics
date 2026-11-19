@@ -44,7 +44,7 @@ enriched AS (
         a.reference_type AS reference_type,
         CASE
             WHEN vc.currency_code = 'EUR' THEN ABS(a.quantity_signed) * vc.unit_cost
-            ELSE CAST(ABS(a.quantity_signed) * vc.unit_cost / NULLIF(fx.rate, 0) AS NUMERIC(18,6))
+            ELSE CAST({{divide_decimal(ABS(a.quantity_signed) * vc.unit_cost, NULLIF(fx.rate, 0))}} AS NUMERIC(18,6))
         END AS estimated_value_eur
     FROM adjustments_2025 a
     JOIN stock_locations sl ON sl.id = a.stock_location_id

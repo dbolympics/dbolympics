@@ -19,7 +19,7 @@ cat_perm_counts AS (
 SELECT
   cu.category AS category,
   count(*) AS staff_users_with_category,
-  100.0 * count(*) / st.total_staff AS pct_of_all_staff,
+  {{divide_decimal(100.0 * count(*), st.total_staff)}} AS pct_of_all_staff,
   count(*) FILTER (WHERE cu.status = 'active') AS active_count,
   count(*) FILTER (WHERE cu.status IN ('invited','suspended','deactivated')) AS non_active_count,
   cpc.distinct_permission_codes AS distinct_permission_codes

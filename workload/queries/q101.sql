@@ -3,12 +3,10 @@ SELECT t.id AS tenant_id,
        t.status AS tenant_status,
        COUNT(CASE WHEN u.is_staff THEN u.id END) AS staff_user_count,
        COUNT(CASE WHEN u.is_staff AND um.has_mfa THEN u.id END) AS staff_users_with_mfa,
-       100.0 * COUNT(CASE WHEN u.is_staff AND um.has_mfa THEN u.id END)
-       / NULLIF(COUNT(CASE WHEN u.is_staff THEN u.id END), 0) AS staff_mfa_rate_pct,
+       {{divide_decimal(100.0 * COUNT(CASE WHEN u.is_staff AND um.has_mfa THEN u.id END), NULLIF(COUNT(CASE WHEN u.is_staff THEN u.id END), 0))}} AS staff_mfa_rate_pct,
        COUNT(CASE WHEN NOT u.is_staff THEN u.id END) AS shopper_user_count,
        COUNT(CASE WHEN NOT u.is_staff AND um.has_mfa THEN u.id END) AS shopper_users_with_mfa,
-       100.0 * COUNT(CASE WHEN NOT u.is_staff AND um.has_mfa THEN u.id END)
-       / NULLIF(COUNT(CASE WHEN NOT u.is_staff THEN u.id END), 0) AS shopper_mfa_rate_pct,
+       {{divide_decimal(100.0 * COUNT(CASE WHEN NOT u.is_staff AND um.has_mfa THEN u.id END), NULLIF(COUNT(CASE WHEN NOT u.is_staff THEN u.id END), 0))}} AS shopper_mfa_rate_pct,
        COUNT(u.id) AS total_users
 FROM tenants t
 JOIN users u

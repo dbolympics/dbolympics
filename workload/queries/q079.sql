@@ -3,8 +3,8 @@ SELECT
   t.industry AS industry,
   COALESCE(v.visits_2025, 0) AS visits_2025,
   COALESCE(o.orders_2025, 0) AS orders_2025,
-  CAST(COALESCE(v.visits_2025, 0) AS numeric(18,6)) / NULLIF(COALESCE(o.orders_2025, 0), 0) AS visits_per_order,
-  100.0 * COALESCE(s.sub_linked_orders, 0) / NULLIF(COALESCE(o.orders_2025, 0), 0) AS subscription_linked_orders_pct,
+  {{divide_decimal(CAST(COALESCE(v.visits_2025, 0) AS numeric(18,6)), NULLIF(COALESCE(o.orders_2025, 0), 0))}} AS visits_per_order,
+  {{divide_decimal(100.0 * COALESCE(s.sub_linked_orders, 0), NULLIF(COALESCE(o.orders_2025, 0), 0))}} AS subscription_linked_orders_pct,
   COALESCE(a.active_subscriptions, 0) AS active_subscriptions
 FROM tenants t
 LEFT JOIN (

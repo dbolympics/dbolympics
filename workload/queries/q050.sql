@@ -18,7 +18,7 @@ per_channel AS (
   SELECT
     channel,
     COUNT(DISTINCT order_id) AS attributed_orders,
-    SUM(CAST(attributed_revenue / fx_rate AS NUMERIC(18,6))) AS attributed_revenue_eur
+    SUM(CAST({{divide_decimal(attributed_revenue, fx_rate)}} AS NUMERIC(18,6))) AS attributed_revenue_eur
   FROM attr
   GROUP BY channel
 ),
@@ -29,8 +29,8 @@ SELECT
   pc.channel AS channel,
   pc.attributed_orders AS attributed_orders,
   pc.attributed_revenue_eur AS attributed_revenue_eur,
-  pc.attributed_revenue_eur / t.total_revenue_eur * 100 AS share_of_revenue_pct,
-  pc.attributed_revenue_eur / pc.attributed_orders AS avg_order_value_eur
+  {{divide_decimal(pc.attributed_revenue_eur, t.total_revenue_eur)}} * 100 AS share_of_revenue_pct,
+  {{divide_decimal(pc.attributed_revenue_eur, pc.attributed_orders)}} AS avg_order_value_eur
 FROM per_channel pc
 CROSS JOIN totals t
 ORDER BY attributed_revenue_eur DESC NULLS FIRST, channel ASC NULLS LAST

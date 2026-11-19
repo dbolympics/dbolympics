@@ -9,7 +9,7 @@ SELECT
   CASE WHEN cmp.avg_subtotal_eur IS NULL OR cmp.avg_subtotal_eur = 0 THEN NULL
        ELSE (disc.avg_subtotal_eur - cmp.avg_subtotal_eur) * 100 / cmp.avg_subtotal_eur END AS subtotal_lift_pct,
   CASE WHEN disc.customer_count = 0 THEN NULL
-       ELSE 100.0 * cmp.customers_with_comparison / disc.customer_count END AS pct_customers_with_comparison_order,
+       ELSE {{divide_decimal(100.0 * cmp.customers_with_comparison, disc.customer_count)}} END AS pct_customers_with_comparison_order,
   (disc.customer_count - cmp.customers_with_comparison) AS customers_with_no_comparison_order
 FROM discounts d
 JOIN (
@@ -19,7 +19,7 @@ JOIN (
          AVG(dconv.subtotal_eur) AS avg_subtotal_eur
   FROM (
     SELECT DISTINCT od.discount_id AS discount_id, o.id AS order_id, o.user_id AS user_id,
-           CASE WHEN o.currency_code = 'EUR' THEN o.subtotal ELSE CAST(o.subtotal / er.rate AS NUMERIC(18,6)) END AS subtotal_eur
+           CASE WHEN o.currency_code = 'EUR' THEN o.subtotal ELSE CAST({{divide_decimal(o.subtotal, er.rate)}} AS NUMERIC(18,6)) END AS subtotal_eur
     FROM order_discounts od
     JOIN orders o ON o.id = od.order_id AND o.tenant_id = od.tenant_id
     LEFT JOIN exchange_rates er ON er.base_code = 'EUR'
@@ -38,7 +38,7 @@ JOIN (
 JOIN (
   SELECT dcust.discount_id AS discount_id,
          COUNT(cp.user_id) AS customers_with_comparison,
-         SUM(cp.cmp_subtotal_sum) / NULLIF(SUM(cp.cmp_order_count), 0) AS avg_subtotal_eur
+         {{divide_decimal(SUM(cp.cmp_subtotal_sum), NULLIF(SUM(cp.cmp_order_count), 0))}} AS avg_subtotal_eur
   FROM (
     SELECT DISTINCT od.discount_id AS discount_id, o.tenant_id AS tenant_id, o.user_id AS user_id
     FROM order_discounts od
@@ -54,7 +54,7 @@ JOIN (
   LEFT JOIN (
     SELECT o2.tenant_id AS tenant_id, o2.user_id AS user_id,
            COUNT(*) AS cmp_order_count,
-           SUM(CASE WHEN o2.currency_code = 'EUR' THEN o2.subtotal ELSE CAST(o2.subtotal / er2.rate AS NUMERIC(18,6)) END) AS cmp_subtotal_sum
+           SUM(CASE WHEN o2.currency_code = 'EUR' THEN o2.subtotal ELSE CAST({{divide_decimal(o2.subtotal, er2.rate)}} AS NUMERIC(18,6)) END) AS cmp_subtotal_sum
     FROM orders o2
     LEFT JOIN exchange_rates er2 ON er2.base_code = 'EUR'
            AND er2.quote_code = o2.currency_code

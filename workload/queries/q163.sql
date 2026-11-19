@@ -43,7 +43,7 @@ t_refunded_orders AS (
 t_revenue AS (
   SELECT p.tenure_band AS tenure_band, p.segment AS segment,
          SUM(CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-                  ELSE CAST(o.grand_total / NULLIF(er.rate, 0) AS NUMERIC(18,6)) END) AS total_revenue_eur,
+                  ELSE CAST({{divide_decimal(o.grand_total, NULLIF(er.rate, 0))}} AS NUMERIC(18,6)) END) AS total_revenue_eur,
          COUNT(o.id) AS non_cancelled_orders
   FROM population p
   JOIN orders o ON o.user_id = p.user_id
@@ -58,10 +58,10 @@ SELECT
   gk.tenure_band AS tenure_band,
   gk.segment AS segment,
   COALESCE(cc.customer_count, 0) AS customer_count,
-  CAST(COALESCE(lo.total_orders, 0) AS numeric(18,6)) / NULLIF(cc.customer_count, 0) AS avg_lifetime_orders,
-  COALESCE(rev.total_revenue_eur, 0) / NULLIF(cc.customer_count, 0) AS avg_lifetime_revenue_eur,
-  COALESCE(rev.total_revenue_eur, 0) / NULLIF(rev.non_cancelled_orders, 0) AS avg_order_value_eur,
-  100.0 * COALESCE(ro.refunded_orders, 0) / NULLIF(lo.total_orders, 0) AS refund_rate_pct
+  {{divide_decimal(CAST(COALESCE(lo.total_orders, 0) AS numeric(18,6)), NULLIF(cc.customer_count, 0))}} AS avg_lifetime_orders,
+  {{divide_decimal(COALESCE(rev.total_revenue_eur, 0), NULLIF(cc.customer_count, 0))}} AS avg_lifetime_revenue_eur,
+  {{divide_decimal(COALESCE(rev.total_revenue_eur, 0), NULLIF(rev.non_cancelled_orders, 0))}} AS avg_order_value_eur,
+  {{divide_decimal(100.0 * COALESCE(ro.refunded_orders, 0), NULLIF(lo.total_orders, 0))}} AS refund_rate_pct
 FROM grain_keys gk
 LEFT JOIN t_customer_count cc ON cc.tenure_band = gk.tenure_band AND cc.segment = gk.segment
 LEFT JOIN t_lifetime_orders lo ON lo.tenure_band = gk.tenure_band AND lo.segment = gk.segment

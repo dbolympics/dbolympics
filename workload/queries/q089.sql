@@ -12,7 +12,7 @@ orders_filtered AS (
 ),
 orders_eur AS (
   SELECT ofl.order_id AS order_id, ofl.month_label AS month_label,
-         CAST(ofl.grand_total / er.rate AS NUMERIC(18,6)) AS grand_total_eur
+         CAST({{divide_decimal(ofl.grand_total, er.rate)}} AS NUMERIC(18,6)) AS grand_total_eur
   FROM orders_filtered ofl
   JOIN exchange_rates er ON er.base_code = 'EUR' AND er.quote_code = ofl.currency_code
     AND er.as_of = CAST(ofl.placed_at AS date)
@@ -24,7 +24,7 @@ payments_captured AS (
 ),
 payments_linked AS (
   SELECT pc.payment_id AS payment_id, pc.order_id AS order_id, ofl.month_label AS month_label,
-         CAST(pc.amount / er.rate AS NUMERIC(18,6)) AS amount_eur
+         CAST({{divide_decimal(pc.amount, er.rate)}} AS NUMERIC(18,6)) AS amount_eur
   FROM payments_captured pc
   JOIN orders_filtered ofl ON ofl.order_id = pc.order_id
   JOIN exchange_rates er ON er.base_code = 'EUR' AND er.quote_code = pc.currency_code
@@ -56,7 +56,7 @@ SELECT
   COALESCE(oa.orders_count, 0) - COALESCE(owp.orders_with_captured_payment_count, 0) AS orders_without_captured_payment_count,
   COALESCE(oa.orders_grand_total_eur, 0) - COALESCE(pa.captured_payment_total_eur, 0) AS gap_eur,
   CASE WHEN COALESCE(oa.orders_grand_total_eur, 0) = 0 THEN NULL
-       ELSE (COALESCE(oa.orders_grand_total_eur, 0) - COALESCE(pa.captured_payment_total_eur, 0)) / oa.orders_grand_total_eur * 100
+       ELSE {{divide_decimal((COALESCE(oa.orders_grand_total_eur, 0) - COALESCE(pa.captured_payment_total_eur, 0)), oa.orders_grand_total_eur)}} * 100
   END AS gap_pct
 FROM months m
 LEFT JOIN order_agg oa ON oa.month_label = m.month_label

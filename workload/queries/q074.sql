@@ -43,7 +43,7 @@ SELECT
   COALESCE(la.total_login_attempts, 0) AS total_login_attempts,
   COALESCE(la.failed_login_attempts, 0) AS failed_login_attempts,
   CASE WHEN COALESCE(la.total_login_attempts,0) = 0 THEN 0
- ELSE 100.0 * la.failed_login_attempts / la.total_login_attempts END AS pct_failed,
+ ELSE {{divide_decimal(100.0 * la.failed_login_attempts, la.total_login_attempts)}} END AS pct_failed,
   COALESCE(bf.emails_with_5plus_failed, 0) AS emails_with_5plus_failed_in_month,
   COALESCE(aa.audit_access_denied_events, 0) AS audit_access_denied_events
 FROM months m

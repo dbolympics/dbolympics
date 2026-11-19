@@ -75,7 +75,7 @@ t8 AS (
   SELECT
     t4.category_id AS category_id,
     t7.return_item_id AS return_item_id,
-    CAST(t7.refund_amount / NULLIF(t7.eur_rate, 0) AS NUMERIC(18,6)) AS refund_amount_eur,
+    CAST({{divide_decimal(t7.refund_amount, NULLIF(t7.eur_rate, 0))}} AS NUMERIC(18,6)) AS refund_amount_eur,
     {{date_diff_days(t4.order_placed_at, t7.requested_at)}} AS days_to_return
   FROM t7
   JOIN t4 ON t4.order_item_id = t7.order_item_id
@@ -106,9 +106,9 @@ SELECT
   COALESCE(t9.items_sold, 0) AS order_items_sold,
   COALESCE(t9.distinct_orders, 0) AS distinct_orders,
   COALESCE(t10.items_returned, 0) AS items_returned,
-  100.0 * COALESCE(t10.items_returned, 0) / NULLIF(COALESCE(t9.items_sold, 0), 0) AS return_rate_pct,
+  {{divide_decimal(100.0 * COALESCE(t10.items_returned, 0), NULLIF(COALESCE(t9.items_sold, 0), 0))}} AS return_rate_pct,
   COALESCE(t10.total_refund_eur, 0) AS total_refund_eur,
-  100.0 * COALESCE(t10.total_refund_eur, 0) / NULLIF(t11.grand_total_refund_eur, 0) AS share_of_instance_refund_pct,
+  {{divide_decimal(100.0 * COALESCE(t10.total_refund_eur, 0), NULLIF(t11.grand_total_refund_eur, 0))}} AS share_of_instance_refund_pct,
   t10.avg_days_to_return AS avg_days_order_to_return
 FROM t5
 LEFT JOIN t9 ON t9.category_id = t5.category_id

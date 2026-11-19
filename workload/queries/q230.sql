@@ -24,9 +24,9 @@ payment_eur AS (
     pb.amount_refunded AS amount_refunded,
     pb.captured_at AS captured_at,
     CASE WHEN pb.currency_code = 'EUR' THEN pb.amount
-         ELSE CAST(pb.amount / er.rate AS NUMERIC(18,6)) END AS payment_amount_eur,
+         ELSE CAST({{divide_decimal(pb.amount, er.rate)}} AS NUMERIC(18,6)) END AS payment_amount_eur,
     CASE WHEN pb.currency_code = 'EUR' THEN pb.amount_refunded
-         ELSE CAST(pb.amount_refunded / er.rate AS NUMERIC(18,6)) END AS amount_refunded_eur
+         ELSE CAST({{divide_decimal(pb.amount_refunded, er.rate)}} AS NUMERIC(18,6)) END AS amount_refunded_eur
   FROM payment_base pb
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -37,7 +37,7 @@ ledger_credit AS (
   SELECT
     le.payment_id AS payment_id,
     SUM(CASE WHEN le.currency_code = 'EUR' THEN le.amount
-             ELSE CAST(le.amount / er.rate AS NUMERIC(18,6)) END) AS ledger_credit_total_eur
+             ELSE CAST({{divide_decimal(le.amount, er.rate)}} AS NUMERIC(18,6)) END) AS ledger_credit_total_eur
   FROM ledger_entries le
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

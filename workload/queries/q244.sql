@@ -19,10 +19,10 @@ select
   coalesce(a.registered_agents, 0) as registered_support_agents,
   t.distinct_agents_handled AS distinct_agents_handled,
   case when t.distinct_agents_handled > 0
-       then CAST(t.tickets_created AS decimal(18,6)) / t.distinct_agents_handled
+       then {{divide_decimal(CAST(t.tickets_created AS decimal(18,6)), t.distinct_agents_handled)}}
        else null
   end as tickets_per_active_agent,
-  100.0 * t.unassigned_count / t.tickets_created as pct_unassigned
+  {{divide_decimal(100.0 * t.unassigned_count, t.tickets_created)}} as pct_unassigned
 from t2025 t
 join tenants ten on ten.id = t.tenant_id
 left join agents a on a.tenant_id = t.tenant_id

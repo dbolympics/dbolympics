@@ -17,7 +17,7 @@ referrer_orders AS (
 SELECT
   bucket_label AS orders_before_first_referral_bucket,
   COUNT(*) AS referrer_count,
-  COUNT(*) * 100.0 / SUM(COUNT(*)) OVER () AS share_of_referrers_pct,
+  {{divide_decimal(COUNT(*) * 100.0, SUM(COUNT(*)) OVER ())}} AS share_of_referrers_pct,
   AVG(CAST(orders_2025 AS NUMERIC(18,6))) AS avg_total_2025_orders
 FROM (
   SELECT

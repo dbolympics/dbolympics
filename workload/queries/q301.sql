@@ -1,8 +1,8 @@
 SELECT
   coalesce(t.industry, '(none)') as industry,
   count(distinct p.tenant_id) as tenant_count,
-  sum(CAST(p.amount / er.rate AS NUMERIC(18,6))) as total_2025_money_collected_eur,
-  sum(CAST(p.amount / er.rate AS NUMERIC(18,6))) * 100.0 / sum(sum(CAST(p.amount / er.rate AS NUMERIC(18,6)))) over () as pct_of_total_revenue
+  sum(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) as total_2025_money_collected_eur,
+  {{divide_decimal(sum(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) * 100.0, sum(sum(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6)))) over ())}} as pct_of_total_revenue
 FROM payments p
 JOIN tenants t ON t.id = p.tenant_id
 JOIN exchange_rates er

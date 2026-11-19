@@ -124,7 +124,7 @@ converted AS (
     CAST(c9.tenant_id AS varchar) || ':' || CAST(c9.user_id AS varchar) AS customer_key,
     CASE
       WHEN c9.discount_currency_code = 'EUR' THEN c9.discount_amount
-      ELSE CAST(c9.discount_amount / NULLIF(er9.rate, 0) AS NUMERIC(18,6))
+      ELSE CAST({{divide_decimal(c9.discount_amount, NULLIF(er9.rate, 0))}} AS NUMERIC(18,6))
     END AS discount_amount_eur
   FROM classified c9
   LEFT JOIN exchange_rates er9
@@ -138,7 +138,7 @@ totals AS (
 SELECT
   conv10.category AS category,
   COUNT(*) AS order_count,
-  100.0 * COUNT(*) / t10.total_orders AS pct_of_bucket,
+  {{divide_decimal(100.0 * COUNT(*), t10.total_orders)}} AS pct_of_bucket,
   COUNT(DISTINCT conv10.customer_key) AS distinct_customers,
   SUM(conv10.discount_amount_eur) AS total_discount_eur
 FROM converted conv10

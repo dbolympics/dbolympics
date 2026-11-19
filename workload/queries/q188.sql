@@ -36,7 +36,7 @@ valued AS (
          cc.quantity AS quantity,
          CASE
            WHEN vc.unit_cost IS NOT NULL AND er.rate IS NOT NULL
-           THEN CAST(ABS(cc.quantity) * vc.unit_cost / er.rate AS NUMERIC(18,6))
+           THEN CAST({{divide_decimal(ABS(cc.quantity) * vc.unit_cost, er.rate)}} AS NUMERIC(18,6))
            ELSE 0
          END AS value_eur
   FROM cycle_counts cc
@@ -64,8 +64,7 @@ SELECT
   COALESCE(a.abs_units_variance, 0) AS abs_units_variance,
   COALESCE(a.net_units_variance, 0) AS net_units_variance,
   COALESCE(a.estimated_value_eur, 0) AS estimated_value_eur,
-  100.0 * COALESCE(a.estimated_value_eur, 0)
-  / NULLIF(SUM(COALESCE(a.estimated_value_eur, 0)) OVER (), 0) AS share_of_total_value_pct
+  {{divide_decimal(100.0 * COALESCE(a.estimated_value_eur, 0), NULLIF(SUM(COALESCE(a.estimated_value_eur, 0)) OVER (), 0))}} AS share_of_total_value_pct
 FROM kinds k
 LEFT JOIN location_counts lc ON lc.location_kind = k.location_kind
 LEFT JOIN agg a ON a.location_kind = k.location_kind

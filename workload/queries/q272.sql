@@ -62,7 +62,7 @@ t6_tickets AS (
     t3.shopper_group AS shopper_group,
     t3.window_label AS window_label,
     COUNT(tk.id) AS ticket_count,
-    AVG({{seconds_between(tk.created_at, tk.first_response_at)}} / 3600.0) AS avg_first_response_hours
+    AVG({{divide_decimal({{seconds_between(tk.created_at, tk.first_response_at)}}, 3600.0)}}) AS avg_first_response_hours
   FROM t3_windows t3
   JOIN tickets tk
     ON tk.tenant_id = t3.tenant_id

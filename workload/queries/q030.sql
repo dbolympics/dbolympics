@@ -4,7 +4,7 @@ SELECT
   AVG(CAST({{date_diff_days(o.placed_at, f.shipped_at)}} AS NUMERIC(18,6))) AS avg_processing_days,
   AVG(CAST({{date_diff_days(f.shipped_at, f.delivered_at)}} AS NUMERIC(18,6))) AS avg_transit_days,
   AVG(CAST({{date_diff_days(o.placed_at, f.delivered_at)}} AS NUMERIC(18,6))) AS avg_total_days,
-  100.0 * SUM(CASE WHEN ({{date_diff_days(o.placed_at, f.delivered_at)}}) <= 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_within_5_days_total
+  {{divide_decimal(100.0 * SUM(CASE WHEN ({{date_diff_days(o.placed_at, f.delivered_at)}}) <= 5 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_within_5_days_total
 FROM (
   SELECT orders.id AS id, orders.placed_at AS placed_at, cd.month_label AS month_label
   FROM orders

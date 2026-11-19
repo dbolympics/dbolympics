@@ -11,7 +11,7 @@ SELECT
        AND pr.is_approved = true
        AND pr.created_at >= DATE '2025-12-01' AND pr.created_at < DATE '2026-01-01'
   ) AS avg_rating,
-  (SELECT 100.0 * SUM(CASE WHEN pr.rating <= 2 THEN 1 ELSE 0 END) / COUNT(*) FROM product_reviews pr
+  (SELECT {{divide_decimal(100.0 * SUM(CASE WHEN pr.rating <= 2 THEN 1 ELSE 0 END), COUNT(*))}} FROM product_reviews pr
      WHERE pr.product_id = p.id AND pr.tenant_id = p.tenant_id
        AND pr.is_approved = true
        AND pr.created_at >= DATE '2025-12-01' AND pr.created_at < DATE '2026-01-01'

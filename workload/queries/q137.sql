@@ -38,7 +38,7 @@ reviews AS (
 sales AS (
   SELECT pv.product_id AS product_id,
          SUM(oi.quantity) AS units_sold,
-         SUM(CAST(oi.line_total / er.rate AS NUMERIC(18,6))) AS revenue_eur
+         SUM(CAST({{divide_decimal(oi.line_total, er.rate)}} AS NUMERIC(18,6))) AS revenue_eur
   FROM order_items oi
   JOIN orders o ON o.id = oi.order_id
   JOIN product_variants pv ON pv.id = oi.product_variant_id
@@ -50,7 +50,7 @@ sales AS (
 SELECT
   b.image_count_bucket AS image_count_bucket,
   COUNT(*) AS product_count,
-  100.0 * SUM(b.has_description) / COUNT(*) AS pct_with_description,
+  {{divide_decimal(100.0 * SUM(b.has_description), COUNT(*))}} AS pct_with_description,
   AVG(CAST(COALESCE(r.review_count,0) AS NUMERIC(18,6))) AS avg_reviews_per_product,
   AVG(r.avg_rating) AS avg_rating,
   AVG(CAST(COALESCE(s.units_sold,0) AS NUMERIC(18,6))) AS avg_units_sold_per_product_last_12mo,

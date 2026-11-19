@@ -25,7 +25,7 @@ m_count_days AS (
   SELECT
     t1.refund_group AS refund_group,
     COUNT(*) AS refund_count,
-    AVG({{seconds_between(t1.created_at, t1.processed_at)}} / 86400.0) AS avg_processing_days
+    AVG({{divide_decimal({{seconds_between(t1.created_at, t1.processed_at)}}, 86400.0)}}) AS avg_processing_days
   FROM refund_base t1
   GROUP BY t1.refund_group
 ),

@@ -1,6 +1,6 @@
 WITH q3_refunds AS (
   SELECT pr.tenant_id AS tenant_id,
-         SUM(CAST(pr.amount / er.rate AS NUMERIC(18,6))) AS refund_amount_eur
+         SUM(CAST({{divide_decimal(pr.amount, er.rate)}} AS NUMERIC(18,6))) AS refund_amount_eur
   FROM payment_refunds pr
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -13,7 +13,7 @@ WITH q3_refunds AS (
 ),
 q3_payments AS (
   SELECT p.tenant_id AS tenant_id,
-         SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) AS captured_amount_eur
+         SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) AS captured_amount_eur
   FROM payments p
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -26,7 +26,7 @@ q3_payments AS (
 ),
 h1_refunds AS (
   SELECT pr.tenant_id AS tenant_id,
-         SUM(CAST(pr.amount / er.rate AS NUMERIC(18,6))) AS refund_amount_eur
+         SUM(CAST({{divide_decimal(pr.amount, er.rate)}} AS NUMERIC(18,6))) AS refund_amount_eur
   FROM payment_refunds pr
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -39,7 +39,7 @@ h1_refunds AS (
 ),
 h1_payments AS (
   SELECT p.tenant_id AS tenant_id,
-         SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) AS captured_amount_eur
+         SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) AS captured_amount_eur
   FROM payments p
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -60,10 +60,10 @@ q3_orders AS (
 SELECT
   t.name AS merchant_name,
   t.industry AS vertical,
-  100.0 * COALESCE(qr.refund_amount_eur,0) / NULLIF(qp.captured_amount_eur,0) AS refund_rate_q3_pct,
-  100.0 * COALESCE(hr.refund_amount_eur,0) / NULLIF(hp.captured_amount_eur,0) AS refund_rate_h1_baseline_pct,
-  (100.0 * COALESCE(qr.refund_amount_eur,0) / NULLIF(qp.captured_amount_eur,0))
-  - (100.0 * COALESCE(hr.refund_amount_eur,0) / NULLIF(hp.captured_amount_eur,0)) AS change_vs_baseline_pp,
+  {{divide_decimal(100.0 * COALESCE(qr.refund_amount_eur,0), NULLIF(qp.captured_amount_eur,0))}} AS refund_rate_q3_pct,
+  {{divide_decimal(100.0 * COALESCE(hr.refund_amount_eur,0), NULLIF(hp.captured_amount_eur,0))}} AS refund_rate_h1_baseline_pct,
+  ({{divide_decimal(100.0 * COALESCE(qr.refund_amount_eur,0), NULLIF(qp.captured_amount_eur,0))}})
+  - ({{divide_decimal(100.0 * COALESCE(hr.refund_amount_eur,0), NULLIF(hp.captured_amount_eur,0))}}) AS change_vs_baseline_pp,
   COALESCE(qr.refund_amount_eur,0) AS refund_amount_q3_eur,
   qo.order_count AS order_count_q3
 FROM q3_orders qo

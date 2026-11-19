@@ -2,10 +2,10 @@ SELECT
   tn.name AS merchant_name,
   q123.tickets_q123 AS tickets_q123,
   q123.avg_agents_q123 AS avg_agents_q1_q3,
-  (q123.tickets_q123 / 3.0) / NULLIF(q123.avg_agents_q123, 0) AS tickets_per_agent_q1_q3,
+  ({{divide_decimal(q123.tickets_q123, 3.0)}}) / NULLIF(q123.avg_agents_q123, 0) AS tickets_per_agent_q1_q3,
   q4.tickets_q4 AS tickets_q4,
   q4.agents_q4 AS agents_q4,
-  CAST(q4.tickets_q4 AS numeric(18,6)) / NULLIF(q4.agents_q4, 0) AS tickets_per_agent_q4
+  {{divide_decimal(CAST(q4.tickets_q4 AS numeric(18,6)), NULLIF(q4.agents_q4, 0))}} AS tickets_per_agent_q4
 FROM tenants tn
 JOIN (
   SELECT qt.tenant_id AS tenant_id,

@@ -23,7 +23,7 @@ LEFT JOIN (
       o.id AS id,
       (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id = o.id) AS item_count,
       CASE WHEN o.currency_code = 'EUR' THEN o.subtotal
-           ELSE o.subtotal / (SELECT er.rate FROM exchange_rates er WHERE er.base_code = 'EUR' AND er.quote_code = o.currency_code AND er.as_of = CAST(o.placed_at AS DATE))
+           ELSE {{divide_decimal(o.subtotal, (SELECT er.rate FROM exchange_rates er WHERE er.base_code = 'EUR' AND er.quote_code = o.currency_code AND er.as_of = CAST(o.placed_at AS DATE)))}}
       END AS eur_subtotal
     FROM orders o
     WHERE o.status <> 'cancelled'
@@ -51,7 +51,7 @@ LEFT JOIN (
       o.id AS id,
       (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id = o.id) AS item_count,
       CASE WHEN o.currency_code = 'EUR' THEN o.subtotal
-           ELSE o.subtotal / (SELECT er.rate FROM exchange_rates er WHERE er.base_code = 'EUR' AND er.quote_code = o.currency_code AND er.as_of = CAST(o.placed_at AS DATE))
+           ELSE {{divide_decimal(o.subtotal, (SELECT er.rate FROM exchange_rates er WHERE er.base_code = 'EUR' AND er.quote_code = o.currency_code AND er.as_of = CAST(o.placed_at AS DATE)))}}
       END AS eur_subtotal
     FROM orders o
     WHERE o.status <> 'cancelled'

@@ -26,7 +26,7 @@ orders_enriched AS (
   SELECT
     ob.tenant_id AS tenant_id, ob.user_id AS user_id, ob.order_id AS order_id, ob.status AS status, ob.placed_at AS placed_at,
     CASE WHEN ob.currency_code = 'EUR' THEN ob.grand_total
-         ELSE CAST(ob.grand_total / er.rate AS NUMERIC(18,6)) END AS grand_total_eur,
+         ELSE CAST({{divide_decimal(ob.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS grand_total_eur,
     CASE WHEN COALESCE(pr.has_refund,0) = 1 OR rf.order_id IS NOT NULL THEN 1 ELSE 0 END AS is_refunded
   FROM orders_base ob
   LEFT JOIN exchange_rates er
@@ -46,7 +46,7 @@ member_orders AS (
 ),
 tx_value AS (
   SELECT lt.tenant_id AS tenant_id, lt.user_id AS user_id, lt.direction AS direction, lt.occurred_at AS occurred_at,
-    lt.points / lp.points_per_currency AS points_currency_amount,
+    {{divide_decimal(lt.points, lp.points_per_currency)}} AS points_currency_amount,
     lp.currency_code AS currency_code
   FROM loyalty_transactions lt
   JOIN loyalty_accounts la ON la.id = lt.loyalty_account_id
@@ -73,7 +73,7 @@ member_full AS (
   SELECT
     mo.tenant_id AS tenant_id, mo.user_id AS user_id,
     mo.lifetime_revenue_eur AS lifetime_revenue_eur, mo.lifetime_orders AS lifetime_orders, mo.refunded_orders AS refunded_orders,
-    {{seconds_between(u.created_at, mo.last_order_at)}} / 86400.0 AS tenure_days,
+    {{divide_decimal({{seconds_between(u.created_at, mo.last_order_at)}}, 86400.0)}} AS tenure_days,
     COALESCE(ml.ever_redeemed,0) AS ever_redeemed,
     COALESCE(ml.earned_eur,0) AS earned_eur,
     COALESCE(ml.redeemed_eur,0) AS redeemed_eur
@@ -95,7 +95,7 @@ SELECT
   AVG(tenure_days) AS avg_tenure_days,
   100.0 * AVG(CAST(ever_redeemed AS NUMERIC(18,6))) AS pct_who_ever_redeemed_points,
   100.0 * SUM(redeemed_eur) / NULLIF(SUM(earned_eur), 0) AS own_redemption_rate_pct,
-  100.0 * SUM(refunded_orders) / NULLIF(SUM(lifetime_orders), 0) AS refund_rate_pct
+  {{divide_decimal(100.0 * SUM(refunded_orders), NULLIF(SUM(lifetime_orders), 0))}} AS refund_rate_pct
 FROM ranked
 GROUP BY CASE WHEN quartile = 1 THEN 'Top 25% by lifetime revenue' ELSE 'Remaining 75%' END
 ORDER BY MIN(quartile) NULLS LAST

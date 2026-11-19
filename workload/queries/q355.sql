@@ -36,7 +36,7 @@ tenant_pct AS (
   SELECT
     tenant_id,
     CASE WHEN active_product_count > 0
-      THEN CAST(bundled_active_product_count AS decimal(18,6)) / active_product_count * 100
+      THEN {{divide_decimal(CAST(bundled_active_product_count AS decimal(18,6)), active_product_count)}} * 100
       ELSE NULL END AS pct_active_products_in_a_bundle
   FROM tenant_bundle_counts
 ),
@@ -54,7 +54,7 @@ SELECT
   industry,
   COUNT(*) AS merchant_count,
   SUM(uses_bundles) AS merchants_using_bundles,
-  CAST(SUM(uses_bundles) AS decimal(18,6)) / COUNT(*) * 100 AS pct_merchants_using_bundles,
+  {{divide_decimal(CAST(SUM(uses_bundles) AS decimal(18,6)), COUNT(*))}} * 100 AS pct_merchants_using_bundles,
   AVG(CASE WHEN uses_bundles = 1 THEN pct_active_products_in_a_bundle END) AS avg_pct_products_bundled_among_users
 FROM tenant_summary
 GROUP BY industry

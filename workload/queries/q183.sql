@@ -12,7 +12,7 @@ opp AS (
     o.created_at AS created_at,
     o.closed_at AS closed_at,
     CASE WHEN o.currency_code = 'EUR' THEN o.amount
-         ELSE o.amount / (
+         ELSE {{divide_decimal(o.amount, (
            SELECT er.rate
            FROM exchange_rates er
            WHERE er.base_code = 'EUR'
@@ -20,7 +20,7 @@ opp AS (
              AND er.as_of <= CAST(o.closed_at AS date)
            ORDER BY er.as_of DESC NULLS FIRST
            {{fetch_first(1)}}
-         )
+         ))}}
     END AS amount_eur
   FROM opportunities o
   JOIN pipelines_filtered pf ON pf.pipeline_id = o.pipeline_id AND pf.tenant_id = o.tenant_id
@@ -52,8 +52,8 @@ SELECT
   COUNT(*) AS opportunities_closed,
   COUNT(*) FILTER (WHERE is_won) AS closed_won,
   COUNT(*) FILTER (WHERE NOT is_won) AS closed_lost,
-  100.0 * COUNT(*) FILTER (WHERE is_won) / COUNT(*) AS win_rate_pct,
-  AVG({{seconds_between(created_at, closed_at)}} / 86400.0) AS avg_days_open
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE is_won), COUNT(*))}} AS win_rate_pct,
+  AVG({{divide_decimal({{seconds_between(created_at, closed_at)}}, 86400.0)}}) AS avg_days_open
 FROM banded
 GROUP BY amount_band_eur, band_sort
 ORDER BY band_sort NULLS LAST

@@ -45,6 +45,7 @@ QUERIES = ROOT / "workload" / "queries"
 EDITS = QUERIES / "edits.json"
 DETERMINISM = QUERIES / "determinism.json"
 NUMERICS = QUERIES / "numerics.json"
+DIVISIONS = QUERIES / "divisions.json"
 
 # keywords that can stand before '(' without being a function name
 NOT_FUNCTIONS = {"AND", "OR", "NOT", "IN", "AS", "SELECT", "WHERE", "ON", "WHEN", "THEN", "ELSE",
@@ -154,6 +155,15 @@ def operand_start(toks, k):
         if p >= 0 and toks[p].kind == "ident" and toks[p].text.upper() not in NOT_FUNCTIONS:
             return dotted_start(toks, p)
         return m
+    if t.kind == "placeholder" and t.text == "}}":  # {{name(...)}}
+        depth, i = 0, k
+        while i >= 0:
+            if toks[i].kind == "placeholder":
+                depth += 1 if toks[i].text == "}}" else -1
+                if depth == 0:
+                    return i
+            i -= 1
+        raise ValueError("}} without {{")
     if t.kw("END"):  # CASE ... END
         depth, i = 0, k
         while i >= 0:
@@ -751,6 +761,87 @@ def rate_conversions(sql):
         n += 1
 
 
+def operand_end(toks, j):
+    """Index of the last token of the operand that starts at toks[j] (the divisor of a `/`)."""
+    t = toks[j]
+    if t.kind == "op" and t.text == "(":
+        return match_paren(toks, j)
+    if t.kind == "placeholder" and t.text == "{{":
+        depth, i = 0, j
+        while i < len(toks):
+            if toks[i].kind == "placeholder":
+                depth += 1 if toks[i].text == "{{" else -1
+                if depth == 0:
+                    return i
+            i += 1
+        raise ValueError("{{ without }}")
+    if t.kw("CASE"):
+        depth, i = 0, j
+        while i < len(toks):
+            if toks[i].kw("CASE"):
+                depth += 1
+            elif toks[i].kw("END"):
+                depth -= 1
+                if depth == 0:
+                    return i
+            i += 1
+        raise ValueError("CASE without END")
+    if t.kind in ("ident", "qident"):
+        while j + 2 < len(toks) and toks[j + 1].text == "." and toks[j + 2].kind in ("ident", "qident"):
+            j += 2
+        lp = next_tok(toks, j)
+        if lp < len(toks) and toks[lp].text == "(" and toks[j].text.upper() not in NOT_FUNCTIONS:
+            e = match_paren(toks, lp)
+            while True:  # f(...) FILTER (...) OVER (...)
+                w = next_tok(toks, e)
+                if w < len(toks) and toks[w].kw("FILTER", "OVER"):
+                    p = next_tok(toks, w)
+                    e = match_paren(toks, p) if toks[p].text == "(" else p  # OVER window_name
+                else:
+                    return e
+        return j
+    if t.kind in ("number", "string"):
+        return j
+    raise ValueError(f"unexpected operand start {t!r}")
+
+
+# the point for a division by the types of its operands (workload/queries/divisions.json)
+DIVIDE_POINTS = {"int": "divide_int", "decimal": "divide_decimal"}
+
+
+def divisions(toks):
+    """Every `/` as (dividend start, `/`, divisor start, divisor end), in the order of the text: the
+    dividend is the multiplicative term the `/` divides (`a * b / c` divides `a * b`), the divisor
+    the operand after it."""
+    out = []
+    for k, t in enumerate(toks):
+        if t.kind == "op" and t.text == "/":
+            j = next_tok(toks, k)
+            out.append((term_start(toks, k), k, j, operand_end(toks, j)))
+    return out
+
+
+def divide_points(sql, kinds):
+    """The i-th `a / b` to `{{divide_<kind>(a, b)}}` by kinds[i], the types of its operands
+    (tools/division_types.py): int (two integers) or decimal (a decimal and a decimal or an
+    integer); None (a double, an interval) stays `a / b`. The last division first, so that `a / b / c`
+    divides `a / b`. The standard divides; a system overrides what it divides otherwise
+    (docs/DIALECTS.md)."""
+    if len(divisions(tokenize(sql))) != len(kinds):
+        raise ValueError(f"{len(kinds)} division types for {len(divisions(tokenize(sql)))} divisions: "
+                         "run tools/division_types.py")
+    n = 0
+    for i in range(len(kinds) - 1, -1, -1):
+        if kinds[i] is None:
+            continue
+        toks = tokenize(sql)
+        s, k, j, e = divisions(toks)[i]
+        a, b = text(toks[s:prev_tok(toks, k) + 1]), text(toks[j:e + 1])
+        sql = text(toks[:s]) + "{{" + DIVIDE_POINTS[kinds[i]] + "(" + a + ", " + b + ")}}" + text(toks[e + 1:])
+        n += 1
+    return sql, n
+
+
 def translate(sql, edits=(), determinism=(), numerics=()):
     """Canonical text and the steps applied."""
     steps = []
@@ -808,11 +899,17 @@ def main():
     edits = json.load(open(EDITS)) if EDITS.exists() else {}
     det = json.load(open(DETERMINISM)) if DETERMINISM.exists() else {}
     num = json.load(open(NUMERICS)) if NUMERICS.exists() else {}
+    div = json.load(open(DIVISIONS)) if DIVISIONS.exists() else {}
     QUERIES.mkdir(parents=True, exist_ok=True)
     derivations = {}
     for e in entries:
         sql, steps = translate(e["sql"], edits.get(e["id"], ()),
                                det.get(e["id"], ()), num.get(e["id"], ()))
+        sql, n = divide_points(sql, div.get(e["id"], []))
+        if n:
+            steps.append({"kind": "dialect", "step": "divide", "count": n,
+                          "note": "a division of integers or decimals, by the types of its operands "
+                                  "(divisions.json): the standard's a / b, which a system may divide its own way"})
         (QUERIES / f"{e['id']}.sql").write_text(sql)
         derivations[e["id"]] = steps
     (QUERIES / "derivations.json").write_text(json.dumps(derivations, indent=1) + "\n")

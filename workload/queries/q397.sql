@@ -1,7 +1,7 @@
 SELECT t.industry AS industry,
   COUNT(*) AS total_routine_adjustments_2025,
   COUNT(DISTINCT sa.variant_id) AS distinct_variants_with_adjustment,
-  CAST(COUNT(*) AS numeric(18,6)) / NULLIF(COUNT(DISTINCT sa.variant_id), 0) AS adjustments_per_variant,
+  {{divide_decimal(CAST(COUNT(*) AS numeric(18,6)), NULLIF(COUNT(DISTINCT sa.variant_id), 0))}} AS adjustments_per_variant,
   COUNT(DISTINCT t.id) AS distinct_tenants_in_industry
 FROM stock_adjustments sa
 JOIN stock_locations sl ON sl.id = sa.stock_location_id

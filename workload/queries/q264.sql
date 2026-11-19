@@ -1,7 +1,7 @@
 WITH order_amounts AS (
   SELECT o.id AS id, o.placed_at AS placed_at, o.currency_code AS currency_code, o.grand_total AS grand_total,
     CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-         ELSE CAST(o.grand_total / er.rate AS NUMERIC(18,6)) END AS grand_total_eur
+         ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS grand_total_eur
   FROM orders o
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -16,7 +16,7 @@ SELECT
   {{year_month(oa.placed_at)}} AS month,
   COUNT(*) AS orders_count,
   COUNT(*) FILTER (WHERE a.order_id IS NOT NULL) AS attributed_orders_count,
-  100.0 * COUNT(*) FILTER (WHERE a.order_id IS NOT NULL) / COUNT(*) AS attribution_coverage_pct,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE a.order_id IS NOT NULL), COUNT(*))}} AS attribution_coverage_pct,
   SUM(oa.grand_total_eur) AS total_revenue_eur,
   SUM(oa.grand_total_eur) FILTER (WHERE a.order_id IS NOT NULL) AS attributed_revenue_eur
 FROM order_amounts oa

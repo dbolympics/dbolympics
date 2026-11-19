@@ -3,8 +3,8 @@ WITH t0 AS (
     o.id AS order_id,
     t.industry AS industry,
     CASE WHEN o.discount_total > 0 THEN 'discounted' ELSE 'full price' END AS order_group,
-    CAST(o.subtotal / er.rate AS NUMERIC(18,6)) AS subtotal_eur,
-    CAST(o.discount_total / er.rate AS NUMERIC(18,6)) AS discount_eur
+    CAST({{divide_decimal(o.subtotal, er.rate)}} AS NUMERIC(18,6)) AS subtotal_eur,
+    CAST({{divide_decimal(o.discount_total, er.rate)}} AS NUMERIC(18,6)) AS discount_eur
   FROM orders o
   JOIN tenants t ON t.id = o.tenant_id
   JOIN exchange_rates er
@@ -17,7 +17,7 @@ WITH t0 AS (
 t1 AS (
   SELECT
     orr.order_id AS order_id,
-    SUM(CAST(orr.refund_total / er2.rate AS NUMERIC(18,6))) AS refund_eur
+    SUM(CAST({{divide_decimal(orr.refund_total, er2.rate)}} AS NUMERIC(18,6))) AS refund_eur
   FROM order_returns orr
   JOIN exchange_rates er2
     ON er2.base_code = 'EUR'
@@ -58,9 +58,9 @@ SELECT
   COALESCE(t4.refund_amount_eur_raw,0) AS refund_amount_eur,
   COALESCE(t3.gmv_eur_raw,0) AS gmv_eur,
   CASE WHEN COALESCE(t3.gmv_eur_raw,0) = 0 THEN NULL
-  ELSE (COALESCE(t3.discount_given_eur_raw,0) + COALESCE(t4.refund_amount_eur_raw,0)) / t3.gmv_eur_raw * 100 END AS net_leakage_pct,
+  ELSE {{divide_decimal((COALESCE(t3.discount_given_eur_raw,0) + COALESCE(t4.refund_amount_eur_raw,0)), t3.gmv_eur_raw)}} * 100 END AS net_leakage_pct,
   CASE WHEN COALESCE(t3.orders_count,0) = 0 THEN NULL
-  ELSE CAST(COALESCE(t5.orders_with_return,0) AS numeric(18,6)) / t3.orders_count * 100 END AS refund_rate_pct
+  ELSE {{divide_decimal(CAST(COALESCE(t5.orders_with_return,0) AS numeric(18,6)), t3.orders_count)}} * 100 END AS refund_rate_pct
 FROM t2
 LEFT JOIN t3 ON t3.industry = t2.industry AND t3.order_group = t2.order_group
 LEFT JOIN t4 ON t4.industry = t2.industry AND t4.order_group = t2.order_group

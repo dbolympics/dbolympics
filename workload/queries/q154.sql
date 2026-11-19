@@ -66,7 +66,7 @@ orphan_eur AS (
   select
     oo.tenant_id AS tenant_id,
     oo.order_id AS order_id,
-    CAST(oo.discount_amount / er.rate AS NUMERIC(18,6)) as discount_amount_eur
+    CAST({{divide_decimal(oo.discount_amount, er.rate)}} AS NUMERIC(18,6)) as discount_amount_eur
   from orphan_only oo
   join exchange_rates er
     on er.base_code = 'EUR'
@@ -108,11 +108,11 @@ tenant_eur AS (
 select
   t.name as tenant_name,
   tor.orphan_order_count AS orphan_order_count,
-  100.0 * tor.orphan_order_count / tt.total_discount_orders as orphan_pct_of_discount_orders,
+  {{divide_decimal(100.0 * tor.orphan_order_count, tt.total_discount_orders)}} as orphan_pct_of_discount_orders,
   tor.orphan_customers as distinct_orphan_customers,
   tmc.max_orphan_per_customer AS max_orphan_per_customer,
-  100.0 * tc.lapsed_customers / nullif(tc.total_customers,0) as pct_lapsed_subscriber,
-  100.0 * tc.no_sub_customers / nullif(tc.total_customers,0) as pct_no_subscription_record,
+  {{divide_decimal(100.0 * tc.lapsed_customers, nullif(tc.total_customers,0))}} as pct_lapsed_subscriber,
+  {{divide_decimal(100.0 * tc.no_sub_customers, nullif(tc.total_customers,0))}} as pct_no_subscription_record,
   te.total_discount_eur as total_discount_amount_eur
 from tenant_orphan tor
 join tenants t on t.id = tor.tenant_id

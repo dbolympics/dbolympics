@@ -56,7 +56,7 @@ order_value_eur AS (
         ao.order_id AS order_id,
         ao.tenant_id AS tenant_id,
         ao.user_id AS user_id,
-        CAST(ao.grand_total / er.rate AS NUMERIC(18,6)) AS order_value_eur
+        CAST({{divide_decimal(ao.grand_total, er.rate)}} AS NUMERIC(18,6)) AS order_value_eur
     FROM all_orders_for_users ao
     LEFT JOIN exchange_rates er
         ON er.base_code = 'EUR'

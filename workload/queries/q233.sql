@@ -24,9 +24,8 @@ agg AS (
     tenant_name,
     period,
     COUNT(*) AS shipments_shipped,
-    AVG({{seconds_between(shipped_at, delivered_at)}} / 86400.0) FILTER (WHERE delivered_at IS NOT NULL) AS avg_transit_days_raw,
-    100.0 * COUNT(*) FILTER (WHERE delivered_at IS NOT NULL AND delivered_at <= shipped_at + INTERVAL '3 days')
-      / NULLIF(COUNT(*) FILTER (WHERE delivered_at IS NOT NULL), 0) AS pct_within_3_days_raw
+    AVG({{divide_decimal({{seconds_between(shipped_at, delivered_at)}}, 86400.0)}}) FILTER (WHERE delivered_at IS NOT NULL) AS avg_transit_days_raw,
+    {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE delivered_at IS NOT NULL AND delivered_at <= shipped_at + INTERVAL '3 days'), NULLIF(COUNT(*) FILTER (WHERE delivered_at IS NOT NULL), 0))}} AS pct_within_3_days_raw
   FROM base
   WHERE period IS NOT NULL
   GROUP BY warehouse_id, warehouse_name, tenant_name, period
@@ -49,7 +48,7 @@ SELECT
   a.shipments_shipped AS shipments_shipped,
   a.avg_transit_days_raw AS avg_transit_days,
   a.pct_within_3_days_raw AS pct_within_3_days,
-  100.0 * a.shipments_shipped / pt.total_shipments AS share_of_period_shipments_pct
+  {{divide_decimal(100.0 * a.shipments_shipped, pt.total_shipments)}} AS share_of_period_shipments_pct
 FROM agg a
 JOIN period_totals pt ON pt.period = a.period
 JOIN qualified q ON q.warehouse_id = a.warehouse_id

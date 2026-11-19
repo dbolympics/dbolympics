@@ -2,11 +2,11 @@ SELECT
   u.full_name AS rep_name,
   t.name AS merchant,
   COUNT(*) AS opportunities_closed,
-  100.0 * SUM(CASE WHEN sub.is_won THEN 1 ELSE 0 END) / COUNT(*) AS count_win_rate_pct,
+  {{divide_decimal(100.0 * SUM(CASE WHEN sub.is_won THEN 1 ELSE 0 END), COUNT(*))}} AS count_win_rate_pct,
   SUM(CASE WHEN sub.is_won THEN sub.amount_eur ELSE 0 END) AS total_amount_won_eur,
   SUM(CASE WHEN NOT sub.is_won THEN sub.amount_eur ELSE 0 END) AS total_amount_lost_eur,
   100.0 * SUM(CASE WHEN sub.is_won THEN sub.amount_eur ELSE 0 END) / NULLIF(SUM(sub.amount_eur), 0) AS dollar_weighted_win_rate_pct,
-  (100.0 * SUM(CASE WHEN sub.is_won THEN 1 ELSE 0 END) / COUNT(*))
+  ({{divide_decimal(100.0 * SUM(CASE WHEN sub.is_won THEN 1 ELSE 0 END), COUNT(*))}})
   - (100.0 * SUM(CASE WHEN sub.is_won THEN sub.amount_eur ELSE 0 END) / NULLIF(SUM(sub.amount_eur), 0)) AS gap_pct_points
 FROM (
   SELECT
@@ -15,7 +15,7 @@ FROM (
     o.is_won AS is_won,
     CASE
       WHEN o.currency_code = 'EUR' THEN o.amount
-      ELSE o.amount / (
+      ELSE {{divide_decimal(o.amount, (
         SELECT er.rate
         FROM exchange_rates er
         WHERE er.base_code = 'EUR'
@@ -23,7 +23,7 @@ FROM (
           AND er.as_of <= CAST(o.closed_at AS DATE)
         ORDER BY er.as_of DESC NULLS FIRST
         {{fetch_first(1)}}
-      )
+      ))}}
     END AS amount_eur
   FROM opportunities o
   JOIN tenants t2 ON t2.id = o.tenant_id

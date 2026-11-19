@@ -32,9 +32,9 @@ SELECT
   month_label,
   staff_users,
   staff_mfa_users AS staff_users_with_mfa,
-  100.0 * staff_mfa_users / NULLIF(staff_users,0) AS staff_mfa_rate_pct,
+  {{divide_decimal(100.0 * staff_mfa_users, NULLIF(staff_users,0))}} AS staff_mfa_rate_pct,
   shopper_users,
   shopper_mfa_users AS shopper_users_with_mfa,
-  100.0 * shopper_mfa_users / NULLIF(shopper_users,0) AS shopper_mfa_rate_pct
+  {{divide_decimal(100.0 * shopper_mfa_users, NULLIF(shopper_users,0))}} AS shopper_mfa_rate_pct
 FROM monthly_summary
 ORDER BY month_label NULLS LAST

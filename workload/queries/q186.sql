@@ -30,7 +30,7 @@ cc_valued AS (
     cc.lot_id AS lot_id,
     CASE WHEN cv.currency_code = 'EUR' THEN cv.unit_cost
          WHEN cv.unit_cost IS NULL THEN NULL
-         ELSE CAST(cv.unit_cost / er.rate AS NUMERIC(18,6))
+         ELSE CAST({{divide_decimal(cv.unit_cost, er.rate)}} AS NUMERIC(18,6))
     END AS unit_cost_eur
   FROM cycle_counts cc
   LEFT JOIN cost_per_variant cv ON cv.variant_id = cc.variant_id
@@ -46,7 +46,7 @@ category_cc AS (
     SUM(ABS(quantity)) AS abs_units_variance,
     SUM(quantity) AS net_units_variance,
     SUM(ABS(quantity) * COALESCE(unit_cost_eur, 0)) AS estimated_value_eur,
-    100.0 * SUM(CASE WHEN lot_id IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*) AS pct_lot_or_serial
+    {{divide_decimal(100.0 * SUM(CASE WHEN lot_id IS NOT NULL THEN 1 ELSE 0 END), COUNT(*))}} AS pct_lot_or_serial
   FROM cc_valued
   GROUP BY category_name
 ),
@@ -71,9 +71,9 @@ SELECT
   cc.net_units_variance AS net_units_variance,
   cc.estimated_value_eur AS estimated_value_eur,
   cc.pct_lot_or_serial AS pct_events_lot_or_serial_tracked,
-  COALESCE(s.total_units_sold, 0) / 12.0 AS avg_monthly_units_sold,
+  {{divide_decimal(COALESCE(s.total_units_sold, 0), 12.0)}} AS avg_monthly_units_sold,
   CASE WHEN COALESCE(s.total_units_sold, 0) = 0 THEN NULL
-       ELSE CAST(cc.abs_units_variance AS NUMERIC(18,6)) * 1000 / COALESCE(s.total_units_sold, 0)
+       ELSE {{divide_decimal(CAST(cc.abs_units_variance AS NUMERIC(18,6)) * 1000, COALESCE(s.total_units_sold, 0))}}
   END AS variance_per_1000_units_sold
 FROM category_cc cc
 LEFT JOIN sales s ON s.category_name = cc.category_name

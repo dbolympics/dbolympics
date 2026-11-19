@@ -33,8 +33,8 @@ dec31 AS (
 )
 SELECT t.name AS tenant_name,
   la.total_stock_locations AS total_stock_locations,
-  100.0 * la.bulk_count / la.total_stock_locations AS pct_locations_kind_bulk,
-  100.0 * la.pick_count / la.total_stock_locations AS pct_locations_kind_pick,
+  {{divide_decimal(100.0 * la.bulk_count, la.total_stock_locations)}} AS pct_locations_kind_bulk,
+  {{divide_decimal(100.0 * la.pick_count, la.total_stock_locations)}} AS pct_locations_kind_pick,
   coalesce(adj.routine_stock_adjustments_2025, 0) AS routine_stock_adjustments_2025,
   coalesce(adj.distinct_variants_with_routine_adjustment, 0) AS distinct_variants_with_routine_adjustment,
   coalesce(dec31.dec31_correction_abs_units, 0) AS dec31_correction_abs_units,

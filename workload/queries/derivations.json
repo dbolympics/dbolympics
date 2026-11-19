@@ -45,6 +45,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q002": [
@@ -71,6 +77,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q003": [
@@ -91,6 +103,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q004": [
@@ -117,6 +135,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q005": [
@@ -149,6 +173,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q006": [
@@ -181,6 +211,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q007": [
@@ -217,6 +253,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q008": [
@@ -248,6 +290,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q009": [
@@ -285,6 +333,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q010": [
@@ -305,6 +359,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q011": [
@@ -336,6 +396,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q012": [
@@ -368,6 +434,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q013": [
@@ -394,6 +466,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q014": [
@@ -418,6 +496,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q015": [
@@ -450,6 +534,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q016": [
@@ -476,6 +566,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q017": [
@@ -501,6 +597,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 7,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q018": [
@@ -543,6 +645,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 7,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q019": [
@@ -592,6 +700,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q020": [
@@ -618,6 +732,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q021": [
@@ -644,6 +764,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q022": [
@@ -664,6 +790,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q023": [
@@ -711,6 +843,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 7,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q024": [
@@ -758,6 +896,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q025": [
@@ -793,6 +937,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q026": [
@@ -845,6 +995,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q027": [
@@ -881,6 +1037,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q028": [
@@ -917,6 +1079,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q029": [
@@ -999,6 +1167,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q031": [
@@ -1040,6 +1214,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q032": [
@@ -1082,6 +1262,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q033": [
@@ -1114,6 +1300,12 @@
    "step": "null_order",
    "count": 5,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q034": [
@@ -1172,6 +1364,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q035": [
@@ -1208,6 +1406,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q036": [
@@ -1244,6 +1448,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q037": [
@@ -1296,6 +1506,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q038": [
@@ -1342,6 +1558,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q039": [
@@ -1377,6 +1599,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q040": [
@@ -1423,6 +1651,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q041": [
@@ -1471,6 +1705,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q042": [
@@ -1529,6 +1769,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q043": [
@@ -1570,6 +1816,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q044": [
@@ -1639,6 +1891,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q045": [
@@ -1673,6 +1931,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q046": [
@@ -1737,6 +2001,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q047": [
@@ -1767,6 +2037,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q048": [
@@ -1819,6 +2095,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q049": [
@@ -1849,6 +2131,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q050": [
@@ -1875,6 +2163,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q051": [
@@ -1916,6 +2210,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q052": [
@@ -1946,6 +2246,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q053": [
@@ -1965,6 +2271,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q054": [
@@ -2001,6 +2313,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q055": [
@@ -2021,6 +2339,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q056": [
@@ -2041,6 +2365,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q057": [
@@ -2066,6 +2396,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q058": [
@@ -2091,6 +2427,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q059": [
@@ -2122,6 +2464,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q060": [
@@ -2165,6 +2513,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q061": [
@@ -2209,6 +2563,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q063": [
@@ -2256,6 +2616,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q064": [
@@ -2315,6 +2681,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 8,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q065": [
@@ -2351,6 +2723,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q066": [
@@ -2403,6 +2781,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q067": [
@@ -2439,6 +2823,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q068": [
@@ -2475,6 +2865,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q069": [
@@ -2500,6 +2896,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q070": [
@@ -2520,6 +2922,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q071": [
@@ -2539,6 +2947,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q072": [
@@ -2573,6 +2987,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q074": [
@@ -2603,6 +3023,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q075": [
@@ -2623,6 +3049,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q076": [
@@ -2653,6 +3085,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q077": [
@@ -2725,6 +3163,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 6
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q078": [
@@ -2776,6 +3220,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q079": [
@@ -2807,6 +3257,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q080": [
@@ -2865,6 +3321,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q081": [
@@ -2896,6 +3358,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q082": [
@@ -2938,6 +3406,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q083": [
@@ -2969,6 +3443,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q084": [
@@ -3022,6 +3502,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q085": [
@@ -3042,6 +3528,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q086": [
@@ -3078,6 +3570,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q087": [
@@ -3119,6 +3617,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q088": [
@@ -3179,6 +3683,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q089": [
@@ -3228,6 +3738,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q090": [
@@ -3269,6 +3785,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q091": [
@@ -3301,6 +3823,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q092": [
@@ -3336,6 +3864,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 7,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q093": [
@@ -3368,6 +3902,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q094": [
@@ -3394,6 +3934,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q095": [
@@ -3442,6 +3988,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q096": [
@@ -3462,6 +4014,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q097": [
@@ -3505,6 +4063,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q098": [
@@ -3547,6 +4111,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q099": [
@@ -3561,6 +4131,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q100": [
@@ -3587,6 +4163,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q101": [
@@ -3623,6 +4205,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q102": [
@@ -3679,6 +4267,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q104": [
@@ -3705,6 +4299,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q105": [
@@ -3741,6 +4341,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q106": [
@@ -3803,6 +4409,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q109": [
@@ -3822,6 +4434,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q110": [
@@ -3841,6 +4459,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q111": [
@@ -3855,6 +4479,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q112": [
@@ -3901,6 +4531,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q113": [
@@ -3927,6 +4563,12 @@
    "step": "null_order",
    "count": 5,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q114": [
@@ -3978,6 +4620,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q115": [
@@ -4017,6 +4665,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q117": [
@@ -4205,6 +4859,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q125": [
@@ -4247,6 +4907,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q126": [
@@ -4282,6 +4948,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q127": [
@@ -4317,6 +4989,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q128": [
@@ -4348,6 +5026,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q129": [
@@ -4374,6 +5058,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q130": [
@@ -4421,6 +5111,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q131": [
@@ -4447,6 +5143,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q132": [
@@ -4477,6 +5179,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q133": [
@@ -4502,6 +5210,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 7,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q134": [
@@ -4532,6 +5246,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q135": [
@@ -4552,6 +5272,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q136": [
@@ -4611,6 +5337,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q137": [
@@ -4648,6 +5380,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q138": [
@@ -4674,6 +5412,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q139": [
@@ -4711,6 +5455,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q140": [
@@ -4747,6 +5497,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q141": [
@@ -4778,6 +5534,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q142": [
@@ -4816,6 +5578,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q143": [
@@ -4857,6 +5625,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q144": [
@@ -4905,6 +5679,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q145": [
@@ -4954,6 +5734,12 @@
    "step": "null_order",
    "count": 5,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q146": [
@@ -5008,6 +5794,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q147": [
@@ -5063,6 +5855,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q148": [
@@ -5100,6 +5898,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q149": [
@@ -5158,6 +5962,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q150": [
@@ -5200,6 +6010,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q151": [
@@ -5226,6 +6042,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 7,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q152": [
@@ -5268,6 +6090,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q153": [
@@ -5310,6 +6138,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q154": [
@@ -5348,6 +6182,12 @@
    "step": "null_order",
    "count": 5,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q155": [
@@ -5385,6 +6225,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q156": [
@@ -5427,6 +6273,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 7,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q157": [
@@ -5464,6 +6316,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q158": [
@@ -5501,6 +6359,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 10,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q159": [
@@ -5544,6 +6408,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q160": [
@@ -5598,6 +6468,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q161": [
@@ -5640,6 +6516,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q162": [
@@ -5671,6 +6553,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q163": [
@@ -5702,6 +6590,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q164": [
@@ -5727,6 +6621,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q165": [
@@ -5775,6 +6675,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q166": [
@@ -5801,6 +6707,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q167": [
@@ -5821,6 +6733,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q168": [
@@ -5852,6 +6770,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q169": [
@@ -5872,6 +6796,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q170": [
@@ -5910,6 +6840,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q171": [
@@ -5936,6 +6872,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q172": [
@@ -6004,6 +6946,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q174": [
@@ -6055,6 +7003,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q175": [
@@ -6098,6 +7052,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q176": [
@@ -6160,6 +7120,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q177": [
@@ -6201,6 +7167,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q178": [
@@ -6247,6 +7219,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q179": [
@@ -6278,6 +7256,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q180": [
@@ -6304,6 +7288,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q181": [
@@ -6356,6 +7346,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q182": [
@@ -6403,6 +7399,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q183": [
@@ -6449,6 +7451,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q184": [
@@ -6491,6 +7499,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q185": [
@@ -6527,6 +7541,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q186": [
@@ -6564,6 +7584,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q187": [
@@ -6589,6 +7615,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q188": [
@@ -6621,6 +7653,12 @@
    "step": "null_order",
    "count": 5,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q189": [
@@ -6652,6 +7690,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q190": [
@@ -6699,6 +7743,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q191": [
@@ -6735,6 +7785,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q192": [
@@ -6815,6 +7871,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q195": [
@@ -6845,6 +7907,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q196": [
@@ -6881,6 +7949,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q197": [
@@ -6924,6 +7998,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q198": [
@@ -6973,6 +8053,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q199": [
@@ -7020,6 +8106,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q200": [
@@ -7072,6 +8164,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q201": [
@@ -7114,6 +8212,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q202": [
@@ -7170,6 +8274,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q204": [
@@ -7206,6 +8316,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q205": [
@@ -7247,6 +8363,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q206": [
@@ -7298,6 +8420,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q207": [
@@ -7323,6 +8451,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q208": [
@@ -7354,6 +8488,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q209": [
@@ -7374,6 +8514,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 8,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q210": [
@@ -7422,6 +8568,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q211": [
@@ -7459,6 +8611,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 8,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q212": [
@@ -7495,6 +8653,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q213": [
@@ -7543,6 +8707,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q214": [
@@ -7575,6 +8745,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q215": [
@@ -7595,6 +8771,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q216": [
@@ -7621,6 +8803,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q217": [
@@ -7653,6 +8841,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 8,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q218": [
@@ -7700,6 +8894,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 8,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q219": [
@@ -7720,6 +8920,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q220": [
@@ -7780,6 +8986,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 3
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q221": [
@@ -7817,6 +9029,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q222": [
@@ -7859,6 +9077,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q223": [
@@ -7916,6 +9140,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q225": [
@@ -7957,6 +9187,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q226": [
@@ -7988,6 +9224,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q227": [
@@ -8018,6 +9260,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q228": [
@@ -8055,6 +9303,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q229": [
@@ -8086,6 +9340,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q230": [
@@ -8112,6 +9372,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q231": [
@@ -8137,6 +9403,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q232": [
@@ -8173,6 +9445,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q233": [
@@ -8216,6 +9494,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q234": [
@@ -8247,6 +9531,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q235": [
@@ -8276,6 +9566,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q236": [
@@ -8295,6 +9591,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q237": [
@@ -8338,6 +9640,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q238": [
@@ -8368,6 +9676,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q239": [
@@ -8399,6 +9713,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q240": [
@@ -8441,6 +9761,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q241": [
@@ -8466,6 +9792,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q242": [
@@ -8503,6 +9835,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q243": [
@@ -8534,6 +9872,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q244": [
@@ -8581,6 +9925,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q245": [
@@ -8611,6 +9961,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q246": [
@@ -8658,6 +10014,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q247": [
@@ -8699,6 +10061,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q248": [
@@ -8757,6 +10125,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q249": [
@@ -8776,6 +10150,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q250": [
@@ -8817,6 +10197,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q251": [
@@ -8860,6 +10246,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q252": [
@@ -8891,6 +10283,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 9,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q253": [
@@ -8932,6 +10330,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q254": [
@@ -8964,6 +10368,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q255": [
@@ -9006,6 +10416,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q256": [
@@ -9031,6 +10447,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q257": [
@@ -9067,6 +10489,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q258": [
@@ -9110,6 +10538,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q259": [
@@ -9136,6 +10570,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q260": [
@@ -9173,6 +10613,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q261": [
@@ -9205,6 +10651,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q262": [
@@ -9225,6 +10677,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q263": [
@@ -9239,6 +10697,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q264": [
@@ -9270,6 +10734,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q265": [
@@ -9296,6 +10766,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q266": [
@@ -9322,6 +10798,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q267": [
@@ -9348,6 +10830,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q268": [
@@ -9384,6 +10872,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q269": [
@@ -9449,6 +10943,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 8,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q270": [
@@ -9490,6 +10990,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q271": [
@@ -9521,6 +11027,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q272": [
@@ -9563,6 +11075,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q273": [
@@ -9630,6 +11148,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q275": [
@@ -9689,6 +11213,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 2
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q276": [
@@ -9709,6 +11239,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q277": [
@@ -9729,6 +11265,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q278": [
@@ -9754,6 +11296,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q279": [
@@ -9786,6 +11334,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q280": [
@@ -9821,6 +11375,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q281": [
@@ -9840,6 +11400,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q282": [
@@ -9885,6 +11451,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q284": [
@@ -9911,6 +11483,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q285": [
@@ -9985,6 +11563,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q288": [
@@ -10033,6 +11617,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q289": [
@@ -10053,6 +11643,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q290": [
@@ -10089,6 +11685,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q291": [
@@ -10121,6 +11723,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q292": [
@@ -10162,6 +11770,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q293": [
@@ -10198,6 +11812,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q294": [
@@ -10217,6 +11837,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q295": [
@@ -10243,6 +11869,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q296": [
@@ -10263,6 +11895,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q297": [
@@ -10283,6 +11921,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q298": [
@@ -10302,6 +11946,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q299": [
@@ -10328,6 +11978,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q300": [
@@ -10382,6 +12038,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q301": [
@@ -10407,6 +12069,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q302": [
@@ -10445,6 +12113,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 9,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q303": [
@@ -10523,6 +12197,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q305": [
@@ -10604,6 +12284,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q308": [
@@ -10630,6 +12316,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q309": [
@@ -10656,6 +12348,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q310": [
@@ -10688,6 +12386,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q311": [
@@ -10708,6 +12412,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q312": [
@@ -10728,6 +12438,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q313": [
@@ -10778,6 +12494,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q315": [
@@ -10792,6 +12514,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q316": [
@@ -10814,6 +12542,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q318": [
@@ -10834,6 +12568,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q319": [
@@ -10888,6 +12628,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q321": [
@@ -10902,6 +12648,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q322": [
@@ -10957,6 +12709,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q324": [
@@ -10985,6 +12743,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q326": [
@@ -11010,6 +12774,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q327": [
@@ -11070,6 +12840,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q330": [
@@ -11108,6 +12884,12 @@
    "step": "null_order",
    "count": 5,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q332": [
@@ -11162,6 +12944,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q335": [
@@ -11200,6 +12988,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q336": [
@@ -11225,6 +13019,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q337": [
@@ -11264,6 +13064,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q339": [
@@ -11283,6 +13089,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q340": [
@@ -11315,6 +13127,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q342": [
@@ -11340,6 +13158,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q343": [
@@ -11365,6 +13189,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q344": [
@@ -11391,6 +13221,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q345": [
@@ -11410,6 +13246,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q346": [
@@ -11429,6 +13271,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q347": [
@@ -11484,6 +13332,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q348": [
@@ -11537,6 +13391,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q349": [
@@ -11585,6 +13445,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q350": [
@@ -11639,6 +13505,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q351": [
@@ -11665,6 +13537,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q352": [
@@ -11718,6 +13596,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q353": [
@@ -11744,6 +13628,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q354": [
@@ -11775,6 +13665,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q355": [
@@ -11806,6 +13702,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q356": [
@@ -11849,6 +13751,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q358": [
@@ -11886,6 +13794,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q359": [
@@ -11929,6 +13843,12 @@
    "step": "null_order",
    "count": 6,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q360": [
@@ -11967,6 +13887,12 @@
    "step": "null_order",
    "count": 6,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q361": [
@@ -12010,6 +13936,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q362": [
@@ -12042,6 +13974,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q363": [
@@ -12068,6 +14006,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q364": [
@@ -12100,6 +14044,12 @@
    "step": "null_order",
    "count": 5,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q365": [
@@ -12148,6 +14098,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q366": [
@@ -12162,6 +14118,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q367": [
@@ -12198,6 +14160,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q368": [
@@ -12239,6 +14207,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q369": [
@@ -12271,6 +14245,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q370": [
@@ -12302,6 +14282,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q371": [
@@ -12334,6 +14320,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q372": [
@@ -12348,6 +14340,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q373": [
@@ -12380,6 +14378,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q374": [
@@ -12400,6 +14404,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q375": [
@@ -12443,6 +14453,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q376": [
@@ -12474,6 +14490,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q377": [
@@ -12494,6 +14516,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 6,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q378": [
@@ -12548,6 +14576,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q379": [
@@ -12579,6 +14613,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q380": [
@@ -12611,6 +14651,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q381": [
@@ -12641,6 +14687,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q382": [
@@ -12690,6 +14742,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q383": [
@@ -12742,6 +14800,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q384": [
@@ -12833,6 +14897,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q387": [
@@ -12874,6 +14944,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q388": [
@@ -12909,6 +14985,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q389": [
@@ -12944,6 +15026,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q390": [
@@ -12980,6 +15068,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q391": [
@@ -13016,6 +15110,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q392": [
@@ -13047,6 +15147,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q393": [
@@ -13082,6 +15188,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q394": [
@@ -13123,6 +15235,12 @@
    "kind": "dialect",
    "step": "fetch_first",
    "count": 1
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q395": [
@@ -13156,6 +15274,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q397": [
@@ -13181,6 +15305,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 1,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q398": [
@@ -13223,6 +15353,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 5,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q399": [
@@ -13294,6 +15430,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 4,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q401": [
@@ -13331,6 +15473,12 @@
    "step": "null_order",
    "count": 4,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q402": [
@@ -13361,6 +15509,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q403": [
@@ -13424,6 +15578,12 @@
    "step": "null_order",
    "count": 3,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 3,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q405": [
@@ -13465,6 +15625,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q406": [
@@ -13524,6 +15690,12 @@
    "step": "null_order",
    "count": 1,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q408": [
@@ -13555,6 +15727,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ],
  "q409": [
@@ -13586,6 +15764,12 @@
    "step": "null_order",
    "count": 2,
    "note": "the standard leaves the place of NULLs in a sort to the implementation: NULLS LAST ascending, NULLS FIRST descending, as in the reference results"
+  },
+  {
+   "kind": "dialect",
+   "step": "divide",
+   "count": 2,
+   "note": "a division of integers or decimals, by the types of its operands (divisions.json): the standard's a / b, which a system may divide its own way"
   }
  ]
 }

@@ -1,8 +1,8 @@
 WITH payout_eur AS (
   SELECT p.tenant_id AS tenant_id,
-         CAST(p.gross_amount / er.rate AS NUMERIC(18,6)) AS gross_eur,
-         CAST(p.fee_amount / er.rate AS NUMERIC(18,6)) AS fee_eur,
-         CAST(p.net_amount / er.rate AS NUMERIC(18,6)) AS net_eur
+         CAST({{divide_decimal(p.gross_amount, er.rate)}} AS NUMERIC(18,6)) AS gross_eur,
+         CAST({{divide_decimal(p.fee_amount, er.rate)}} AS NUMERIC(18,6)) AS fee_eur,
+         CAST({{divide_decimal(p.net_amount, er.rate)}} AS NUMERIC(18,6)) AS net_eur
   FROM payouts p
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -34,8 +34,8 @@ SELECT
   r.gross_volume_eur AS gross_payment_volume_eur,
   r.fee_revenue_eur AS fee_revenue_eur,
   r.net_paid_eur AS net_paid_eur,
-  100.0 * r.fee_revenue_eur / NULLIF(r.total_fee_eur,0) AS fee_share_pct,
-  100.0 * SUM(r.fee_revenue_eur) OVER (ORDER BY r.fee_revenue_eur DESC NULLS FIRST, t.name ASC NULLS LAST, t.id ASC NULLS LAST ROWS UNBOUNDED PRECEDING) / NULLIF(r.total_fee_eur,0) AS cumulative_fee_share_pct
+  {{divide_decimal(100.0 * r.fee_revenue_eur, NULLIF(r.total_fee_eur,0))}} AS fee_share_pct,
+  {{divide_decimal(100.0 * SUM(r.fee_revenue_eur) OVER (ORDER BY r.fee_revenue_eur DESC NULLS FIRST, t.name ASC NULLS LAST, t.id ASC NULLS LAST ROWS UNBOUNDED PRECEDING), NULLIF(r.total_fee_eur,0))}} AS cumulative_fee_share_pct
 FROM ranked r
 JOIN tenants t ON t.id = r.tenant_id
 ORDER BY r.fee_revenue_eur DESC NULLS FIRST, t.name ASC NULLS LAST, t.id ASC NULLS LAST

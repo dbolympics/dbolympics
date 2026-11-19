@@ -9,12 +9,12 @@ SELECT
         AND a.entity_id = i.id
         AND a.tenant_id = i.tenant_id
   ) THEN 1 ELSE 0 END) AS matching_audit_log_rows,
-  100.0 * SUM(CASE WHEN EXISTS (
+  {{divide_decimal(100.0 * SUM(CASE WHEN EXISTS (
     SELECT 1 FROM audit_log a
     WHERE a.entity_table = 'invoices'
       AND a.entity_id = i.id
       AND a.tenant_id = i.tenant_id
-  ) THEN 1 ELSE 0 END) / COUNT(*) AS coverage_rate_pct,
+  ) THEN 1 ELSE 0 END), COUNT(*))}} AS coverage_rate_pct,
   COUNT(DISTINCT i.tenant_id) AS distinct_tenants
 FROM invoices i
 WHERE i.status IN ('void', 'uncollectible')

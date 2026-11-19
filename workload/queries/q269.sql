@@ -33,7 +33,7 @@ orders_classified AS (
     ow.tenant_id AS tenant_id,
     ow.order_id AS order_id,
     ow.user_id AS user_id,
-    CASE WHEN ow.currency_code = 'EUR' THEN ow.grand_total ELSE CAST(ow.grand_total / ow.rate AS NUMERIC(18,6)) END AS revenue_eur,
+    CASE WHEN ow.currency_code = 'EUR' THEN ow.grand_total ELSE CAST({{divide_decimal(ow.grand_total, ow.rate)}} AS NUMERIC(18,6)) END AS revenue_eur,
     CASE
       WHEN ow.placed_at BETWEEN w.final_start AND w.final_end THEN 'final'
       WHEN ow.placed_at BETWEEN w.prior_start AND w.prior_end THEN 'prior'
@@ -69,8 +69,8 @@ repeat_metrics AS (
 repeat_pivot AS (
   SELECT
     tenant_id,
-    MAX(CASE WHEN period = 'final' THEN CAST(customers_repeat AS numeric(18,6)) / NULLIF(customers_total, 0) END) AS repeat_rate_final,
-    MAX(CASE WHEN period = 'prior' THEN CAST(customers_repeat AS numeric(18,6)) / NULLIF(customers_total, 0) END) AS repeat_rate_prior
+    MAX(CASE WHEN period = 'final' THEN {{divide_decimal(CAST(customers_repeat AS numeric(18,6)), NULLIF(customers_total, 0))}} END) AS repeat_rate_final,
+    MAX(CASE WHEN period = 'prior' THEN {{divide_decimal(CAST(customers_repeat AS numeric(18,6)), NULLIF(customers_total, 0))}} END) AS repeat_rate_prior
   FROM repeat_metrics
   GROUP BY tenant_id
 ),
@@ -86,7 +86,7 @@ payments_with_fx AS (
 payments_classified AS (
   SELECT
     pw.tenant_id AS tenant_id,
-    CASE WHEN pw.currency_code = 'EUR' THEN pw.amount ELSE CAST(pw.amount / pw.rate AS NUMERIC(18,6)) END AS amount_eur,
+    CASE WHEN pw.currency_code = 'EUR' THEN pw.amount ELSE CAST({{divide_decimal(pw.amount, pw.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
     CASE
       WHEN pw.captured_at BETWEEN w.final_start AND w.final_end THEN 'final'
       WHEN pw.captured_at BETWEEN w.prior_start AND w.prior_end THEN 'prior'
@@ -115,7 +115,7 @@ refunds_with_fx AS (
 refunds_classified AS (
   SELECT
     rw.tenant_id AS tenant_id,
-    CASE WHEN rw.currency_code = 'EUR' THEN rw.amount ELSE CAST(rw.amount / rw.rate AS NUMERIC(18,6)) END AS amount_eur,
+    CASE WHEN rw.currency_code = 'EUR' THEN rw.amount ELSE CAST({{divide_decimal(rw.amount, rw.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
     CASE
       WHEN rw.processed_at BETWEEN w.final_start AND w.final_end THEN 'final'
       WHEN rw.processed_at BETWEEN w.prior_start AND w.prior_end THEN 'prior'
@@ -160,17 +160,17 @@ report AS (
     COALESCE(om.orders_prior, 0) AS orders_prior_90d,
     CASE
       WHEN om.revenue_prior IS NULL OR om.revenue_prior = 0 THEN NULL
-      ELSE ((om.revenue_final - om.revenue_prior) / om.revenue_prior) * 100
+      ELSE ({{divide_decimal((om.revenue_final - om.revenue_prior), om.revenue_prior)}}) * 100
     END AS revenue_growth_pct,
     rp.repeat_rate_final * 100 AS repeat_rate_final_pct,
     rp.repeat_rate_prior * 100 AS repeat_rate_prior_pct,
     CASE
       WHEN pm.payments_final IS NULL OR pm.payments_final = 0 THEN NULL
-      ELSE COALESCE(rfm.refunds_final, 0) / pm.payments_final * 100
+      ELSE {{divide_decimal(COALESCE(rfm.refunds_final, 0), pm.payments_final)}} * 100
     END AS refund_rate_final_pct,
     CASE
       WHEN pm.payments_prior IS NULL OR pm.payments_prior = 0 THEN NULL
-      ELSE COALESCE(rfm.refunds_prior, 0) / pm.payments_prior * 100
+      ELSE {{divide_decimal(COALESCE(rfm.refunds_prior, 0), pm.payments_prior)}} * 100
     END AS refund_rate_prior_pct,
     COALESCE(tm.tickets_final, 0) AS tickets_final_90d,
     COALESCE(tm.tickets_prior, 0) AS tickets_prior_90d,

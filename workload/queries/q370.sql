@@ -20,7 +20,7 @@ order_agg AS (
     o.user_id AS user_id,
     COUNT(*) AS total_order_count,
     COUNT(*) FILTER (WHERE o.status <> 'cancelled') AS non_cancelled_order_count,
-    SUM(CASE WHEN o.status <> 'cancelled' THEN CAST(o.grand_total / er.rate AS NUMERIC(18,6)) ELSE 0 END) AS total_revenue_eur,
+    SUM(CASE WHEN o.status <> 'cancelled' THEN CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) ELSE 0 END) AS total_revenue_eur,
     COUNT(*) FILTER (
       WHERE EXISTS (SELECT 1 FROM payments p WHERE p.order_id = o.id AND p.amount_refunded > 0)
          OR EXISTS (SELECT 1 FROM order_returns r WHERE r.order_id = o.id)
@@ -54,8 +54,8 @@ SELECT
   COUNT(*) AS customer_count,
   AVG(CAST(oa.total_order_count AS NUMERIC(18,6))) AS avg_lifetime_orders,
   AVG(oa.total_revenue_eur) AS avg_lifetime_revenue_eur,
-  SUM(oa.total_revenue_eur) / NULLIF(SUM(oa.non_cancelled_order_count), 0) AS avg_order_value_eur,
-  100.0 * SUM(oa.refunded_order_count) / NULLIF(SUM(oa.total_order_count), 0) AS refund_rate_pct
+  {{divide_decimal(SUM(oa.total_revenue_eur), NULLIF(SUM(oa.non_cancelled_order_count), 0))}} AS avg_order_value_eur,
+  {{divide_decimal(100.0 * SUM(oa.refunded_order_count), NULLIF(SUM(oa.total_order_count), 0))}} AS refund_rate_pct
 FROM segmented s
 JOIN order_agg oa ON oa.user_id = s.user_id
 GROUP BY s.tenure_band, s.segment

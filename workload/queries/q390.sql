@@ -2,7 +2,7 @@ SELECT
   COALESCE(u.full_name, 'Unknown/unassigned') AS staff_name,
   COUNT(*) AS total_adjustments_logged,
   COUNT(*) FILTER (WHERE sa.reason = 'Missing - suspected theft') AS theft_tagged_count,
-  100.0 * COUNT(*) FILTER (WHERE sa.reason = 'Missing - suspected theft') / COUNT(*) AS pct_theft_of_own_adjustments,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE sa.reason = 'Missing - suspected theft'), COUNT(*))}} AS pct_theft_of_own_adjustments,
   COUNT(*) FILTER (WHERE sa.reason = 'Damaged in warehouse') AS damage_tagged_count,
   COUNT(*) FILTER (WHERE sa.reason = 'Expired') AS expired_tagged_count,
   COUNT(*) FILTER (WHERE sa.reason = 'Cycle count variance') AS cycle_count_variance_count,

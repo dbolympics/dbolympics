@@ -27,9 +27,9 @@ ticket_metrics AS (
     COUNT(*) AS ticket_count,
     COUNT(*) FILTER (WHERE status NOT IN ('solved','closed')) AS open_ticket_count,
     COUNT(*) FILTER (WHERE assignee_agent_id IS NULL) AS unassigned_ticket_count,
-    AVG({{seconds_between(created_at, first_response_at)}} / 60.0)
+    AVG({{divide_decimal({{seconds_between(created_at, first_response_at)}}, 60.0)}})
       FILTER (WHERE first_response_at IS NOT NULL) AS avg_first_response_minutes,
-    AVG({{seconds_between(created_at, resolved_at)}} / 60.0)
+    AVG({{divide_decimal({{seconds_between(created_at, resolved_at)}}, 60.0)}})
       FILTER (WHERE resolved_at IS NOT NULL) AS avg_resolution_minutes
   FROM ticket_window
   GROUP BY COALESCE(group_name, 'Unassigned queue')
@@ -56,8 +56,8 @@ SELECT
   COALESCE(tm.ticket_count, 0) AS ticket_count,
   COALESCE(tm.open_ticket_count, 0) AS open_ticket_count,
   ac.agent_count AS agent_count,
-  CAST(COALESCE(tm.ticket_count,0) AS numeric(18,6)) / NULLIF(ac.agent_count,0) AS tickets_per_agent,
-  100.0 * COALESCE(tm.unassigned_ticket_count,0) / NULLIF(tm.ticket_count,0) AS pct_unassigned,
+  {{divide_decimal(CAST(COALESCE(tm.ticket_count,0) AS numeric(18,6)), NULLIF(ac.agent_count,0))}} AS tickets_per_agent,
+  {{divide_decimal(100.0 * COALESCE(tm.unassigned_ticket_count,0), NULLIF(tm.ticket_count,0))}} AS pct_unassigned,
   tm.avg_first_response_minutes AS avg_first_response_minutes,
   tm.avg_resolution_minutes AS avg_resolution_minutes
 FROM all_rows r

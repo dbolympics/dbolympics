@@ -5,10 +5,10 @@ SELECT
   SUM(CASE WHEN subtotal > 0 THEN 1 ELSE 0 END) AS carts_with_items,
   SUM(CASE WHEN order_id IS NOT NULL THEN 1 ELSE 0 END) AS orders_placed,
   SUM(CASE WHEN order_status IS NOT NULL AND order_status NOT IN ('pending','cancelled') THEN 1 ELSE 0 END) AS orders_paid,
-  100.0 * SUM(CASE WHEN subtotal > 0 THEN 1 ELSE 0 END) / NULLIF(COUNT(*),0) AS cart_to_item_pct,
-  100.0 * SUM(CASE WHEN order_id IS NOT NULL THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN subtotal > 0 THEN 1 ELSE 0 END),0) AS item_to_order_pct,
-  100.0 * SUM(CASE WHEN order_status IS NOT NULL AND order_status NOT IN ('pending','cancelled') THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN order_id IS NOT NULL THEN 1 ELSE 0 END),0) AS order_to_paid_pct,
-  100.0 * SUM(CASE WHEN order_status IS NOT NULL AND order_status NOT IN ('pending','cancelled') THEN 1 ELSE 0 END) / NULLIF(COUNT(*),0) AS overall_cart_to_paid_pct
+  {{divide_decimal(100.0 * SUM(CASE WHEN subtotal > 0 THEN 1 ELSE 0 END), NULLIF(COUNT(*),0))}} AS cart_to_item_pct,
+  {{divide_decimal(100.0 * SUM(CASE WHEN order_id IS NOT NULL THEN 1 ELSE 0 END), NULLIF(SUM(CASE WHEN subtotal > 0 THEN 1 ELSE 0 END),0))}} AS item_to_order_pct,
+  {{divide_decimal(100.0 * SUM(CASE WHEN order_status IS NOT NULL AND order_status NOT IN ('pending','cancelled') THEN 1 ELSE 0 END), NULLIF(SUM(CASE WHEN order_id IS NOT NULL THEN 1 ELSE 0 END),0))}} AS order_to_paid_pct,
+  {{divide_decimal(100.0 * SUM(CASE WHEN order_status IS NOT NULL AND order_status NOT IN ('pending','cancelled') THEN 1 ELSE 0 END), NULLIF(COUNT(*),0))}} AS overall_cart_to_paid_pct
 FROM (
   SELECT
     cb.cart_id AS cart_id,

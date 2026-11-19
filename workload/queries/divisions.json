@@ -1,0 +1,1760 @@
+{
+ "q001": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q002": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q003": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q004": [
+  "decimal",
+  "decimal"
+ ],
+ "q005": [
+  "decimal",
+  "decimal"
+ ],
+ "q006": [
+  "decimal",
+  "decimal"
+ ],
+ "q007": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q008": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q009": [
+  "decimal",
+  "decimal"
+ ],
+ "q010": [
+  "decimal"
+ ],
+ "q011": [
+  "decimal"
+ ],
+ "q012": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q013": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q014": [
+  "decimal",
+  "decimal",
+  null,
+  null,
+  null
+ ],
+ "q015": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q016": [
+  "decimal",
+  "decimal"
+ ],
+ "q017": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q018": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q019": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q020": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q021": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q022": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q023": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q024": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q025": [
+  "decimal"
+ ],
+ "q026": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q027": [
+  "decimal",
+  "decimal"
+ ],
+ "q028": [
+  "decimal",
+  "decimal"
+ ],
+ "q030": [
+  "decimal"
+ ],
+ "q031": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q032": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q033": [
+  "decimal",
+  "decimal"
+ ],
+ "q034": [
+  "decimal"
+ ],
+ "q035": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q036": [
+  "decimal",
+  "decimal"
+ ],
+ "q037": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q038": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q039": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q040": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q041": [
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  "decimal"
+ ],
+ "q042": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q043": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q044": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q045": [
+  "decimal",
+  "decimal"
+ ],
+ "q046": [
+  "decimal",
+  "decimal"
+ ],
+ "q047": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q048": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q049": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q050": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q051": [
+  "decimal",
+  "decimal",
+  "decimal",
+  null,
+  null
+ ],
+ "q052": [
+  "decimal",
+  "decimal"
+ ],
+ "q053": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q054": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q055": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q056": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q057": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q058": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q059": [
+  "decimal",
+  "decimal"
+ ],
+ "q060": [
+  "decimal",
+  "decimal"
+ ],
+ "q062": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q063": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q064": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q065": [
+  "decimal",
+  "decimal"
+ ],
+ "q066": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q067": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q068": [
+  "decimal",
+  "decimal"
+ ],
+ "q069": [
+  "decimal",
+  "decimal"
+ ],
+ "q070": [
+  "decimal"
+ ],
+ "q071": [
+  "decimal"
+ ],
+ "q073": [
+  "decimal",
+  "decimal"
+ ],
+ "q074": [
+  "decimal"
+ ],
+ "q075": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q076": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q077": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q078": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q079": [
+  "decimal",
+  "decimal"
+ ],
+ "q080": [
+  "decimal",
+  "decimal"
+ ],
+ "q081": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q082": [
+  "decimal",
+  "decimal"
+ ],
+ "q083": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q084": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q085": [
+  "decimal"
+ ],
+ "q086": [
+  "decimal",
+  "decimal"
+ ],
+ "q087": [
+  "decimal",
+  "decimal"
+ ],
+ "q088": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q089": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q090": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q091": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q092": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q093": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q094": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q095": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q096": [
+  "decimal"
+ ],
+ "q097": [
+  "decimal",
+  "decimal"
+ ],
+ "q098": [
+  "decimal",
+  "decimal"
+ ],
+ "q099": [
+  "decimal"
+ ],
+ "q100": [
+  "decimal",
+  "decimal"
+ ],
+ "q101": [
+  "decimal",
+  "decimal"
+ ],
+ "q103": [
+  "decimal",
+  "decimal"
+ ],
+ "q104": [
+  "decimal",
+  "decimal"
+ ],
+ "q105": [
+  "decimal",
+  "decimal"
+ ],
+ "q108": [
+  "decimal"
+ ],
+ "q109": [
+  "decimal"
+ ],
+ "q110": [
+  "decimal"
+ ],
+ "q111": [
+  "decimal"
+ ],
+ "q112": [
+  "decimal"
+ ],
+ "q113": [
+  "decimal"
+ ],
+ "q114": [
+  "decimal"
+ ],
+ "q116": [
+  "decimal"
+ ],
+ "q124": [
+  "decimal",
+  "decimal"
+ ],
+ "q125": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q126": [
+  "decimal"
+ ],
+ "q127": [
+  "decimal",
+  "decimal"
+ ],
+ "q128": [
+  "decimal"
+ ],
+ "q129": [
+  "decimal",
+  "decimal"
+ ],
+ "q130": [
+  "decimal"
+ ],
+ "q131": [
+  "decimal",
+  "decimal"
+ ],
+ "q132": [
+  "decimal",
+  "decimal"
+ ],
+ "q133": [
+  "decimal",
+  null,
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  "decimal",
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q134": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q135": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q136": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q137": [
+  "decimal",
+  "decimal"
+ ],
+ "q138": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q139": [
+  "decimal",
+  "decimal"
+ ],
+ "q140": [
+  "decimal"
+ ],
+ "q141": [
+  "decimal"
+ ],
+ "q142": [
+  "decimal"
+ ],
+ "q143": [
+  "decimal"
+ ],
+ "q144": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q145": [
+  "decimal",
+  "decimal"
+ ],
+ "q146": [
+  "decimal"
+ ],
+ "q147": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q148": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q149": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q150": [
+  "decimal"
+ ],
+ "q151": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q152": [
+  "decimal"
+ ],
+ "q153": [
+  "decimal",
+  "decimal",
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q154": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q155": [
+  null,
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q156": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q157": [
+  "decimal",
+  "decimal"
+ ],
+ "q158": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  "decimal"
+ ],
+ "q159": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q160": [
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q161": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q162": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q163": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q164": [
+  "decimal",
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q165": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q166": [
+  "decimal",
+  "decimal"
+ ],
+ "q167": [
+  "decimal",
+  "decimal"
+ ],
+ "q168": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q169": [
+  "decimal",
+  "decimal"
+ ],
+ "q170": [
+  "decimal"
+ ],
+ "q171": [
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q173": [
+  "decimal"
+ ],
+ "q174": [
+  "decimal",
+  "decimal"
+ ],
+ "q175": [
+  "decimal"
+ ],
+ "q176": [
+  "decimal",
+  "decimal"
+ ],
+ "q177": [
+  "decimal",
+  "decimal"
+ ],
+ "q178": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q179": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q180": [
+  "decimal",
+  "decimal"
+ ],
+ "q181": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q182": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q183": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q184": [
+  "decimal",
+  "decimal"
+ ],
+ "q185": [
+  "decimal",
+  null
+ ],
+ "q186": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q187": [
+  "decimal"
+ ],
+ "q188": [
+  "decimal",
+  "decimal"
+ ],
+ "q189": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q190": [
+  "decimal"
+ ],
+ "q191": [
+  "decimal"
+ ],
+ "q194": [
+  "decimal",
+  "decimal"
+ ],
+ "q195": [
+  "decimal"
+ ],
+ "q196": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q197": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q198": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q199": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q200": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q201": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q203": [
+  "decimal",
+  "decimal"
+ ],
+ "q204": [
+  "decimal"
+ ],
+ "q205": [
+  "decimal",
+  "decimal"
+ ],
+ "q206": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q207": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q208": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q209": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q210": [
+  "decimal",
+  "decimal",
+  "decimal",
+  null
+ ],
+ "q211": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q212": [
+  "decimal",
+  "decimal"
+ ],
+ "q213": [
+  "decimal",
+  "decimal"
+ ],
+ "q214": [
+  "decimal"
+ ],
+ "q215": [
+  "decimal"
+ ],
+ "q216": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q217": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q218": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q219": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q220": [
+  "decimal"
+ ],
+ "q221": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q222": [
+  "decimal",
+  "decimal"
+ ],
+ "q224": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q225": [
+  "decimal",
+  "decimal"
+ ],
+ "q226": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q227": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q228": [
+  "decimal",
+  "decimal"
+ ],
+ "q229": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q230": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q231": [
+  "decimal"
+ ],
+ "q232": [
+  "decimal",
+  "decimal"
+ ],
+ "q233": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q234": [
+  "decimal",
+  "decimal"
+ ],
+ "q235": [
+  "decimal",
+  "decimal"
+ ],
+ "q236": [
+  "decimal",
+  "decimal"
+ ],
+ "q237": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q238": [
+  "decimal",
+  "decimal"
+ ],
+ "q239": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q240": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q241": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q242": [
+  "decimal",
+  "decimal"
+ ],
+ "q243": [
+  "decimal",
+  "decimal"
+ ],
+ "q244": [
+  "decimal",
+  "decimal"
+ ],
+ "q245": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q246": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q247": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q248": [
+  "decimal",
+  "decimal",
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q249": [
+  "decimal"
+ ],
+ "q250": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q251": [
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q252": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q253": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q254": [
+  "decimal"
+ ],
+ "q255": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q256": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q257": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q258": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q259": [
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q260": [
+  "decimal",
+  "decimal"
+ ],
+ "q261": [
+  "decimal",
+  "decimal"
+ ],
+ "q262": [
+  "decimal"
+ ],
+ "q263": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q264": [
+  "decimal",
+  "decimal"
+ ],
+ "q265": [
+  "decimal"
+ ],
+ "q266": [
+  "decimal",
+  "decimal"
+ ],
+ "q267": [
+  "decimal"
+ ],
+ "q268": [
+  "decimal",
+  "decimal"
+ ],
+ "q269": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q270": [
+  "decimal"
+ ],
+ "q271": [
+  "decimal",
+  "decimal"
+ ],
+ "q272": [
+  "decimal"
+ ],
+ "q274": [
+  "decimal"
+ ],
+ "q275": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q276": [
+  "decimal"
+ ],
+ "q277": [
+  "decimal"
+ ],
+ "q278": [
+  "decimal"
+ ],
+ "q279": [
+  "decimal"
+ ],
+ "q280": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q281": [
+  "decimal"
+ ],
+ "q283": [
+  "decimal",
+  "decimal"
+ ],
+ "q284": [
+  "decimal"
+ ],
+ "q287": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q288": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q289": [
+  "decimal",
+  "decimal"
+ ],
+ "q290": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q291": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q292": [
+  "decimal",
+  "decimal"
+ ],
+ "q293": [
+  "decimal",
+  "decimal"
+ ],
+ "q294": [
+  "decimal",
+  "decimal"
+ ],
+ "q295": [
+  "decimal",
+  "decimal"
+ ],
+ "q296": [
+  "decimal"
+ ],
+ "q297": [
+  "decimal"
+ ],
+ "q298": [
+  "decimal"
+ ],
+ "q299": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q300": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q301": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q302": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q304": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q307": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q308": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q309": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q310": [
+  "decimal",
+  "decimal"
+ ],
+ "q311": [
+  "decimal"
+ ],
+ "q312": [
+  "decimal",
+  "decimal"
+ ],
+ "q314": [
+  "decimal"
+ ],
+ "q315": [
+  "decimal"
+ ],
+ "q317": [
+  "decimal"
+ ],
+ "q318": [
+  "decimal"
+ ],
+ "q320": [
+  "decimal"
+ ],
+ "q321": [
+  "decimal"
+ ],
+ "q323": [
+  "decimal"
+ ],
+ "q325": [
+  "decimal"
+ ],
+ "q326": [
+  "decimal"
+ ],
+ "q329": [
+  "decimal"
+ ],
+ "q331": [
+  "decimal"
+ ],
+ "q334": [
+  "decimal"
+ ],
+ "q335": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q336": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q338": [
+  "decimal"
+ ],
+ "q339": [
+  "decimal"
+ ],
+ "q341": [
+  "int",
+  "decimal"
+ ],
+ "q342": [
+  "decimal"
+ ],
+ "q343": [
+  "decimal"
+ ],
+ "q344": [
+  "decimal",
+  "decimal"
+ ],
+ "q345": [
+  "decimal",
+  "decimal"
+ ],
+ "q346": [
+  "decimal"
+ ],
+ "q347": [
+  "decimal",
+  "decimal"
+ ],
+ "q348": [
+  "decimal",
+  "decimal"
+ ],
+ "q349": [
+  "decimal"
+ ],
+ "q350": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q351": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q352": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q353": [
+  "decimal"
+ ],
+ "q354": [
+  "decimal"
+ ],
+ "q355": [
+  "decimal",
+  "decimal"
+ ],
+ "q357": [
+  "decimal",
+  "decimal"
+ ],
+ "q358": [
+  "decimal"
+ ],
+ "q359": [
+  "decimal",
+  "decimal"
+ ],
+ "q360": [
+  "decimal"
+ ],
+ "q361": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q362": [
+  "decimal",
+  "decimal"
+ ],
+ "q363": [
+  null,
+  "decimal",
+  "decimal"
+ ],
+ "q364": [
+  "decimal"
+ ],
+ "q365": [
+  "decimal",
+  "decimal"
+ ],
+ "q366": [
+  "decimal"
+ ],
+ "q367": [
+  "decimal"
+ ],
+ "q368": [
+  "decimal"
+ ],
+ "q369": [
+  "decimal",
+  "decimal"
+ ],
+ "q370": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q371": [
+  "decimal",
+  "decimal",
+  null,
+  null
+ ],
+ "q372": [
+  "decimal"
+ ],
+ "q373": [
+  "decimal"
+ ],
+ "q374": [
+  "decimal",
+  "decimal",
+  "decimal",
+  null
+ ],
+ "q375": [
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q376": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q377": [
+  "decimal",
+  null,
+  "decimal",
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  "decimal",
+  null
+ ],
+ "q378": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  null,
+  null
+ ],
+ "q379": [
+  null,
+  "decimal",
+  "decimal"
+ ],
+ "q380": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q381": [
+  "decimal",
+  "decimal"
+ ],
+ "q382": [
+  "decimal",
+  "decimal"
+ ],
+ "q383": [
+  "decimal"
+ ],
+ "q386": [
+  "decimal",
+  null,
+  "decimal",
+  null,
+  "decimal"
+ ],
+ "q387": [
+  "decimal"
+ ],
+ "q388": [
+  "decimal",
+  "decimal",
+  null,
+  "decimal",
+  null
+ ],
+ "q389": [
+  "decimal"
+ ],
+ "q390": [
+  "decimal"
+ ],
+ "q391": [
+  "decimal"
+ ],
+ "q392": [
+  "decimal",
+  "decimal"
+ ],
+ "q393": [
+  "decimal"
+ ],
+ "q394": [
+  "decimal"
+ ],
+ "q396": [
+  "decimal"
+ ],
+ "q397": [
+  "decimal"
+ ],
+ "q398": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q400": [
+  "decimal",
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q401": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q402": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q404": [
+  "decimal",
+  "decimal",
+  "decimal"
+ ],
+ "q405": [
+  "decimal",
+  "decimal"
+ ],
+ "q407": [
+  "decimal",
+  "decimal"
+ ],
+ "q408": [
+  "decimal",
+  "decimal"
+ ],
+ "q409": [
+  "decimal",
+  "decimal"
+ ]
+}

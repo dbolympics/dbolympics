@@ -9,8 +9,8 @@ WITH base AS (
 ticket_stats AS (
   SELECT agent_group_id, agent_group_name,
          COUNT(*) AS ticket_count_with_sla,
-         AVG({{seconds_between(created_at, first_response_at)}}/60.0) FILTER (WHERE first_response_at IS NOT NULL) AS avg_first_response_minutes,
-         AVG({{seconds_between(created_at, resolved_at)}}/60.0) FILTER (WHERE resolved_at IS NOT NULL) AS avg_resolution_minutes
+         AVG({{divide_decimal({{seconds_between(created_at, first_response_at)}}, 60.0)}}) FILTER (WHERE first_response_at IS NOT NULL) AS avg_first_response_minutes,
+         AVG({{divide_decimal({{seconds_between(created_at, resolved_at)}}, 60.0)}}) FILTER (WHERE resolved_at IS NOT NULL) AS avg_resolution_minutes
   FROM base
   GROUP BY agent_group_id, agent_group_name
 ),
@@ -31,8 +31,8 @@ breach_stats AS (
 SELECT
   ts.agent_group_name AS agent_group_name,
   ts.ticket_count_with_sla AS ticket_count_with_sla,
-  100.0 * COALESCE(bs.fr_breach_tickets, 0) / ts.ticket_count_with_sla AS first_response_breach_rate,
-  100.0 * COALESCE(bs.res_breach_tickets, 0) / ts.ticket_count_with_sla AS resolution_breach_rate,
+  {{divide_decimal(100.0 * COALESCE(bs.fr_breach_tickets, 0), ts.ticket_count_with_sla)}} AS first_response_breach_rate,
+  {{divide_decimal(100.0 * COALESCE(bs.res_breach_tickets, 0), ts.ticket_count_with_sla)}} AS resolution_breach_rate,
   bs.avg_minutes_over_first_response AS avg_minutes_over_first_response,
   bs.avg_minutes_over_resolution AS avg_minutes_over_resolution,
   ts.avg_first_response_minutes AS avg_first_response_minutes,

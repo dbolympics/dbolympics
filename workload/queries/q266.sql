@@ -18,7 +18,7 @@ converted AS (
     b.order_id AS order_id,
     b.weight AS weight,
     CASE WHEN b.currency_code = 'EUR' THEN b.attributed_revenue
-         ELSE CAST(b.attributed_revenue / er.rate AS NUMERIC(18,6)) END AS revenue_eur
+         ELSE CAST({{divide_decimal(b.attributed_revenue, er.rate)}} AS NUMERIC(18,6)) END AS revenue_eur
   FROM base b
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -31,7 +31,7 @@ totals AS (
 SELECT
   c.touch_point AS touch_point,
   COUNT(DISTINCT c.order_id) AS distinct_orders_count,
-  COUNT(DISTINCT c.order_id) * 100.0 / t.total_orders AS share_of_no_campaign_orders_pct,
+  {{divide_decimal(COUNT(DISTINCT c.order_id) * 100.0, t.total_orders)}} AS share_of_no_campaign_orders_pct,
   SUM(c.revenue_eur) AS attributed_revenue_eur,
   AVG(c.weight) AS avg_weight
 FROM converted c

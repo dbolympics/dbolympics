@@ -39,7 +39,7 @@ SELECT
   coalesce(monthly_changes.role_grants_created, 0) - coalesce(monthly_changes.role_grants_removed, 0) AS net_change,
   coalesce(monthly_changes.distinct_actor_user_id, 0) AS distinct_actor_user_id,
   CASE WHEN coalesce(monthly_changes.total_changes,0) = 0 THEN NULL
-       ELSE 100.0 * monthly_changes.null_actor_changes / monthly_changes.total_changes
+       ELSE {{divide_decimal(100.0 * monthly_changes.null_actor_changes, monthly_changes.total_changes)}}
   END AS pct_actor_user_id_null
 FROM months
 LEFT JOIN monthly_changes ON months.month_label = monthly_changes.month_label

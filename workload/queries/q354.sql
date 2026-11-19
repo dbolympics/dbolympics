@@ -10,7 +10,7 @@ LEFT JOIN (
     CAST(EXTRACT(YEAR FROM created_at) AS int) AS yr,
     COUNT(*) AS dec_review_count,
     AVG(CAST(rating AS NUMERIC(18,6))) AS dec_avg_rating,
-    100.0*SUM(CASE WHEN rating<=2 THEN 1 ELSE 0 END)/COUNT(*) AS dec_pct_1_2_star
+    {{divide_decimal(100.0*SUM(CASE WHEN rating<=2 THEN 1 ELSE 0 END), COUNT(*))}} AS dec_pct_1_2_star
   FROM product_reviews
   WHERE is_approved = true AND EXTRACT(MONTH FROM created_at) = 12
   GROUP BY tenant_id, EXTRACT(YEAR FROM created_at)

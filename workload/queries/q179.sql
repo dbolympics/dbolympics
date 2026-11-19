@@ -4,17 +4,17 @@ SELECT
   COUNT(*) AS opportunities_closed,
   SUM(CASE WHEN o.is_won THEN 1 ELSE 0 END) AS closed_won,
   SUM(CASE WHEN NOT o.is_won THEN 1 ELSE 0 END) AS closed_lost,
-  100.0 * SUM(CASE WHEN o.is_won THEN 1 ELSE 0 END) / COUNT(*) AS win_rate_pct,
-  AVG({{seconds_between(o.created_at, o.closed_at)}} / 86400.0) AS avg_days_open,
+  {{divide_decimal(100.0 * SUM(CASE WHEN o.is_won THEN 1 ELSE 0 END), COUNT(*))}} AS win_rate_pct,
+  AVG({{divide_decimal({{seconds_between(o.created_at, o.closed_at)}}, 86400.0)}}) AS avg_days_open,
   AVG(
 CASE WHEN o.currency_code = 'EUR' THEN o.amount
-ELSE o.amount / (
+ELSE {{divide_decimal(o.amount, (
 SELECT er.rate
 FROM exchange_rates er
 WHERE er.base_code = 'EUR'
   AND er.quote_code = o.currency_code
   AND er.as_of = CAST(o.closed_at AS date)
-) END
+))}} END
 ) AS avg_amount_eur
 FROM opportunities o
 JOIN users u ON u.id = o.owner_user_id

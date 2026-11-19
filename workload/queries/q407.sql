@@ -21,7 +21,7 @@ monthly_shipment_counts AS (
 delivered_base AS (
   SELECT
     month_label,
-    {{seconds_between(shipped_at, delivered_at)}} / 86400.0 AS delivery_days
+    {{divide_decimal({{seconds_between(shipped_at, delivered_at)}}, 86400.0)}} AS delivery_days
   FROM base
   WHERE shipped_at IS NOT NULL
     AND delivered_at IS NOT NULL
@@ -30,7 +30,7 @@ monthly_delivery_stats AS (
   SELECT
     month_label,
     AVG(delivery_days) AS avg_delivery_days,
-    100.0 * SUM(CASE WHEN delivery_days <= 3 THEN 1 ELSE 0 END) / COUNT(*) AS pct_delivered_within_3_days
+    {{divide_decimal(100.0 * SUM(CASE WHEN delivery_days <= 3 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_delivered_within_3_days
   FROM delivered_base
   GROUP BY month_label
 )

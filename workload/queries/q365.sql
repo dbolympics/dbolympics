@@ -43,7 +43,7 @@ classified AS (
       WHEN sub_started_at <= placed_at AND sub_ended_at IS NOT NULL AND sub_ended_at < placed_at THEN 'active status but already past its end date'
       ELSE 'dates indicate overlap - likely a bug in the original orphan flag'
     END AS category,
-    CAST(total_discount_amount / er.rate AS NUMERIC(18,6)) AS discount_amount_eur
+    CAST({{divide_decimal(total_discount_amount, er.rate)}} AS NUMERIC(18,6)) AS discount_amount_eur
   FROM orphan_orders oo
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -53,7 +53,7 @@ classified AS (
 SELECT
   category,
   COUNT(*) AS order_count,
-  100.0 * COUNT(*) / SUM(COUNT(*)) OVER () AS pct_of_bucket,
+  {{divide_decimal(100.0 * COUNT(*), SUM(COUNT(*)) OVER ())}} AS pct_of_bucket,
   COUNT(DISTINCT user_id) AS distinct_customers,
   SUM(discount_amount_eur) AS total_discount_eur,
   SUM(COUNT(*)) OVER () AS check_total_291

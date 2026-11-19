@@ -1,5 +1,5 @@
 SELECT warehouse_name, tenant_name, distinct_pick_locations, total_routine_adjustments_2025,
-  CASE WHEN distinct_pick_locations = 0 THEN NULL ELSE CAST(total_routine_adjustments_2025 AS numeric(18,6)) / distinct_pick_locations END AS events_per_pick_location,
+  CASE WHEN distinct_pick_locations = 0 THEN NULL ELSE {{divide_decimal(CAST(total_routine_adjustments_2025 AS numeric(18,6)), distinct_pick_locations)}} END AS events_per_pick_location,
   distinct_variants_affected,
   avg_hour_of_day_of_entries
 FROM (

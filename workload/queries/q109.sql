@@ -2,7 +2,7 @@ SELECT entity_table,
  total_soft_deleted,
  matching_audit_rows,
  CASE WHEN total_soft_deleted = 0 THEN NULL
-      ELSE LEAST(CAST(matching_audit_rows AS numeric(18,6)) / total_soft_deleted * 100, 100)
+      ELSE LEAST({{divide_decimal(CAST(matching_audit_rows AS numeric(18,6)), total_soft_deleted)}} * 100, 100)
  END AS coverage_rate_pct,
  distinct_tenants,
  earliest_deleted_at,

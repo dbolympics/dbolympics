@@ -41,7 +41,7 @@ order_detail AS (
     qo.placed_at AS placed_at,
     os.carrier AS carrier,
     os.delivered_at AS delivered_at,
-    {{seconds_between(qo.placed_at, os.delivered_at)}} / 86400.0 AS delivery_days
+    {{divide_decimal({{seconds_between(qo.placed_at, os.delivered_at)}}, 86400.0)}} AS delivery_days
   FROM q_orders qo
   JOIN order_shipment os ON os.order_id = qo.order_id AND os.tenant_id = qo.tenant_id
 ),
@@ -89,7 +89,7 @@ SELECT
   ga.orders_fully_delivered AS orders_fully_delivered,
   ga.avg_delivery_days AS avg_delivery_days,
   ga.pct_within_5_days AS pct_within_5_days,
-  ga.orders_fully_delivered * 100.0 / qt.total_orders AS share_of_quarter_orders_pct
+  {{divide_decimal(ga.orders_fully_delivered * 100.0, qt.total_orders)}} AS share_of_quarter_orders_pct
 FROM group_agg ga
 JOIN quarter_totals qt ON qt.year_num = ga.year_num AND qt.quarter_num = ga.quarter_num
 ORDER BY

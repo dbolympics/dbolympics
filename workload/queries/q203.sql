@@ -26,8 +26,8 @@ ticket_metrics AS (
     tw.id AS id,
     tw.channel AS channel,
     tw.assignment_status AS assignment_status,
-    {{seconds_between(tw.created_at, tw.first_response_at)}} / 60.0 AS first_response_minutes,
-    {{seconds_between(tw.created_at, tw.resolved_at)}} / 60.0 AS resolution_minutes,
+    {{divide_decimal({{seconds_between(tw.created_at, tw.first_response_at)}}, 60.0)}} AS first_response_minutes,
+    {{divide_decimal({{seconds_between(tw.created_at, tw.resolved_at)}}, 60.0)}} AS resolution_minutes,
     bf.first_response_breached AS first_response_breached,
     bf.resolution_breached AS resolution_breached
   FROM ticket_window tw

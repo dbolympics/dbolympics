@@ -2,8 +2,8 @@ SELECT
     t.name AS tenant_name,
     b.bucket AS bucket,
     COUNT(*) AS cart_count,
-    100.0 * COUNT(*) / SUM(COUNT(*)) OVER (PARTITION BY t.name) AS pct_of_tenant_carts,
-    100.0 * SUM(CASE WHEN b.status = 'converted' THEN 1 ELSE 0 END) / COUNT(*) AS converted_pct
+    {{divide_decimal(100.0 * COUNT(*), SUM(COUNT(*)) OVER (PARTITION BY t.name))}} AS pct_of_tenant_carts,
+    {{divide_decimal(100.0 * SUM(CASE WHEN b.status = 'converted' THEN 1 ELSE 0 END), COUNT(*))}} AS converted_pct
 FROM (
     SELECT
         c.tenant_id AS tenant_id,
@@ -11,11 +11,11 @@ FROM (
         CASE
             WHEN c.converted_at IS NULL AND c.abandoned_at IS NULL AND c.expires_at IS NULL
                 THEN 'unresolved/still active'
-            WHEN {{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}} / 3600.0 < 1
+            WHEN {{divide_decimal({{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}}, 3600.0)}} < 1
                 THEN '<1 hour'
-            WHEN {{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}} / 3600.0 < 24
+            WHEN {{divide_decimal({{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}}, 3600.0)}} < 24
                 THEN '1-24 hours'
-            WHEN {{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}} / 3600.0 < 168
+            WHEN {{divide_decimal({{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}}, 3600.0)}} < 168
                 THEN '1-7 days'
             ELSE '>7 days'
         END AS bucket

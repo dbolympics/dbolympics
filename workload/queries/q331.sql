@@ -1,7 +1,7 @@
 SELECT
   COUNT(DISTINCT w.user_key) AS withdrawn_users,
   COUNT(DISTINCT CASE WHEN cm.id IS NOT NULL THEN w.user_key END) AS contacted_after_withdrawal_users,
-  100.0 * COUNT(DISTINCT CASE WHEN cm.id IS NOT NULL THEN w.user_key END) / NULLIF(COUNT(DISTINCT w.user_key), 0) AS pct_contacted_after_withdrawal,
+  {{divide_decimal(100.0 * COUNT(DISTINCT CASE WHEN cm.id IS NOT NULL THEN w.user_key END), NULLIF(COUNT(DISTINCT w.user_key), 0))}} AS pct_contacted_after_withdrawal,
   COUNT(cm.id) AS total_post_withdrawal_sends,
   MAX({{date_diff_days(w.withdrawn_at, COALESCE(cm.sent_at, cm.created_at))}}) AS max_days_withdrawal_to_send,
   MAX(COALESCE(cm.sent_at, cm.created_at)) AS most_recent_post_withdrawal_send
