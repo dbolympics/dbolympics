@@ -55,7 +55,7 @@ table.spec { width: 100%; border-collapse: collapse; font-size: 15px; margin: 6p
   computed.</p>
 <nav class="toc" aria-label="Contents">
   <a href="#workload">Workload</a><a href="#machines">Machines</a><a href="#systems">Systems</a><a href="#dialects">Dialects</a><a href="#procedure">Procedure</a>
-  <a href="#isolation">Isolation</a><a href="#measures">Measures</a><a href="#correctness">Correctness</a><a href="#ai">Use of AI</a><a href="#reproduce">Reproduce</a>
+  <a href="#isolation">Isolation</a><a href="#measures">Measures</a><a href="#penalties">Penalties</a><a href="#correctness">Correctness</a><a href="#ai">Use of AI</a><a href="#reproduce">Reproduce</a>
 </nav>
 
 <section id="workload" class="measure">
@@ -185,8 +185,7 @@ table.spec { width: 100%; border-collapse: collapse; font-size: 15px; margin: 6p
     as taking twice the slowest correct time of that query on that machine (the timeout if no system answered it
     correctly).</p>
   <p><b>Queries per second</b> (Figure 1) is 409 over the time all queries take together after the last load (the median
-    of each). A timed-out query counts as taking the full timeout, a failed or wrong one as taking twice the slowest
-    correct time of that query.</p>
+    of each). A timed-out query counts as taking the full timeout, a failed or wrong one as the penalty below.</p>
   <p><b>Cost</b> (Figure 1) is that same time at the machine's price per hour: what it costs to run all 409 queries
     once.</p>
   <p id="efficiency"><b>Efficiency</b> (Figure 1) is queries per second (y-axis) divided by cost (x-axis). A system
@@ -212,6 +211,44 @@ table.spec { width: 100%; border-collapse: collapse; font-size: 15px; margin: 6p
     last load (the median of each), on a log scale, estimated with a Gaussian kernel a tenth of a decade wide; its area
     is their share of all queries. The shares between the guides count the queries by band of time.</p>
 <!--/SECTION:distribution-->
+</section>
+
+<section id="penalties" class="measure">
+  <h2>Penalties</h2>
+  <p>A query has a <i>recorded runtime</i> when the system answered it correctly (its time) or ran it to the timeout
+    (the timeout, {{TIMEOUT}}). A query that failed, returned a wrong result or was not run, because the run ended
+    before it, has none. The scores take the times of the last run, after the last load; a query without a recorded
+    runtime there is charged the pessimistic end of an estimate from the system's recorded runtimes in that run, as if
+    they were a sample of all <i>Q</i>&nbsp;=&nbsp;409 queries.</p>
+  <p>With <i>N</i> recorded runtimes in the last run <i>x</i><sub>1</sub>, …, <i>x<sub>N</sub></i>, the mean and the sample standard
+    deviation are</p>
+  <math display="block"><mrow><mover><mi>x</mi><mo>¯</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>x</mi><mi>i</mi></msub><mspace width="2em"/><mi>s</mi><mo>=</mo><msqrt><mfrac><mn>1</mn><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msup><mrow><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mover><mi>x</mi><mo>¯</mo></mover><mo>)</mo></mrow><mn>2</mn></msup></msqrt></mrow></math>
+  <p>The 409 queries are a fixed, small population, and the <i>N</i> recorded ones are known exactly, so the standard
+    error of the mean takes the finite population correction. The margin of error is that of a 95% confidence
+    interval (<i>z</i>&nbsp;=&nbsp;1.96):</p>
+  <math display="block"><mrow><mi>SE</mi><mo>=</mo><mfrac><mi>s</mi><msqrt><mi>N</mi></msqrt></mfrac><mo>×</mo><msqrt><mfrac><mrow><mi>Q</mi><mo>−</mo><mi>N</mi></mrow><mrow><mi>Q</mi><mo>−</mo><mn>1</mn></mrow></mfrac></msqrt><mspace width="2em"/><mi>ME</mi><mo>=</mo><mn>1.96</mn><mo>×</mo><mi>SE</mi></mrow></math>
+  <p>Each query without a recorded runtime counts as the upper bound of that interval:</p>
+  <math display="block"><mrow><mi>penalty</mi><mo>=</mo><mover><mi>x</mi><mo>¯</mo></mover><mo>+</mo><mi>ME</mi></mrow></math>
+  <p>So the time of all queries, from which queries per second and cost follow, is</p>
+  <math display="block"><mrow><mi>T</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mo>(</mo><mi>Q</mi><mo>−</mo><mi>N</mi><mo>)</mo><mo>×</mo><mo>(</mo><mover><mi>x</mi><mo>¯</mo></mover><mo>+</mo><mi>ME</mi><mo>)</mo><mspace width="2em"/><mi>QPS</mi><mo>=</mo><mfrac><mi>Q</mi><mi>T</mi></mfrac></mrow></math>
+
+  <p>Without the margin the penalty would be the mean alone, and queries per second would be <i>N</i>&nbsp;/&nbsp;Σ<i>x<sub>i</sub></i>:
+    exactly the speed on the recorded queries, as if the failed ones had not been asked. The margin makes failing cost
+    something, more the more queries are missing (<i>N</i> small) and the more the recorded runtimes vary (<i>s</i>
+    large). With every query recorded (<i>N</i>&nbsp;=&nbsp;<i>Q</i>) it is zero.</p>
+  <p>The estimate needs enough of a sample: with recorded runtimes for fewer than half of the queries
+    (<i>N</i>&nbsp;&lt;&nbsp;<i>Q</i>&nbsp;/&nbsp;2, fewer than 205), a query without one is charged twice the slowest
+    correct time of that query on that machine (the timeout if no system answered it correctly).</p>
+  <p>The interval assumes the recorded queries are a random sample of the 409. They are not quite: a system tends to
+    fail the harder queries, so the true time of the missing ones is likely above the mean, and the margin covers only
+    part of that.</p>
+  <p><b>Example.</b> At SF1000 on c8a.12xlarge (Parquet), ClickHouse answers 217 queries correctly in 121.5&#8202;s and
+    runs 3 to the 30&#8202;s timeout: <i>N</i>&nbsp;=&nbsp;220, Σ<i>x<sub>i</sub></i>&nbsp;=&nbsp;211.5&#8202;s,
+    <i>x̄</i>&nbsp;=&nbsp;0.961&#8202;s, <i>s</i>&nbsp;=&nbsp;3.62&#8202;s,
+    <i>SE</i>&nbsp;=&nbsp;3.62&nbsp;/&nbsp;√220&nbsp;×&nbsp;√(189&nbsp;/&nbsp;408)&nbsp;=&nbsp;0.166&#8202;s,
+    <i>ME</i>&nbsp;=&nbsp;0.326&#8202;s. Each of its 189 failed or wrong queries counts 1.287&#8202;s, so
+    <i>T</i>&nbsp;=&nbsp;211.5&nbsp;+&nbsp;189&nbsp;×&nbsp;1.287&nbsp;=&nbsp;454.7&#8202;s and
+    QPS&nbsp;=&nbsp;409&nbsp;/&nbsp;454.7&nbsp;=&nbsp;0.90.</p>
 </section>
 
 <section id="correctness" class="measure">
