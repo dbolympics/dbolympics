@@ -369,12 +369,12 @@ def tip(category, name, ps, best=None):
 def hero():
     """Figure 1 in every view, each a file of its own
     (out/fig1/<category>-<sf>-<best|all>-<x log|lin>-<y log|lin>-<wide|narrow>.svg), the page loading a view when it is
-    first shown; the first view (native systems, the largest scale factor, the most efficient machines, both axes
-    linear), for a large screen and a phone, is in the page itself."""
+    first shown; the first view (native systems, the largest scale factor, the most efficient machines, cost on a log
+    axis, queries per second on a linear one), for a large screen and a phone, is in the page itself."""
     d = os.path.join(OUT, "fig1")
     shutil.rmtree(d, ignore_errors=True)
     os.makedirs(d)
-    first = f"{DEFAULT_CATEGORY}-{DEFAULT_SF}-best-lin-lin"
+    first = f"{DEFAULT_CATEGORY}-{DEFAULT_SF}-best-log-lin"
     inline = ""
     # every category's scale factors, with the most efficient or all machines, each axis log or linear
     views = [(category, sf, m, xlog, ylog) for category, cfgs in D["categories"].items() for sf in sorted({c["sf"] for c in cfgs.values()})
