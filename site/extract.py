@@ -219,9 +219,9 @@ for (cfg, category), b in sorted(bench.items()):
     for i in range(len(qids)):
         ok = [last[n][0][i] for n in last if n not in variant and last[n][1][i] == 0 and last[n][0][i] is not None]
         best.append(min(ok) if ok else None)
-    # what a query without a correct result counts as where there is no estimate below (fewer than half of the queries
-    # recorded): a timeout the timeout; an error, a wrong result or a query not run twice the slowest correct time of
-    # that query (the timeout if no system answered it)
+    # what a query without a correct result counts as in a run that failed (no estimate below): a timeout the timeout;
+    # an error, a wrong result or a query not run twice the slowest correct time of that query (the timeout if no
+    # system answered it)
     worst = [max((last[n][0][i] for n in last if n not in variant and last[n][1][i] == 0 and last[n][0][i] is not None), default=TIMEOUT / 2)
              for i in range(len(qids))]
     cost = lambda t, st, i: t[i] if st[i] == 0 else TIMEOUT if st[i] == 3 else 2 * worst[i]
@@ -230,11 +230,13 @@ for (cfg, category), b in sorted(bench.items()):
         t, st = last[name]
         # the recorded runtimes of the last run (a correct query's time, a timed-out one's timeout) as a sample of all
         # queries: an error, a wrong result or a query not run counts as the upper bound of the 95% confidence interval
-        # of their mean, x̄ + ME, with the finite population correction (methodology, Penalties); with recorded
-        # runtimes for fewer than half of the queries, as above
+        # of their mean, x̄ + ME, with the finite population correction (methodology, Penalties); a system with
+        # recorded runtimes for fewer than half of the queries counts as crashed
         okt = [t[i] if st[i] == 0 else TIMEOUT for i in range(len(qids)) if (st[i] == 0 and t[i] is not None) or st[i] == 3]
         N, Q = len(okt), len(qids)
         fill = fill_mean = fill_me = None
+        if N < Q / 2 and not s["failed"]:
+            s["failed"] = {"run": 5, "status": "failed_half", "query": ""}
         if N >= Q / 2:
             fill_mean = sum(okt) / N
             sd = math.sqrt(sum((x - fill_mean) ** 2 for x in okt) / (N - 1)) if N > 1 else 0.0
