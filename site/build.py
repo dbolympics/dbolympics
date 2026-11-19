@@ -204,7 +204,14 @@ def hero_svg(category, sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True
     # every mark the same size, whatever the machine (the middle of mark_s and mark_l)
     size = lambda p: (mark_s + mark_l) / 2
     L, R, T, B = 52, 18, 34, 46
-    lx = [math.log10(p["dollars"]) for p in pts]; ly = [math.log10(p["qps"]) for p in pts]
+    # the cost axis's limits from all systems at this scale factor, so that the native and the Parquet views share it;
+    # the queries per second axis fits each view's own points
+    ax = points("all", sf)
+    ax_top = {}
+    for p in ax:
+        ax_top.setdefault(p["name"], []).append(p)
+    ax_top = {name: most_efficient(ps) for name, ps in ax_top.items()}
+    lx = [math.log10(p["dollars"]) for p in ax]; ly = [math.log10(p["qps"]) for p in pts]
     x0, x1 = math.floor((min(lx) - 0.1) * 2) / 2, math.ceil((max(lx) + 0.1) * 2) / 2
     y0, y1 = math.floor((min(ly) - 0.06) * 2) / 2, math.ceil((max(ly) + 0.06) * 2) / 2
     X = lambda v: L + (math.log10(v) - x0) / (x1 - x0) * (W - L - R)
@@ -214,8 +221,8 @@ def hero_svg(category, sf, W, H, font, mark_s, mark_l, cls, best_only, ylog=True
     if not xlog:  # from $0 to the first round step above 1.1 times the most expensive mark, but at most 10 times the
         # cheapest; and at least 1.5 times the most expensive of the most efficient machines, so that every system's
         # most efficient machine is in the frame (a costlier machine may fall outside); as many round steps as fit
-        costs = [p["dollars"] for p in pts]
-        most = max(1.5 * max(p["dollars"] for p in top.values()), min(1.1 * max(costs), 10 * min(costs)))
+        costs = [p["dollars"] for p in ax]
+        most = max(1.5 * max(p["dollars"] for p in ax_top.values()), min(1.1 * max(costs), 10 * min(costs)))
         xstep = nice_step(most / max(3, (W - L - R) / 110))
         top_x = math.ceil(most / xstep - 1e-9) * xstep
         X = lambda v: L + v / top_x * (W - L - R)
