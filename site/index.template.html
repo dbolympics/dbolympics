@@ -271,7 +271,7 @@ canvas { display: block; }
       <tbody id="board"></tbody>
     </table></div>
     <figcaption><b>Table 1.</b> Systems ordered by cost, the cheapest first. <i>Slowdown</i> is the geometric mean, over the
-      queries the system answered correctly or ran to the timeout ({{TIMEOUT}}, counted as the full timeout), of each query's time relative to the fastest correct system (plus 10&#8202;ms), the bar on a log scale; failed and wrong queries are left out.
+      queries the system answered correctly or ran to the timeout ({{TIMEOUT}}, counted as the full timeout), of each query's time relative to the fastest correct system (plus 10&#8202;ms), the bar on a log scale; failed and wrong queries are left out. A system with runtimes for fewer than half of the queries counts as crashed.
       <i>QPS</i> (queries per second) and <i>Cost</i> as in Figure 1. <i>Correct</i> is out of 409 after the last load. <i>Load</i> is the
       total of all five loads.
       <b id="unchecked" hidden>There are no reference results at this scale factor yet: every result that came back counts
@@ -349,7 +349,8 @@ canvas { display: block; }
     <dt>Failures</dt>
     <dd>A query still running after its timeout ({{TIMEOUT}}) is aborted. In every measure of speed, a timed-out query
       counts as taking the full timeout, and a failed or wrong one as the upper bound x̄ + ME of the 95% confidence
-      interval of the system's mean runtime (methodology, Penalties).</dd>
+      interval of the system's mean runtime (methodology, Penalties). A system with runtimes for
+      fewer than half of the queries counts as crashed.</dd>
     <dt>Figure 1</dt>
     <dd><i>Queries per second</i> is 409 over the time all queries take together after the last load. The <i>cost</i> is
       that time at the machine's price per hour (methodology, Machines).</dd>
@@ -555,7 +556,7 @@ function failure(f) {
   if (f.status === "disabled") return `disabled: ${f.message}`;
   const what = { failed_crash: "crashed", failed_oom: "ran out of memory", failed_stuck: "stopped responding",
                  failed_load: "load failed", failed_load_timeout: "load took too long",
-                 failed_setup: "could not be set up" }[f.status] || "failed";
+                 failed_setup: "could not be set up", failed_half: "crashed: ran fewer than half of the queries" }[f.status] || "failed";
   const at = f.query && f.query !== "load" ? ` at ${f.query}` : "";
   return `${what}${at} in the ${ROUNDS[f.run - 1] || `${f.run}th`} round`;
 }

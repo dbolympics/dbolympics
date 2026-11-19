@@ -236,9 +236,9 @@ table.spec { width: 100%; border-collapse: collapse; font-size: 15px; margin: 6p
     exactly the speed on the recorded queries, as if the failed ones had not been asked. The margin makes failing cost
     something, more the more queries are missing (<i>N</i> small) and the more the recorded runtimes vary (<i>s</i>
     large). With every query recorded (<i>N</i>&nbsp;=&nbsp;<i>Q</i>) it is zero.</p>
-  <p>The estimate needs enough of a sample: with recorded runtimes for fewer than half of the queries
-    (<i>N</i>&nbsp;&lt;&nbsp;<i>Q</i>&nbsp;/&nbsp;2, fewer than 205), a query without one is charged twice the slowest
-    correct time of that query on that machine (the timeout if no system answered it correctly).</p>
+  <p>The estimate needs enough of a sample: a system with recorded runtimes for fewer than half of the queries
+    (<i>N</i>&nbsp;&lt;&nbsp;<i>Q</i>&nbsp;/&nbsp;2, fewer than 205) counts as crashed, like a run that fails as a whole.
+    It has no queries per second, cost or place in the ranking.</p>
   <p>The interval assumes the recorded queries are a random sample of the 409. They are not quite: a system tends to
     fail the harder queries, so the true time of the missing ones is likely above the mean, and the margin covers only
     part of that.</p>
