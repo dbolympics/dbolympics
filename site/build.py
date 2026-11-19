@@ -103,9 +103,8 @@ def points(category, sf):
     cfgs = sorted((c for c in D["categories"][category].values() if c["sf"] == sf), key=lambda c: machine_order(c["machine"]))
     pts = []
     for m, c in enumerate(cfgs):
-        # a query without a correct result counts as in Table 1 (extract.py): a timeout the timeout, anything else twice
-        # the slowest correct time of that query
-        cost = lambda s, i: s["times"][i] if s["status"][i] == 0 else c["timeout"] if s["status"][i] == 3 else 2 * c["worst"][i]
+        # a query without a correct result counts as in extract.py: a timeout the timeout, anything else x̄ + ME
+        cost = lambda s, i: s["times"][i] if s["status"][i] == 0 else c["timeout"] if s["status"][i] == 3 else s["fill"] if s.get("fill") is not None else 2 * c["worst"][i]
         for name, s in c["systems"].items():
             if s["failed"]:  # a run that did not finish has no last round
                 continue

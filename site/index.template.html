@@ -248,7 +248,7 @@ canvas { display: block; }
     all 409 queries.
     <!--HERO_MACHINES-->
     Pricing based on <span class="hn" tabindex="0" data-note="<!--PRICE_NOTE-->">AWS</span>.
-    <span class="hn" tabindex="0" data-note="A timed-out query counts as taking the full timeout ({{TIMEOUT}}); a failed or wrong one as taking twice the slowest correct time of that query.">Timeouts and errors are penalized</span>.</figcaption>
+    A timed-out query counts as the full timeout ({{TIMEOUT}}), a failed or wrong one as the upper 95% bound of the system's mean runtime with the finite population correction (<a href="methodology.html#penalties">how</a>).</figcaption>
 </figure>
 
 <nav class="settings" aria-label="Configuration">
@@ -349,8 +349,8 @@ canvas { display: block; }
       failed query.</dd>
     <dt>Failures</dt>
     <dd>A query still running after its timeout ({{TIMEOUT}}) is aborted. In every measure of speed, a timed-out query
-      counts as taking the full timeout, and a failed or wrong one as taking twice the slowest correct time of that
-      query.</dd>
+      counts as taking the full timeout, and a failed or wrong one as the upper bound x̄ + ME of the 95% confidence
+      interval of the system's mean runtime (methodology, Penalties).</dd>
     <dt>Figure 1</dt>
     <dd><i>Queries per second</i> is 409 over the time all queries take together after the last load. The <i>cost</i> is
       that time at the machine's price per hour (methodology, Machines).</dd>
@@ -561,10 +561,10 @@ function failure(f) {
   return `${what}${at} in the ${ROUNDS[f.run - 1] || `${f.run}th`} round`;
 }
 function renderBoard() {
-  // as in Figure 1: all queries once after the last load, a timeout as the timeout, a failed or wrong query as twice
-  // the slowest correct time of that query; the cost at the machine's price per hour
+  // as in Figure 1: all queries once after the last load, a timeout as the timeout, a failed or wrong query as x̄ + ME
+  // (extract.py); the cost at the machine's price per hour
   const c = cfg();
-  const secs = s => Q.reduce((sum, _, k) => sum + (s.status[k] === 0 ? s.times[k] : s.status[k] === 3 ? c.timeout : 2 * c.worst[k]), 0);
+  const secs = s => Q.reduce((sum, _, k) => sum + (s.status[k] === 0 ? s.times[k] : s.status[k] === 3 ? c.timeout : s.fill != null ? s.fill : 2 * c.worst[k]), 0);
   // by cost, the cheapest first; a run that did not finish has no last round to cost: it goes below the others, with
   // what ended it; a system disabled at this scale factor goes last
   const last = s => !s.failed ? 0 : s.failed.status === "disabled" ? 2 : 1;
@@ -602,7 +602,7 @@ function renderBoard() {
       <td class="r load">${loaded ? `${s.load.reduce((a, b) => a + b, 0).toFixed(0)} s` : "–"}</td>`;
     tr.onclick = () => select(name);
     tr.onmousemove = e => tip(e, `<div class="t">${NAMES[name]}</div>
-      <div>${s.correct} correct · ${s.wrong} wrong · ${s.error} error · ${s.timeout} timeout</div>
+      <div>${s.correct} correct · ${s.wrong} wrong · ${s.error} error · ${s.timeout} timeout</div>${s.fill != null ? `<div>N = ${s.sample_n} recorded · x̄ = ${s.fill_mean.toFixed(3)} s · ME = ${s.fill_me.toFixed(3)} s · a query without a runtime counts ${s.fill.toFixed(3)} s</div>` : ''}
       <div class="m">first load ${fmtT(s.load[0])}</div>`);
     tr.onmouseleave = hideTip;
     tb.appendChild(tr);
@@ -621,11 +621,11 @@ function order() {
     const roles = Object.keys(D.roles);
     idx.sort((a, b) => roles.indexOf(Q[a].role) - roles.indexOf(Q[b].role) || a - b);
   } else if (state.order.startsWith("sel") && c.systems[state.sel]) {
-    // what each query costs the selected system, as in Table 1: its time, a timeout the timeout, a failed or wrong
-    // query twice the slowest correct time of that query; by itself or relative to the fastest correct system (both
+    // what each query costs the selected system, as in Figure 1: its time, a timeout the timeout, a failed or wrong
+    // query x̄ + ME; by itself or relative to the fastest correct system (both
     // plus 10 ms), the costliest last. A query no system answers has no fastest: at the very end
     const s = c.systems[state.sel];
-    const cost = i => s.status[i] === 0 ? s.times[i] : s.status[i] === 3 ? c.timeout : 2 * c.worst[i];
+    const cost = i => s.status[i] === 0 ? s.times[i] : s.status[i] === 3 ? c.timeout : s.fill != null ? s.fill : 2 * c.worst[i];
     const key = state.order === "selrel" ? i => c.best[i] == null ? Infinity : (cost(i) + 0.01) / (c.best[i] + 0.01) : cost;
     idx.sort((a, b) => key(a) - key(b) || a - b);
   }
