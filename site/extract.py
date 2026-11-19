@@ -240,11 +240,13 @@ for (cfg, category), b in sorted(bench.items()):
             sd = math.sqrt(sum((x - fill_mean) ** 2 for x in okt) / (N - 1)) if N > 1 else 0.0
             fill_me = 1.96 * sd / math.sqrt(N) * math.sqrt((Q - N) / (Q - 1))
             fill = fill_mean + fill_me
-        # geometric mean of (t + 10 ms) / (best + 10 ms) over all queries, ClickBench style
+        # geometric mean of (t + 10 ms) / (best + 10 ms) over the correct and the timed-out queries, ClickBench style
         logs = []
         for i, q in enumerate(qids):
             if best[i] is None:
                 continue
+            if st[i] not in (0, 3) and not s["failed"]:
+                continue  # failed and wrong queries are left out (a failed run counts every query, as above)
             logs.append(math.log((cost(t, st, i) + 0.01) / (best[i] + 0.01)))
         # per-run geometric mean over the queries that succeeded in every run of this system
         per_run = []

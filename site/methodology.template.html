@@ -179,11 +179,11 @@ table.spec { width: 100%; border-collapse: collapse; font-size: 15px; margin: 6p
     whole result, over a connection that stays open for the run, so no client starts per query. {{REPS_COUNTS}}</p>
   <p><b>Load time</b> is measured the same way: from sending a load, every table's file of the period at once, to the
     system's answer that all of it is loaded. Creating the schema is timed apart and not counted.</p>
-  <p><b>Relative time</b> (Table 1) is the geometric mean, over all 409 queries, of a query's time relative to the
-    fastest correct system on that machine, both plus 10&#8202;ms so that the shortest queries do not dominate. A
-    timed-out query counts as taking the full timeout ({{TIMEOUT}}); a failed one, one with a wrong result or one not run
-    as taking twice the slowest correct time of that query on that machine (the timeout if no system answered it
-    correctly).</p>
+  <p><b>Relative time</b> (Table 1) is the geometric mean, over the queries the system answered correctly or ran to
+    the timeout, of a query's time relative to the fastest correct system on that machine, both plus 10&#8202;ms so that
+    the shortest queries do not dominate. A timed-out query counts as taking the full timeout ({{TIMEOUT}}); a failed
+    one, one with a wrong result or one not run is left out. The failures show in queries per second and cost (the
+    penalty below) and in the number of correct queries.</p>
   <p><b>Queries per second</b> (Figure 1) is 409 over the time all queries take together after the last load (the median
     of each). A timed-out query counts as taking the full timeout, a failed or wrong one as the penalty below.</p>
   <p><b>Cost</b> (Figure 1) is that same time at the machine's price per hour: what it costs to run all 409 queries

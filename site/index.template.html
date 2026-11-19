@@ -270,9 +270,8 @@ canvas { display: block; }
       </tr></thead>
       <tbody id="board"></tbody>
     </table></div>
-    <figcaption><b>Table 1.</b> Systems ordered by cost, the cheapest first. <i>Slowdown</i> is the geometric mean, over all
-      409 queries, of each query's time relative to the fastest correct system (plus 10&#8202;ms), the bar on a log scale. A timed-out query counts as taking the full timeout
-      ({{TIMEOUT}}); a failed or wrong one as taking twice the slowest correct time of that query.
+    <figcaption><b>Table 1.</b> Systems ordered by cost, the cheapest first. <i>Slowdown</i> is the geometric mean, over the
+      queries the system answered correctly or ran to the timeout ({{TIMEOUT}}, counted as the full timeout), of each query's time relative to the fastest correct system (plus 10&#8202;ms), the bar on a log scale; failed and wrong queries are left out.
       <i>QPS</i> (queries per second) and <i>Cost</i> as in Figure 1. <i>Correct</i> is out of 409 after the last load. <i>Load</i> is the
       total of all five loads.
       <b id="unchecked" hidden>There are no reference results at this scale factor yet: every result that came back counts
