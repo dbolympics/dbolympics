@@ -47,7 +47,7 @@ orders_scoped AS (
     o.user_id AS user_id,
     o.status AS status,
     CASE WHEN o.status <> 'cancelled' THEN
-      CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+      CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
            ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END
     ELSE NULL END AS revenue_eur,
     CASE WHEN o.status <> 'cancelled' THEN 1 ELSE 0 END AS is_noncancelled,

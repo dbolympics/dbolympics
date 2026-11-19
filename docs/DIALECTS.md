@@ -69,7 +69,9 @@ Renaming an alias at all its uses is simple too.
      `final` (non-reserved in the standard, ClickHouse's `FINAL` modifier).
    - Otherwise the system's error stays. Examples: correlated subqueries a system cannot
      decorrelate; Hyper's `(a, b) IN (VALUES ...)` (its equivalent repeats a pattern per list
-     element); ClickHouse's CASE over decimals of different scales (finding them needs types); `COUNT(DISTINCT (a, b))` on Hyper, CedarDB
+     element); ClickHouse's CASE over decimals of different scales where a result is an expression
+     (finding its type needs more than the schema; columns of a known type are cast,
+     [NUMERICS.md](NUMERICS.md) rule 8); `COUNT(DISTINCT (a, b))` on Hyper, CedarDB
      and Firebolt (combining the two values into one is exact only within a range of values).
 3. **The query uses X, and the standard has no X** (implementation-defined or unspecified).
    - Enough reference dialects support another way to write it, two of the four for a standard

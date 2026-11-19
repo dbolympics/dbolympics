@@ -22,8 +22,8 @@ converted AS (
   SELECT
     b.tenant_id AS tenant_id,
     b.q AS q,
-    CASE WHEN b.currency_code = 'EUR' THEN b.amount ELSE CAST({{divide_decimal(b.amount, fx.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
-    CASE WHEN b.currency_code = 'EUR' THEN b.amount_refunded ELSE CAST({{divide_decimal(b.amount_refunded, fx.rate)}} AS NUMERIC(18,6)) END AS refunded_eur
+    CASE WHEN b.currency_code = 'EUR' THEN CAST(b.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(b.amount, fx.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
+    CASE WHEN b.currency_code = 'EUR' THEN CAST(b.amount_refunded AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(b.amount_refunded, fx.rate)}} AS NUMERIC(18,6)) END AS refunded_eur
   FROM base b
   LEFT JOIN fx ON fx.quote_code = b.currency_code AND fx.as_of = b.captured_date
 ),

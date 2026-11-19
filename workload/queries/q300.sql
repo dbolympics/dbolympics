@@ -12,7 +12,7 @@ converted AS (
   SELECT
     lr.tenant_id AS tenant_id,
     lr.processed_at AS processed_at,
-    CASE WHEN lr.currency_code = 'EUR' THEN lr.amount
+    CASE WHEN lr.currency_code = 'EUR' THEN CAST(lr.amount AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(lr.amount, er.rate)}} AS NUMERIC(18,6)) END AS eur_amount
   FROM late_refunds lr
   LEFT JOIN exchange_rates er

@@ -28,7 +28,7 @@ cc_valued AS (
     cc.category_name AS category_name,
     cc.quantity AS quantity,
     cc.lot_id AS lot_id,
-    CASE WHEN cv.currency_code = 'EUR' THEN cv.unit_cost
+    CASE WHEN cv.currency_code = 'EUR' THEN CAST(cv.unit_cost AS NUMERIC(18,6))
          WHEN cv.unit_cost IS NULL THEN NULL
          ELSE CAST({{divide_decimal(cv.unit_cost, er.rate)}} AS NUMERIC(18,6))
     END AS unit_cost_eur

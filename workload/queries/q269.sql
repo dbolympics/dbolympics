@@ -33,7 +33,7 @@ orders_classified AS (
     ow.tenant_id AS tenant_id,
     ow.order_id AS order_id,
     ow.user_id AS user_id,
-    CASE WHEN ow.currency_code = 'EUR' THEN ow.grand_total ELSE CAST({{divide_decimal(ow.grand_total, ow.rate)}} AS NUMERIC(18,6)) END AS revenue_eur,
+    CASE WHEN ow.currency_code = 'EUR' THEN CAST(ow.grand_total AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(ow.grand_total, ow.rate)}} AS NUMERIC(18,6)) END AS revenue_eur,
     CASE
       WHEN ow.placed_at BETWEEN w.final_start AND w.final_end THEN 'final'
       WHEN ow.placed_at BETWEEN w.prior_start AND w.prior_end THEN 'prior'
@@ -86,7 +86,7 @@ payments_with_fx AS (
 payments_classified AS (
   SELECT
     pw.tenant_id AS tenant_id,
-    CASE WHEN pw.currency_code = 'EUR' THEN pw.amount ELSE CAST({{divide_decimal(pw.amount, pw.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
+    CASE WHEN pw.currency_code = 'EUR' THEN CAST(pw.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(pw.amount, pw.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
     CASE
       WHEN pw.captured_at BETWEEN w.final_start AND w.final_end THEN 'final'
       WHEN pw.captured_at BETWEEN w.prior_start AND w.prior_end THEN 'prior'
@@ -115,7 +115,7 @@ refunds_with_fx AS (
 refunds_classified AS (
   SELECT
     rw.tenant_id AS tenant_id,
-    CASE WHEN rw.currency_code = 'EUR' THEN rw.amount ELSE CAST({{divide_decimal(rw.amount, rw.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
+    CASE WHEN rw.currency_code = 'EUR' THEN CAST(rw.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(rw.amount, rw.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
     CASE
       WHEN rw.processed_at BETWEEN w.final_start AND w.final_end THEN 'final'
       WHEN rw.processed_at BETWEEN w.prior_start AND w.prior_end THEN 'prior'

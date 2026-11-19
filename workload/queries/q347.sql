@@ -35,7 +35,7 @@ LEFT JOIN (
 LEFT JOIN (
   SELECT p.primary_category_id AS primary_category_id,
     SUM(oi.quantity) AS units_sold,
-    SUM(CASE WHEN oi.currency_code = 'EUR' THEN oi.line_total ELSE CAST({{divide_decimal(oi.line_total, er.rate)}} AS NUMERIC(18,6)) END) AS revenue_eur
+    SUM(CASE WHEN oi.currency_code = 'EUR' THEN CAST(oi.line_total AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(oi.line_total, er.rate)}} AS NUMERIC(18,6)) END) AS revenue_eur
   FROM order_items oi
   JOIN orders o ON o.id = oi.order_id
   JOIN product_variants pv ON pv.id = oi.product_variant_id

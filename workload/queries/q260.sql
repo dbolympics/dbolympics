@@ -24,7 +24,7 @@ orders_2025 AS (
 ),
 orders_eur AS (
   SELECT oe.*,
-    CASE WHEN oe.currency_code = 'EUR' THEN oe.grand_total
+    CASE WHEN oe.currency_code = 'EUR' THEN CAST(oe.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(oe.grand_total, er.rate)}} AS NUMERIC(18,6))
     END AS grand_total_eur
   FROM orders_2025 oe

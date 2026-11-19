@@ -1,9 +1,9 @@
 WITH payout_eur AS (
   SELECT p.tenant_id AS tenant_id,
          EXTRACT(YEAR FROM p.paid_at) AS yr,
-         CASE WHEN p.currency_code = 'EUR' THEN p.gross_amount
+         CASE WHEN p.currency_code = 'EUR' THEN CAST(p.gross_amount AS NUMERIC(18,6))
               ELSE CAST({{divide_decimal(p.gross_amount, er.rate)}} AS NUMERIC(18,6)) END AS gross_eur,
-         CASE WHEN p.currency_code = 'EUR' THEN p.fee_amount
+         CASE WHEN p.currency_code = 'EUR' THEN CAST(p.fee_amount AS NUMERIC(18,6))
               ELSE CAST({{divide_decimal(p.fee_amount, er.rate)}} AS NUMERIC(18,6)) END AS fee_eur
   FROM payouts p
   LEFT JOIN exchange_rates er

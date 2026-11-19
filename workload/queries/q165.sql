@@ -11,7 +11,7 @@ FROM (
     SELECT rr.tenant_id AS tenant_id, ref.referrer_user_id AS referrer_user_id,
            COUNT(*) AS redemption_count,
            COUNT(DISTINCT rr.referred_user_id) AS distinct_referred_customers,
-           SUM(CASE WHEN rr.currency_code = 'EUR' THEN rr.reward_amount
+           SUM(CASE WHEN rr.currency_code = 'EUR' THEN CAST(rr.reward_amount AS NUMERIC(18,6))
                     ELSE CAST({{divide_decimal(rr.reward_amount, er.rate)}} AS NUMERIC(18,6)) END) AS total_reward_paid_eur
     FROM referral_redemptions rr
     JOIN referrals ref ON ref.id = rr.referral_id
@@ -26,7 +26,7 @@ LEFT JOIN (
     SELECT o.tenant_id AS tenant_id, o.user_id AS user_id,
            COUNT(*) AS lifetime_order_count,
            SUM(CASE WHEN o.status <> 'cancelled' THEN
-                    CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+                    CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
                          ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END
                     ELSE 0 END) AS lifetime_revenue_eur
     FROM orders o

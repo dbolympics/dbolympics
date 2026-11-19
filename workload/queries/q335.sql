@@ -27,7 +27,7 @@ order_eur_amounts AS (
   SELECT
     o.tenant_id AS tenant_id,
     o.id AS order_id,
-    CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+    CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS revenue_eur
   FROM orders o
   LEFT JOIN exchange_rates er

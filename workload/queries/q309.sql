@@ -15,7 +15,7 @@ naive AS (
 ),
 correct AS (
   SELECT p.currency_code AS currency_code,
-    SUM(CASE WHEN p.currency_code = 'EUR' THEN p.amount ELSE CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6)) END) AS correct_eur
+    SUM(CASE WHEN p.currency_code = 'EUR' THEN CAST(p.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6)) END) AS correct_eur
   FROM pop p
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

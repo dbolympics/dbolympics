@@ -12,7 +12,7 @@ FROM (
       WHEN pr.processed_at <= po.paid_at THEN 'refund before payout paid_at'
       ELSE 'refund after payout paid_at'
     END AS timing_bucket,
-    CASE WHEN pr.currency_code = 'EUR' THEN pr.amount ELSE CAST({{divide_decimal(pr.amount, er.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
+    CASE WHEN pr.currency_code = 'EUR' THEN CAST(pr.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(pr.amount, er.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
     {{divide_decimal({{seconds_between(po.paid_at, pr.processed_at)}}, 86400.0)}} AS days_lag
   FROM payment_refunds pr
   LEFT JOIN payout_items pi ON pi.payment_id = pr.payment_id

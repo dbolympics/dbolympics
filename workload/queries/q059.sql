@@ -12,7 +12,7 @@ WITH classified AS (
 ),
 converted AS (
   SELECT c.*,
-    CASE WHEN c.currency_code = 'EUR' THEN c.grand_total
+    CASE WHEN c.currency_code = 'EUR' THEN CAST(c.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(c.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS grand_total_eur
   FROM classified c
   LEFT JOIN exchange_rates er ON er.base_code = 'EUR' AND er.quote_code = c.currency_code AND er.as_of = CAST(c.placed_at AS date)

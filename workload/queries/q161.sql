@@ -16,7 +16,7 @@ WITH orders_base AS (
 orders_enriched AS (
   SELECT
     ob.*,
-    CASE WHEN ob.currency_code = 'EUR' THEN ob.grand_total
+    CASE WHEN ob.currency_code = 'EUR' THEN CAST(ob.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(ob.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS eur_amount,
     EXISTS (SELECT 1 FROM payments p WHERE p.order_id = ob.order_id AND p.amount_refunded > 0) AS has_refund,
     EXISTS (SELECT 1 FROM order_returns r WHERE r.order_id = ob.order_id) AS has_return

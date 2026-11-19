@@ -82,7 +82,7 @@ t4 AS (
 t5 AS (
   SELECT ow.status_category AS status_category,
          SUM(
-           CASE WHEN ow.discount_currency = 'EUR' THEN ow.discount_amount
+           CASE WHEN ow.discount_currency = 'EUR' THEN CAST(ow.discount_amount AS NUMERIC(18,6))
                 ELSE CAST({{divide_decimal(ow.discount_amount, er.rate)}} AS NUMERIC(18,6))
            END
          ) AS total_discount_eur

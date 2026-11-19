@@ -20,7 +20,7 @@ orders_agg AS (
   SELECT CAST({{date_trunc('month', o.placed_at)}} AS date) AS month,
          count(*) AS orders_count,
          sum(
-           CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+           CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
                 ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))
            END
          ) AS revenue_eur
