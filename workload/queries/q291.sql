@@ -10,7 +10,7 @@ cart_population AS (
 ),
 cart_with_eur AS (
   SELECT cp.*,
-    CASE WHEN cp.currency_code = 'EUR' THEN cp.subtotal
+    CASE WHEN cp.currency_code = 'EUR' THEN CAST(cp.subtotal AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(cp.subtotal, er.rate)}} AS NUMERIC(18,6)) END AS subtotal_eur
   FROM cart_population cp
   LEFT JOIN exchange_rates er

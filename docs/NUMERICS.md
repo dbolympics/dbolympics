@@ -98,6 +98,12 @@ checker absorbs only the digits the standard leaves to the engine.
      `CASE WHEN currency = 'EUR' THEN amount ELSE amount / rate END` the double branch made
      the EUR amounts doubles too, and in q230 two exactly tied rows sorted by float noise
      instead of by the tie-breaker. With the cast the CASE is exact in every engine.
+   - **The other results of such a CASE** that are columns of a known decimal type (a table
+     column of scale up to 6 and up to 12 integer digits, or a CTE's column that passes one
+     through) get the same type, `CAST(amount AS NUMERIC(18,6))`: 73 results in 50 queries
+     (the `exact_case_branch` step). The cast is exact, so no value changes, and the CASE has
+     one type: ClickHouse rejects a CASE over decimals of different scales (the amount's 4
+     next to the conversion's 6). An expression such as `amount - amount_refunded` stays.
    - **q258** converted with `x * (1.0 / rate)`. It now uses `x / rate`, so the cast rounds
      the amount and not the inverse rate (1/400 at scale 6 would be off by 2e-4 relative).
 9. **Divisors that are zero on partial loads are guarded:** `x / NULLIF(y, 0)` in q080,

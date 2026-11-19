@@ -25,7 +25,7 @@ return_flag AS (
 orders_enriched AS (
   SELECT
     ob.tenant_id AS tenant_id, ob.user_id AS user_id, ob.order_id AS order_id, ob.status AS status, ob.placed_at AS placed_at,
-    CASE WHEN ob.currency_code = 'EUR' THEN ob.grand_total
+    CASE WHEN ob.currency_code = 'EUR' THEN CAST(ob.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(ob.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS grand_total_eur,
     CASE WHEN COALESCE(pr.has_refund,0) = 1 OR rf.order_id IS NOT NULL THEN 1 ELSE 0 END AS is_refunded
   FROM orders_base ob

@@ -21,7 +21,7 @@ fx_rates AS (
 payments_with_eur AS (
   SELECT
     bp.*,
-    CASE WHEN bp.currency_code = 'EUR' THEN bp.payment_amount
+    CASE WHEN bp.currency_code = 'EUR' THEN CAST(bp.payment_amount AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(bp.payment_amount, fx.rate)}} AS NUMERIC(18,6)) END AS payment_amount_eur
   FROM base_payments bp
   LEFT JOIN fx_rates fx

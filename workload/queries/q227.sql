@@ -4,12 +4,12 @@ WITH ledger_q AS (
     CAST(EXTRACT(QUARTER FROM le.occurred_at) AS int) AS qtr,
     SUM(CASE
           WHEN la.account_type = 'revenue' AND le.direction = 'credit'
-          THEN (CASE WHEN le.currency_code = 'EUR' THEN le.amount ELSE CAST({{divide_decimal(le.amount, er.rate)}} AS NUMERIC(18,6)) END)
+          THEN (CASE WHEN le.currency_code = 'EUR' THEN CAST(le.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(le.amount, er.rate)}} AS NUMERIC(18,6)) END)
           ELSE 0
         END) AS ledger_revenue_credit_eur,
     SUM(CASE
           WHEN la.account_type = 'contra_revenue' AND le.direction = 'debit'
-          THEN (CASE WHEN le.currency_code = 'EUR' THEN le.amount ELSE CAST({{divide_decimal(le.amount, er.rate)}} AS NUMERIC(18,6)) END)
+          THEN (CASE WHEN le.currency_code = 'EUR' THEN CAST(le.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(le.amount, er.rate)}} AS NUMERIC(18,6)) END)
           ELSE 0
         END) AS ledger_contra_revenue_debit_eur
   FROM ledger_entries le

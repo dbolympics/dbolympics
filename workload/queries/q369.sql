@@ -26,7 +26,7 @@ base AS (
       ELSE 'dates indicate overlap - likely a bug in the original orphan flag'
     END AS category,
     CASE
-      WHEN mrs.currency_code = 'EUR' THEN mrs.discount_total
+      WHEN mrs.currency_code = 'EUR' THEN CAST(mrs.discount_total AS NUMERIC(18,6))
       ELSE CAST({{divide_decimal(mrs.discount_total, er.rate)}} AS NUMERIC(18,6))
     END AS discount_amount_eur
   FROM most_recent_sub mrs

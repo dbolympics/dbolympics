@@ -38,7 +38,7 @@ orders_after_revenue AS (
     SUM(
       CASE
         WHEN o.id IS NULL THEN 0
-        WHEN o.currency_code = 'EUR' THEN o.grand_total
+        WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
         ELSE CAST({{divide_decimal(o.grand_total, NULLIF(er.rate, 0))}} AS NUMERIC(18,6))
       END
     ) AS revenue_after_eur

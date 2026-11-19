@@ -12,7 +12,7 @@ cart_base AS (
 ),
 cart_calc AS (
   SELECT *,
-    CASE WHEN currency_code='EUR' THEN subtotal ELSE CAST({{divide_decimal(subtotal, NULLIF(eur_rate,0))}} AS NUMERIC(18,6)) END AS subtotal_eur,
+    CASE WHEN currency_code='EUR' THEN CAST(subtotal AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(subtotal, NULLIF(eur_rate,0))}} AS NUMERIC(18,6)) END AS subtotal_eur,
     CASE WHEN resolved_at IS NULL THEN NULL ELSE {{divide_decimal({{seconds_between(created_at, resolved_at)}}, 3600.0)}} END AS resolution_hours
   FROM cart_base
 ),

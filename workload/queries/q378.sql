@@ -51,7 +51,7 @@ aov AS (
   SELECT
     t8.period AS period,
     AVG(
-      CASE WHEN t8.currency_code = 'EUR' THEN t8.grand_total
+      CASE WHEN t8.currency_code = 'EUR' THEN CAST(t8.grand_total AS NUMERIC(18,6))
            ELSE CAST({{divide_decimal(t8.grand_total, t9.rate)}} AS NUMERIC(18,6))
       END
     ) AS avg_order_value_eur

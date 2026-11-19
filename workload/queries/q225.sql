@@ -31,7 +31,7 @@ pay_eur AS (
   SELECT
     pf.*,
     CASE
-      WHEN pf.currency_code = 'EUR' THEN pf.amount
+      WHEN pf.currency_code = 'EUR' THEN CAST(pf.amount AS NUMERIC(18,6))
       ELSE CAST({{divide_decimal(pf.amount, er.rate)}} AS NUMERIC(18,6))
     END AS amount_eur
   FROM pay_flagged pf

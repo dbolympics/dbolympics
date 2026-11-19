@@ -10,7 +10,7 @@ WITH target_tenants AS (
 ),
 revenue_tenant AS (
   SELECT p0.tenant_id AS tenant_id,
-    SUM(CASE WHEN p0.currency_code = 'EUR' THEN p0.amount
+    SUM(CASE WHEN p0.currency_code = 'EUR' THEN CAST(p0.amount AS NUMERIC(18,6))
              ELSE CAST({{divide_decimal(p0.amount, er0.rate)}} AS NUMERIC(18,6)) END) AS total_2025_revenue_eur
   FROM payments p0
   LEFT JOIN exchange_rates er0
@@ -23,7 +23,7 @@ revenue_tenant AS (
   GROUP BY p0.tenant_id
 ),
 revenue_all AS (
-  SELECT SUM(CASE WHEN p1.currency_code = 'EUR' THEN p1.amount
+  SELECT SUM(CASE WHEN p1.currency_code = 'EUR' THEN CAST(p1.amount AS NUMERIC(18,6))
                   ELSE CAST({{divide_decimal(p1.amount, er1.rate)}} AS NUMERIC(18,6)) END) AS total_revenue_eur_all
   FROM payments p1
   LEFT JOIN exchange_rates er1
@@ -36,10 +36,10 @@ revenue_all AS (
 ),
 open_invoices_tenant AS (
   SELECT i0.tenant_id AS tenant_id,
-    SUM(CASE WHEN i0.currency_code = 'EUR' THEN i0.amount_due
+    SUM(CASE WHEN i0.currency_code = 'EUR' THEN CAST(i0.amount_due AS NUMERIC(18,6))
              ELSE CAST({{divide_decimal(i0.amount_due, er2.rate)}} AS NUMERIC(18,6)) END) AS open_amount_due_eur,
     SUM(CASE WHEN i0.due_at < TIMESTAMP '2025-12-31 00:00:00'
-             THEN (CASE WHEN i0.currency_code = 'EUR' THEN i0.amount_due
+             THEN (CASE WHEN i0.currency_code = 'EUR' THEN CAST(i0.amount_due AS NUMERIC(18,6))
                         ELSE CAST({{divide_decimal(i0.amount_due, er2.rate)}} AS NUMERIC(18,6)) END)
              ELSE 0 END) AS overdue_amount_due_eur
   FROM invoices i0

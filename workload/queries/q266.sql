@@ -17,7 +17,7 @@ converted AS (
     b.touch_point AS touch_point,
     b.order_id AS order_id,
     b.weight AS weight,
-    CASE WHEN b.currency_code = 'EUR' THEN b.attributed_revenue
+    CASE WHEN b.currency_code = 'EUR' THEN CAST(b.attributed_revenue AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(b.attributed_revenue, er.rate)}} AS NUMERIC(18,6)) END AS revenue_eur
   FROM base b
   LEFT JOIN exchange_rates er

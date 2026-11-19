@@ -1,6 +1,6 @@
 WITH order_amounts AS (
   SELECT o.id AS id, o.placed_at AS placed_at, o.currency_code AS currency_code, o.grand_total AS grand_total,
-    CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+    CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS grand_total_eur
   FROM orders o
   LEFT JOIN exchange_rates er

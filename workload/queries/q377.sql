@@ -11,7 +11,7 @@ FROM (
     u.id AS user_id,
     EXISTS (SELECT 1 FROM loyalty_transactions lt WHERE lt.user_id = u.id AND lt.direction = 'burn') AS is_ever_redeemed,
     (SELECT COALESCE(SUM(
-        CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+        CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
              ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END
       ), 0)
      FROM orders o

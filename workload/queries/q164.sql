@@ -43,7 +43,7 @@ ord_eur AS (
     ord.tenant_id AS tenant_id,
     ord.order_id AS order_id,
     ord.period AS period,
-    CASE WHEN ord.currency_code = 'EUR' THEN ord.grand_total
+    CASE WHEN ord.currency_code = 'EUR' THEN CAST(ord.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(ord.grand_total, NULLIF(er0.rate, 0))}} AS NUMERIC(18,6))
     END AS eur_amount
   FROM ord

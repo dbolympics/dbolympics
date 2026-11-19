@@ -28,7 +28,7 @@ ledger_eur AS (
     lf.account_type AS account_type,
     lf.account_name AS account_name,
     CAST(EXTRACT(QUARTER FROM lf.occurred_at) AS int) AS q,
-    CASE WHEN lf.currency_code = 'EUR' THEN lf.amount
+    CASE WHEN lf.currency_code = 'EUR' THEN CAST(lf.amount AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(lf.amount, er.rate)}} AS NUMERIC(18,6)) END AS amount_eur
   FROM ledger_filtered lf
   LEFT JOIN exchange_rates er

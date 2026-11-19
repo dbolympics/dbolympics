@@ -24,7 +24,7 @@ scoped AS (
 converted AS (
   SELECT
     s.*,
-    CASE WHEN s.currency_code = 'EUR' THEN s.amount
+    CASE WHEN s.currency_code = 'EUR' THEN CAST(s.amount AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(s.amount, fx.rate)}} AS NUMERIC(18,6)) END AS amount_eur
   FROM scoped s
   LEFT JOIN fx ON fx.quote_code = s.currency_code

@@ -9,7 +9,7 @@ tenant_counts AS (
 orders_2025 AS (
   SELECT o.currency_code AS currency_code,
     SUM(
-      CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+      CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
            ELSE CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) END
     ) AS orders_2025_total_eur
   FROM orders o

@@ -40,7 +40,7 @@ order_value_eur AS (
   SELECT
     co.order_id AS order_id,
     co.order_type AS order_type,
-    CASE WHEN co.currency_code = 'EUR' THEN co.grand_total
+    CASE WHEN co.currency_code = 'EUR' THEN CAST(co.grand_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(co.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS grand_total_eur
   FROM classified_orders co
   LEFT JOIN exchange_rates er

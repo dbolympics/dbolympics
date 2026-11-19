@@ -42,7 +42,7 @@ converted AS (
     li.month AS month,
     li.product_id AS product_id,
     li.quantity AS quantity,
-    CASE WHEN li.currency_code = 'EUR' THEN li.line_total
+    CASE WHEN li.currency_code = 'EUR' THEN CAST(li.line_total AS NUMERIC(18,6))
          ELSE CAST({{divide_decimal(li.line_total, er.rate)}} AS NUMERIC(18,6)) END AS revenue_eur
   FROM line_items li
   LEFT JOIN exchange_rates er

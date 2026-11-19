@@ -25,7 +25,7 @@ inv AS (
     i.currency_code AS currency_code,
     i.due_at AS due_at,
     CASE
-      WHEN i.currency_code = 'EUR' THEN i.amount_due
+      WHEN i.currency_code = 'EUR' THEN CAST(i.amount_due AS NUMERIC(18,6))
       ELSE CAST({{divide_decimal(i.amount_due, r.rate)}} AS NUMERIC(18,6))
     END AS amount_due_eur,
     CASE

@@ -42,7 +42,7 @@ t_refunded_orders AS (
 ),
 t_revenue AS (
   SELECT p.tenure_band AS tenure_band, p.segment AS segment,
-         SUM(CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
+         SUM(CASE WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
                   ELSE CAST({{divide_decimal(o.grand_total, NULLIF(er.rate, 0))}} AS NUMERIC(18,6)) END) AS total_revenue_eur,
          COUNT(o.id) AS non_cancelled_orders
   FROM population p
