@@ -62,7 +62,8 @@ Renaming an alias at all its uses is simple too.
      Firebolt's sorted `string_agg` from a sorted array; the dense ranks for
      `COUNT(DISTINCT x) OVER (...)`; ClickHouse's `addMinutes`; ClickHouse's division of
      decimals in double precision (as DuckDB's), where its own keeps the dividend's scale and
-     fails on a divisor of a larger one, and its `intDiv` for integers; DuckDB's `//` for
+     fails on a divisor of a larger one, and its `intDiv` for integers; Firebolt's, which does
+     no arithmetic on decimals of different precision and scale; DuckDB's `//` for
      integers. If the change costs nothing on
      any system, it goes into the canonical query instead: an output alias that reuses the name
      of an input column the same block still uses is renamed, and so is a subquery alias
