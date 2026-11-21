@@ -286,9 +286,11 @@ points, their defaults and where a difference goes are in [DIALECTS.md](DIALECTS
   needs network; runs have none.
 - **Storage:** nothing is mounted for storage; a system writes into its container's own
   filesystem. Podman's storage is `bench/containers/` (remove it by hand with
-  `podman unshare rm -rf bench/containers`). Before a configuration starts and after it ends,
-  every pod, container and volume of it goes, the databases' files with them (the images stay);
-  a storage that cannot be emptied stops the run.
+  `podman unshare rm -rf bench/containers`), its temporary files too (`bench/containers/tmp/`,
+  not `/var/tmp`, which may be on a smaller disk: a build stages an image's layers there).
+  Before a configuration starts and after it ends, every pod, container and volume of it goes,
+  the databases' files with them (the images stay); a storage that cannot be emptied stops the
+  run.
 - **Limits:**
   - **Cores:** every container is pinned to the configuration's cores (`--cpuset-cpus`).
   - **Memory:** every container has the configuration's memory as its own limit (a system with

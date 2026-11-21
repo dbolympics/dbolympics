@@ -20,6 +20,9 @@ const BASE_IMAGE: &str = "localhost/dbo-base";
 pub struct Podman {
     /// podman's storage: images, container layers (the databases' files) and volumes
     root: PathBuf,
+    /// podman's temporary files, such as an image's layers while a build commits them (by default in
+    /// /var/tmp, which may be on a smaller disk than the storage)
+    tmp: PathBuf,
     runroot: PathBuf,
     seccomp: PathBuf,
 }
@@ -28,8 +31,9 @@ impl Podman {
     /// `bench` is the bench directory of the repository.
     pub fn new(bench: &Path) -> Result<Podman> {
         let uid = unsafe { libc::getuid() };
-        let p = Podman { root: bench.join("containers/storage"), runroot: PathBuf::from(format!("/run/user/{uid}/dbo-containers")), seccomp: bench.join("seccomp.json") };
+        let p = Podman { root: bench.join("containers/storage"), tmp: bench.join("containers/tmp"), runroot: PathBuf::from(format!("/run/user/{uid}/dbo-containers")), seccomp: bench.join("seccomp.json") };
         std::fs::create_dir_all(&p.root)?;
+        std::fs::create_dir_all(&p.tmp)?;
         if !Path::new(LXCFS).join("proc/meminfo").exists() {
             bail!("LXCFS is not running ({LXCFS}/proc/meminfo is missing): run bench/host-setup.sh");
         }
@@ -38,7 +42,7 @@ impl Podman {
 
     pub fn cmd(&self) -> Command {
         let mut c = Command::new("podman");
-        c.arg("--root").arg(&self.root).arg("--runroot").arg(&self.runroot);
+        c.arg("--root").arg(&self.root).arg("--runroot").arg(&self.runroot).env("TMPDIR", &self.tmp);
         c
     }
 
