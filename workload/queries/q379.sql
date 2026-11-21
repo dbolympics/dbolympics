@@ -75,8 +75,8 @@ SELECT
   period,
   COUNT(*) AS customer_count,
   SUM(order_count) AS total_orders,
-  SUM(order_count) / (SUM(exposed_days) / 365.0) AS orders_per_customer_per_year,
-  100.0 * SUM(refund_count) / SUM(order_count) AS refund_rate_pct
+  SUM(order_count) / ({{divide_decimal(SUM(exposed_days), 365.0)}}) AS orders_per_customer_per_year,
+  {{divide_decimal(100.0 * SUM(refund_count), SUM(order_count))}} AS refund_rate_pct
 FROM customer_period_exposed
 GROUP BY customer_group, period
 ORDER BY

@@ -6,11 +6,11 @@ WITH evaluable_tickets AS (
     t0.resolved_at AS resolved_at,
     t1.resolution_target_minutes AS resolution_target_minutes,
     CASE WHEN t0.resolved_at IS NULL THEN NULL
-         ELSE {{seconds_between(t0.created_at, t0.resolved_at)}} / 3600.0
+         ELSE {{divide_decimal({{seconds_between(t0.created_at, t0.resolved_at)}}, 3600.0)}}
     END AS actual_hours,
     CASE
       WHEN t0.resolved_at IS NULL THEN 1
-      WHEN {{seconds_between(t0.created_at, t0.resolved_at)}} / 60.0 > t1.resolution_target_minutes THEN 1
+      WHEN {{divide_decimal({{seconds_between(t0.created_at, t0.resolved_at)}}, 60.0)}} > t1.resolution_target_minutes THEN 1
       ELSE 0
     END AS is_miss
   FROM tickets t0
@@ -28,7 +28,7 @@ tenant_counts AS (
 ),
 tenant_target AS (
   SELECT e.tenant_id AS tenant_id,
-    CAST(SUM(e.resolution_target_minutes) AS NUMERIC(18,6)) / COUNT(*) / 60.0 AS weighted_target_hours,
+    {{divide_decimal(CAST(SUM(e.resolution_target_minutes) AS NUMERIC(18,6)), COUNT(*))}} / 60.0 AS weighted_target_hours,
     COUNT(DISTINCT e.resolution_target_minutes) AS distinct_target_count
   FROM evaluable_tickets e
   JOIN tenant_counts c ON c.tenant_id = e.tenant_id
@@ -56,7 +56,7 @@ SELECT
   t0.evaluated_count AS urgent_tickets_evaluated_2025,
   t2.median_actual_hours AS median_actual_resolution_hours,
   t2.avg_actual_hours AS avg_actual_resolution_hours,
-  100.0 * t3.miss_count / t0.evaluated_count AS urgent_miss_rate_pct,
+  {{divide_decimal(100.0 * t3.miss_count, t0.evaluated_count)}} AS urgent_miss_rate_pct,
   CASE WHEN t1.distinct_target_count > 1 THEN 'Y' ELSE 'N' END AS multiple_urgent_sla_policies
 FROM tenant_counts t0
 JOIN tenant_target t1 ON t1.tenant_id = t0.tenant_id

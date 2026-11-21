@@ -1,7 +1,7 @@
 SELECT
   t.definition AS definition,
   t.user_count AS user_count,
-  t.user_count * 100.0 / tot.total_count as pct_of_all_customers
+  {{divide_decimal(t.user_count * 100.0, tot.total_count)}} as pct_of_all_customers
 FROM (
   SELECT 'All customers (ever created)' as definition,
     (SELECT count(distinct u1.id) FROM users u1

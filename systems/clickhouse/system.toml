@@ -31,6 +31,11 @@ uuid = "UUID"
 "equals_any(x, arr)" = "CASE WHEN {arr} IS NULL THEN NULL WHEN empty({arr}) THEN false WHEN {x} IS NULL THEN NULL WHEN has({arr}, {x}) THEN true WHEN has({arr}, NULL) THEN NULL ELSE false END"
 # no integer times an interval
 "add_minutes(ts, n)" = "addMinutes({ts}, {n})"
+# an integer quotient is a double: intDiv truncates toward zero; a decimal quotient keeps the dividend's
+# scale and fails on a divisor of a larger one (an amount, scale 4, over an exchange rate, scale 6): in
+# double precision, as DuckDB divides decimals
+"divide_int(a, b)" = "intDiv({a}, {b})"
+"divide_decimal(a, b)" = "toFloat64({a}) / toFloat64({b})"
 "date_diff_days(a, b)" = "dateDiff('day', {a}, {b})"
 "year_month(x)" = "formatDateTime({x}, '%Y-%m')"
 # date_trunc of a month or quarter returns a date; the standard's result is a timestamp

@@ -40,10 +40,10 @@ SELECT
   w.total_attempts AS total_attempts,
   w.successful_logins AS successful_logins,
   w.failed_logins AS failed_logins,
-  100.0 * w.failed_logins / NULLIF(w.total_attempts, 0) AS failure_rate_pct,
+  {{divide_decimal(100.0 * w.failed_logins, NULLIF(w.total_attempts, 0))}} AS failure_rate_pct,
   w.distinct_identities AS distinct_emails_attempted,
   w.distinct_ips AS distinct_ips,
-  w.total_attempts * 1.0 / NULLIF(w.distinct_ips, 0) AS avg_attempts_per_ip,
+  {{divide_decimal(w.total_attempts * 1.0, NULLIF(w.distinct_ips, 0))}} AS avg_attempts_per_ip,
   m.max_ip_attempts AS max_attempts_single_ip
 FROM weekly w
 JOIN ip_max m ON m.week_start = w.week_start

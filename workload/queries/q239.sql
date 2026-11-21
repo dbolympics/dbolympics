@@ -39,7 +39,7 @@ labeled AS (
     order_id,
     CASE WHEN placed_at < DATE '2025-11-01' THEN 'baseline' ELSE 'collapse' END AS period,
     CASE WHEN carrier = 'Albion Parcel' THEN 'Albion Parcel' ELSE 'All other carriers' END AS carrier_group,
-    {{seconds_between(placed_at, delivered_at)}} / 86400.0 AS delivery_days
+    {{divide_decimal({{seconds_between(placed_at, delivered_at)}}, 86400.0)}} AS delivery_days
   FROM qualified
 ),
 agg AS (
@@ -48,7 +48,7 @@ agg AS (
     carrier_group,
     COUNT(*) AS orders_fully_delivered,
     AVG(delivery_days) AS avg_delivery_days,
-    100.0 * SUM(CASE WHEN delivery_days <= 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_within_5_days
+    {{divide_decimal(100.0 * SUM(CASE WHEN delivery_days <= 5 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_within_5_days
   FROM labeled
   GROUP BY period, carrier_group
 )
@@ -58,6 +58,6 @@ SELECT
   orders_fully_delivered,
   avg_delivery_days AS avg_delivery_days,
   pct_within_5_days AS pct_within_5_days,
-  100.0 * orders_fully_delivered / SUM(orders_fully_delivered) OVER (PARTITION BY period) AS share_of_period_orders_pct
+  {{divide_decimal(100.0 * orders_fully_delivered, SUM(orders_fully_delivered) OVER (PARTITION BY period))}} AS share_of_period_orders_pct
 FROM agg
 ORDER BY period ASC NULLS LAST, carrier_group ASC NULLS LAST

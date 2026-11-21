@@ -43,10 +43,10 @@ order_flags AS (
 SELECT
   industry,
   COUNT(*) AS orders_placed_2025,
-  100.0 * SUM(has_shortfall) / NULLIF(COUNT(*),0) AS pct_orders_with_fulfillment_shortfall,
+  {{divide_decimal(100.0 * SUM(has_shortfall), NULLIF(COUNT(*),0))}} AS pct_orders_with_fulfillment_shortfall,
   SUM(is_fully_delivered) AS orders_fully_delivered,
-  AVG(CASE WHEN is_fully_delivered=1 THEN {{seconds_between(placed_at, max_delivered_at)}}/86400.0 END) AS avg_delivery_days,
-  100.0 * SUM(CASE WHEN is_fully_delivered=1 AND max_delivered_at <= placed_at + INTERVAL '5 days' THEN 1 ELSE 0 END) / NULLIF(SUM(is_fully_delivered),0) AS pct_within_5_days
+  AVG(CASE WHEN is_fully_delivered=1 THEN {{divide_decimal({{seconds_between(placed_at, max_delivered_at)}}, 86400.0)}} END) AS avg_delivery_days,
+  {{divide_decimal(100.0 * SUM(CASE WHEN is_fully_delivered=1 AND max_delivered_at <= placed_at + INTERVAL '5 days' THEN 1 ELSE 0 END), NULLIF(SUM(is_fully_delivered),0))}} AS pct_within_5_days
 FROM order_flags
 GROUP BY industry
 ORDER BY pct_orders_with_fulfillment_shortfall DESC NULLS FIRST, industry ASC NULLS LAST

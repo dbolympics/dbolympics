@@ -6,7 +6,7 @@ with quarters as (
 payments_in_2025 as (
   select
     CAST({{date_trunc('quarter', p.captured_at)}} AS date) as quarter_start,
-    CAST(p.amount_refunded / er.rate AS NUMERIC(18,6)) as amount_refunded_eur
+    CAST({{divide_decimal(p.amount_refunded, er.rate)}} AS NUMERIC(18,6)) as amount_refunded_eur
   from payments p
   join exchange_rates er
     on er.base_code = 'EUR'
@@ -23,7 +23,7 @@ payments_by_quarter as (
 returns_in_2025 as (
   select
     CAST({{date_trunc('quarter', r.refunded_at)}} AS date) as quarter_start,
-    CAST(r.refund_total / er.rate AS NUMERIC(18,6)) as refund_total_eur
+    CAST({{divide_decimal(r.refund_total, er.rate)}} AS NUMERIC(18,6)) as refund_total_eur
   from order_returns r
   join exchange_rates er
     on er.base_code = 'EUR'
@@ -55,7 +55,7 @@ select
   refund_total_eur_from_order_returns as refund_total_eur_from_order_returns,
   amount_refunded_eur_from_payments - refund_total_eur_from_order_returns as difference_eur,
   case when amount_refunded_eur_from_payments = 0 then null
-  else (amount_refunded_eur_from_payments - refund_total_eur_from_order_returns) / amount_refunded_eur_from_payments * 100
+  else {{divide_decimal((amount_refunded_eur_from_payments - refund_total_eur_from_order_returns), amount_refunded_eur_from_payments)}} * 100
   end as difference_pct_of_payments_figure
 from combined
 order by year_num NULLS LAST, quarter_num NULLS LAST, quarter_start NULLS LAST

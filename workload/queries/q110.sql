@@ -32,7 +32,7 @@ select
     when '5 - 4+ years' then '4+ years'
   end as age_bucket,
   count(*) as active_key_count,
-  100.0 * count(*) / t.total_active as share_pct,
+  {{divide_decimal(100.0 * count(*), t.total_active)}} as share_pct,
   count(distinct b.tenant_id) as distinct_tenants,
   max(b.age_days) as oldest_key_age_days,
   count(*) filter (where b.last_used_at is null) as never_used_count,

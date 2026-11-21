@@ -22,7 +22,7 @@ rated AS (
     s.*,
     CASE
       WHEN s.currency_code = 'EUR' THEN s.amount
-      ELSE s.amount / (
+      ELSE {{divide_decimal(s.amount, (
         SELECT er.rate
         FROM exchange_rates er
         WHERE er.base_code = 'EUR'
@@ -30,7 +30,7 @@ rated AS (
           AND er.as_of <= CAST(s.closed_at AS date)
         ORDER BY er.as_of DESC NULLS FIRST
         {{fetch_first(1)}}
-      )
+      ))}}
     END AS amount_eur
   FROM scoped s
 )
@@ -40,8 +40,8 @@ SELECT
   COUNT(*) AS opportunities_closed,
   COUNT(*) FILTER (WHERE is_won) AS closed_won,
   COUNT(*) FILTER (WHERE NOT is_won) AS closed_lost,
-  100.0 * COUNT(*) FILTER (WHERE is_won) / COUNT(*) AS win_rate_pct,
-  AVG({{seconds_between(created_at, closed_at)}} / 86400.0) AS avg_days_open,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE is_won), COUNT(*))}} AS win_rate_pct,
+  AVG({{divide_decimal({{seconds_between(created_at, closed_at)}}, 86400.0)}}) AS avg_days_open,
   AVG(amount_eur) AS avg_amount_eur
 FROM rated
 GROUP BY owner_user_id, rep_name, merchant

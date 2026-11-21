@@ -9,14 +9,14 @@ SELECT
         AND al.tenant_id = o.tenant_id
     )
   ) AS events_with_match,
-  100.0 * COUNT(*) FILTER (
+  {{divide_decimal(100.0 * COUNT(*) FILTER (
     WHERE EXISTS (
       SELECT 1 FROM audit_log al
       WHERE al.entity_table = 'orders'
         AND al.entity_id = o.id
         AND al.tenant_id = o.tenant_id
     )
-  ) / NULLIF(COUNT(*), 0) AS coverage_rate_pct,
+  ), NULLIF(COUNT(*), 0))}} AS coverage_rate_pct,
   COUNT(DISTINCT o.tenant_id) AS distinct_tenants
 FROM orders o
 WHERE o.status = 'cancelled'
@@ -36,14 +36,14 @@ SELECT
         AND al.tenant_id = i.tenant_id
     )
   ) AS events_with_match,
-  100.0 * COUNT(*) FILTER (
+  {{divide_decimal(100.0 * COUNT(*) FILTER (
     WHERE EXISTS (
       SELECT 1 FROM audit_log al
       WHERE al.entity_table = 'invoices'
         AND al.entity_id = i.id
         AND al.tenant_id = i.tenant_id
     )
-  ) / NULLIF(COUNT(*), 0) AS coverage_rate_pct,
+  ), NULLIF(COUNT(*), 0))}} AS coverage_rate_pct,
   COUNT(DISTINCT i.tenant_id) AS distinct_tenants
 FROM invoices i
 WHERE i.status = 'void'

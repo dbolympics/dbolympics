@@ -1,9 +1,9 @@
 SELECT
   t0.month_start AS month,
   t0.total_sync_deliveries AS total_sync_deliveries,
-  100.0 * t0.success_count / NULLIF(t0.total_sync_deliveries,0) AS success_rate_pct,
-  100.0 * t0.failed_count / NULLIF(t0.total_sync_deliveries,0) AS failed_rate_pct,
-  100.0 * t0.pending_retrying_count / NULLIF(t0.total_sync_deliveries,0) AS pending_or_retrying_rate_pct
+  {{divide_decimal(100.0 * t0.success_count, NULLIF(t0.total_sync_deliveries,0))}} AS success_rate_pct,
+  {{divide_decimal(100.0 * t0.failed_count, NULLIF(t0.total_sync_deliveries,0))}} AS failed_rate_pct,
+  {{divide_decimal(100.0 * t0.pending_retrying_count, NULLIF(t0.total_sync_deliveries,0))}} AS pending_or_retrying_rate_pct
 FROM (
   SELECT
     {{date_trunc('month', wd.created_at)}} AS month_start,

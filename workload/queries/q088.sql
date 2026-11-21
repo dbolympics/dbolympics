@@ -6,7 +6,7 @@ WITH months AS (
 
 orders_rev AS (
   SELECT CAST({{date_trunc('month', o.placed_at)}} AS date) AS month_start,
-         SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS orders_booked_revenue_eur,
+         SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS orders_booked_revenue_eur,
          COUNT(*) AS order_count
   FROM orders o
   LEFT JOIN exchange_rates er
@@ -20,7 +20,7 @@ orders_rev AS (
 
 payments_rev AS (
   SELECT CAST({{date_trunc('month', p.captured_at)}} AS date) AS month_start,
-         SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) AS payments_captured_eur,
+         SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) AS payments_captured_eur,
          COUNT(*) AS payment_count
   FROM payments p
   LEFT JOIN exchange_rates er
@@ -34,7 +34,7 @@ payments_rev AS (
 
 payouts_rev AS (
   SELECT CAST({{date_trunc('month', po.paid_at)}} AS date) AS month_start,
-         SUM(CAST(po.gross_amount / er.rate AS NUMERIC(18,6))) AS payout_gross_eur
+         SUM(CAST({{divide_decimal(po.gross_amount, er.rate)}} AS NUMERIC(18,6))) AS payout_gross_eur
   FROM payouts po
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -46,7 +46,7 @@ payouts_rev AS (
 
 invoices_rev AS (
   SELECT CAST({{date_trunc('month', i.paid_at)}} AS date) AS month_start,
-         SUM(CAST(i.total / er.rate AS NUMERIC(18,6))) AS invoice_paid_revenue_eur
+         SUM(CAST({{divide_decimal(i.total, er.rate)}} AS NUMERIC(18,6))) AS invoice_paid_revenue_eur
   FROM invoices i
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -59,7 +59,7 @@ invoices_rev AS (
 
 refunds_rev AS (
   SELECT CAST({{date_trunc('month', pr.processed_at)}} AS date) AS month_start,
-         SUM(CAST(pr.amount / er.rate AS NUMERIC(18,6))) AS refunds_eur
+         SUM(CAST({{divide_decimal(pr.amount, er.rate)}} AS NUMERIC(18,6))) AS refunds_eur
   FROM payment_refunds pr
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

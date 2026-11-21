@@ -3,7 +3,7 @@ WITH classified AS (
          cd.quarter_start AS quarter_start, cd.year_num AS year_num, cd.quarter_num AS quarter_num,
          CASE WHEN t.created_at >= cd.quarter_start AND t.created_at < cd.quarter_start + interval '3 months'
               THEN 'new' ELSE 'existing' END AS cohort,
-         CAST(o.grand_total / er.rate AS NUMERIC(18,6)) AS amount_eur
+         CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) AS amount_eur
   FROM orders o
   JOIN tenants t ON t.id = o.tenant_id
   JOIN calendar_days cd ON cd.calendar_date = CAST(o.placed_at AS date)
@@ -25,6 +25,6 @@ SELECT
   merchant_count,
   order_count,
   gmv_eur AS gmv_eur,
-  100.0 * gmv_eur / SUM(gmv_eur) OVER (PARTITION BY year_num, quarter_num) AS share_of_quarter_gmv_pct
+  {{divide_decimal(100.0 * gmv_eur, SUM(gmv_eur) OVER (PARTITION BY year_num, quarter_num))}} AS share_of_quarter_gmv_pct
 FROM agg
 ORDER BY year_num NULLS LAST, quarter_num NULLS LAST, (CASE WHEN cohort = 'new' THEN 0 ELSE 1 END) NULLS LAST, quarter_start NULLS LAST

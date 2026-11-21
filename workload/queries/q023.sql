@@ -22,8 +22,8 @@ converted AS (
   SELECT
     b.tenant_id AS tenant_id,
     b.q AS q,
-    CASE WHEN b.currency_code = 'EUR' THEN b.amount ELSE CAST(b.amount / fx.rate AS NUMERIC(18,6)) END AS amount_eur,
-    CASE WHEN b.currency_code = 'EUR' THEN b.amount_refunded ELSE CAST(b.amount_refunded / fx.rate AS NUMERIC(18,6)) END AS refunded_eur
+    CASE WHEN b.currency_code = 'EUR' THEN CAST(b.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(b.amount, fx.rate)}} AS NUMERIC(18,6)) END AS amount_eur,
+    CASE WHEN b.currency_code = 'EUR' THEN CAST(b.amount_refunded AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(b.amount_refunded, fx.rate)}} AS NUMERIC(18,6)) END AS refunded_eur
   FROM base b
   LEFT JOIN fx ON fx.quote_code = b.currency_code AND fx.as_of = b.captured_date
 ),
@@ -68,11 +68,11 @@ SELECT
   t.name AS merchant_name,
   t.industry AS vertical,
   p.gross_eur_fy AS gross_captured_eur_fy2025,
-  100.0 * p.q1_ref / NULLIF(p.q1_gross, 0) AS refund_rate_q1_pct,
-  100.0 * p.q2_ref / NULLIF(p.q2_gross, 0) AS refund_rate_q2_pct,
-  100.0 * p.q3_ref / NULLIF(p.q3_gross, 0) AS refund_rate_q3_pct,
-  100.0 * p.q4_ref / NULLIF(p.q4_gross, 0) AS refund_rate_q4_pct,
-  100.0 * p.refunded_eur_fy / NULLIF(p.gross_eur_fy, 0) AS refund_rate_fy2025_pct
+  {{divide_decimal(100.0 * p.q1_ref, NULLIF(p.q1_gross, 0))}} AS refund_rate_q1_pct,
+  {{divide_decimal(100.0 * p.q2_ref, NULLIF(p.q2_gross, 0))}} AS refund_rate_q2_pct,
+  {{divide_decimal(100.0 * p.q3_ref, NULLIF(p.q3_gross, 0))}} AS refund_rate_q3_pct,
+  {{divide_decimal(100.0 * p.q4_ref, NULLIF(p.q4_gross, 0))}} AS refund_rate_q4_pct,
+  {{divide_decimal(100.0 * p.refunded_eur_fy, NULLIF(p.gross_eur_fy, 0))}} AS refund_rate_fy2025_pct
 FROM pivoted p
 JOIN tenants t ON t.id = p.tenant_id
 ORDER BY refund_rate_q3_pct DESC NULLS LAST, merchant_name ASC NULLS LAST, t.id NULLS LAST

@@ -28,14 +28,14 @@ JOIN (
 ) t3 ON t3.tenant_id = t0.id
 JOIN (
   SELECT tenant_id,
-    100.0 * SUM(CASE WHEN score >= 4 THEN 1 ELSE 0 END) / COUNT(*) AS pct_satisfied
+    {{divide_decimal(100.0 * SUM(CASE WHEN score >= 4 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_satisfied
   FROM csat_responses
   WHERE submitted_at >= DATE '2025-01-01' AND submitted_at < DATE '2026-01-01'
   GROUP BY tenant_id
 ) t4 ON t4.tenant_id = t0.id
 JOIN (
   SELECT tenant_id,
-    100.0 * SUM(CASE WHEN score <= 2 THEN 1 ELSE 0 END) / COUNT(*) AS pct_dissatisfied
+    {{divide_decimal(100.0 * SUM(CASE WHEN score <= 2 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_dissatisfied
   FROM csat_responses
   WHERE submitted_at >= DATE '2025-01-01' AND submitted_at < DATE '2026-01-01'
   GROUP BY tenant_id

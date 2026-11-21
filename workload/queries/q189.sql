@@ -1,7 +1,7 @@
 SELECT
   category AS outcome_category,
   count(*) AS reservation_count,
-  100.0 * count(*) / sum(count(*)) OVER () AS pct_of_total,
+  {{divide_decimal(100.0 * count(*), sum(count(*)) OVER ())}} AS pct_of_total,
   sum(quantity) AS total_quantity_units,
   avg(quantity * 1.0) AS avg_quantity_per_reservation,
   avg(duration_days) AS avg_hold_duration_days
@@ -15,8 +15,8 @@ FROM (
       ELSE 'still_open_active'
     END AS category,
     CASE
-      WHEN released_at IS NOT NULL THEN {{seconds_between(created_at, released_at)}} / 86400.0
-      ELSE {{seconds_between(created_at, TIMESTAMP '2025-12-31 00:00:00')}} / 86400.0
+      WHEN released_at IS NOT NULL THEN {{divide_decimal({{seconds_between(created_at, released_at)}}, 86400.0)}}
+      ELSE {{divide_decimal({{seconds_between(created_at, TIMESTAMP '2025-12-31 00:00:00')}}, 86400.0)}}
     END AS duration_days
   FROM stock_reservations
   WHERE created_at >= TIMESTAMP '2025-01-01 00:00:00'

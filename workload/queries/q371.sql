@@ -31,8 +31,8 @@ transaction_amounts as (
         ac.quarter_start AS quarter_start,
         lt.direction AS direction,
         case
-            when ac.currency_code = 'EUR' then (lt.points / ac.points_per_currency)
-            else CAST((lt.points / ac.points_per_currency) / er.rate AS NUMERIC(18,6))
+            when ac.currency_code = 'EUR' then ({{divide_decimal(lt.points, ac.points_per_currency)}})
+            else CAST(({{divide_decimal(lt.points, ac.points_per_currency)}}) / er.rate AS NUMERIC(18,6))
         end as amount_eur
     from account_currency ac
     join loyalty_transactions lt on lt.loyalty_account_id = ac.loyalty_account_id

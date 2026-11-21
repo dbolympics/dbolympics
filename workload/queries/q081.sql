@@ -8,7 +8,7 @@ WITH base AS (
     c.expires_at AS expires_at,
     CASE
       WHEN c.converted_at IS NOT NULL OR c.abandoned_at IS NOT NULL OR c.expires_at IS NOT NULL
-      THEN {{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}} / 3600.0
+      THEN {{divide_decimal({{seconds_between(c.created_at, COALESCE(c.converted_at, c.abandoned_at, c.expires_at))}}, 3600.0)}}
       ELSE NULL
     END AS resolution_hours
   FROM carts c
@@ -32,8 +32,8 @@ bucketed AS (
 SELECT
   duration_bucket,
   COUNT(*) AS cart_count,
-  COUNT(*) * 100.0 / SUM(COUNT(*)) OVER () AS pct_of_carts,
-  SUM(CASE WHEN status = 'converted' THEN 1 ELSE 0 END) * 100.0 / COUNT(*) AS converted_pct
+  {{divide_decimal(COUNT(*) * 100.0, SUM(COUNT(*)) OVER ())}} AS pct_of_carts,
+  {{divide_decimal(SUM(CASE WHEN status = 'converted' THEN 1 ELSE 0 END) * 100.0, COUNT(*))}} AS converted_pct
 FROM bucketed
 GROUP BY duration_bucket
 ORDER BY

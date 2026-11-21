@@ -42,17 +42,17 @@ m_age AS (
 m_status AS (
   SELECT
     t5.image_count_bucket AS image_count_bucket,
-    100.0 * SUM(CASE WHEN t5.status = 'draft' THEN 1 ELSE 0 END) / COUNT(*) AS pct_status_draft,
-    100.0 * SUM(CASE WHEN t5.status = 'archived' THEN 1 ELSE 0 END) / COUNT(*) AS pct_status_archived,
-    100.0 * SUM(CASE WHEN t5.status = 'active' THEN 1 ELSE 0 END) / COUNT(*) AS pct_status_active
+    {{divide_decimal(100.0 * SUM(CASE WHEN t5.status = 'draft' THEN 1 ELSE 0 END), COUNT(*))}} AS pct_status_draft,
+    {{divide_decimal(100.0 * SUM(CASE WHEN t5.status = 'archived' THEN 1 ELSE 0 END), COUNT(*))}} AS pct_status_archived,
+    {{divide_decimal(100.0 * SUM(CASE WHEN t5.status = 'active' THEN 1 ELSE 0 END), COUNT(*))}} AS pct_status_active
   FROM product_base t5
   GROUP BY t5.image_count_bucket
 ),
 m_industry AS (
   SELECT
     t6.image_count_bucket AS image_count_bucket,
-    100.0 * SUM(CASE WHEN LOWER(t7.industry) LIKE '%apparel%' OR LOWER(t7.industry) LIKE '%footwear%' THEN 1 ELSE 0 END) / COUNT(*) AS pct_apparel_footwear_industry,
-    100.0 * SUM(CASE WHEN LOWER(t7.industry) LIKE '%office%' OR LOWER(t7.industry) LIKE '%industrial%' THEN 1 ELSE 0 END) / COUNT(*) AS pct_b2b_industry
+    {{divide_decimal(100.0 * SUM(CASE WHEN LOWER(t7.industry) LIKE '%apparel%' OR LOWER(t7.industry) LIKE '%footwear%' THEN 1 ELSE 0 END), COUNT(*))}} AS pct_apparel_footwear_industry,
+    {{divide_decimal(100.0 * SUM(CASE WHEN LOWER(t7.industry) LIKE '%office%' OR LOWER(t7.industry) LIKE '%industrial%' THEN 1 ELSE 0 END), COUNT(*))}} AS pct_b2b_industry
   FROM product_base t6
   JOIN tenants t7 ON t7.id = t6.tenant_id
   GROUP BY t6.image_count_bucket

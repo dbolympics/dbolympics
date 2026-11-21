@@ -23,9 +23,9 @@ ticket_weeks AS (
 SELECT
   week_start,
   COUNT(*) FILTER (WHERE is_affected = 1) AS tickets_affected_tenants,
-  COUNT(*) FILTER (WHERE is_affected = 1) / 10.0 AS avg_tickets_per_affected_tenant,
+  {{divide_decimal(COUNT(*) FILTER (WHERE is_affected = 1), 10.0)}} AS avg_tickets_per_affected_tenant,
   COUNT(*) FILTER (WHERE is_affected = 0) AS tickets_other_tenants,
-  CAST(COUNT(*) FILTER (WHERE is_affected = 0) AS NUMERIC(18,6)) / (SELECT (total_tenants - 10) FROM tenant_counts) AS avg_tickets_per_other_tenant
+  {{divide_decimal(CAST(COUNT(*) FILTER (WHERE is_affected = 0) AS NUMERIC(18,6)), (SELECT (total_tenants - 10) FROM tenant_counts))}} AS avg_tickets_per_other_tenant
 FROM ticket_weeks
 GROUP BY week_start
 ORDER BY week_start NULLS LAST

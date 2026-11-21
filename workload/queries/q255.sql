@@ -37,8 +37,8 @@ LEFT JOIN (
   SELECT
     tenant_id,
     assignee_agent_id,
-    AVG({{seconds_between(created_at, resolved_at)}} / 3600.0) AS avg_resolution_hours,
-    {{percentile_cont(0.5, {{seconds_between(created_at, resolved_at)}} / 3600.0)}} AS median_resolution_hours
+    AVG({{divide_decimal({{seconds_between(created_at, resolved_at)}}, 3600.0)}}) AS avg_resolution_hours,
+    {{percentile_cont(0.5, {{divide_decimal({{seconds_between(created_at, resolved_at)}}, 3600.0)}})}} AS median_resolution_hours
   FROM base_tickets
   WHERE resolved_at IS NOT NULL
   GROUP BY tenant_id, assignee_agent_id
@@ -47,7 +47,7 @@ LEFT JOIN (
   SELECT
     t7.tenant_id AS tenant_id,
     t7.assignee_agent_id AS assignee_agent_id,
-    100.0 * COUNT(DISTINCT CASE WHEN t8.ticket_id IS NOT NULL THEN t7.ticket_id END) / COUNT(DISTINCT t7.ticket_id) AS breach_rate_pct
+    {{divide_decimal(100.0 * COUNT(DISTINCT CASE WHEN t8.ticket_id IS NOT NULL THEN t7.ticket_id END), COUNT(DISTINCT t7.ticket_id))}} AS breach_rate_pct
   FROM base_tickets t7
   LEFT JOIN sla_breaches t8 ON t8.ticket_id = t7.ticket_id
   GROUP BY t7.tenant_id, t7.assignee_agent_id

@@ -5,7 +5,7 @@ WITH t0 AS (
     o.shipping_address_id AS shipping_address_id,
     s.carrier AS carrier,
     s.delivered_at AS delivered_at,
-    ({{seconds_between(o.placed_at, s.delivered_at)}} / 86400.0) AS delivery_days
+    ({{divide_decimal({{seconds_between(o.placed_at, s.delivered_at)}}, 86400.0)}}) AS delivery_days
   FROM orders o
   JOIN fulfillments f ON f.order_id = o.id
   JOIN shipments s ON s.fulfillment_id = f.id
@@ -34,7 +34,7 @@ t2 AS (
     t1.lane_group AS lane_group,
     COUNT(*) AS orders_fully_delivered,
     AVG(t1.delivery_days) AS avg_delivery_days,
-    100.0 * SUM(CASE WHEN t1.delivery_days <= 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_within_5_days
+    {{divide_decimal(100.0 * SUM(CASE WHEN t1.delivery_days <= 5 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_within_5_days
   FROM t1
   GROUP BY t1.lane_group
 ),
@@ -46,7 +46,7 @@ SELECT
   t2.orders_fully_delivered AS orders_fully_delivered,
   t2.avg_delivery_days AS avg_delivery_days,
   t2.pct_within_5_days AS pct_within_5_days,
-  100.0 * t2.orders_fully_delivered / t3.total_orders AS share_of_orders_pct
+  {{divide_decimal(100.0 * t2.orders_fully_delivered, t3.total_orders)}} AS share_of_orders_pct
 FROM t2
 CROSS JOIN t3
 ORDER BY

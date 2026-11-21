@@ -61,8 +61,7 @@ SELECT
   SUM(CASE WHEN classification = 'credit_equals_payment_plus_refund' THEN 1 ELSE 0 END) AS count_credit_equals_payment_plus_refund,
   SUM(CASE WHEN classification = 'other_mismatch' THEN 1 ELSE 0 END) AS count_other_mismatch,
   SUM(CASE WHEN classification = 'no_ledger_entries' THEN 1 ELSE 0 END) AS count_no_ledger_entries,
-  100.0 * SUM(CASE WHEN classification IN ('credit_equals_net', 'credit_equals_payment_plus_refund') THEN 1 ELSE 0 END)
-  / COUNT(*) AS pct_clean
+  {{divide_decimal(100.0 * SUM(CASE WHEN classification IN ('credit_equals_net', 'credit_equals_payment_plus_refund') THEN 1 ELSE 0 END), COUNT(*))}} AS pct_clean
 FROM classified
 GROUP BY payment_method_kind
 ORDER BY total_payment_count_2025 DESC NULLS FIRST, payment_method_kind ASC NULLS LAST

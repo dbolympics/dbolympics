@@ -34,8 +34,8 @@ rated AS (
       ELSE 'other-or-no-subscription-record'
     END AS status_category,
     CASE
-      WHEN os.currency_code = 'EUR' THEN os.discount_total
-      ELSE CAST(os.discount_total / er.rate AS NUMERIC(18,6))
+      WHEN os.currency_code = 'EUR' THEN CAST(os.discount_total AS NUMERIC(18,6))
+      ELSE CAST({{divide_decimal(os.discount_total, er.rate)}} AS NUMERIC(18,6))
     END AS discount_eur
   FROM order_sub os
   LEFT JOIN exchange_rates er

@@ -8,8 +8,8 @@ WITH tenant_industry AS (
 payout_totals AS (
     SELECT
         p.tenant_id AS tenant_id,
-        SUM(CAST(p.gross_amount / er.rate AS NUMERIC(18,6))) AS gross_eur,
-        SUM(CAST(p.fee_amount / er.rate AS NUMERIC(18,6))) AS fee_eur
+        SUM(CAST({{divide_decimal(p.gross_amount, er.rate)}} AS NUMERIC(18,6))) AS gross_eur,
+        SUM(CAST({{divide_decimal(p.fee_amount, er.rate)}} AS NUMERIC(18,6))) AS fee_eur
     FROM payouts p
     JOIN exchange_rates er
         ON er.base_code = 'EUR'
@@ -24,7 +24,7 @@ payout_totals AS (
 refund_totals AS (
     SELECT
         r.tenant_id AS tenant_id,
-        SUM(CAST(r.refund_total / er.rate AS NUMERIC(18,6))) AS refund_eur
+        SUM(CAST({{divide_decimal(r.refund_total, er.rate)}} AS NUMERIC(18,6))) AS refund_eur
     FROM order_returns r
     JOIN exchange_rates er
         ON er.base_code = 'EUR'
@@ -39,7 +39,7 @@ refund_totals AS (
 shipping_totals AS (
     SELECT
         o.tenant_id AS tenant_id,
-        SUM(CAST(s.shipping_cost / er.rate AS NUMERIC(18,6))) AS shipping_eur
+        SUM(CAST({{divide_decimal(s.shipping_cost, er.rate)}} AS NUMERIC(18,6))) AS shipping_eur
     FROM shipments s
     JOIN fulfillments f ON f.id = s.fulfillment_id
     JOIN orders o ON o.id = f.order_id
@@ -118,11 +118,11 @@ SELECT
     mc.merchant_count AS merchant_count,
     va.gross_eur AS gross_payment_volume_eur,
     va.fee_eur AS fee_revenue_eur,
-    CASE WHEN va.gross_eur = 0 THEN NULL ELSE 100.0 * va.fee_eur / va.gross_eur END AS take_rate_pct,
-    CASE WHEN va.gross_eur = 0 THEN NULL ELSE 100.0 * va.refund_eur / va.gross_eur END AS refund_rate_pct,
-    CASE WHEN va.gross_eur = 0 THEN NULL ELSE 100.0 * va.shipping_eur / va.gross_eur END AS shipping_cost_rate_pct,
+    CASE WHEN va.gross_eur = 0 THEN NULL ELSE {{divide_decimal(100.0 * va.fee_eur, va.gross_eur)}} END AS take_rate_pct,
+    CASE WHEN va.gross_eur = 0 THEN NULL ELSE {{divide_decimal(100.0 * va.refund_eur, va.gross_eur)}} END AS refund_rate_pct,
+    CASE WHEN va.gross_eur = 0 THEN NULL ELSE {{divide_decimal(100.0 * va.shipping_eur, va.gross_eur)}} END AS shipping_cost_rate_pct,
     va.order_count AS order_count_2025,
-    CASE WHEN va.order_count = 0 THEN NULL ELSE 100.0 * va.ticket_count / va.order_count END AS tickets_per_100_orders
+    CASE WHEN va.order_count = 0 THEN NULL ELSE {{divide_decimal(100.0 * va.ticket_count, va.order_count)}} END AS tickets_per_100_orders
 FROM vertical_agg va
 JOIN merchant_counts mc ON mc.vertical = va.vertical
 ORDER BY va.gross_eur DESC NULLS FIRST, va.vertical ASC NULLS LAST

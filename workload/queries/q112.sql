@@ -56,7 +56,7 @@ t6 AS (
 t7 AS (
   SELECT
     CAST({{date_trunc('month', tdsr.received_at)}} AS date) AS month_start,
-    {{percentile_cont(0.5, {{seconds_between(tdsr.received_at, tdsr.completed_at)}} / 86400.0)}} AS median_days_to_close
+    {{percentile_cont(0.5, {{divide_decimal({{seconds_between(tdsr.received_at, tdsr.completed_at)}}, 86400.0)}})}} AS median_days_to_close
   FROM data_subject_requests tdsr
   WHERE tdsr.completed_at IS NOT NULL
   GROUP BY CAST({{date_trunc('month', tdsr.received_at)}} AS date)

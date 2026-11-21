@@ -19,9 +19,9 @@ payouts_2025_converted AS (
   SELECT
     pw.id AS id,
     pw.paid_date AS paid_date,
-    CAST(pw.gross_amount / pw.eur_rate AS NUMERIC(18,6)) AS gross_eur,
-    CAST(pw.fee_amount / pw.eur_rate AS NUMERIC(18,6)) AS fee_eur,
-    CAST(pw.net_amount / pw.eur_rate AS NUMERIC(18,6)) AS net_eur
+    CAST({{divide_decimal(pw.gross_amount, pw.eur_rate)}} AS NUMERIC(18,6)) AS gross_eur,
+    CAST({{divide_decimal(pw.fee_amount, pw.eur_rate)}} AS NUMERIC(18,6)) AS fee_eur,
+    CAST({{divide_decimal(pw.net_amount, pw.eur_rate)}} AS NUMERIC(18,6)) AS net_eur
   FROM payouts_with_rate pw
   WHERE pw.paid_date >= DATE '2025-01-01' AND pw.paid_date < DATE '2026-01-01'
 ),
@@ -29,7 +29,7 @@ payouts_2024_converted AS (
   SELECT
     pw.id AS id,
     pw.paid_date AS paid_date,
-    CAST(pw.fee_amount / pw.eur_rate AS NUMERIC(18,6)) AS fee_eur
+    CAST({{divide_decimal(pw.fee_amount, pw.eur_rate)}} AS NUMERIC(18,6)) AS fee_eur
   FROM payouts_with_rate pw
   WHERE pw.paid_date >= DATE '2024-01-01' AND pw.paid_date < DATE '2025-01-01'
 ),
@@ -61,7 +61,7 @@ monthly_combined AS (
     m.gross_volume_eur AS gross_volume_eur,
     m.fee_revenue_eur AS fee_revenue_eur,
     m.net_paid_out_eur AS net_paid_out_eur,
-    CASE WHEN m.gross_volume_eur = 0 THEN NULL ELSE (m.fee_revenue_eur / m.gross_volume_eur) * 100 END AS fee_rate_pct,
+    CASE WHEN m.gross_volume_eur = 0 THEN NULL ELSE ({{divide_decimal(m.fee_revenue_eur, m.gross_volume_eur)}}) * 100 END AS fee_rate_pct,
     py.fee_revenue_prior_year_eur AS fee_revenue_prior_year_eur
   FROM monthly_2025 m
   LEFT JOIN monthly_2024_fee py ON py.month_num = m.month_num
@@ -74,7 +74,7 @@ total_row AS (
     SUM(gross_volume_eur) AS total_gross_volume_eur,
     SUM(fee_revenue_eur) AS total_fee_revenue_eur,
     SUM(net_paid_out_eur) AS net_paid_out_eur,
-    CASE WHEN SUM(gross_volume_eur) = 0 THEN NULL ELSE (SUM(fee_revenue_eur) / SUM(gross_volume_eur)) * 100 END AS fee_rate_pct,
+    CASE WHEN SUM(gross_volume_eur) = 0 THEN NULL ELSE ({{divide_decimal(SUM(fee_revenue_eur), SUM(gross_volume_eur))}}) * 100 END AS fee_rate_pct,
     SUM(fee_revenue_prior_year_eur) AS fee_revenue_prior_year_eur
   FROM monthly_combined
 )

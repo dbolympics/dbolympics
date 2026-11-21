@@ -13,8 +13,8 @@ t0 AS (
 t1 AS (
   SELECT CAST({{date_trunc('month', tk.created_at)}} AS date) AS month_start,
          COUNT(*) AS tickets_with_first_response,
-         AVG({{seconds_between(tk.created_at, tk.first_response_at)}} / 3600.0) AS avg_first_response_hours,
-         {{percentile_cont(0.5, {{seconds_between(tk.created_at, tk.first_response_at)}} / 3600.0)}} AS median_first_response_hours
+         AVG({{divide_decimal({{seconds_between(tk.created_at, tk.first_response_at)}}, 3600.0)}}) AS avg_first_response_hours,
+         {{percentile_cont(0.5, {{divide_decimal({{seconds_between(tk.created_at, tk.first_response_at)}}, 3600.0)}})}} AS median_first_response_hours
   FROM tickets tk
   WHERE tk.created_at >= TIMESTAMP '2023-01-01' AND tk.created_at < TIMESTAMP '2026-01-01'
     AND tk.first_response_at IS NOT NULL
@@ -23,8 +23,8 @@ t1 AS (
 t2 AS (
   SELECT CAST({{date_trunc('month', tk.created_at)}} AS date) AS month_start,
          COUNT(*) AS tickets_resolved,
-         AVG({{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0) AS avg_resolution_hours,
-         {{percentile_cont(0.5, {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0)}} AS median_resolution_hours
+         AVG({{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}}) AS avg_resolution_hours,
+         {{percentile_cont(0.5, {{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}})}} AS median_resolution_hours
   FROM tickets tk
   WHERE tk.created_at >= TIMESTAMP '2023-01-01' AND tk.created_at < TIMESTAMP '2026-01-01'
     AND tk.resolved_at IS NOT NULL
@@ -47,7 +47,7 @@ SELECT
   COALESCE(t2.tickets_resolved, 0) AS tickets_resolved,
   t2.avg_resolution_hours AS avg_resolution_hours,
   t2.median_resolution_hours AS median_resolution_hours,
-  100.0 * COALESCE(t3.tickets_with_breach, 0) / NULLIF(t0.tickets_created, 0) AS sla_breach_rate_pct
+  {{divide_decimal(100.0 * COALESCE(t3.tickets_with_breach, 0), NULLIF(t0.tickets_created, 0))}} AS sla_breach_rate_pct
 FROM month_dim md
 LEFT JOIN t0 ON t0.month_start = md.month_start
 LEFT JOIN t1 ON t1.month_start = md.month_start

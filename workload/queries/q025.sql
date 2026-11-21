@@ -3,7 +3,7 @@ select cd.month_label as month,
        avg(cast(dd.delivery_days as numeric(18,6))) as avg_delivery_days,
        {{percentile_cont(0.5, dd.delivery_days)}} as median_delivery_days,
        {{percentile_cont(0.9, dd.delivery_days)}} as p90_delivery_days,
-       100.0 * sum(case when dd.delivery_days <= 5 then 1 else 0 end) / count(*) as pct_within_5_days
+       {{divide_decimal(100.0 * sum(case when dd.delivery_days <= 5 then 1 else 0 end), count(*))}} as pct_within_5_days
 from (
   select o.id as order_id,
          o.placed_at AS placed_at,

@@ -40,7 +40,7 @@ bucketed AS (
 SELECT
   b.outcome_bucket AS outcome_bucket,
   COUNT(*) AS email_count,
-  100.0 * COUNT(*) / (SELECT COUNT(*) FROM cohort) AS pct_of_cohort,
+  {{divide_decimal(100.0 * COUNT(*), (SELECT COUNT(*) FROM cohort))}} AS pct_of_cohort,
   AVG(CAST(b.failed_cnt AS NUMERIC(18,6))) FILTER (WHERE b.outcome_bucket <> 'never_succeeded_in_month') AS avg_failed_attempts_before_success,
   COUNT(DISTINCT la.tenant_id) AS distinct_tenants_affected
 FROM bucketed b

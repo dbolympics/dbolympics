@@ -2,9 +2,8 @@ SELECT
   s.carrier AS carrier,
   cd.month_label AS month_label,
   COUNT(*) AS shipment_count,
-  AVG({{seconds_between(s.shipped_at, s.delivered_at)}} / 86400.0) FILTER (WHERE s.delivered_at IS NOT NULL) AS avg_delivery_days,
-  100.0 * COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '3 days')
-  / NULLIF(COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL), 0) AS pct_delivered_within_3_days
+  AVG({{divide_decimal({{seconds_between(s.shipped_at, s.delivered_at)}}, 86400.0)}}) FILTER (WHERE s.delivered_at IS NOT NULL) AS avg_delivery_days,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL AND s.delivered_at <= s.shipped_at + INTERVAL '3 days'), NULLIF(COUNT(*) FILTER (WHERE s.delivered_at IS NOT NULL), 0))}} AS pct_delivered_within_3_days
 FROM shipments s
 JOIN fulfillments f ON f.id = s.fulfillment_id
 JOIN orders o ON o.id = f.order_id

@@ -65,9 +65,9 @@ SELECT
   COUNT(DISTINCT tenant_id || '-' || user_id) AS shopper_count,
   COUNT(*) AS messages_sent,
   COUNT(opened_at) AS messages_opened,
-  100.0 * COUNT(opened_at) / NULLIF(COUNT(*), 0) AS open_rate_pct,
+  {{divide_decimal(100.0 * COUNT(opened_at), NULLIF(COUNT(*), 0))}} AS open_rate_pct,
   COUNT(clicked_at) AS messages_clicked,
-  100.0 * COUNT(clicked_at) / NULLIF(COUNT(*), 0) AS click_rate_pct
+  {{divide_decimal(100.0 * COUNT(clicked_at), NULLIF(COUNT(*), 0))}} AS click_rate_pct
 FROM messages
 WHERE window_label IS NOT NULL
 GROUP BY shopper_group, window_label

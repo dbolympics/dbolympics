@@ -2,7 +2,7 @@ SELECT
   delivery_bucket,
   MAX(bucket_shipment_count) AS shipments_count,
   COUNT(*) AS distinct_customers,
-  100.0 * SUM(CASE WHEN min_days_to_next IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*) AS pct_customers_with_next_order,
+  {{divide_decimal(100.0 * SUM(CASE WHEN min_days_to_next IS NOT NULL THEN 1 ELSE 0 END), COUNT(*))}} AS pct_customers_with_next_order,
   {{percentile_cont_filter(0.5, min_days_to_next, min_days_to_next IS NOT NULL)}} AS median_days_to_next_order
 FROM (
   SELECT
@@ -16,7 +16,7 @@ FROM (
       tenant_id,
       user_id,
       delivery_bucket,
-      {{seconds_between(delivered_at, next_order_at)}} / 86400.0 AS days_to_next,
+      {{divide_decimal({{seconds_between(delivered_at, next_order_at)}}, 86400.0)}} AS days_to_next,
       COUNT(*) OVER (PARTITION BY delivery_bucket) AS bucket_shipment_count
     FROM (
       SELECT

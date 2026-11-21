@@ -2,7 +2,7 @@ select
   cd.calendar_date as date,
   cd.day_name as day_of_week,
   count(*) as carts_created,
-  100.0 * count(*) filter (where c.status = 'converted') / count(*) as overall_conversion_pct
+  {{divide_decimal(100.0 * count(*) filter (where c.status = 'converted'), count(*))}} as overall_conversion_pct
 from carts c
 join tenants t on t.id = c.tenant_id
 join calendar_days cd on cd.calendar_date = CAST(c.created_at AS DATE)

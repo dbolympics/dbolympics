@@ -16,8 +16,8 @@ WITH orders_base AS (
 orders_enriched AS (
   SELECT
     ob.*,
-    CASE WHEN ob.currency_code = 'EUR' THEN ob.grand_total
-         ELSE CAST(ob.grand_total / er.rate AS NUMERIC(18,6)) END AS eur_amount,
+    CASE WHEN ob.currency_code = 'EUR' THEN CAST(ob.grand_total AS NUMERIC(18,6))
+         ELSE CAST({{divide_decimal(ob.grand_total, er.rate)}} AS NUMERIC(18,6)) END AS eur_amount,
     EXISTS (SELECT 1 FROM payments p WHERE p.order_id = ob.order_id AND p.amount_refunded > 0) AS has_refund,
     EXISTS (SELECT 1 FROM order_returns r WHERE r.order_id = ob.order_id) AS has_return
   FROM orders_base ob
@@ -47,11 +47,11 @@ SELECT
   segment,
   COUNT(*) AS customer_count,
   AVG(CAST(total_orders AS NUMERIC(18,6))) AS avg_lifetime_orders,
-  (SUM(noncancelled_revenue) / NULLIF(COUNT(*),0)) AS avg_lifetime_revenue_eur,
-  (SUM(noncancelled_revenue) / NULLIF(SUM(noncancelled_orders),0)) AS avg_order_value_eur,
-  (AVG({{seconds_between(first_order_date, last_order_date)}} / 86400.0)) AS avg_tenure_days,
-  (100.0 * COUNT(*) FILTER (WHERE total_orders >= 2) / NULLIF(COUNT(*),0)) AS repeat_purchase_rate_pct,
-  (100.0 * SUM(refunded_orders) / NULLIF(SUM(total_orders),0)) AS refund_rate_pct
+  ({{divide_decimal(SUM(noncancelled_revenue), NULLIF(COUNT(*),0))}}) AS avg_lifetime_revenue_eur,
+  ({{divide_decimal(SUM(noncancelled_revenue), NULLIF(SUM(noncancelled_orders),0))}}) AS avg_order_value_eur,
+  (AVG({{divide_decimal({{seconds_between(first_order_date, last_order_date)}}, 86400.0)}})) AS avg_tenure_days,
+  ({{divide_decimal(100.0 * COUNT(*) FILTER (WHERE total_orders >= 2), NULLIF(COUNT(*),0))}}) AS repeat_purchase_rate_pct,
+  ({{divide_decimal(100.0 * SUM(refunded_orders), NULLIF(SUM(total_orders),0))}}) AS refund_rate_pct
 FROM segmented
 GROUP BY segment
 ORDER BY CASE WHEN segment = 'loyalty member' THEN 0 ELSE 1 END NULLS LAST, segment NULLS LAST

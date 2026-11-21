@@ -29,9 +29,9 @@ tag_stats AS (
   SELECT
     tagged.tag_name AS tag_name,
     COUNT(DISTINCT tagged.ticket_id) AS ticket_count,
-    AVG({{seconds_between(tagged.created_at, tagged.first_response_at)}} / 60.0)
+    AVG({{divide_decimal({{seconds_between(tagged.created_at, tagged.first_response_at)}}, 60.0)}})
       FILTER (WHERE tagged.first_response_at IS NOT NULL) AS avg_first_response_minutes,
-    AVG({{seconds_between(tagged.created_at, tagged.resolved_at)}} / 60.0)
+    AVG({{divide_decimal({{seconds_between(tagged.created_at, tagged.resolved_at)}}, 60.0)}})
       FILTER (WHERE tagged.resolved_at IS NOT NULL) AS avg_resolution_minutes,
     COUNT(DISTINCT tagged.ticket_id) FILTER (WHERE bpt.fr_breach) AS fr_breach_count,
     COUNT(DISTINCT tagged.ticket_id) FILTER (WHERE bpt.res_breach) AS res_breach_count
@@ -51,8 +51,8 @@ SELECT
   tag_stats.ticket_count AS ticket_count,
   tag_stats.avg_first_response_minutes AS avg_first_response_minutes,
   tag_stats.avg_resolution_minutes AS avg_resolution_minutes,
-  CAST(tag_stats.fr_breach_count AS numeric(18,6)) / NULLIF(tag_stats.ticket_count, 0) AS first_response_breach_rate,
-  CAST(tag_stats.res_breach_count AS numeric(18,6)) / NULLIF(tag_stats.ticket_count, 0) AS resolution_breach_rate,
+  {{divide_decimal(CAST(tag_stats.fr_breach_count AS numeric(18,6)), NULLIF(tag_stats.ticket_count, 0))}} AS first_response_breach_rate,
+  {{divide_decimal(CAST(tag_stats.res_breach_count AS numeric(18,6)), NULLIF(tag_stats.ticket_count, 0))}} AS resolution_breach_rate,
   totals.total_tagged_tickets_2025 AS total_tagged_tickets_2025,
   totals.total_tickets_2025 AS total_tickets_2025
 FROM tag_stats

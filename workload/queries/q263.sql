@@ -10,8 +10,8 @@ FROM (
     industry,
     attribution_status,
     COUNT(*) AS orders_count,
-    COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (PARTITION BY industry) AS share_of_industry_orders_pct,
-    100.0 * SUM(is_new) / COUNT(*) AS new_customer_order_pct,
+    {{divide_decimal(COUNT(*) * 100.0, SUM(COUNT(*)) OVER (PARTITION BY industry))}} AS share_of_industry_orders_pct,
+    {{divide_decimal(100.0 * SUM(is_new), COUNT(*))}} AS new_customer_order_pct,
     AVG(amount_eur) AS avg_order_value_eur
   FROM (
     SELECT
@@ -27,11 +27,11 @@ FROM (
           AND o3.placed_at IS NOT NULL
       ) THEN 1 ELSE 0 END AS is_new,
       CASE WHEN o.currency_code = 'EUR' THEN o.grand_total
-           ELSE o.grand_total / (
+           ELSE {{divide_decimal(o.grand_total, (
              SELECT er.rate FROM exchange_rates er
              WHERE er.base_code = 'EUR' AND er.quote_code = o.currency_code
                AND er.as_of = CAST(o.placed_at AS DATE)
-           )
+           ))}}
       END AS amount_eur
     FROM orders o
     JOIN tenants t ON t.id = o.tenant_id

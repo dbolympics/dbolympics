@@ -13,7 +13,7 @@ SELECT
   avgc.avg_days_to_complete AS avg_days_to_complete,
   medc.median_days_to_complete AS median_days_to_complete,
   CASE WHEN (COALESCE(ot.completed_on_time,0)+COALESCE(lt.completed_late,0))=0 THEN NULL
-ELSE 100.0*COALESCE(ot.completed_on_time,0)/(COALESCE(ot.completed_on_time,0)+COALESCE(lt.completed_late,0))
+ELSE {{divide_decimal(100.0*COALESCE(ot.completed_on_time,0), (COALESCE(ot.completed_on_time,0)+COALESCE(lt.completed_late,0)))}}
 END AS pct_on_time
 FROM months m
 LEFT JOIN (
@@ -47,7 +47,7 @@ LEFT JOIN (
 ) od ON od.month_start = m.month_start
 LEFT JOIN (
   SELECT CAST({{date_trunc('month', t6.received_at)}} AS date) AS month_start,
-    AVG({{seconds_between(t6.received_at, t6.completed_at)}}/86400.0) AS avg_days_to_complete
+    AVG({{divide_decimal({{seconds_between(t6.received_at, t6.completed_at)}}, 86400.0)}}) AS avg_days_to_complete
   FROM data_subject_requests t6
   WHERE t6.completed_at IS NOT NULL
   GROUP BY 1
@@ -56,7 +56,7 @@ LEFT JOIN (
   SELECT month_start, {{percentile_cont(0.5, days)}} AS median_days_to_complete
   FROM (
     SELECT CAST({{date_trunc('month', t7.received_at)}} AS date) AS month_start,
-      {{seconds_between(t7.received_at, t7.completed_at)}}/86400.0 AS days
+      {{divide_decimal({{seconds_between(t7.received_at, t7.completed_at)}}, 86400.0)}} AS days
     FROM data_subject_requests t7
     WHERE t7.completed_at IS NOT NULL
   ) sub

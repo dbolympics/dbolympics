@@ -16,7 +16,7 @@ LEFT JOIN (
 ) t1 ON t1.tenant_id = t0.id
 LEFT JOIN (
   SELECT c1.tenant_id AS tenant_id,
-    100.0 * SUM(CASE WHEN c1.status = 'converted' THEN 1 ELSE 0 END) / COUNT(*) AS single_conv_pct
+    {{divide_decimal(100.0 * SUM(CASE WHEN c1.status = 'converted' THEN 1 ELSE 0 END), COUNT(*))}} AS single_conv_pct
   FROM carts c1
   WHERE c1.item_count = 1
     AND c1.created_at >= DATE '2025-01-01'
@@ -33,7 +33,7 @@ LEFT JOIN (
 ) t3 ON t3.tenant_id = t0.id
 LEFT JOIN (
   SELECT c3.tenant_id AS tenant_id,
-    100.0 * SUM(CASE WHEN c3.status = 'converted' THEN 1 ELSE 0 END) / COUNT(*) AS multi_conv_pct
+    {{divide_decimal(100.0 * SUM(CASE WHEN c3.status = 'converted' THEN 1 ELSE 0 END), COUNT(*))}} AS multi_conv_pct
   FROM carts c3
   WHERE c3.item_count >= 2
     AND c3.created_at >= DATE '2025-01-01'

@@ -26,8 +26,8 @@ base AS (
       ELSE 'dates indicate overlap - likely a bug in the original orphan flag'
     END AS category,
     CASE
-      WHEN mrs.currency_code = 'EUR' THEN mrs.discount_total
-      ELSE CAST(mrs.discount_total / er.rate AS NUMERIC(18,6))
+      WHEN mrs.currency_code = 'EUR' THEN CAST(mrs.discount_total AS NUMERIC(18,6))
+      ELSE CAST({{divide_decimal(mrs.discount_total, er.rate)}} AS NUMERIC(18,6))
     END AS discount_amount_eur
   FROM most_recent_sub mrs
   LEFT JOIN exchange_rates er
@@ -37,7 +37,7 @@ base AS (
 SELECT
   category,
   COUNT(*) AS order_count,
-  100.0 * COUNT(*) / SUM(COUNT(*)) OVER () AS pct_of_active_bucket,
+  {{divide_decimal(100.0 * COUNT(*), SUM(COUNT(*)) OVER ())}} AS pct_of_active_bucket,
   COUNT(DISTINCT user_id) AS distinct_customers,
   SUM(discount_amount_eur) AS total_discount_eur
 FROM base

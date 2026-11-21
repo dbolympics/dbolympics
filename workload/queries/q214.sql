@@ -16,7 +16,7 @@ last_paid_payout AS (
 ),
 fee_revenue_ttm AS (
   SELECT p.tenant_id AS tenant_id,
-         SUM(CASE WHEN p.currency_code = 'EUR' THEN p.fee_amount ELSE CAST(p.fee_amount / er.rate AS NUMERIC(18,6)) END) AS fee_revenue_eur
+         SUM(CASE WHEN p.currency_code = 'EUR' THEN CAST(p.fee_amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(p.fee_amount, er.rate)}} AS NUMERIC(18,6)) END) AS fee_revenue_eur
   FROM payouts p
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

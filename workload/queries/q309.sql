@@ -5,7 +5,7 @@ WITH pop AS (
     AND captured_at >= DATE '2025-01-01' AND captured_at < DATE '2026-01-01'
 ),
 naive AS (
-  SELECT p.currency_code AS currency_code, SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) AS naive_eur
+  SELECT p.currency_code AS currency_code, SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) AS naive_eur
   FROM pop p
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -15,7 +15,7 @@ naive AS (
 ),
 correct AS (
   SELECT p.currency_code AS currency_code,
-    SUM(CASE WHEN p.currency_code = 'EUR' THEN p.amount ELSE CAST(p.amount / er.rate AS NUMERIC(18,6)) END) AS correct_eur
+    SUM(CASE WHEN p.currency_code = 'EUR' THEN CAST(p.amount AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6)) END) AS correct_eur
   FROM pop p
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -28,7 +28,7 @@ SELECT
   COALESCE(n.naive_eur, 0) AS total_2025_revenue_naive_eur,
   c.correct_eur AS total_2025_revenue_correct_eur,
   c.correct_eur - COALESCE(n.naive_eur, 0) AS shortfall_eur,
-  (c.correct_eur - COALESCE(n.naive_eur, 0)) / c.correct_eur * 100 AS shortfall_pct
+  {{divide_decimal((c.correct_eur - COALESCE(n.naive_eur, 0)), c.correct_eur)}} * 100 AS shortfall_pct
 FROM correct c
 LEFT JOIN naive n ON n.currency_code = c.currency_code
 ORDER BY c.correct_eur DESC NULLS FIRST, c.currency_code NULLS LAST

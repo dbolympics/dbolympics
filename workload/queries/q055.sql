@@ -31,10 +31,10 @@ SELECT
   b.industry AS industry,
   b.order_group AS order_group,
   COUNT(*) AS orders_count,
-  AVG(CAST(b.grand_total / b.eur_rate AS NUMERIC(18,6))) AS avg_order_value_eur,
+  AVG(CAST({{divide_decimal(b.grand_total, b.eur_rate)}} AS NUMERIC(18,6))) AS avg_order_value_eur,
   AVG(CAST(b.item_qty AS NUMERIC(18,6))) AS avg_items_per_order,
-  100.0 * SUM(CASE WHEN rf.order_id IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*) AS return_rate_pct,
-  100.0 * SUM(CASE WHEN b.status = 'cancelled' THEN 1 ELSE 0 END) / COUNT(*) AS cancelled_rate_pct
+  {{divide_decimal(100.0 * SUM(CASE WHEN rf.order_id IS NOT NULL THEN 1 ELSE 0 END), COUNT(*))}} AS return_rate_pct,
+  {{divide_decimal(100.0 * SUM(CASE WHEN b.status = 'cancelled' THEN 1 ELSE 0 END), COUNT(*))}} AS cancelled_rate_pct
 FROM base b
 LEFT JOIN order_returns_flag rf ON rf.order_id = b.order_id
 GROUP BY b.industry, b.order_group

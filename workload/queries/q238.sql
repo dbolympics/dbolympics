@@ -37,8 +37,8 @@ SELECT
   carrier_group,
   COUNT(*) AS orders_fully_delivered,
   AVG(CAST(delivery_days AS NUMERIC(18,6))) AS avg_delivery_days,
-  100.0 * SUM(CASE WHEN delivery_days <= 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_within_5_days,
-  100.0 * COUNT(*) / SUM(COUNT(*)) OVER () AS share_of_orders_pct
+  {{divide_decimal(100.0 * SUM(CASE WHEN delivery_days <= 5 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_within_5_days,
+  {{divide_decimal(100.0 * COUNT(*), SUM(COUNT(*)) OVER ())}} AS share_of_orders_pct
 FROM scored
 GROUP BY carrier_group
 ORDER BY carrier_group ASC NULLS LAST

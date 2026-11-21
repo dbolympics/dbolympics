@@ -15,7 +15,7 @@ SELECT
   COALESCE(fa.failed_attempts, 0) AS failed_attempts,
   CASE
     WHEN COALESCE(ta.total_attempts, 0) = 0 THEN 0
-    ELSE 100.0 * COALESCE(fa.failed_attempts, 0) / ta.total_attempts
+    ELSE {{divide_decimal(100.0 * COALESCE(fa.failed_attempts, 0), ta.total_attempts)}}
   END AS pct_failed
 FROM base b
 LEFT JOIN (

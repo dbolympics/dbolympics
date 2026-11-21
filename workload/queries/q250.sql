@@ -11,13 +11,13 @@ SELECT
   m.name AS merchant_name,
   '2025-Q' || q.q_num AS quarter,
   count(tk.id) AS urgent_tickets_evaluated,
-  100.0 * CAST(sum(
+  {{divide_decimal(100.0 * CAST(sum(
     case when tk.id is not null
            and (tk.resolved_at is null or tk.resolved_at > {{add_minutes(tk.created_at, sp.resolution_target_minutes)}})
          then 1 else 0 end
-  ) AS numeric(18,6)) / nullif(count(tk.id), 0) AS urgent_miss_rate_pct,
-  avg(case when tk.resolved_at is not null then {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0 end) AS avg_actual_resolution_hours,
-  {{percentile_cont(0.5, case when tk.resolved_at is not null then {{seconds_between(tk.created_at, tk.resolved_at)}} / 3600.0 end)}} AS median_actual_resolution_hours
+  ) AS numeric(18,6)), nullif(count(tk.id), 0))}} AS urgent_miss_rate_pct,
+  avg(case when tk.resolved_at is not null then {{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}} end) AS avg_actual_resolution_hours,
+  {{percentile_cont(0.5, case when tk.resolved_at is not null then {{divide_decimal({{seconds_between(tk.created_at, tk.resolved_at)}}, 3600.0)}} end)}} AS median_actual_resolution_hours
 FROM m
 CROSS JOIN q
 LEFT JOIN tickets tk

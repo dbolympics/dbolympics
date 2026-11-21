@@ -12,7 +12,7 @@ discounted AS (
          o.tenant_id AS tenant_id,
          o.user_id AS user_id,
          o.id AS order_id,
-         CAST(o.subtotal / er.rate AS NUMERIC(18,6)) AS subtotal_eur
+         CAST({{divide_decimal(o.subtotal, er.rate)}} AS NUMERIC(18,6)) AS subtotal_eur
   FROM order_discounts od
   JOIN discounts d ON d.id = od.discount_id AND d.tenant_id = od.tenant_id
   JOIN orders o ON o.id = od.order_id AND o.tenant_id = od.tenant_id
@@ -54,7 +54,7 @@ customer_set_agg AS (
 ),
 comparison_orders AS (
   SELECT cs.promo_name AS promo_name, cs.tenant_id AS tenant_id, cs.user_id AS user_id, o.id AS order_id,
-         CAST(o.subtotal / er.rate AS NUMERIC(18,6)) AS subtotal_eur
+         CAST({{divide_decimal(o.subtotal, er.rate)}} AS NUMERIC(18,6)) AS subtotal_eur
   FROM customer_set cs
   JOIN orders o ON o.tenant_id = cs.tenant_id AND o.user_id = cs.user_id
   JOIN exchange_rates er ON er.base_code = 'EUR' AND er.quote_code = o.currency_code AND er.as_of = CAST(o.placed_at AS DATE)
@@ -79,15 +79,15 @@ SELECT
   COALESCE(ia.discount_instances, 0) AS discount_instances,
   COALESCE(da.discounted_order_count, 0) AS discounted_order_count,
   COALESCE(ia.distinct_customers_summed, 0) AS distinct_customers,
-  da.discounted_subtotal_sum / NULLIF(da.discounted_order_count,0) AS avg_discounted_order_subtotal_eur,
-  ca.comparison_subtotal_sum / NULLIF(ca.comparison_order_count,0) AS avg_comparison_order_subtotal_eur,
-  (da.discounted_subtotal_sum / NULLIF(da.discounted_order_count,0))
-  - (ca.comparison_subtotal_sum / NULLIF(ca.comparison_order_count,0)) AS subtotal_lift_eur,
+  {{divide_decimal(da.discounted_subtotal_sum, NULLIF(da.discounted_order_count,0))}} AS avg_discounted_order_subtotal_eur,
+  {{divide_decimal(ca.comparison_subtotal_sum, NULLIF(ca.comparison_order_count,0))}} AS avg_comparison_order_subtotal_eur,
+  ({{divide_decimal(da.discounted_subtotal_sum, NULLIF(da.discounted_order_count,0))}})
+  - ({{divide_decimal(ca.comparison_subtotal_sum, NULLIF(ca.comparison_order_count,0))}}) AS subtotal_lift_eur,
   100.0 * (
-    (da.discounted_subtotal_sum / NULLIF(da.discounted_order_count,0))
-    - (ca.comparison_subtotal_sum / NULLIF(ca.comparison_order_count,0))
-  ) / NULLIF(ca.comparison_subtotal_sum / NULLIF(ca.comparison_order_count,0), 0) AS subtotal_lift_pct,
-  100.0 * COALESCE(ca.customers_with_comparison,0) / NULLIF(cs.customer_set_count,0) AS pct_customers_with_comparison_order
+    ({{divide_decimal(da.discounted_subtotal_sum, NULLIF(da.discounted_order_count,0))}})
+    - ({{divide_decimal(ca.comparison_subtotal_sum, NULLIF(ca.comparison_order_count,0))}})
+  ) / NULLIF({{divide_decimal(ca.comparison_subtotal_sum, NULLIF(ca.comparison_order_count,0))}}, 0) AS subtotal_lift_pct,
+  {{divide_decimal(100.0 * COALESCE(ca.customers_with_comparison,0), NULLIF(cs.customer_set_count,0))}} AS pct_customers_with_comparison_order
 FROM promo_names pn
 LEFT JOIN instance_agg ia ON ia.promo_name = pn.name
 LEFT JOIN discounted_agg da ON da.promo_name = pn.name

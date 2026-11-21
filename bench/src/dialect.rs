@@ -60,6 +60,10 @@ const POINTS: &[Point] = &[
     Point { name: "timestamp_midpoint", params: &["a", "b"], default: "{a} + ({b} - {a}) * 0.5" },
     // the exact seconds from a to b (docs/NUMERICS.md)
     Point { name: "seconds_between", params: &["a", "b"], default: "CAST(EXTRACT(EPOCH FROM ({b} - {a})) AS NUMERIC(18,6))" },
+    // a / b by the types of the operands (tools/division_types.py): the standard's division of
+    // two integers (truncated toward zero), and of a decimal and a decimal or an integer
+    Point { name: "divide_int", params: &["a", "b"], default: "{a} / {b}" },
+    Point { name: "divide_decimal", params: &["a", "b"], default: "{a} / {b}" },
     // COUNT(DISTINCT x) OVER window, standard SQL when the window has no ORDER BY or frame;
     // a system without DISTINCT window aggregates computes the distinct non-NULL values of x in
     // the partition from two dense ranks:

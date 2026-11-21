@@ -1,12 +1,12 @@
 SELECT
   tn.name AS merchant_name,
   a.mayjun_count AS tickets_created_may_jun_2025,
-  a.other_count / 10.0 AS avg_monthly_tickets_other_2025,
+  {{divide_decimal(a.other_count, 10.0)}} AS avg_monthly_tickets_other_2025,
   CASE WHEN a.other_count = 0 THEN NULL
-       ELSE (a.mayjun_count/2.0) / (a.other_count/10.0)
+       ELSE ({{divide_decimal(a.mayjun_count, 2.0)}}) / ({{divide_decimal(a.other_count, 10.0)}})
   END AS spike_ratio,
   CASE WHEN a.mayjun_count = 0 THEN NULL
-       ELSE 100.0 * COALESCE(d.delivery_count,0) / a.mayjun_count
+       ELSE {{divide_decimal(100.0 * COALESCE(d.delivery_count,0), a.mayjun_count)}}
   END AS delivery_tag_share_pct
 FROM (
   SELECT tenant_id,

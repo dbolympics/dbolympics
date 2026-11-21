@@ -12,8 +12,8 @@ cart_base AS (
 ),
 cart_calc AS (
   SELECT *,
-    CASE WHEN currency_code='EUR' THEN subtotal ELSE CAST(subtotal / NULLIF(eur_rate,0) AS NUMERIC(18,6)) END AS subtotal_eur,
-    CASE WHEN resolved_at IS NULL THEN NULL ELSE {{seconds_between(created_at, resolved_at)}}/3600.0 END AS resolution_hours
+    CASE WHEN currency_code='EUR' THEN CAST(subtotal AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(subtotal, NULLIF(eur_rate,0))}} AS NUMERIC(18,6)) END AS subtotal_eur,
+    CASE WHEN resolved_at IS NULL THEN NULL ELSE {{divide_decimal({{seconds_between(created_at, resolved_at)}}, 3600.0)}} END AS resolution_hours
   FROM cart_base
 ),
 bucketed AS (
@@ -38,8 +38,8 @@ SELECT
   AVG(CAST(b.item_count AS NUMERIC(18,6))) AS avg_item_count,
   AVG(b.subtotal_eur) AS avg_subtotal_eur,
   {{percentile_cont(0.5, b.subtotal_eur)}} AS median_subtotal_eur,
-  100.0 * COUNT(*) FILTER (WHERE b.status='converted') / COUNT(*) AS pct_converted,
-  100.0 * COUNT(*) FILTER (WHERE b.status='converted' AND odf.has_discount=1) / NULLIF(COUNT(*) FILTER (WHERE b.status='converted'),0) AS pct_converted_with_discount
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE b.status='converted'), COUNT(*))}} AS pct_converted,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE b.status='converted' AND odf.has_discount=1), NULLIF(COUNT(*) FILTER (WHERE b.status='converted'),0))}} AS pct_converted_with_discount
 FROM bucketed b
 LEFT JOIN order_discount_flag odf ON odf.cart_id = b.id
 GROUP BY b.duration_bucket

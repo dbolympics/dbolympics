@@ -21,7 +21,7 @@ sales_eur AS (
   SELECT
     s.product_id AS product_id,
     SUM(s.quantity) AS units_sold,
-    SUM(CAST(s.line_total / r.rate AS NUMERIC(18,6))) AS revenue_eur
+    SUM(CAST({{divide_decimal(s.line_total, r.rate)}} AS NUMERIC(18,6))) AS revenue_eur
   FROM order_item_sales s
   JOIN rates r
     ON r.quote_code = s.currency_code

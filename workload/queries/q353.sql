@@ -17,7 +17,7 @@ JOIN (
    SELECT pr.product_id AS product_id,
           COUNT(*) AS review_count,
           AVG(CAST(pr.rating AS NUMERIC(18,6))) AS avg_rating,
-          100.0 * SUM(CASE WHEN pr.rating IN (1,2) THEN 1 ELSE 0 END) / COUNT(*) AS pct_1_2_star
+          {{divide_decimal(100.0 * SUM(CASE WHEN pr.rating IN (1,2) THEN 1 ELSE 0 END), COUNT(*))}} AS pct_1_2_star
    FROM product_reviews pr
    WHERE pr.is_approved = true
      AND pr.created_at >= timestamp '2025-12-01' AND pr.created_at < timestamp '2026-01-01'

@@ -11,7 +11,7 @@ WITH redemptions AS (
     c.per_customer_limit AS per_customer_limit,
     c.starts_at AS starts_at,
     c.expires_at AS expires_at,
-    CAST(cr.discount_amount / NULLIF(er.rate, 0) AS NUMERIC(18,6)) AS discount_amount_eur
+    CAST({{divide_decimal(cr.discount_amount, NULLIF(er.rate, 0))}} AS NUMERIC(18,6)) AS discount_amount_eur
   FROM coupon_redemptions cr
   JOIN coupons c ON cr.coupon_id = c.id
   LEFT JOIN exchange_rates er

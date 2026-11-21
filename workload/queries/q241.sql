@@ -11,8 +11,8 @@ FROM (
       d.carrier AS carrier,
       COUNT(*) AS orders_fully_delivered,
       AVG(CAST(d.delivery_days AS NUMERIC(18,6))) AS avg_delivery_days,
-      100.0 * SUM(CASE WHEN d.delivery_days <= 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_within_5_days,
-      100.0 * COUNT(*) / (
+      {{divide_decimal(100.0 * SUM(CASE WHEN d.delivery_days <= 5 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_within_5_days,
+      {{divide_decimal(100.0 * COUNT(*), (
   SELECT COUNT(*)
   FROM (
     SELECT o2.id AS order_id
@@ -26,7 +26,7 @@ FROM (
       AND (SELECT COUNT(*) FROM fulfillments ff WHERE ff.order_id = o2.id) = 1
       AND (SELECT COUNT(*) FROM shipments ss WHERE ss.fulfillment_id = f2a.id) = 1
   ) all_d
-) AS share_of_orders_pct
+))}} AS share_of_orders_pct
     FROM (
       SELECT
         o.id AS order_id,
@@ -57,7 +57,7 @@ FROM (
     SELECT
       COUNT(*) AS orders_fully_delivered,
       AVG(CAST(delivery_days AS NUMERIC(18,6))) AS avg_delivery_days,
-      100.0 * SUM(CASE WHEN delivery_days <= 5 THEN 1 ELSE 0 END) / COUNT(*) AS pct_within_5_days
+      {{divide_decimal(100.0 * SUM(CASE WHEN delivery_days <= 5 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_within_5_days
     FROM (
       SELECT
         ({{date_diff_days(o.placed_at, s.delivered_at)}}) AS delivery_days

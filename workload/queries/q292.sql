@@ -31,7 +31,7 @@ agg AS (
 ),
 medians AS (
   SELECT grp,
-    {{percentile_cont(0.5, {{seconds_between(created_at, converted_at)}}/86400.0)}} AS median_days_to_convert
+    {{percentile_cont(0.5, {{divide_decimal({{seconds_between(created_at, converted_at)}}, 86400.0)}})}} AS median_days_to_convert
   FROM grouped
   WHERE status = 'converted'
   GROUP BY grp
@@ -40,7 +40,7 @@ SELECT
   a.grp AS group_name,
   a.cart_count AS cart_count,
   a.guest_cart_count AS guest_cart_count,
-  100.0 * a.converted_count / a.cart_count AS pct_eventually_converted,
+  {{divide_decimal(100.0 * a.converted_count, a.cart_count)}} AS pct_eventually_converted,
   m.median_days_to_convert AS median_days_to_convert
 FROM agg a
 LEFT JOIN medians m ON m.grp = a.grp

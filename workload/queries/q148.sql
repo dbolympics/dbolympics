@@ -42,7 +42,7 @@ coupon_codes_agg AS (
 m_discount_amount AS (
   SELECT
     fod.discount_id AS discount_id,
-    SUM(CAST(fod.discount_amount_local / fxd.rate AS NUMERIC(18,6))) AS discount_amount_eur
+    SUM(CAST({{divide_decimal(fod.discount_amount_local, fxd.rate)}} AS NUMERIC(18,6))) AS discount_amount_eur
   FROM fod
   JOIN exchange_rates fxd
     ON fxd.base_code = 'EUR'
@@ -72,7 +72,7 @@ distinct_orders AS (
 m_revenue AS (
   SELECT
     do1.discount_id AS discount_id,
-    SUM(CAST(do1.order_grand_total_local / fxo.rate AS NUMERIC(18,6))) AS revenue_eur
+    SUM(CAST({{divide_decimal(do1.order_grand_total_local, fxo.rate)}} AS NUMERIC(18,6))) AS revenue_eur
   FROM distinct_orders do1
   JOIN exchange_rates fxo
     ON fxo.base_code = 'EUR'
@@ -88,7 +88,7 @@ SELECT
   COALESCE(mo.order_count, 0) AS order_count,
   COALESCE(mr.revenue_eur, 0) AS order_revenue_eur,
   CASE WHEN COALESCE(mr.revenue_eur, 0) = 0 THEN NULL
-       ELSE 100.0 * COALESCE(mda.discount_amount_eur, 0) / mr.revenue_eur
+       ELSE {{divide_decimal(100.0 * COALESCE(mda.discount_amount_eur, 0), mr.revenue_eur)}}
   END AS discount_pct_of_revenue,
   COALESCE(mo.distinct_customers, 0) AS distinct_customers,
   mo.first_order_date AS first_order_date,

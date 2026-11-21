@@ -18,9 +18,9 @@ movements AS (
 valued AS (
   SELECT m.id AS id, m.quantity AS quantity,
     {{date_trunc('month', m.occurred_at)}} AS month_start,
-    CASE WHEN bc.currency_code = 'EUR' THEN bc.unit_cost
+    CASE WHEN bc.currency_code = 'EUR' THEN CAST(bc.unit_cost AS NUMERIC(18,6))
          WHEN bc.currency_code IS NULL THEN NULL
-         ELSE CAST(bc.unit_cost / er.rate AS NUMERIC(18,6))
+         ELSE CAST({{divide_decimal(bc.unit_cost, er.rate)}} AS NUMERIC(18,6))
     END AS unit_cost_eur
   FROM movements m
   LEFT JOIN best_cost bc ON bc.variant_id = m.variant_id

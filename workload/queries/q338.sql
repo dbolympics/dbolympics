@@ -1,7 +1,7 @@
 SELECT t.name AS tenant_name,
        CAST({{date_trunc('month', wd.created_at)}} AS date) AS month,
        COUNT(*) AS total_sync_deliveries,
-       100.0 * COUNT(*) FILTER (WHERE wd.status IN ('pending','retrying')) / COUNT(*) AS pending_or_retrying_rate_pct
+       {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE wd.status IN ('pending','retrying')), COUNT(*))}} AS pending_or_retrying_rate_pct
 FROM webhook_deliveries wd
 JOIN webhooks w ON w.id = wd.webhook_id
 JOIN tenants t ON t.id = wd.tenant_id

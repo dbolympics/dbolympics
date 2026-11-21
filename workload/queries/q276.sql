@@ -2,7 +2,7 @@ SELECT
   t.name AS tenant_name,
   COUNT(*) AS total_attempts_feb,
   SUM(CASE WHEN la.succeeded = false THEN 1 ELSE 0 END) AS failed_attempts_feb,
-  100.0 * SUM(CASE WHEN la.succeeded = false THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS pct_failed_feb,
+  {{divide_decimal(100.0 * SUM(CASE WHEN la.succeeded = false THEN 1 ELSE 0 END), NULLIF(COUNT(*), 0))}} AS pct_failed_feb,
   COUNT(DISTINCT CASE WHEN la.succeeded = false THEN la.email END) AS distinct_emails_with_any_failed_attempt,
   COUNT(DISTINCT CASE WHEN la.succeeded = false THEN la.ip_address END) AS distinct_ips_with_any_failed_attempt,
   (SELECT MAX(cnt) FROM (

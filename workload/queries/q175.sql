@@ -36,7 +36,7 @@ SELECT
   COALESCE(stage_name, 'No stage transition recorded') AS stage_name,
   stage_order,
   COUNT(*) AS lost_opportunities_last_seen_here,
-  100.0 * COUNT(*) / SUM(COUNT(*)) OVER () AS pct_of_total_lost_in_new_business,
+  {{divide_decimal(100.0 * COUNT(*), SUM(COUNT(*)) OVER ())}} AS pct_of_total_lost_in_new_business,
   SUM(COUNT(*)) OVER () AS total_lost_opportunities_new_business
 FROM opp_stage
 GROUP BY 1, 2

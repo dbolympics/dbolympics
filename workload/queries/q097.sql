@@ -42,7 +42,7 @@ bucketed AS (
   SELECT
     aging_bucket,
     COUNT(*) AS invoice_count,
-    SUM(CAST(amount_due / eur_rate AS NUMERIC(18,6))) AS amount_due_eur,
+    SUM(CAST({{divide_decimal(amount_due, eur_rate)}} AS NUMERIC(18,6))) AS amount_due_eur,
     AVG(CAST(days_past_due AS NUMERIC(18,6))) AS avg_days_past_due,
     AVG(CAST(net_terms_days AS NUMERIC(18,6))) AS avg_net_terms_days
   FROM base
@@ -55,7 +55,7 @@ SELECT
   b.aging_bucket AS aging_bucket,
   b.invoice_count AS invoice_count,
   b.amount_due_eur AS amount_due_eur,
-  b.amount_due_eur / NULLIF(t.total_amount_due_eur, 0) * 100 AS pct_of_total_amount_due,
+  {{divide_decimal(b.amount_due_eur, NULLIF(t.total_amount_due_eur, 0))}} * 100 AS pct_of_total_amount_due,
   b.avg_days_past_due AS avg_days_past_due,
   b.avg_net_terms_days AS avg_net_terms_days
 FROM bucketed b

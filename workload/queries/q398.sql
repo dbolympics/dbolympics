@@ -34,7 +34,7 @@ priority_counts AS (
 ),
 resolution_stats AS (
   SELECT tenant_id,
-    AVG({{seconds_between(created_at, resolved_at)}} / 60.0) AS avg_resolution_minutes
+    AVG({{divide_decimal({{seconds_between(created_at, resolved_at)}}, 60.0)}}) AS avg_resolution_minutes
   FROM tickets_2025
   WHERE resolved_at IS NOT NULL
   GROUP BY tenant_id
@@ -49,11 +49,11 @@ SELECT
   tt.tenant_name AS tenant_name,
   tc.ticket_count AS ticket_count,
   COALESCE(ac.agent_count, 0) AS agent_count,
-  CAST(tc.ticket_count AS numeric(18,6)) / NULLIF(ac.agent_count, 0) AS tickets_per_agent,
-  CAST(COALESCE(mc.message_count, 0) AS numeric(18,6)) / NULLIF(tc.ticket_count, 0) AS avg_messages_per_ticket,
-  100.0 * COALESCE(pc.high_urgent_count, 0) / NULLIF(tc.ticket_count, 0) AS pct_high_or_urgent_priority,
+  {{divide_decimal(CAST(tc.ticket_count AS numeric(18,6)), NULLIF(ac.agent_count, 0))}} AS tickets_per_agent,
+  {{divide_decimal(CAST(COALESCE(mc.message_count, 0) AS numeric(18,6)), NULLIF(tc.ticket_count, 0))}} AS avg_messages_per_ticket,
+  {{divide_decimal(100.0 * COALESCE(pc.high_urgent_count, 0), NULLIF(tc.ticket_count, 0))}} AS pct_high_or_urgent_priority,
   rs.avg_resolution_minutes AS avg_resolution_minutes,
-  100.0 * COALESCE(bc.breach_count, 0) / NULLIF(tc.ticket_count, 0) AS resolution_breach_rate
+  {{divide_decimal(100.0 * COALESCE(bc.breach_count, 0), NULLIF(tc.ticket_count, 0))}} AS resolution_breach_rate
 FROM target_tenants tt
 JOIN ticket_counts tc ON tc.tenant_id = tt.tenant_id
 LEFT JOIN agent_counts ac ON ac.tenant_id = tt.tenant_id

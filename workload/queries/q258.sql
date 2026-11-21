@@ -2,8 +2,8 @@ WITH order_agg AS (
   SELECT
     {{year_month(o.placed_at)}} AS month,
     COUNT(*) AS orders_count,
-    SUM(CASE WHEN o.currency_code = 'EUR' THEN o.discount_total ELSE CAST(o.discount_total / er.rate AS NUMERIC(18,6)) END) AS discount_eur,
-    SUM(CASE WHEN o.currency_code = 'EUR' THEN o.subtotal ELSE CAST(o.subtotal / er.rate AS NUMERIC(18,6)) END) AS gmv_eur
+    SUM(CASE WHEN o.currency_code = 'EUR' THEN CAST(o.discount_total AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(o.discount_total, er.rate)}} AS NUMERIC(18,6)) END) AS discount_eur,
+    SUM(CASE WHEN o.currency_code = 'EUR' THEN CAST(o.subtotal AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(o.subtotal, er.rate)}} AS NUMERIC(18,6)) END) AS gmv_eur
   FROM orders o
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -15,7 +15,7 @@ WITH order_agg AS (
 refund_agg AS (
   SELECT
     {{year_month(o.placed_at)}} AS month,
-    SUM(CASE WHEN ret.currency_code = 'EUR' THEN ret.refund_total ELSE CAST(ret.refund_total / er.rate AS NUMERIC(18,6)) END) AS refund_eur
+    SUM(CASE WHEN ret.currency_code = 'EUR' THEN CAST(ret.refund_total AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(ret.refund_total, er.rate)}} AS NUMERIC(18,6)) END) AS refund_eur
   FROM order_returns ret
   JOIN orders o ON o.id = ret.order_id
   LEFT JOIN exchange_rates er
@@ -35,7 +35,7 @@ SELECT
   COALESCE(ra.refund_eur, 0) AS refund_amount_eur,
   COALESCE(oa.gmv_eur, 0) AS gmv_eur,
   CASE WHEN COALESCE(oa.gmv_eur, 0) = 0 THEN NULL
-  ELSE (COALESCE(oa.discount_eur, 0) + COALESCE(ra.refund_eur, 0)) / oa.gmv_eur * 100
+  ELSE {{divide_decimal((COALESCE(oa.discount_eur, 0) + COALESCE(ra.refund_eur, 0)), oa.gmv_eur)}} * 100
   END AS net_leakage_pct
 FROM months m
 LEFT JOIN order_agg oa ON oa.month = m.month_label

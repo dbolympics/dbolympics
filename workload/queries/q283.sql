@@ -60,10 +60,10 @@ top3_days as (
 select
   tt.tenant_name AS tenant_name,
   du.distinct_user_agents AS distinct_user_agents,
-  100.0 * tu.top_ua_count / tt.total_failed as top_user_agent_share_pct,
+  {{divide_decimal(100.0 * tu.top_ua_count, tt.total_failed)}} as top_user_agent_share_pct,
   dd.distinct_calendar_days_with_failures AS distinct_calendar_days_with_failures,
   md.max_failed_attempts_single_day AS max_failed_attempts_single_day,
-  100.0 * t3.top3_sum / tt.total_failed as pct_failed_attempts_in_top_3_days
+  {{divide_decimal(100.0 * t3.top3_sum, tt.total_failed)}} as pct_failed_attempts_in_top_3_days
 from tenant_totals tt
 join distinct_ua du on du.tenant_id = tt.tenant_id
 join top_ua tu on tu.tenant_id = tt.tenant_id

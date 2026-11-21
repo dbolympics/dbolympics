@@ -38,7 +38,7 @@ order_level AS (
         b.user_id AS user_id,
         CASE WHEN ohr.order_id IS NOT NULL THEN 'has_return' ELSE 'no_return' END AS grp,
         CASE WHEN nop.next_placed_at IS NOT NULL
-             THEN {{seconds_between(b.placed_at, nop.next_placed_at)}} / 86400.0
+             THEN {{divide_decimal({{seconds_between(b.placed_at, nop.next_placed_at)}}, 86400.0)}}
         END AS days_to_next
     FROM base_orders b
     LEFT JOIN order_has_return ohr ON ohr.order_id = b.id
@@ -48,7 +48,7 @@ SELECT
     grp AS "group",
     COUNT(*) AS orders_count,
     {{count_distinct_pair(tenant_id, user_id)}} AS distinct_customers,
-    100.0 * SUM(CASE WHEN days_to_next IS NOT NULL AND days_to_next <= 90 THEN 1 ELSE 0 END) / COUNT(*) AS pct_with_subsequent_order_within_90_days,
+    {{divide_decimal(100.0 * SUM(CASE WHEN days_to_next IS NOT NULL AND days_to_next <= 90 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_with_subsequent_order_within_90_days,
     {{percentile_cont_filter(0.5, days_to_next, days_to_next IS NOT NULL AND days_to_next <= 90)}} AS median_days_to_subsequent_order
 FROM order_level
 GROUP BY grp

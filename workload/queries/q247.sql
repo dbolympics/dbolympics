@@ -1,9 +1,9 @@
 SELECT
   t.name AS merchant_name,
   tk.ticket_count AS tickets_2025,
-  CAST(coalesce(msg.total_messages, 0) AS numeric(18,6)) / tk.ticket_count AS avg_messages_per_ticket,
-  CAST(coalesce(msg.total_public, 0) AS numeric(18,6)) / tk.ticket_count AS avg_public_messages_per_ticket,
-  CAST(coalesce(tags.total_tags, 0) AS numeric(18,6)) / tk.ticket_count AS avg_distinct_tags_per_ticket,
+  {{divide_decimal(CAST(coalesce(msg.total_messages, 0) AS numeric(18,6)), tk.ticket_count)}} AS avg_messages_per_ticket,
+  {{divide_decimal(CAST(coalesce(msg.total_public, 0) AS numeric(18,6)), tk.ticket_count)}} AS avg_public_messages_per_ticket,
+  {{divide_decimal(CAST(coalesce(tags.total_tags, 0) AS numeric(18,6)), tk.ticket_count)}} AS avg_distinct_tags_per_ticket,
   count(*) OVER () AS qualifying_tenant_count
 FROM tenants t
 JOIN (

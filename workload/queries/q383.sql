@@ -56,7 +56,7 @@ with_rate AS (
 SELECT
   account_name,
   CASE WHEN is_won THEN 'won' ELSE 'lost' END AS outcome,
-  CAST(amount / eur_rate AS NUMERIC(18,6)) AS amount_eur,
+  CAST({{divide_decimal(amount, eur_rate)}} AS NUMERIC(18,6)) AS amount_eur,
   currency_code,
   {{date_diff_days(created_at, closed_at)}} AS days_open,
   created_at,

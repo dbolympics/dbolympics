@@ -34,7 +34,7 @@ refunds AS (
     orr.id AS return_id,
     orr.refund_total AS refund_total,
     orr.refunded_at AS refunded_at,
-    (CAST(orr.refund_total / er.rate AS NUMERIC(18,6))) AS refund_eur
+    (CAST({{divide_decimal(orr.refund_total, er.rate)}} AS NUMERIC(18,6))) AS refund_eur
   FROM target_orders tord
   JOIN order_returns orr ON orr.order_id = tord.order_id AND orr.status = 'refunded'
   JOIN exchange_rates er ON er.base_code = 'EUR'
@@ -82,10 +82,10 @@ SELECT
   td.order_count AS order_count,
   da.total_refund_eur AS total_refunded_eur,
   da.refund_count AS refund_count,
-  100.0 * t3.top3_sum / NULLIF(da.total_refund_eur,0) AS top3_pct_of_total,
+  {{divide_decimal(100.0 * t3.top3_sum, NULLIF(da.total_refund_eur,0))}} AS top3_pct_of_total,
   da.median_refund_eur AS median_refund_eur,
   da.max_refund_eur AS max_refund_eur,
-  100.0 * COALESCE(fr.full_refund_orders,0) / td.order_count AS pct_orders_fully_refunded
+  {{divide_decimal(100.0 * COALESCE(fr.full_refund_orders,0), td.order_count)}} AS pct_orders_fully_refunded
 FROM target_discounts td
 JOIN discount_agg da ON da.discount_id = td.discount_id
 LEFT JOIN top3_agg t3 ON t3.discount_id = td.discount_id

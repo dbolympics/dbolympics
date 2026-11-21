@@ -10,7 +10,7 @@ WITH paid_payouts AS (
 ),
 payout_fees_eur AS (
   SELECT pp.tenant_id AS tenant_id, pp.industry AS industry, pp.year AS year,
-    CAST(pp.fee_amount / er.rate AS NUMERIC(18,6)) AS fee_amount_eur
+    CAST({{divide_decimal(pp.fee_amount, er.rate)}} AS NUMERIC(18,6)) AS fee_amount_eur
   FROM paid_payouts pp
   JOIN exchange_rates er
     ON er.base_code = 'EUR' AND er.quote_code = pp.currency_code AND er.as_of = CAST(pp.paid_at AS DATE)
@@ -41,7 +41,7 @@ SELECT
   fee_revenue_2024 AS fee_revenue_2024_eur,
   fee_revenue_2025 AS fee_revenue_2025_eur,
   CASE WHEN fee_revenue_2024 = 0 THEN NULL
-       ELSE 100.0 * (fee_revenue_2025 - fee_revenue_2024) / fee_revenue_2024
+       ELSE {{divide_decimal(100.0 * (fee_revenue_2025 - fee_revenue_2024), fee_revenue_2024)}}
   END AS yoy_fee_revenue_growth_pct,
   merchant_count_2024,
   merchant_count_2025,

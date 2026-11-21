@@ -45,7 +45,7 @@ SELECT
   a.total_rows AS total_rows,
   a.oldest_age_days AS oldest_row_age_days,
   a.exceeding_rows AS rows_exceeding_retention,
-  100.0 * a.exceeding_rows / NULLIF(a.total_rows, 0) AS pct_exceeding_retention
+  {{divide_decimal(100.0 * a.exceeding_rows, NULLIF(a.total_rows, 0))}} AS pct_exceeding_retention
 FROM all_stats a
 LEFT JOIN policy p ON p.entity_table = a.entity_table
 ORDER BY pct_exceeding_retention DESC NULLS FIRST, a.entity_table ASC NULLS LAST

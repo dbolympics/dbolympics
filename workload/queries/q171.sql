@@ -20,7 +20,7 @@ segment_membership AS (
 revenue_detail AS (
   SELECT
     sm.segment AS segment,
-    CAST(o.grand_total / COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6)) AS revenue_eur
+    CAST({{divide_decimal(o.grand_total, COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END))}} AS NUMERIC(18,6)) AS revenue_eur
   FROM segment_membership sm
   JOIN orders o
     ON o.tenant_id = sm.tenant_id AND o.user_id = sm.user_id
@@ -34,7 +34,7 @@ loyalty_tx_detail AS (
   SELECT
     sm.segment AS segment,
     lt.direction AS direction,
-    CAST(ABS(lt.points) / lp.points_per_currency
+    CAST({{divide_decimal(ABS(lt.points), lp.points_per_currency)}}
       / COALESCE(er.rate, CASE WHEN lp.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6)) AS points_value_eur
   FROM segment_membership sm
   JOIN loyalty_accounts la
@@ -74,12 +74,12 @@ SELECT
   cc.segment AS segment,
   cc.customer_count AS customer_count,
   COALESCE(rev.total_revenue_eur, 0) AS total_revenue_eur,
-  COALESCE(rev.total_revenue_eur, 0) / cc.customer_count AS revenue_per_customer_eur,
+  {{divide_decimal(COALESCE(rev.total_revenue_eur, 0), cc.customer_count)}} AS revenue_per_customer_eur,
   COALESCE(red.total_redeemed_eur, 0) AS total_points_redeemed_cost_eur,
-  COALESCE(red.total_redeemed_eur, 0) / cc.customer_count AS redeemed_cost_per_customer_eur,
+  {{divide_decimal(COALESCE(red.total_redeemed_eur, 0), cc.customer_count)}} AS redeemed_cost_per_customer_eur,
   COALESCE(earn.total_earned_eur, 0) AS total_points_earned_liability_eur,
-  COALESCE(earn.total_earned_eur, 0) / cc.customer_count AS earned_liability_per_customer_eur,
-  100.0 * COALESCE(red.total_redeemed_eur, 0) / NULLIF(COALESCE(rev.total_revenue_eur, 0), 0) AS redeemed_cost_pct_of_revenue
+  {{divide_decimal(COALESCE(earn.total_earned_eur, 0), cc.customer_count)}} AS earned_liability_per_customer_eur,
+  {{divide_decimal(100.0 * COALESCE(red.total_redeemed_eur, 0), NULLIF(COALESCE(rev.total_revenue_eur, 0), 0))}} AS redeemed_cost_pct_of_revenue
 FROM customer_counts cc
 LEFT JOIN revenue_totals rev ON rev.segment = cc.segment
 LEFT JOIN redeemed_totals red ON red.segment = cc.segment

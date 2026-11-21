@@ -32,7 +32,7 @@ segmented AS (
 eur_amounts AS (
   SELECT
     s.*,
-    CAST(s.total / NULLIF(er.rate, 0) AS NUMERIC(18,6)) AS total_eur
+    CAST({{divide_decimal(s.total, NULLIF(er.rate, 0))}} AS NUMERIC(18,6)) AS total_eur
   FROM segmented s
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -43,13 +43,12 @@ SELECT
   segment,
   COUNT(DISTINCT user_id) AS customer_count,
   COUNT(*) AS invoice_count,
-  AVG({{seconds_between(issued_at, paid_at)}} / 86400.0) FILTER (WHERE status = 'paid') AS avg_days_to_pay,
-  100.0 * COUNT(*) FILTER (WHERE status = 'paid' AND paid_at > due_at)
-  / NULLIF(COUNT(*) FILTER (WHERE status = 'paid'), 0) AS pct_invoices_paid_late,
-  100.0 * COUNT(*) FILTER (
+  AVG({{divide_decimal({{seconds_between(issued_at, paid_at)}}, 86400.0)}}) FILTER (WHERE status = 'paid') AS avg_days_to_pay,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE status = 'paid' AND paid_at > due_at), NULLIF(COUNT(*) FILTER (WHERE status = 'paid'), 0))}} AS pct_invoices_paid_late,
+  {{divide_decimal(100.0 * COUNT(*) FILTER (
     WHERE status = 'past_due'
        OR (status = 'open' AND due_at < DATE '2025-12-31' AND amount_due > 0)
-  ) / NULLIF(COUNT(*), 0) AS pct_invoices_currently_overdue,
+  ), NULLIF(COUNT(*), 0))}} AS pct_invoices_currently_overdue,
   AVG(total_eur) AS avg_invoice_amount_eur
 FROM eur_amounts
 GROUP BY segment

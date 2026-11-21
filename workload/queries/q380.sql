@@ -51,7 +51,7 @@ order_eur AS (
     o.user_id AS user_id,
     o.tenant_id AS tenant_id,
     o.status AS status,
-    CASE WHEN o.status <> 'cancelled' THEN CAST(o.grand_total / er.rate AS NUMERIC(18,6)) ELSE NULL END AS revenue_eur
+    CASE WHEN o.status <> 'cancelled' THEN CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6)) ELSE NULL END AS revenue_eur
   FROM orders o
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -79,8 +79,8 @@ final AS (
     COUNT(*) AS customer_count,
     AVG(CAST(co.lifetime_orders AS NUMERIC(18,6))) AS avg_lifetime_orders,
     AVG(co.lifetime_revenue_eur) AS avg_lifetime_revenue_eur,
-    SUM(co.lifetime_revenue_eur) / NULLIF(SUM(co.non_cancelled_order_count), 0) AS avg_order_value_eur,
-    100.0 * SUM(co.refunded_order_count) / NULLIF(SUM(co.lifetime_orders), 0) AS refund_rate_pct
+    {{divide_decimal(SUM(co.lifetime_revenue_eur), NULLIF(SUM(co.non_cancelled_order_count), 0))}} AS avg_order_value_eur,
+    {{divide_decimal(100.0 * SUM(co.refunded_order_count), NULLIF(SUM(co.lifetime_orders), 0))}} AS refund_rate_pct
   FROM tenure t
   JOIN membership m ON m.user_id = t.user_id AND m.tenant_id = t.tenant_id
   JOIN customer_orders co ON co.user_id = t.user_id AND co.tenant_id = t.tenant_id

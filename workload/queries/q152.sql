@@ -14,7 +14,7 @@ coupon_stats AS (
     r.coupon_id AS coupon_id,
     COUNT(*) AS times_redeemed,
     COUNT(DISTINCT r.user_id) AS distinct_customers,
-    SUM(CAST(r.discount_amount / COALESCE(er.rate, 1) AS NUMERIC(18,6))) AS total_discount_eur
+    SUM(CAST({{divide_decimal(r.discount_amount, COALESCE(er.rate, 1))}} AS NUMERIC(18,6))) AS total_discount_eur
   FROM redemptions r
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'

@@ -41,7 +41,7 @@ SELECT
   COALESCE(f.expirations, 0) AS expirations_recorded,
   COALESCE(ma.users_with_consent, 0) AS users_with_any_consent,
   COALESCE(ma.net_active, 0) AS net_active_opt_ins,
-  100.0 * COALESCE(ma.net_active, 0) / NULLIF(ma.users_with_consent, 0) AS active_opt_in_rate_pct
+  {{divide_decimal(100.0 * COALESCE(ma.net_active, 0), NULLIF(ma.users_with_consent, 0))}} AS active_opt_in_rate_pct
 FROM months m
 LEFT JOIN flow f ON f.month_label = m.month_label
 LEFT JOIN monthly_active ma ON ma.month_label = m.month_label
