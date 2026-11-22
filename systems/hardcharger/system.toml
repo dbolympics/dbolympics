@@ -1,8 +1,9 @@
 # Hardcharger: Hardcharger Engine, derived from DuckDB and modified for performance, served over
 # Chargewire, queried through the Hardcharger ADBC driver.
 name = "hardcharger"
-# runs on DuckDB (docs/RUNNER.md): the website shows it under DuckDB, when DuckDB is opened
-based_on = "duckdb"
+# Not based on DuckDB (docs/RUNNER.md, based_on): from 2.14.0 Hardcharger runs Hardcharger Engine, a
+# fork of DuckDB with optimizer and execution changes of its own
+# (https://github.com/gizmodata/hardcharger-engine/blob/v2.0.1/docs/optimizations.md).
 # as in install (HARDCHARGER_VERSION, ADBC_VERSION)
 version = "2.14.0 (Hardcharger Engine 2.0.1, derived from DuckDB 2.0.1; ADBC driver 2.7.2)"
 
