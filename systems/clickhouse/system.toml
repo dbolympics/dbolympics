@@ -1,7 +1,7 @@
 # ClickHouse, installed in the system's own container (as in ClickBench).
 name = "clickhouse"
 # the version, kept with the results (by hand)
-version = "26.9.22.3"
+version = "26.10.10.3"
 
 
 # how the website shows it

@@ -12,7 +12,7 @@ name = "clickhouse_brew"
 # runs on ClickHouse (docs/RUNNER.md): the website shows it under ClickHouse, when ClickHouse is opened
 based_on = "clickhouse"
 # the version, kept with the results (by hand)
-version = "experimental (ClickHouse 26.9.22.3)"
+version = "experimental (ClickHouse 26.10.10.3)"
 # for Umbra, which does not read list columns from Parquet; ClickHouse reads the original files
 arrays = "text"
 

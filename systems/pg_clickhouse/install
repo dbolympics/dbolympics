@@ -7,7 +7,7 @@ sudo apt-get install -y --no-install-recommends postgresql-client
 # A stable release, not the latest master build that https://clickhouse.com/ installs: that one
 # changes with every commit (26.11 builds cannot create their system log tables with
 # data_type_default_nullable and retry without end, on every core).
-CLICKHOUSE=26.9.22.3
+CLICKHOUSE=26.10.10.3
 if [ ! -x /usr/bin/clickhouse ]; then
     cd /tmp
     curl -fsSL --retry 10 --retry-delay 60 --retry-all-errors -o clickhouse.tgz \
