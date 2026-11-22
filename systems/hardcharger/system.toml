@@ -1,13 +1,15 @@
-# Hardcharger: DuckDB served over Chargewire, queried by the released hardcharger CLI.
+# Hardcharger: Hardcharger Engine, derived from DuckDB and modified for performance, served over
+# Chargewire, queried through the Hardcharger ADBC driver.
 name = "hardcharger"
 # runs on DuckDB (docs/RUNNER.md): the website shows it under DuckDB, when DuckDB is opened
 based_on = "duckdb"
-version = "2.4.1 (DuckDB 2.0.0)"
+# as in install (HARDCHARGER_VERSION, ADBC_VERSION)
+version = "2.14.0 (Hardcharger Engine 2.0.1, derived from DuckDB 2.0.1; ADBC driver 2.7.2)"
 
 # how the website shows it
 [site]
 name = "Hardcharger"
-description = "DuckDB behind a Chargewire server, queried through its CLI"
+description = "Hardcharger Engine (derived from DuckDB) behind a Chargewire server, queried through its ADBC driver"
 
 [load]
 statement = "COPY {table} FROM '{file}' (FORMAT parquet)"

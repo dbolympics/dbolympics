@@ -1,153 +1,87 @@
-//! Hardcharger's own CLI executes every statement over Chargewire, in one process and
-//! session for the whole run. Local .once/.echo commands frame its CSV output; they
-//! do not send SQL or start a process. HTTP is used only for cancellation.
+//! Hardcharger through its ADBC driver (the release's C shared library, installed by GizmoData's ADBC
+//! installer and loaded by name, through its driver manifest, by Apache Arrow's Rust driver manager):
+//! one database and one connection for the whole run. Every statement is
+//! a new ADBC statement on that connection; a result's Arrow batches are written as CSV by
+//! Arrow's writer, as the DuckDB entry does. A timeout cancels the running statement through
+//! ADBC's StatementCancel, from the timer thread.
 
-use std::io::{BufRead, BufReader, Write};
-use std::os::unix::net::UnixStream;
-use std::process::{Child, ChildStdin, Command, Stdio};
+use std::sync::Mutex;
 
-use serde_json::json;
+use adbc_core::options::{AdbcVersion, OptionDatabase, OptionValue};
+use adbc_core::{CancelHandle, Connection, Database, Driver, LOAD_FLAG_DEFAULT, Statement};
+use adbc_driver_manager::{ManagedConnection, ManagedDriver};
 
-const API: &str = "http://127.0.0.1:31337/chargewire/v1";
-const CSV: &str = "/run/dbo/hardcharger.csv";
-const BARRIER: &str = "echo: off\n";
+/// The driver's name: its manifest (hardcharger.toml, in /etc/adbc/drivers) names the library and the entrypoint.
+const DRIVER: &str = "hardcharger";
+const URI: &str = "hardcharger://127.0.0.1:31337?tls=false";
 
 struct System {
-    child: Child,
-    input: ChildStdin,
-    output: BufReader<UnixStream>,
+    conn: ManagedConnection,
+    running: &'static Mutex<Option<Box<dyn CancelHandle>>>,
 }
-struct Cancel {
-    http: ureq::Agent,
-    bearer: String,
-    url: String,
-}
+struct Cancel(&'static Mutex<Option<Box<dyn CancelHandle>>>);
 
 impl System {
     fn connect() -> (System, Cancel) {
-        let http: ureq::Agent = ureq::Agent::config_builder().build().into();
-        // Also waits for the server. No benchmark SQL uses this control channel.
-        let token: serde_json::Value = dbo::retry(|| {
-            http.post(&format!("{API}/auth/token"))
-                .send_json(
-                    json!({"grant_type": "password", "username": "bench", "password": "bench"}),
-                )
-                .map_err(|e| e.to_string())?
-                .body_mut()
-                .read_json()
-                .map_err(|e| e.to_string())
+        let mut driver = ManagedDriver::load_from_name(DRIVER, None, AdbcVersion::V110, LOAD_FLAG_DEFAULT, None)
+            .expect("loading the Hardcharger ADBC driver");
+        // Also waits for the server to start.
+        let conn = dbo::retry(|| {
+            let opts = [
+                (OptionDatabase::Uri, OptionValue::String(URI.into())),
+                (OptionDatabase::Username, OptionValue::String("bench".into())),
+                (OptionDatabase::Password, OptionValue::String("bench".into())),
+                // One result stream, as the CLI entry requests (--result-partitions 1).
+                (
+                    OptionDatabase::Other("hardcharger.query.result_partitions".into()),
+                    OptionValue::String("1".into()),
+                ),
+            ];
+            let db = driver.new_database_with_opts(opts).map_err(|e| e.to_string())?;
+            let mut conn = db.new_connection().map_err(|e| e.to_string())?;
+            // The connection opens its session lazily: make it now.
+            run_on(&mut conn, "SELECT 1", None).map(|_| conn)
         });
-        let bearer = format!(
-            "Bearer {}",
-            token["access_token"].as_str().expect("access token")
-        );
-
-        // Merge diagnostics into one ordered stream, separate from the result CSV.
-        let (output, writer) = UnixStream::pair().unwrap();
-        let mut child = Command::new("hardcharger")
-            .args([
-                "--host",
-                "127.0.0.1",
-                "--no-tls",
-                "--username",
-                "bench",
-                "--quiet",
-                "--csv",
-                "--no-header",
-                "--null",
-                "",
-                "--no-init",
-                "--result-partitions",
-                "1",
-            ])
-            .env("HARDCHARGER_PASSWORD", "bench")
-            .env("NO_COLOR", "1")
-            .stdin(Stdio::piped())
-            .stdout(Stdio::from(std::os::fd::OwnedFd::from(
-                writer.try_clone().unwrap(),
-            )))
-            .stderr(Stdio::from(std::os::fd::OwnedFd::from(writer)))
-            .spawn()
-            .expect("start hardcharger CLI");
-        let input = child.stdin.take().unwrap();
-        let mut system = System {
-            child,
-            input,
-            output: BufReader::new(output),
-        };
-        // The CLI's actual session, rather than another SQL connection for cancellation.
-        let session = system
-            .run(
-                "SELECT session_id FROM hardcharger_active_connections() WHERE is_current",
-                0,
-            )
-            .expect("identify CLI session");
-        let session = String::from_utf8(session).unwrap();
-        let session = session.trim();
-        assert!(
-            session.starts_with("s_")
-                && session
-                    .bytes()
-                    .all(|b| b.is_ascii_alphanumeric() || b == b'_'),
-            "session id"
-        );
-        let cancel = Cancel {
-            http,
-            bearer,
-            url: format!("{API}/sessions/{session}/cancel"),
-        };
-        (system, cancel)
+        let running: &'static Mutex<Option<Box<dyn CancelHandle>>> = Box::leak(Box::new(Mutex::new(None)));
+        (System { conn, running }, Cancel(running))
     }
 
     fn run(&mut self, sql: &str, _timeout: u32) -> Result<Vec<u8>, String> {
-        // .once closes (and flushes) the file after this statement, even on an error.
-        // A separate terminator also handles SQL ending in a line comment. The CLI
-        // parses statement terminators; the benchmark SQL itself is passed unchanged.
-        write!(self.input, ".once {CSV}\n{sql}\n;\n.echo\n")
-            .and_then(|_| self.input.flush())
-            .expect("write to hardcharger CLI");
-        let mut errors = String::new();
-        loop {
-            let mut line = String::new();
-            assert!(
-                self.output
-                    .read_line(&mut line)
-                    .expect("read hardcharger CLI")
-                    > 0,
-                "hardcharger CLI exited: {errors}"
-            );
-            if line == BARRIER {
-                break;
-            }
-            errors.push_str(&line);
-        }
-        if !errors.is_empty() {
-            return Err(errors.trim().to_owned());
-        }
-        Ok(std::fs::read(CSV).expect("read CLI result"))
+        run_on(&mut self.conn, sql, Some(self.running))
     }
 }
 
-impl Drop for System {
-    fn drop(&mut self) {
-        let _ = self.child.kill();
-        let _ = self.child.wait();
+fn run_on(conn: &mut ManagedConnection, sql: &str, running: Option<&Mutex<Option<Box<dyn CancelHandle>>>>) -> Result<Vec<u8>, String> {
+    let e = |e: adbc_core::error::Error| e.message;
+    let mut stmt = conn.new_statement().map_err(e)?;
+    stmt.set_sql_query(sql).map_err(e)?;
+    if let Some(r) = running {
+        *r.lock().unwrap() = Some(stmt.get_cancel_handle());
     }
+    let result = (|| {
+        let reader = stmt.execute().map_err(e)?;
+        let mut out = Vec::new();
+        let mut w = arrow_csv::WriterBuilder::new().with_header(false).build(&mut out);
+        for b in reader {
+            w.write(&b.map_err(|e| e.to_string())?).map_err(|e| e.to_string())?;
+        }
+        drop(w);
+        Ok(out)
+    })();
+    if let Some(r) = running {
+        *r.lock().unwrap() = None;
+    }
+    result
 }
 
 impl Cancel {
     fn cancel(&self) {
-        // Synchronous acknowledgement: only work already running in this session
-        // is cancelled. No delayed SIGINT can hit the next statement or stop the CLI
-        // while it formats CSV. dbo joins this call before accepting the next request.
-        if let Err(e) = self
-            .http
-            .post(&self.url)
-            .header("Authorization", &self.bearer)
-            .send_empty()
-            .and_then(|mut r| r.body_mut().read_to_vec().map(|_| ()))
-        {
-            eprintln!("Hardcharger cancel failed: {e}");
+        // Under the lock, so the statement stays alive while it is cancelled; dbo joins this
+        // call before it answers, and so before the next statement starts.
+        if let Some(h) = self.0.lock().unwrap().as_ref() {
+            if let Err(e) = h.try_cancel() {
+                eprintln!("Hardcharger ADBC cancel failed: {}", e.message);
+            }
         }
     }
 }

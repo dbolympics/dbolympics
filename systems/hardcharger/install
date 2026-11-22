@@ -2,18 +2,28 @@
 set -euo pipefail
 cd /system
 
+# The releases, as recorded in system.toml's version.
+HARDCHARGER_VERSION=2.14.0
+ADBC_VERSION=2.7.2
+
 apt-get update -y
 apt-get install -y --no-install-recommends build-essential tzdata
 
 # The official installer selects the architecture, verifies the release checksums
-# and checks both binaries. Pin the release as recorded in system.toml.
-VERSION=2.4.1
+# and checks both binaries.
 curl -fsSL --retry 10 https://install.hardcharger.gizmodata.com | \
-    sh -s -- --version "$VERSION" --prefix /opt/hardcharger
+    sh -s -- --version "$HARDCHARGER_VERSION" --prefix /opt/hardcharger
 ln -s /opt/hardcharger/bin/hardcharger-server /usr/local/bin/hardcharger-server
-ln -s /opt/hardcharger/bin/hardcharger /usr/local/bin/hardcharger
-hardcharger-server --version
-hardcharger --version
+server_version=$(hardcharger-server --version)
+echo "$server_version"
+grep -qF -- "$HARDCHARGER_VERSION" <<<"$server_version"
+
+# The Hardcharger ADBC driver, from GizmoData's ADBC installer: it verifies the release's
+# SHA256SUMS and writes the driver manifest (/etc/adbc/drivers/hardcharger.toml) that the
+# ADBC driver manager finds by name. Installed system-wide: install and start both run as root.
+curl -fsS --retry 10 https://install.adbc.gizmodata.com/hardcharger | ADBC_VERSION=$ADBC_VERSION ADBC_SYSTEM=1 sh
+cat /etc/adbc/drivers/hardcharger.toml
+grep -qF "$ADBC_VERSION" /etc/adbc/drivers/hardcharger.toml
 
 curl -fsSL --retry 10 https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain 1.98.1
 "$HOME/.cargo/bin/cargo" build --release --locked
