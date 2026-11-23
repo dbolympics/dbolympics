@@ -10,8 +10,8 @@ WITH target_tenants AS (
 ),
 revenue_tenant AS (
   SELECT p0.tenant_id AS tenant_id,
-    SUM(CASE WHEN p0.currency_code = 'EUR' THEN p0.amount
-             ELSE CAST(p0.amount / er0.rate AS NUMERIC(18,6)) END) AS total_2025_revenue_eur
+    SUM(CASE WHEN p0.currency_code = 'EUR' THEN CAST(p0.amount AS NUMERIC(18,6))
+             ELSE CAST({{divide_decimal(p0.amount, er0.rate)}} AS NUMERIC(18,6)) END) AS total_2025_revenue_eur
   FROM payments p0
   LEFT JOIN exchange_rates er0
     ON er0.base_code = 'EUR'
@@ -23,8 +23,8 @@ revenue_tenant AS (
   GROUP BY p0.tenant_id
 ),
 revenue_all AS (
-  SELECT SUM(CASE WHEN p1.currency_code = 'EUR' THEN p1.amount
-                  ELSE CAST(p1.amount / er1.rate AS NUMERIC(18,6)) END) AS total_revenue_eur_all
+  SELECT SUM(CASE WHEN p1.currency_code = 'EUR' THEN CAST(p1.amount AS NUMERIC(18,6))
+                  ELSE CAST({{divide_decimal(p1.amount, er1.rate)}} AS NUMERIC(18,6)) END) AS total_revenue_eur_all
   FROM payments p1
   LEFT JOIN exchange_rates er1
     ON er1.base_code = 'EUR'
@@ -36,11 +36,11 @@ revenue_all AS (
 ),
 open_invoices_tenant AS (
   SELECT i0.tenant_id AS tenant_id,
-    SUM(CASE WHEN i0.currency_code = 'EUR' THEN i0.amount_due
-             ELSE CAST(i0.amount_due / er2.rate AS NUMERIC(18,6)) END) AS open_amount_due_eur,
+    SUM(CASE WHEN i0.currency_code = 'EUR' THEN CAST(i0.amount_due AS NUMERIC(18,6))
+             ELSE CAST({{divide_decimal(i0.amount_due, er2.rate)}} AS NUMERIC(18,6)) END) AS open_amount_due_eur,
     SUM(CASE WHEN i0.due_at < TIMESTAMP '2025-12-31 00:00:00'
-             THEN (CASE WHEN i0.currency_code = 'EUR' THEN i0.amount_due
-                        ELSE CAST(i0.amount_due / er2.rate AS NUMERIC(18,6)) END)
+             THEN (CASE WHEN i0.currency_code = 'EUR' THEN CAST(i0.amount_due AS NUMERIC(18,6))
+                        ELSE CAST({{divide_decimal(i0.amount_due, er2.rate)}} AS NUMERIC(18,6)) END)
              ELSE 0 END) AS overdue_amount_due_eur
   FROM invoices i0
   LEFT JOIN exchange_rates er2
@@ -55,10 +55,10 @@ SELECT
   tt0.tenant_name AS tenant_name,
   tt0.currency_code AS currency_code,
   COALESCE(rt0.total_2025_revenue_eur, 0) AS total_2025_revenue_eur,
-  COALESCE(rt0.total_2025_revenue_eur, 0) / NULLIF(ra0.total_revenue_eur_all, 0) * 100 AS pct_of_total_2025_revenue,
+  {{divide_decimal(COALESCE(rt0.total_2025_revenue_eur, 0), NULLIF(ra0.total_revenue_eur_all, 0))}} * 100 AS pct_of_total_2025_revenue,
   COALESCE(oi0.open_amount_due_eur, 0) AS open_amount_due_eur,
   CASE WHEN COALESCE(oi0.open_amount_due_eur, 0) = 0 THEN NULL
-       ELSE oi0.overdue_amount_due_eur / oi0.open_amount_due_eur * 100 END AS pct_amount_due_overdue
+       ELSE {{divide_decimal(oi0.overdue_amount_due_eur, oi0.open_amount_due_eur)}} * 100 END AS pct_amount_due_overdue
 FROM target_tenants tt0
 LEFT JOIN revenue_tenant rt0 ON rt0.tenant_id = tt0.tenant_id
 CROSS JOIN revenue_all ra0

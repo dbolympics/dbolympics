@@ -3,7 +3,7 @@ SELECT
   COALESCE(t1.orders_count, 0) AS orders_count,
   COALESCE(t2.review_count, 0) AS review_count,
   CASE WHEN COALESCE(t1.orders_count, 0) = 0 THEN 0
-  ELSE CAST(COALESCE(t2.review_count, 0) AS decimal(18,6)) / t1.orders_count * 100
+  ELSE {{divide_decimal(CAST(COALESCE(t2.review_count, 0) AS decimal(18,6)), t1.orders_count)}} * 100
   END AS reviews_per_100_orders,
   COALESCE(t2.avg_rating, 0) AS avg_rating
 FROM (

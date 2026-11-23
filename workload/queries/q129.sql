@@ -22,10 +22,10 @@ SELECT
   jw.week_start AS week_start,
   jw.total_job_runs AS total_job_runs,
   jw.failed_job_runs AS failed_job_runs,
-  100.0 * jw.failed_job_runs / NULLIF(jw.total_job_runs, 0) AS job_failure_rate_pct,
+  {{divide_decimal(100.0 * jw.failed_job_runs, NULLIF(jw.total_job_runs, 0))}} AS job_failure_rate_pct,
   hw.total_health_checks AS total_health_checks,
   hw.unhealthy_health_checks AS unhealthy_health_checks,
-  100.0 * hw.unhealthy_health_checks / NULLIF(hw.total_health_checks, 0) AS health_check_unhealthy_rate_pct
+  {{divide_decimal(100.0 * hw.unhealthy_health_checks, NULLIF(hw.total_health_checks, 0))}} AS health_check_unhealthy_rate_pct
 FROM job_week jw
 JOIN health_week hw ON hw.week_start = jw.week_start
 ORDER BY jw.week_start ASC NULLS LAST

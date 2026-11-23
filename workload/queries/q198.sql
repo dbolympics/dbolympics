@@ -26,8 +26,8 @@ per_priority as (
     count(*) as ticket_count_with_sla,
     avg(cast(b.first_response_target_minutes as numeric(18,6))) as typical_first_response_target_minutes,
     avg(cast(b.resolution_target_minutes as numeric(18,6))) as typical_resolution_target_minutes,
-    100.0 * count(fr.ticket_id) / count(*) as first_response_breach_rate,
-    100.0 * count(res.ticket_id) / count(*) as resolution_breach_rate,
+    {{divide_decimal(100.0 * count(fr.ticket_id), count(*))}} as first_response_breach_rate,
+    {{divide_decimal(100.0 * count(res.ticket_id), count(*))}} as resolution_breach_rate,
     avg(fr.minutes_over) as avg_minutes_over_first_response,
     avg(res.minutes_over) as avg_minutes_over_resolution
   from base b
@@ -41,8 +41,8 @@ overall as (
     count(*) as ticket_count_with_sla,
     CAST(null AS numeric(18,6)) as typical_first_response_target_minutes,
     CAST(null AS numeric(18,6)) as typical_resolution_target_minutes,
-    100.0 * count(fr.ticket_id) / NULLIF(count(*), 0) as first_response_breach_rate,
-    100.0 * count(res.ticket_id) / NULLIF(count(*), 0) as resolution_breach_rate,
+    {{divide_decimal(100.0 * count(fr.ticket_id), NULLIF(count(*), 0))}} as first_response_breach_rate,
+    {{divide_decimal(100.0 * count(res.ticket_id), NULLIF(count(*), 0))}} as resolution_breach_rate,
     avg(fr.minutes_over) as avg_minutes_over_first_response,
     avg(res.minutes_over) as avg_minutes_over_resolution
   from base b

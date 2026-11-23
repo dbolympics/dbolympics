@@ -82,8 +82,8 @@ t4 AS (
 t5 AS (
   SELECT ow.status_category AS status_category,
          SUM(
-           CASE WHEN ow.discount_currency = 'EUR' THEN ow.discount_amount
-                ELSE CAST(ow.discount_amount / er.rate AS NUMERIC(18,6))
+           CASE WHEN ow.discount_currency = 'EUR' THEN CAST(ow.discount_amount AS NUMERIC(18,6))
+                ELSE CAST({{divide_decimal(ow.discount_amount, er.rate)}} AS NUMERIC(18,6))
            END
          ) AS total_discount_eur
   FROM orphan_with_category ow
@@ -97,7 +97,7 @@ SELECT
   t0.status_category AS status_category,
   COALESCE(t1.orphan_customer_count, 0) AS orphan_customer_count,
   COALESCE(t2.orphan_order_count, 0) AS orphan_order_count,
-  100.0 * COALESCE(t2.orphan_order_count, 0) / NULLIF(t3.total_orphan_orders, 0) AS pct_of_all_orphan_orders,
+  {{divide_decimal(100.0 * COALESCE(t2.orphan_order_count, 0), NULLIF(t3.total_orphan_orders, 0))}} AS pct_of_all_orphan_orders,
   t4.avg_days_sub_end_to_order AS avg_days_sub_end_to_order,
   COALESCE(t5.total_discount_eur, 0) AS total_discount_amount_eur
 FROM t0

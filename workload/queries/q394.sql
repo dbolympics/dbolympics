@@ -21,7 +21,7 @@ aggregated AS (
     vi.sku AS sku,
     vi.variant_name AS variant_name,
     COUNT(*) AS adjustment_count,
-    100.0 * SUM(CASE WHEN a.reason = 'Missing - suspected theft' THEN 1 ELSE 0 END) / COUNT(*) AS pct_theft_reason,
+    {{divide_decimal(100.0 * SUM(CASE WHEN a.reason = 'Missing - suspected theft' THEN 1 ELSE 0 END), COUNT(*))}} AS pct_theft_reason,
     COUNT(DISTINCT CAST(a.created_at AS DATE)) AS distinct_days_affected
   FROM adjustments a
   JOIN variant_info vi ON vi.variant_id = a.variant_id

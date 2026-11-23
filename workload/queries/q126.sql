@@ -22,7 +22,7 @@ select
   {{year_month(month_start)}} as month,
   total_checks,
   unhealthy_checks,
-  100.0 * unhealthy_checks / nullif(total_checks, 0) as unhealthy_rate_pct,
+  {{divide_decimal(100.0 * unhealthy_checks, nullif(total_checks, 0))}} as unhealthy_rate_pct,
   avg_latency_ms,
   distinct_components_checked
 from monthly_agg

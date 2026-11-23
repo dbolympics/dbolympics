@@ -12,8 +12,8 @@ converted AS (
   SELECT
     lr.tenant_id AS tenant_id,
     lr.processed_at AS processed_at,
-    CASE WHEN lr.currency_code = 'EUR' THEN lr.amount
-         ELSE CAST(lr.amount / er.rate AS NUMERIC(18,6)) END AS eur_amount
+    CASE WHEN lr.currency_code = 'EUR' THEN CAST(lr.amount AS NUMERIC(18,6))
+         ELSE CAST({{divide_decimal(lr.amount, er.rate)}} AS NUMERIC(18,6)) END AS eur_amount
   FROM late_refunds lr
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR' AND er.quote_code = lr.currency_code
@@ -41,10 +41,10 @@ SELECT
   tot.h1_2025_late_refund_eur AS h1_2025_late_refund_eur,
   tot.h2_2025_late_refund_eur AS h2_2025_late_refund_eur,
   CASE WHEN COALESCE(tot.h1_2025_late_refund_eur,0) = 0 THEN NULL
-       ELSE (tot.h2_2025_late_refund_eur - tot.h1_2025_late_refund_eur) / tot.h1_2025_late_refund_eur * 100
+       ELSE {{divide_decimal((tot.h2_2025_late_refund_eur - tot.h1_2025_late_refund_eur), tot.h1_2025_late_refund_eur)}} * 100
   END AS change_pct,
   tot.total_2025_late_refund_eur AS total_2025_late_refund_eur,
-  tot.total_2025_late_refund_eur / gt.grand_total_eur * 100 AS pct_of_all_late_refunds_2025
+  {{divide_decimal(tot.total_2025_late_refund_eur, gt.grand_total_eur)}} * 100 AS pct_of_all_late_refunds_2025
 FROM totals tot
 JOIN tenants t ON t.id = tot.tenant_id
 CROSS JOIN grand_total gt

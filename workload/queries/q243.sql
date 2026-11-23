@@ -40,7 +40,7 @@ eligible_with_shipment AS (
 order_lane AS (
   SELECT
     ews.order_id AS order_id,
-    {{seconds_between(ews.placed_at, ews.delivered_at)}} / 86400.0 AS delivery_days,
+    {{divide_decimal({{seconds_between(ews.placed_at, ews.delivered_at)}}, 86400.0)}} AS delivery_days,
     CASE
       WHEN ews.carrier = 'Lowlands Express' AND c.name IN ('Netherlands', 'Belgium', 'France')
         THEN 'Lowlands core (NL/BE/FR)'
@@ -76,7 +76,7 @@ SELECT
   COALESCE(ls.orders_fully_delivered, 0) AS orders_fully_delivered,
   ls.avg_delivery_days AS avg_delivery_days,
   ls.pct_within_5_days AS pct_within_5_days,
-  CAST(COALESCE(ls.orders_fully_delivered, 0) AS numeric(18,6)) / NULLIF(t.total_orders, 0) * 100 AS share_of_orders_pct
+  {{divide_decimal(CAST(COALESCE(ls.orders_fully_delivered, 0) AS numeric(18,6)), NULLIF(t.total_orders, 0))}} * 100 AS share_of_orders_pct
 FROM lane_groups lg
 LEFT JOIN lane_stats ls ON ls.lane_group = lg.lane_group
 CROSS JOIN totals t

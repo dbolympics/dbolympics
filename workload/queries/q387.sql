@@ -14,7 +14,7 @@ lost_opportunities as (
         o.id as opportunity_id,
         o.created_at AS created_at,
         o.closed_at AS closed_at,
-        ({{seconds_between(o.created_at, o.closed_at)}} / 86400.0) as days_open
+        ({{divide_decimal({{seconds_between(o.created_at, o.closed_at)}}, 86400.0)}}) as days_open
     from opportunities o
     join pipeline_scope ps
         on o.pipeline_id = ps.pipeline_id

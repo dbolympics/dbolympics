@@ -9,13 +9,13 @@ FROM (
     ft.tenant_name AS tenant_name,
     ft.excluded_period AS excluded_period,
     count(*) AS ticket_count_after_exclusion,
-    avg({{seconds_between(ft.created_at, ft.resolved_at)}} / 60.0) AS avg_resolution_minutes_after_exclusion,
-    100.0 * sum(
+    avg({{divide_decimal({{seconds_between(ft.created_at, ft.resolved_at)}}, 60.0)}}) AS avg_resolution_minutes_after_exclusion,
+    {{divide_decimal(100.0 * sum(
       case when exists (
         select 1 from sla_breaches sb
         where sb.ticket_id = ft.ticket_id and sb.breach_kind = 'resolution'
       ) then 1 else 0 end
-    ) / count(*) AS resolution_breach_rate_after_exclusion
+    ), count(*))}} AS resolution_breach_rate_after_exclusion
   FROM (
     SELECT
       tk.id as ticket_id,

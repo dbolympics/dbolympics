@@ -2,8 +2,8 @@ WITH t0_payments_eur AS (
   SELECT
     p.id AS payment_id,
     p.payment_method_id AS payment_method_id,
-    CAST(p.amount / er0.rate AS NUMERIC(18,6)) AS payment_amount_eur,
-    CAST(p.amount_refunded / er0.rate AS NUMERIC(18,6)) AS amount_refunded_eur
+    CAST({{divide_decimal(p.amount, er0.rate)}} AS NUMERIC(18,6)) AS payment_amount_eur,
+    CAST({{divide_decimal(p.amount_refunded, er0.rate)}} AS NUMERIC(18,6)) AS amount_refunded_eur
   FROM payments p
   JOIN exchange_rates er0
     ON er0.base_code = 'EUR'
@@ -17,7 +17,7 @@ WITH t0_payments_eur AS (
 t1_ledger_credit AS (
   SELECT
     le.payment_id AS payment_id,
-    SUM(CAST(le.amount / er1.rate AS NUMERIC(18,6))) AS ledger_credit_total_eur
+    SUM(CAST({{divide_decimal(le.amount, er1.rate)}} AS NUMERIC(18,6))) AS ledger_credit_total_eur
   FROM ledger_entries le
   JOIN exchange_rates er1
     ON er1.base_code = 'EUR'
@@ -103,9 +103,9 @@ t9_avgdiff AS (
 SELECT
   t7.payment_method_kind AS payment_method_kind,
   t7.payment_count AS payment_count,
-  100.0 * t7.payment_count / NULLIF(t6.grand_total_count, 0) AS pct_of_mismatch_count,
+  {{divide_decimal(100.0 * t7.payment_count, NULLIF(t6.grand_total_count, 0))}} AS pct_of_mismatch_count,
   COALESCE(t8.total_payment_amount_eur, 0) AS total_payment_amount_eur,
-  100.0 * COALESCE(t8.total_payment_amount_eur, 0) / NULLIF(t6.grand_total_amount_eur, 0) AS pct_of_mismatch_amount,
+  {{divide_decimal(100.0 * COALESCE(t8.total_payment_amount_eur, 0), NULLIF(t6.grand_total_amount_eur, 0))}} AS pct_of_mismatch_amount,
   COALESCE(t9.avg_abs_diff_eur, 0) AS avg_abs_diff_eur
 FROM t7_count t7
 LEFT JOIN t8_amount t8 ON t8.payment_method_kind = t7.payment_method_kind

@@ -27,10 +27,10 @@ agg AS (
 SELECT
   channel,
   messages_sent,
-  100.0 * delivered_count / NULLIF(messages_sent, 0) AS delivered_rate_pct,
-  100.0 * opened_count / NULLIF(delivered_count, 0) AS open_rate_pct,
-  100.0 * clicked_count / NULLIF(delivered_count, 0) AS click_rate_pct,
-  100.0 * bounced_count / NULLIF(messages_sent, 0) AS bounce_rate_pct,
-  100.0 * unsubscribed_count / NULLIF(messages_sent, 0) AS unsubscribe_rate_pct
+  {{divide_decimal(100.0 * delivered_count, NULLIF(messages_sent, 0))}} AS delivered_rate_pct,
+  {{divide_decimal(100.0 * opened_count, NULLIF(delivered_count, 0))}} AS open_rate_pct,
+  {{divide_decimal(100.0 * clicked_count, NULLIF(delivered_count, 0))}} AS click_rate_pct,
+  {{divide_decimal(100.0 * bounced_count, NULLIF(messages_sent, 0))}} AS bounce_rate_pct,
+  {{divide_decimal(100.0 * unsubscribed_count, NULLIF(messages_sent, 0))}} AS unsubscribe_rate_pct
 FROM agg
 ORDER BY messages_sent DESC NULLS FIRST, channel ASC NULLS LAST

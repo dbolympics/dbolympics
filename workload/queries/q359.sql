@@ -68,7 +68,7 @@ classified AS (
 with_eur AS (
   SELECT
     c.order_id AS order_id, c.tenant_id AS tenant_id, c.user_id AS user_id, c.category AS category,
-    CAST(c.discount_amount / er.rate AS NUMERIC(18,6)) AS discount_amount_eur
+    CAST({{divide_decimal(c.discount_amount, er.rate)}} AS NUMERIC(18,6)) AS discount_amount_eur
   FROM classified c
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -81,7 +81,7 @@ total AS (
 SELECT
   w.category AS category,
   COUNT(*) AS order_count,
-  100.0 * COUNT(*) / t.total_orders AS pct_of_291_bucket,
+  {{divide_decimal(100.0 * COUNT(*), t.total_orders)}} AS pct_of_291_bucket,
   COUNT(DISTINCT w.user_id) AS distinct_customers,
   SUM(w.discount_amount_eur) AS total_discount_eur
 FROM with_eur w

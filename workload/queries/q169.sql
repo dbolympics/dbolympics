@@ -5,11 +5,11 @@ SELECT
   COALESCE(t2.active_customers, 0) AS active_customers,
   COALESCE(t3.loyalty_members, 0) AS loyalty_members,
   CASE WHEN COALESCE(t2.active_customers, 0) = 0 THEN 0
-       ELSE 100.0 * COALESCE(t3.loyalty_members, 0) / t2.active_customers
+       ELSE {{divide_decimal(100.0 * COALESCE(t3.loyalty_members, 0), t2.active_customers)}}
   END AS pct_customers_enrolled,
   COALESCE(t4.referred_customers, 0) AS referred_customers,
   CASE WHEN COALESCE(t2.active_customers, 0) = 0 THEN 0
-       ELSE 100.0 * COALESCE(t4.referred_customers, 0) / t2.active_customers
+       ELSE {{divide_decimal(100.0 * COALESCE(t4.referred_customers, 0), t2.active_customers)}}
   END AS pct_customers_referred
 FROM (
   SELECT COALESCE(t.industry, 'Unknown') AS industry, COUNT(DISTINCT t.id) AS tenant_count

@@ -1,17 +1,17 @@
 SELECT
   pop.status AS order_status,
   pop.order_count AS order_count,
-  pop.order_count * 100.0 / SUM(pop.order_count) OVER () AS pct_of_orders,
+  {{divide_decimal(pop.order_count * 100.0, SUM(pop.order_count) OVER ())}} AS pct_of_orders,
   pop.grand_total_eur AS orders_grand_total_eur,
   pop.orders_with_captured_payment_count AS orders_with_captured_payment_count,
   COALESCE(pay.captured_eur, 0) AS matched_captured_payment_eur,
   pop.grand_total_eur - COALESCE(pay.captured_eur, 0) AS gap_eur,
-  (pop.grand_total_eur - COALESCE(pay.captured_eur, 0)) / NULLIF(pop.grand_total_eur, 0) * 100 AS gap_pct
+  {{divide_decimal((pop.grand_total_eur - COALESCE(pay.captured_eur, 0)), NULLIF(pop.grand_total_eur, 0))}} * 100 AS gap_pct
 FROM (
   SELECT
     o.status AS status,
     COUNT(*) AS order_count,
-    SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS grand_total_eur,
+    SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS grand_total_eur,
     COUNT(CASE WHEN EXISTS (
       SELECT 1 FROM payments p WHERE p.order_id = o.id AND p.status = 'captured'
     ) THEN 1 END) AS orders_with_captured_payment_count
@@ -27,7 +27,7 @@ FROM (
 LEFT JOIN (
   SELECT
     o.status AS status,
-    SUM(CAST(p.amount / er2.rate AS NUMERIC(18,6))) AS captured_eur
+    SUM(CAST({{divide_decimal(p.amount, er2.rate)}} AS NUMERIC(18,6))) AS captured_eur
   FROM payments p
   JOIN orders o ON o.id = p.order_id
   JOIN exchange_rates er2

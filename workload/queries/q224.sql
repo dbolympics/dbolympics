@@ -13,8 +13,8 @@ WITH qualifying_payments AS (
 payment_amounts_eur AS (
   SELECT
     qp.id AS id,
-    CAST(qp.amount / er.rate AS NUMERIC(18,6)) AS payment_amount_eur,
-    CAST(qp.amount_refunded / er.rate AS NUMERIC(18,6)) AS amount_refunded_eur
+    CAST({{divide_decimal(qp.amount, er.rate)}} AS NUMERIC(18,6)) AS payment_amount_eur,
+    CAST({{divide_decimal(qp.amount_refunded, er.rate)}} AS NUMERIC(18,6)) AS amount_refunded_eur
   FROM qualifying_payments qp
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -25,7 +25,7 @@ ledger_entries_eur AS (
   SELECT
     le.payment_id AS payment_id,
     le.direction AS direction,
-    CAST(le.amount / er.rate AS NUMERIC(18,6)) AS amount_eur
+    CAST({{divide_decimal(le.amount, er.rate)}} AS NUMERIC(18,6)) AS amount_eur
   FROM ledger_entries le
   JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -72,7 +72,7 @@ categorized AS (
 SELECT
   reconciliation_category,
   COUNT(*) AS payment_count,
-  100.0 * COUNT(*) / SUM(COUNT(*)) OVER () AS pct_of_payments,
+  {{divide_decimal(100.0 * COUNT(*), SUM(COUNT(*)) OVER ())}} AS pct_of_payments,
   SUM(payment_amount_eur) AS total_payment_amount_eur,
   SUM(total_credit_eur) AS total_ledger_credit_eur,
   SUM(total_debit_eur) AS total_ledger_debit_eur

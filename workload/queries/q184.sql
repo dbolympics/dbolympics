@@ -38,8 +38,8 @@ select
   coalesce(sum(quantity) filter (where quantity > 0), 0) as units_over,
   sum(quantity) as net_units_variance,
   sum(abs(quantity)) as abs_units_variance,
-  sum(CAST(abs(quantity) * unit_cost / rate AS NUMERIC(18,6))) as estimated_value_eur,
-  CAST(sum(abs(quantity)) AS numeric(18,6)) / count(*) as avg_abs_units_per_event
+  sum(CAST({{divide_decimal(abs(quantity) * unit_cost, rate)}} AS NUMERIC(18,6))) as estimated_value_eur,
+  {{divide_decimal(CAST(sum(abs(quantity)) AS numeric(18,6)), count(*))}} as avg_abs_units_per_event
 from valued
 group by {{year_month(occurred_at)}}
 order by month NULLS LAST

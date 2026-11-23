@@ -5,7 +5,7 @@ SELECT
   t_fr.median_first_response_hours AS median_first_response_hours,
   t_res.avg_resolution_hours AS avg_resolution_hours,
   t_res.median_resolution_hours AS median_resolution_hours,
-  CAST(COALESCE(t_breach.breached_tickets, 0) AS numeric(18,6)) / CAST(t_counts.tickets_created AS numeric(18,6)) * 100.0 AS sla_breach_rate_pct
+  {{divide_decimal(CAST(COALESCE(t_breach.breached_tickets, 0) AS numeric(18,6)), CAST(t_counts.tickets_created AS numeric(18,6)))}} * 100.0 AS sla_breach_rate_pct
 FROM (
   SELECT t0.tenant_id AS tenant_id, COUNT(*) AS tickets_created
   FROM tickets t0
@@ -16,8 +16,8 @@ JOIN tenants t_tenant
   ON t_tenant.id = t_counts.tenant_id
 LEFT JOIN (
   SELECT t0.tenant_id AS tenant_id,
-    AVG({{seconds_between(t0.created_at, t0.first_response_at)}} / 3600.0) AS avg_first_response_hours,
-    {{percentile_cont(0.5, {{seconds_between(t0.created_at, t0.first_response_at)}} / 3600.0)}} AS median_first_response_hours
+    AVG({{divide_decimal({{seconds_between(t0.created_at, t0.first_response_at)}}, 3600.0)}}) AS avg_first_response_hours,
+    {{percentile_cont(0.5, {{divide_decimal({{seconds_between(t0.created_at, t0.first_response_at)}}, 3600.0)}})}} AS median_first_response_hours
   FROM tickets t0
   WHERE t0.created_at >= DATE '2025-01-01' AND t0.created_at < DATE '2026-01-01'
     AND t0.first_response_at IS NOT NULL
@@ -26,8 +26,8 @@ LEFT JOIN (
   ON t_fr.tenant_id = t_counts.tenant_id
 LEFT JOIN (
   SELECT t0.tenant_id AS tenant_id,
-    AVG({{seconds_between(t0.created_at, t0.resolved_at)}} / 3600.0) AS avg_resolution_hours,
-    {{percentile_cont(0.5, {{seconds_between(t0.created_at, t0.resolved_at)}} / 3600.0)}} AS median_resolution_hours
+    AVG({{divide_decimal({{seconds_between(t0.created_at, t0.resolved_at)}}, 3600.0)}}) AS avg_resolution_hours,
+    {{percentile_cont(0.5, {{divide_decimal({{seconds_between(t0.created_at, t0.resolved_at)}}, 3600.0)}})}} AS median_resolution_hours
   FROM tickets t0
   WHERE t0.created_at >= DATE '2025-01-01' AND t0.created_at < DATE '2026-01-01'
     AND t0.resolved_at IS NOT NULL

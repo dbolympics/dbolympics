@@ -23,9 +23,9 @@ SELECT
   tf.name AS tenant_name,
   tt.tag_name AS tag_name,
   COUNT(*) AS ticket_count,
-  100.0 * COUNT(*) / tot.total_tickets AS pct_of_tenant_tickets,
-  AVG(CASE WHEN tt.resolved_at IS NOT NULL THEN {{seconds_between(tt.created_at, tt.resolved_at)}} / 60.0 END) AS avg_resolution_minutes,
-  100.0 * COUNT(DISTINCT CASE WHEN b.ticket_id IS NOT NULL THEN tt.ticket_id END) / COUNT(*) AS resolution_breach_rate
+  {{divide_decimal(100.0 * COUNT(*), tot.total_tickets)}} AS pct_of_tenant_tickets,
+  AVG(CASE WHEN tt.resolved_at IS NOT NULL THEN {{divide_decimal({{seconds_between(tt.created_at, tt.resolved_at)}}, 60.0)}} END) AS avg_resolution_minutes,
+  {{divide_decimal(100.0 * COUNT(DISTINCT CASE WHEN b.ticket_id IS NOT NULL THEN tt.ticket_id END), COUNT(*))}} AS resolution_breach_rate
 FROM ticket_tags tt
 JOIN tenant_filter tf ON tf.id = tt.tenant_id
 JOIN tenant_totals tot ON tot.tenant_id = tt.tenant_id

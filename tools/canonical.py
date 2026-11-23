@@ -31,8 +31,10 @@ are applied to the canonical text at the end:
 - determinism fixes (tie-breakers), workload/queries/determinism.json;
 - numeric normalization (docs/NUMERICS.md: no rounding, explicit exact arithmetic, FLOOR
   instead of casts of fractions), workload/queries/numerics.json.
-Last, two numeric steps give values an exact type: seconds between timestamps
-(`epoch_seconds`) and currency conversions (`rate_conversions`) are cast to NUMERIC(18,6).
+Last, numeric steps give values an exact type: seconds between timestamps (`epoch_seconds`)
+and currency conversions (`rate_conversions`) are cast to NUMERIC(18,6), and so are the other
+results of a CASE with a conversion that are columns of a known decimal type
+(`exact_case_branch`).
 """
 
 import json
@@ -45,6 +47,7 @@ QUERIES = ROOT / "workload" / "queries"
 EDITS = QUERIES / "edits.json"
 DETERMINISM = QUERIES / "determinism.json"
 NUMERICS = QUERIES / "numerics.json"
+DIVISIONS = QUERIES / "divisions.json"
 
 # keywords that can stand before '(' without being a function name
 NOT_FUNCTIONS = {"AND", "OR", "NOT", "IN", "AS", "SELECT", "WHERE", "ON", "WHEN", "THEN", "ELSE",
@@ -154,6 +157,15 @@ def operand_start(toks, k):
         if p >= 0 and toks[p].kind == "ident" and toks[p].text.upper() not in NOT_FUNCTIONS:
             return dotted_start(toks, p)
         return m
+    if t.kind == "placeholder" and t.text == "}}":  # {{name(...)}}
+        depth, i = 0, k
+        while i >= 0:
+            if toks[i].kind == "placeholder":
+                depth += 1 if toks[i].text == "}}" else -1
+                if depth == 0:
+                    return i
+            i -= 1
+        raise ValueError("}} without {{")
     if t.kw("END"):  # CASE ... END
         depth, i = 0, k
         while i >= 0:
@@ -751,6 +763,291 @@ def rate_conversions(sql):
         n += 1
 
 
+SCHEMA = ROOT / "schema" / "schema.json"
+# what ends a FROM item's alias: the clauses and join words after it
+NOT_ALIASES = {"ON", "USING", "WHERE", "JOIN", "LEFT", "RIGHT", "INNER", "FULL", "CROSS", "NATURAL", "LATERAL",
+               "GROUP", "ORDER", "HAVING", "WINDOW", "UNION", "INTERSECT", "EXCEPT", "FETCH", "LIMIT", "OFFSET"}
+
+
+def schema_columns():
+    """table -> column -> type, from schema/schema.json."""
+    return {t["name"]: {c["name"]: c["type"] for c in t["columns"]}
+            for t in json.loads(SCHEMA.read_text())["tables"]}
+
+
+def ctes(toks):
+    """name -> (start, end) of the body of every CTE `name AS (SELECT ...)`."""
+    out = {}
+    for i, t in enumerate(toks):
+        if t.kind == "ident" and not t.kw("AS"):
+            a = next_tok(toks, i)
+            if a < len(toks) and toks[a].kw("AS"):
+                lp = next_tok(toks, a)
+                if lp < len(toks) and toks[lp].text == "(" and toks[next_tok(toks, lp)].kw("SELECT", "WITH"):
+                    out[t.text] = (lp + 1, match_paren(toks, lp))
+    return out
+
+
+def from_items(toks, start, end, tables, bodies):
+    """The FROM items of the select toks[start:end] (not of the queries nested in it), each name and
+    alias -> ("table", name) or ("query", (start, end) of its body), and the list of the items."""
+    names, items, depth, in_from = {}, [], 0, False
+    for i in range(start, end):
+        t = toks[i]
+        if t.kind == "op" and t.text in "([":
+            depth += 1
+        elif t.kind == "op" and t.text in ")]":
+            depth -= 1
+        if depth != 0 and not (depth == 1 and t.text == "(" and in_from):
+            continue
+        if t.kw("FROM"):
+            in_from = True
+        elif t.kw("WHERE", "GROUP", "HAVING", "WINDOW", "ORDER", "UNION", "INTERSECT", "EXCEPT", "FETCH", "LIMIT"):
+            in_from = False
+        if not (in_from and (t.kw("FROM", "JOIN") or (t.kind == "op" and t.text == ","))):
+            continue
+        j = next_tok(toks, i)
+        if j >= end:
+            continue
+        if toks[j].text == "(" and toks[next_tok(toks, j)].kw("SELECT", "WITH"):
+            rel, e = ("query", (j + 1, match_paren(toks, j))), match_paren(toks, j)
+        elif toks[j].kind == "ident" and toks[j].text in bodies:
+            rel, e = ("query", bodies[toks[j].text]), j
+            names[toks[j].text] = rel
+        elif toks[j].kind == "ident" and toks[j].text in tables:
+            rel, e = ("table", toks[j].text), j
+            names[toks[j].text] = rel
+        else:
+            items.append(None)  # a function, an unknown name
+            continue
+        items.append(rel)
+        k = next_tok(toks, e)
+        if k < end and toks[k].kw("AS"):
+            k = next_tok(toks, k)
+        if k < end and toks[k].kind == "ident" and toks[k].text.upper() not in NOT_ALIASES:
+            names[toks[k].text] = rel
+    return names, items
+
+
+def scope(toks, i):
+    """(start, end) of the innermost query around toks[i]: the parentheses of a CTE or subquery body,
+    else the whole statement."""
+    depth = 0
+    for k in range(i - 1, -1, -1):
+        if toks[k].kind == "op" and toks[k].text in ")]":
+            depth += 1
+        elif toks[k].kind == "op" and toks[k].text in "([":
+            if depth == 0 and toks[next_tok(toks, k)].kw("SELECT", "WITH"):
+                return k + 1, match_paren(toks, k)
+            depth = max(depth - 1, 0) if depth else 0
+    return 0, len(toks)
+
+
+def select_items(toks, start, end):
+    """The items of the select list of the query toks[start:end], each without whitespace; None
+    for a set operation (UNION, INTERSECT, EXCEPT), whose columns come from several selects."""
+    depth, sel, frm = 0, None, end
+    for i in range(start, end):
+        t = toks[i]
+        if t.kind == "op" and t.text in "([":
+            depth += 1
+        elif t.kind == "op" and t.text in ")]":
+            depth -= 1
+        elif depth == 0 and t.kw("UNION", "INTERSECT", "EXCEPT"):
+            return None
+        elif depth == 0 and t.kw("SELECT"):
+            sel = i
+        elif depth == 0 and t.kw("FROM") and sel is not None and frm == end:
+            frm = i
+    if sel is None:
+        return None
+    s = next_tok(toks, sel)
+    if toks[s].kw("DISTINCT", "ALL"):
+        s = next_tok(toks, s)
+    return [[t for t in item if t.kind not in ("ws", "comment")] for item in split_args(toks[s:frm])]
+
+
+def column_ref(core):
+    """(qualifier or None, column) of tokens that are a column reference, else None."""
+    if len(core) == 1 and core[0].kind == "ident":
+        return None, core[0].text
+    if len(core) == 3 and core[0].kind == "ident" and core[1].text == "." and core[2].kind == "ident":
+        return core[0].text, core[2].text
+    return None
+
+
+def column_type(toks, tables, bodies, where, qual, col, depth=0):
+    """The schema type of the column qual.col (or an unqualified col) of the select toks[where[0]:where[1]]:
+    of a table among its FROM items, or of a CTE or derived table that selects a table's column under
+    that name, followed through its aliases. None where it is not known: an expression, an
+    unqualified name with several FROM items, a set operation."""
+    if depth >= 8:
+        return None
+    names, items = from_items(toks, where[0], where[1], tables, bodies)
+    rel = names.get(qual) if qual is not None else (items[0] if len(items) == 1 else None)
+    if rel is None:
+        return None
+    if rel[0] == "table":
+        return tables[rel[1]].get(col)
+    for core in select_items(toks, *rel[1]) or []:
+        if len(core) > 2 and core[-2].kw("AS") and core[-1].text == col:
+            ref = column_ref(core[:-2])
+        elif column_ref(core) and column_ref(core)[1] == col:
+            ref = column_ref(core)
+        else:
+            continue
+        return column_type(toks, tables, bodies, rel[1], ref[0], ref[1], depth + 1) if ref else None
+    return None
+
+
+RATE_CAST = re.compile(r"(?is)^CAST\(.*\s+AS\s+NUMERIC\(18,6\)\)$")
+
+
+def case_results(toks, i):
+    """The END of the CASE at toks[i] and its results (THEN and ELSE expressions) as token ranges."""
+    depth, j, res, cur = 0, next_tok(toks, i), [], None
+    while j < len(toks):
+        t = toks[j]
+        if t.kind == "op" and t.text in "([":
+            depth += 1
+        elif t.kind == "op" and t.text in ")]":
+            depth -= 1
+        elif t.kw("CASE"):
+            j, _ = case_results(toks, j)
+        elif depth == 0 and t.kw("WHEN", "THEN", "ELSE", "END"):
+            if cur is not None:
+                res.append((cur, j))
+            cur = next_tok(toks, j) if t.kw("THEN", "ELSE") else None
+            if t.kw("END"):
+                return j, res
+        j += 1
+    raise ValueError("CASE without END")
+
+
+def is_conversion(toks, a, b):
+    """Whether toks[a:b] is a currency conversion `CAST(x / er.rate AS NUMERIC(18,6))`."""
+    if not RATE_CAST.match(text(toks[a:b]).strip()):
+        return False
+    return any(t.kind == "op" and t.text == "/" and rate_divisor_end(toks, next_tok(toks, k)) is not None
+               for k, t in enumerate(toks[:b]) if k >= a)
+
+
+def exact_case_branches(sql):
+    """In a CASE with a currency conversion (`CAST(x / er.rate AS NUMERIC(18,6))`, rate_conversions)
+    the other results that are columns of a known decimal type of scale up to 6 and up to 12
+    integer digits get the same type, `CAST(col AS NUMERIC(18,6))` (docs/NUMERICS.md): exact, so
+    every system's value stays, and the results of the CASE have one type (ClickHouse rejects a
+    CASE over decimals of different scales: an amount's 4 next to the conversion's 6)."""
+    tables, n = schema_columns(), 0
+    while True:
+        toks = tokenize(sql)
+        bodies = ctes(toks)
+        site = None
+        for i, t in enumerate(toks):
+            if not t.kw("CASE"):
+                continue
+            _, res = case_results(toks, i)
+            if not any(is_conversion(toks, a, b) for a, b in res):
+                continue
+            for a, b in res:
+                ref = column_ref([x for x in toks[a:b] if x.kind not in ("ws", "comment")])
+                ty = ref and column_type(toks, tables, bodies, scope(toks, i), ref[0], ref[1])
+                if ty and ty["name"] in ("decimal", "numeric") and ty["scale"] <= 6 and ty["precision"] - ty["scale"] <= 12:
+                    e = b
+                    while toks[e - 1].kind in ("ws", "comment"):
+                        e -= 1
+                    site = (a, e)
+                    break
+            if site:
+                break
+        if site is None:
+            return sql, n
+        a, e = site
+        sql = text(toks[:a]) + "CAST(" + text(toks[a:e]) + " AS NUMERIC(18,6))" + text(toks[e:])
+        n += 1
+
+
+def operand_end(toks, j):
+    """Index of the last token of the operand that starts at toks[j] (the divisor of a `/`)."""
+    t = toks[j]
+    if t.kind == "op" and t.text == "(":
+        return match_paren(toks, j)
+    if t.kind == "placeholder" and t.text == "{{":
+        depth, i = 0, j
+        while i < len(toks):
+            if toks[i].kind == "placeholder":
+                depth += 1 if toks[i].text == "{{" else -1
+                if depth == 0:
+                    return i
+            i += 1
+        raise ValueError("{{ without }}")
+    if t.kw("CASE"):
+        depth, i = 0, j
+        while i < len(toks):
+            if toks[i].kw("CASE"):
+                depth += 1
+            elif toks[i].kw("END"):
+                depth -= 1
+                if depth == 0:
+                    return i
+            i += 1
+        raise ValueError("CASE without END")
+    if t.kind in ("ident", "qident"):
+        while j + 2 < len(toks) and toks[j + 1].text == "." and toks[j + 2].kind in ("ident", "qident"):
+            j += 2
+        lp = next_tok(toks, j)
+        if lp < len(toks) and toks[lp].text == "(" and toks[j].text.upper() not in NOT_FUNCTIONS:
+            e = match_paren(toks, lp)
+            while True:  # f(...) FILTER (...) OVER (...)
+                w = next_tok(toks, e)
+                if w < len(toks) and toks[w].kw("FILTER", "OVER"):
+                    p = next_tok(toks, w)
+                    e = match_paren(toks, p) if toks[p].text == "(" else p  # OVER window_name
+                else:
+                    return e
+        return j
+    if t.kind in ("number", "string"):
+        return j
+    raise ValueError(f"unexpected operand start {t!r}")
+
+
+# the point for a division by the types of its operands (workload/queries/divisions.json)
+DIVIDE_POINTS = {"int": "divide_int", "decimal": "divide_decimal"}
+
+
+def divisions(toks):
+    """Every `/` as (dividend start, `/`, divisor start, divisor end), in the order of the text: the
+    dividend is the multiplicative term the `/` divides (`a * b / c` divides `a * b`), the divisor
+    the operand after it."""
+    out = []
+    for k, t in enumerate(toks):
+        if t.kind == "op" and t.text == "/":
+            j = next_tok(toks, k)
+            out.append((term_start(toks, k), k, j, operand_end(toks, j)))
+    return out
+
+
+def divide_points(sql, kinds):
+    """The i-th `a / b` to `{{divide_<kind>(a, b)}}` by kinds[i], the types of its operands
+    (tools/division_types.py): int (two integers) or decimal (a decimal and a decimal or an
+    integer); None (a double, an interval) stays `a / b`. The last division first, so that `a / b / c`
+    divides `a / b`. The standard divides; a system overrides what it divides otherwise
+    (docs/DIALECTS.md)."""
+    if len(divisions(tokenize(sql))) != len(kinds):
+        raise ValueError(f"{len(kinds)} division types for {len(divisions(tokenize(sql)))} divisions: "
+                         "run tools/division_types.py")
+    n = 0
+    for i in range(len(kinds) - 1, -1, -1):
+        if kinds[i] is None:
+            continue
+        toks = tokenize(sql)
+        s, k, j, e = divisions(toks)[i]
+        a, b = text(toks[s:prev_tok(toks, k) + 1]), text(toks[j:e + 1])
+        sql = text(toks[:s]) + "{{" + DIVIDE_POINTS[kinds[i]] + "(" + a + ", " + b + ")}}" + text(toks[e + 1:])
+        n += 1
+    return sql, n
+
+
 def translate(sql, edits=(), determinism=(), numerics=()):
     """Canonical text and the steps applied."""
     steps = []
@@ -783,6 +1080,11 @@ def translate(sql, edits=(), determinism=(), numerics=()):
     if n:
         steps.append({"kind": "numeric", "step": "rate_conversion", "count": n,
                       "note": "docs/NUMERICS.md: x / exchange rate cast to NUMERIC(18,6)"})
+    out, n = exact_case_branches(out)
+    if n:
+        steps.append({"kind": "numeric", "step": "exact_case_branch", "count": n,
+                      "note": "docs/NUMERICS.md: in a CASE with a currency conversion, a column of a known decimal "
+                              "type cast to NUMERIC(18,6) too (exact)"})
     toks = tokenize(out.rstrip("\n"))
     toks, n = explicit_column_aliases(toks)
     if n:
@@ -808,11 +1110,17 @@ def main():
     edits = json.load(open(EDITS)) if EDITS.exists() else {}
     det = json.load(open(DETERMINISM)) if DETERMINISM.exists() else {}
     num = json.load(open(NUMERICS)) if NUMERICS.exists() else {}
+    div = json.load(open(DIVISIONS)) if DIVISIONS.exists() else {}
     QUERIES.mkdir(parents=True, exist_ok=True)
     derivations = {}
     for e in entries:
         sql, steps = translate(e["sql"], edits.get(e["id"], ()),
                                det.get(e["id"], ()), num.get(e["id"], ()))
+        sql, n = divide_points(sql, div.get(e["id"], []))
+        if n:
+            steps.append({"kind": "dialect", "step": "divide", "count": n,
+                          "note": "a division of integers or decimals, by the types of its operands "
+                                  "(divisions.json): the standard's a / b, which a system may divide its own way"})
         (QUERIES / f"{e['id']}.sql").write_text(sql)
         derivations[e["id"]] = steps
     (QUERIES / "derivations.json").write_text(json.dumps(derivations, indent=1) + "\n")

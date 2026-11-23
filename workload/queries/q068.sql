@@ -44,11 +44,11 @@ SELECT
   coalesce(a.archived_events,0) AS audit_log_archived_events,
   coalesce(l.live_events,0) + coalesce(a.archived_events,0) AS total_audit_events,
   CASE WHEN (coalesce(l.live_events,0)+coalesce(a.archived_events,0)) = 0 THEN NULL
-  ELSE CAST((coalesce(l.live_null_actor,0)+coalesce(a.archived_null_actor,0)) AS numeric(18,6)) / (coalesce(l.live_events,0)+coalesce(a.archived_events,0))
+  ELSE {{divide_decimal(CAST((coalesce(l.live_null_actor,0)+coalesce(a.archived_null_actor,0)) AS numeric(18,6)), (coalesce(l.live_events,0)+coalesce(a.archived_events,0)))}}
   END AS pct_actor_user_id_null,
   coalesce(dat.distinct_actor_type_values,0) AS distinct_actor_type_values,
   CASE WHEN (coalesce(l.live_events,0)+coalesce(a.archived_events,0)) = 0 THEN NULL
-  ELSE CAST((coalesce(l.live_system_api,0)+coalesce(a.archived_system_api,0)) AS numeric(18,6)) / (coalesce(l.live_events,0)+coalesce(a.archived_events,0))
+  ELSE {{divide_decimal(CAST((coalesce(l.live_system_api,0)+coalesce(a.archived_system_api,0)) AS numeric(18,6)), (coalesce(l.live_events,0)+coalesce(a.archived_events,0)))}}
   END AS pct_actor_type_system_or_api,
   coalesce(acc.access_events,0) AS access_log_events
 FROM months m

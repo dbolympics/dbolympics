@@ -9,7 +9,7 @@ with latest_rates as (
 ),
 unpaid as (
   select i.tenant_id AS tenant_id,
-    sum(i.amount_due / case when i.currency_code = 'EUR' then 1 else lr.rate end) as unpaid_eur
+    sum({{divide_decimal(i.amount_due, case when i.currency_code = 'EUR' then 1 else lr.rate end)}}) as unpaid_eur
   from invoices i
   left join latest_rates lr on lr.quote_code = i.currency_code
   where i.status in ('open','past_due')
@@ -24,7 +24,7 @@ traffic as (
 ),
 payout_rates as (
   select p.id as payout_id, p.tenant_id AS tenant_id, p.paid_at AS paid_at,
-    p.fee_amount / case when p.currency_code = 'EUR' then 1 else er.rate end as fee_eur
+    {{divide_decimal(p.fee_amount, case when p.currency_code = 'EUR' then 1 else er.rate end)}} as fee_eur
   from payouts p
   left join exchange_rates er
     on er.base_code = 'EUR' and er.quote_code = p.currency_code and er.as_of = CAST(p.paid_at AS DATE)
@@ -47,7 +47,7 @@ select
   t.industry as vertical,
   coalesce(u.unpaid_eur, 0) as unpaid_invoice_balance_eur,
   case when tr.q3_sessions is null or tr.q3_sessions = 0 then null
-       else 100.0 * (tr.q4_sessions - tr.q3_sessions) / tr.q3_sessions end as traffic_change_pct_q4_vs_q3,
+       else {{divide_decimal(100.0 * (tr.q4_sessions - tr.q3_sessions), tr.q3_sessions)}} end as traffic_change_pct_q4_vs_q3,
   case when r.q3_fee is null or r.q3_fee = 0 then null
        else 100.0 * (r.q4_fee - r.q3_fee) / r.q3_fee end as fee_revenue_change_pct_q4_vs_q3,
   (DATE '2026-01-05' - CAST(lo.last_placed_at AS DATE)) as days_since_last_order,

@@ -19,7 +19,7 @@ orphan_orders AS (
     o.user_id AS user_id,
     o.id AS order_id,
     cd.month_label AS month_label,
-    CAST(od.amount / er.rate AS NUMERIC(18,6)) AS discount_amount_eur
+    CAST({{divide_decimal(od.amount, er.rate)}} AS NUMERIC(18,6)) AS discount_amount_eur
   FROM order_discounts od
   JOIN discounts d ON d.id = od.discount_id AND d.tenant_id = od.tenant_id
   JOIN orders o ON o.id = od.order_id AND o.tenant_id = od.tenant_id

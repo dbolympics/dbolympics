@@ -51,8 +51,8 @@ aov AS (
   SELECT
     t8.period AS period,
     AVG(
-      CASE WHEN t8.currency_code = 'EUR' THEN t8.grand_total
-           ELSE CAST(t8.grand_total / t9.rate AS NUMERIC(18,6))
+      CASE WHEN t8.currency_code = 'EUR' THEN CAST(t8.grand_total AS NUMERIC(18,6))
+           ELSE CAST({{divide_decimal(t8.grand_total, t9.rate)}} AS NUMERIC(18,6))
       END
     ) AS avg_order_value_eur
   FROM base_orders t8
@@ -83,7 +83,7 @@ order_refund_flags AS (
 refund_rate AS (
   SELECT
     t15.period AS period,
-    100.0 * SUM(t15.is_refunded) / COUNT(*) AS refund_rate_pct
+    {{divide_decimal(100.0 * SUM(t15.is_refunded), COUNT(*))}} AS refund_rate_pct
   FROM order_refund_flags t15
   GROUP BY t15.period
 ),
@@ -93,7 +93,7 @@ exposure_before AS (
     t16.user_id AS user_id,
     GREATEST(
       1,
-      FLOOR({{seconds_between(COALESCE(t17.first_order_before, t16.user_created_at), t16.first_redeem_at)}} / 86400)
+      FLOOR({{divide_decimal({{seconds_between(COALESCE(t17.first_order_before, t16.user_created_at), t16.first_redeem_at)}}, 86400)}})
     ) AS exposed_days
   FROM population t16
   LEFT JOIN (
@@ -110,10 +110,10 @@ exposure_after AS (
     GREATEST(
       1,
       FLOOR(
-        {{seconds_between(t19.first_redeem_at, COALESCE(
+        {{divide_decimal({{seconds_between(t19.first_redeem_at, COALESCE(
               CASE WHEN t19.tenant_status = 'churned' THEN t20.last_order_after ELSE TIMESTAMP '2025-12-31 00:00:00' END,
               t19.first_redeem_at
-            ))}} / 86400
+            ))}}, 86400)}}
       )
     ) AS exposed_days
   FROM population t19

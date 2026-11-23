@@ -16,7 +16,7 @@ SELECT
   t0.handler AS handler,
   COALESCE(t1.total_runs, 0) AS total_runs,
   COALESCE(t2.failed_runs, 0) AS failed_runs,
-  100.0 * COALESCE(t2.failed_runs, 0) / NULLIF(COALESCE(t1.total_runs, 0), 0) AS failure_rate_pct,
+  {{divide_decimal(100.0 * COALESCE(t2.failed_runs, 0), NULLIF(COALESCE(t1.total_runs, 0), 0))}} AS failure_rate_pct,
   COALESCE(t3.distinct_tenants_run, 0) AS distinct_tenants_run,
   COALESCE(t4.distinct_tenants_failed, 0) AS distinct_tenants_failed,
   t5.avg_duration_seconds_failed AS avg_duration_seconds_failed

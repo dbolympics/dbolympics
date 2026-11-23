@@ -2,7 +2,7 @@ SELECT t.name as merchant_name,
   concat('2025-Q', CAST(extract(quarter from tk.created_at) AS int)) as quarter,
   count(*) as tickets_created,
   count(distinct tk.assignee_agent_id) as distinct_agents,
-  CAST(count(*) AS numeric(18,6)) / nullif(count(distinct tk.assignee_agent_id),0) as tickets_per_agent
+  {{divide_decimal(CAST(count(*) AS numeric(18,6)), nullif(count(distinct tk.assignee_agent_id),0))}} as tickets_per_agent
 FROM tickets tk
 JOIN tenants t on t.id = tk.tenant_id
 WHERE t.name in ('Cragsley Outfitters','Marrowby & Vane','Studio Vrij','Grind Collective')

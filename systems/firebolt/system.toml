@@ -29,6 +29,9 @@ smallint = "integer"
 "string_agg_distinct_sorted(x, sep)" = "CASE WHEN COUNT({x}) = 0 THEN NULL ELSE ARRAY_TO_STRING(ARRAY_SORT(ARRAY_DISTINCT(ARRAY_AGG({x}))), {sep}) END"
 # no DISTINCT in window aggregates: the distinct non-NULL values from two dense ranks
 "count_distinct_over(x, window)" = "(DENSE_RANK() OVER ({window} ORDER BY {x} ASC NULLS FIRST) + DENSE_RANK() OVER ({window} ORDER BY {x} DESC NULLS LAST) - 1 - MAX(CASE WHEN {x} IS NULL THEN 1 ELSE 0 END) OVER ({window}))"
+# no arithmetic on decimals of different precision and scale (an amount, decimal(14,4), over an exchange
+# rate, decimal(12,6)): in double precision, as DuckDB divides decimals
+"divide_decimal(a, b)" = "CAST({a} AS DOUBLE PRECISION) / CAST({b} AS DOUBLE PRECISION)"
 
 [[container]]
 name = "db"

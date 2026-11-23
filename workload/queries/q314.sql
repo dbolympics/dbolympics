@@ -31,7 +31,7 @@ SELECT
     t.name AS tenant_name,
     pt.cancelled_orders AS cancelled_orders,
     pt.matching_history_rows AS matching_history_rows,
-    100.0 * pt.orders_with_match / pt.cancelled_orders AS coverage_rate_pct,
+    {{divide_decimal(100.0 * pt.orders_with_match, pt.cancelled_orders)}} AS coverage_rate_pct,
     pt.matching_rows_with_actor AS matching_rows_with_actor
 FROM per_tenant pt
 JOIN tenants t ON t.id = pt.tenant_id

@@ -1,6 +1,6 @@
 WITH discount_eur AS (
   SELECT od.discount_id AS discount_id,
-         SUM(CAST(od.amount / er.rate AS NUMERIC(18,6))) AS discount_amount_eur
+         SUM(CAST({{divide_decimal(od.amount, er.rate)}} AS NUMERIC(18,6))) AS discount_amount_eur
   FROM order_discounts od
   JOIN orders o ON o.id = od.order_id
   JOIN discounts d ON d.id = od.discount_id
@@ -43,7 +43,7 @@ discount_summary AS (
 ),
 refunds AS (
   SELECT dco.discount_id AS discount_id,
-         SUM(CAST(orr.refund_total / er.rate AS NUMERIC(18,6))) AS refund_eur
+         SUM(CAST({{divide_decimal(orr.refund_total, er.rate)}} AS NUMERIC(18,6))) AS refund_eur
   FROM discounted_orders dco
   JOIN order_returns orr ON orr.order_id = dco.order_id AND orr.status = 'refunded'
   JOIN orders o ON o.id = dco.order_id
@@ -71,12 +71,12 @@ SELECT
   COALESCE(cc.code, 'automatic') AS coupon_code,
   ds.order_count AS order_count,
   ds.orders_with_rma AS orders_with_rma,
-  100.0 * ds.orders_with_rma / NULLIF(ds.order_count, 0) AS return_rate_pct,
+  {{divide_decimal(100.0 * ds.orders_with_rma, NULLIF(ds.order_count, 0))}} AS return_rate_pct,
   COALESCE(r.refund_eur, 0) AS total_refunded_eur,
-  100.0 * COALESCE(r.refund_eur, 0) / NULLIF(t.discount_amount_eur, 0) AS refund_pct_of_discount_cost,
-  100.0 * b.baseline_rma_count / NULLIF(b.baseline_order_count, 0) AS baseline_return_rate_pct,
-  100.0 * ds.orders_with_rma / NULLIF(ds.order_count, 0)
-  - 100.0 * b.baseline_rma_count / NULLIF(b.baseline_order_count, 0) AS return_rate_lift_pp
+  {{divide_decimal(100.0 * COALESCE(r.refund_eur, 0), NULLIF(t.discount_amount_eur, 0))}} AS refund_pct_of_discount_cost,
+  {{divide_decimal(100.0 * b.baseline_rma_count, NULLIF(b.baseline_order_count, 0))}} AS baseline_return_rate_pct,
+  {{divide_decimal(100.0 * ds.orders_with_rma, NULLIF(ds.order_count, 0))}}
+  - {{divide_decimal(100.0 * b.baseline_rma_count, NULLIF(b.baseline_order_count, 0))}} AS return_rate_lift_pp
 FROM top15 t
 JOIN discounts d ON d.id = t.discount_id
 JOIN discount_summary ds ON ds.discount_id = t.discount_id

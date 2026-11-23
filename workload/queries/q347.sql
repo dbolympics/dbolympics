@@ -4,7 +4,7 @@ SELECT
   COALESCE(pr.products_5plus, 0) AS products_with_5plus_reviews,
   COALESCE(pr.poor_rated_count, 0) AS poor_rated_product_count,
   CASE WHEN COALESCE(pr.products_5plus,0) = 0 THEN NULL
-       ELSE CAST(pr.poor_rated_count AS numeric(18,6)) / pr.products_5plus * 100
+       ELSE {{divide_decimal(CAST(pr.poor_rated_count AS numeric(18,6)), pr.products_5plus)}} * 100
   END AS pct_poor_rated_products,
   pr.avg_rating AS avg_rating_of_reviewed_products,
   COALESCE(rv.units_sold, 0) AS units_sold_last_12mo,
@@ -35,7 +35,7 @@ LEFT JOIN (
 LEFT JOIN (
   SELECT p.primary_category_id AS primary_category_id,
     SUM(oi.quantity) AS units_sold,
-    SUM(CASE WHEN oi.currency_code = 'EUR' THEN oi.line_total ELSE CAST(oi.line_total / er.rate AS NUMERIC(18,6)) END) AS revenue_eur
+    SUM(CASE WHEN oi.currency_code = 'EUR' THEN CAST(oi.line_total AS NUMERIC(18,6)) ELSE CAST({{divide_decimal(oi.line_total, er.rate)}} AS NUMERIC(18,6)) END) AS revenue_eur
   FROM order_items oi
   JOIN orders o ON o.id = oi.order_id
   JOIN product_variants pv ON pv.id = oi.product_variant_id

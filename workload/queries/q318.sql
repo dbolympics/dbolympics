@@ -35,7 +35,7 @@ total_shoppers as (
 select
     cs.method_category AS method_category,
     count(*) as shopper_user_count,
-    100.0 * count(*) / t.total_count as share_of_shoppers_pct,
+    {{divide_decimal(100.0 * count(*), t.total_count)}} as share_of_shoppers_pct,
     count(mfa.user_id) as confirmed_mfa_count,
     count(rl.user_id) as recently_active_count
 from classified_shoppers cs

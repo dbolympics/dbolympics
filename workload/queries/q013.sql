@@ -8,9 +8,9 @@ converted_payouts AS (
     t0.id AS payout_id,
     t2.year_num AS year_num,
     t2.month_num AS month_num,
-    CAST(t0.gross_amount / t1.rate AS NUMERIC(18,6)) AS gross_eur,
-    CAST(t0.fee_amount / t1.rate AS NUMERIC(18,6)) AS fee_eur,
-    CAST(t0.net_amount / t1.rate AS NUMERIC(18,6)) AS net_eur
+    CAST({{divide_decimal(t0.gross_amount, t1.rate)}} AS NUMERIC(18,6)) AS gross_eur,
+    CAST({{divide_decimal(t0.fee_amount, t1.rate)}} AS NUMERIC(18,6)) AS fee_eur,
+    CAST({{divide_decimal(t0.net_amount, t1.rate)}} AS NUMERIC(18,6)) AS net_eur
   FROM payouts t0
   JOIN exchange_rates t1
     ON t1.base_code = 'EUR'
@@ -46,7 +46,7 @@ SELECT
   COALESCE(t1.gross_eur_total, 0) AS gross_volume_eur,
   COALESCE(t1.fee_eur_total, 0) AS fee_revenue_eur,
   COALESCE(t1.net_eur_total, 0) AS net_paid_out_eur,
-  COALESCE(t1.fee_eur_total, 0) / NULLIF(t1.gross_eur_total, 0) * 100 AS fee_rate_pct,
+  {{divide_decimal(COALESCE(t1.fee_eur_total, 0), NULLIF(t1.gross_eur_total, 0))}} * 100 AS fee_rate_pct,
   COALESCE(t2.fee_eur_total_prior, 0) AS fee_revenue_prior_year_eur
 FROM months t0
 LEFT JOIN current_year t1 ON t1.month_num = t0.month_num

@@ -9,7 +9,7 @@ JOIN (
   SELECT p.tenant_id AS tenant_id,
          COUNT(*) AS review_count,
          AVG(CAST(pr.rating AS NUMERIC(18,6))) AS avg_rating,
-         100.0 * SUM(CASE WHEN pr.rating <= 2 THEN 1 ELSE 0 END) / COUNT(*) AS pct_1_2_star
+         {{divide_decimal(100.0 * SUM(CASE WHEN pr.rating <= 2 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_1_2_star
   FROM product_reviews pr
   JOIN products p ON pr.product_id = p.id
   WHERE pr.is_approved = true

@@ -21,7 +21,7 @@ payments_with_fx AS (
   SELECT
     p.id AS id,
     p.captured_at AS captured_at,
-    CAST(p.amount / er.rate AS NUMERIC(18,6)) AS amount_eur,
+    CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6)) AS amount_eur,
     COALESCE(lc.entry_count, 0) AS entry_count
   FROM payments_2025 p
   LEFT JOIN ledger_counts lc ON lc.payment_id = p.id
@@ -53,7 +53,7 @@ SELECT
   month_label AS month,
   total_payments,
   payments_without_ledger_entries,
-  100.0 * payments_without_ledger_entries / total_payments AS pct_without_ledger_entries,
+  {{divide_decimal(100.0 * payments_without_ledger_entries, total_payments)}} AS pct_without_ledger_entries,
   amount_at_risk_eur AS amount_at_risk_eur
 FROM monthly
 ORDER BY month_start NULLS LAST, month_label NULLS LAST

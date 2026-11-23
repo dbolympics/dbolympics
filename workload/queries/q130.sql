@@ -2,7 +2,7 @@ WITH order_rev AS (
   SELECT
     o.tenant_id AS tenant_id,
     COUNT(*) AS total_orders_2025,
-    SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS total_revenue_eur_2025
+    SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS total_revenue_eur_2025
   FROM orders o
   JOIN exchange_rates er
     ON er.base_code = 'EUR'

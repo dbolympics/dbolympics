@@ -2,7 +2,7 @@ SELECT
   CAST(EXTRACT(HOUR FROM o.placed_at) AS int) AS hour,
   COUNT(*) AS total_orders_placed,
   COUNT(DISTINCT o.tenant_id) AS distinct_tenants_with_orders,
-  SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS total_revenue_eur
+  SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS total_revenue_eur
 FROM orders o
 JOIN exchange_rates er
   ON er.base_code = 'EUR'

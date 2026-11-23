@@ -34,9 +34,9 @@ JOIN (
 JOIN (
   SELECT
     month_start,
-    100.0 * SUM(CASE WHEN rating IN (1,2) THEN 1 ELSE 0 END) / COUNT(*) AS pct_low_rating,
-    100.0 * SUM(CASE WHEN rating IN (4,5) THEN 1 ELSE 0 END) / COUNT(*) AS pct_high_rating,
-    100.0 * SUM(CASE WHEN is_verified_purchase THEN 1 ELSE 0 END) / COUNT(*) AS pct_verified_purchase
+    {{divide_decimal(100.0 * SUM(CASE WHEN rating IN (1,2) THEN 1 ELSE 0 END), COUNT(*))}} AS pct_low_rating,
+    {{divide_decimal(100.0 * SUM(CASE WHEN rating IN (4,5) THEN 1 ELSE 0 END), COUNT(*))}} AS pct_high_rating,
+    {{divide_decimal(100.0 * SUM(CASE WHEN is_verified_purchase THEN 1 ELSE 0 END), COUNT(*))}} AS pct_verified_purchase
   FROM base
   GROUP BY month_start
 ) t3 ON t3.month_start = t0.month_start

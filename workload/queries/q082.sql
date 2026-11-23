@@ -23,14 +23,14 @@ first_reach AS (
 ),
 joined AS (
   SELECT fr.order_id AS order_id, fr.status AS status, fr.first_at AS first_at, bo.created_at AS created_at,
-         {{seconds_between(bo.created_at, fr.first_at)}} / 3600.0 AS hours
+         {{divide_decimal({{seconds_between(bo.created_at, fr.first_at)}}, 3600.0)}} AS hours
   FROM first_reach fr
   JOIN base_orders bo ON bo.id = fr.order_id
 )
 SELECT
   s.status AS status,
   count(j.order_id) AS orders_reaching_status,
-  100.0 * count(j.order_id) / NULLIF(t.total_orders, 0) AS pct_of_total_orders,
+  {{divide_decimal(100.0 * count(j.order_id), NULLIF(t.total_orders, 0))}} AS pct_of_total_orders,
   {{percentile_cont(0.5, j.hours)}} AS median_hours_from_order_creation
 FROM statuses s
 CROSS JOIN total t

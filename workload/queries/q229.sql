@@ -28,8 +28,8 @@ ledger_eur AS (
     lf.account_type AS account_type,
     lf.account_name AS account_name,
     CAST(EXTRACT(QUARTER FROM lf.occurred_at) AS int) AS q,
-    CASE WHEN lf.currency_code = 'EUR' THEN lf.amount
-         ELSE CAST(lf.amount / er.rate AS NUMERIC(18,6)) END AS amount_eur
+    CASE WHEN lf.currency_code = 'EUR' THEN CAST(lf.amount AS NUMERIC(18,6))
+         ELSE CAST({{divide_decimal(lf.amount, er.rate)}} AS NUMERIC(18,6)) END AS amount_eur
   FROM ledger_filtered lf
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -64,7 +64,7 @@ payments_eur AS (
   SELECT
     pf.q AS q,
     CASE WHEN pf.currency_code = 'EUR' THEN (pf.amount - pf.amount_refunded)
-         ELSE CAST((pf.amount - pf.amount_refunded) / er.rate AS NUMERIC(18,6)) END AS net_amount_eur
+         ELSE CAST({{divide_decimal((pf.amount - pf.amount_refunded), er.rate)}} AS NUMERIC(18,6)) END AS net_amount_eur
   FROM payments_filtered pf
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -82,7 +82,7 @@ SELECT
   COALESCE(pq.payments_net_amount_eur,0) AS payments_net_amount_eur,
   COALESCE(lq.ledger_gross_billed_eur,0) - COALESCE(pq.payments_net_amount_eur,0) AS diff_eur,
   CASE WHEN COALESCE(pq.payments_net_amount_eur,0) = 0 THEN NULL
-       ELSE (COALESCE(lq.ledger_gross_billed_eur,0) - COALESCE(pq.payments_net_amount_eur,0)) / pq.payments_net_amount_eur * 100
+       ELSE {{divide_decimal((COALESCE(lq.ledger_gross_billed_eur,0) - COALESCE(pq.payments_net_amount_eur,0)), pq.payments_net_amount_eur)}} * 100
   END AS diff_pct
 FROM quarters
 LEFT JOIN ledger_quarterly lq ON lq.q = quarters.q

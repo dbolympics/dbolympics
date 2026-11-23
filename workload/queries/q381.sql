@@ -38,8 +38,8 @@ orders_after_revenue AS (
     SUM(
       CASE
         WHEN o.id IS NULL THEN 0
-        WHEN o.currency_code = 'EUR' THEN o.grand_total
-        ELSE CAST(o.grand_total / NULLIF(er.rate, 0) AS NUMERIC(18,6))
+        WHEN o.currency_code = 'EUR' THEN CAST(o.grand_total AS NUMERIC(18,6))
+        ELSE CAST({{divide_decimal(o.grand_total, NULLIF(er.rate, 0))}} AS NUMERIC(18,6))
       END
     ) AS revenue_after_eur
   FROM member_base mb
@@ -56,7 +56,7 @@ orders_after_revenue AS (
 SELECT
   mb.bucket AS time_to_first_redemption_bucket,
   COUNT(*) AS member_count,
-  100.0 * SUM(CASE WHEN COALESCE(oac.orders_after_count, 0) = 0 THEN 1 ELSE 0 END) / COUNT(*) AS pct_with_no_orders_after_redemption,
+  {{divide_decimal(100.0 * SUM(CASE WHEN COALESCE(oac.orders_after_count, 0) = 0 THEN 1 ELSE 0 END), COUNT(*))}} AS pct_with_no_orders_after_redemption,
   AVG(CAST(COALESCE(oac.orders_after_count, 0) AS NUMERIC(18,6))) AS avg_orders_after_per_customer,
   AVG(COALESCE(oar.revenue_after_eur, 0)) AS avg_revenue_after_eur
 FROM member_base mb

@@ -2,7 +2,7 @@ SELECT
   bucket AS age_bucket,
   COUNT(DISTINCT ak_id) AS total_active_keys,
   COUNT(DISTINCT CASE WHEN has_admin_api THEN ak_id END) AS admin_api_scoped_keys,
-  100.0 * COUNT(DISTINCT CASE WHEN has_admin_api THEN ak_id END) / NULLIF(COUNT(DISTINCT ak_id), 0) AS admin_api_share_pct,
+  {{divide_decimal(100.0 * COUNT(DISTINCT CASE WHEN has_admin_api THEN ak_id END), NULLIF(COUNT(DISTINCT ak_id), 0))}} AS admin_api_share_pct,
   COUNT(DISTINCT CASE WHEN no_scope_recorded THEN ak_id END) AS no_scope_recorded_keys,
   COUNT(DISTINCT tenant_id) AS distinct_tenants
 FROM (

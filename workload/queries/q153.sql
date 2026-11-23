@@ -27,8 +27,8 @@ WITH discount_order_lines AS (
 discount_order_lines_eur AS (
     SELECT
         t4.*,
-        CAST(t4.discount_amount / NULLIF(t5.rate, 0) AS NUMERIC(18,6)) AS discount_amount_eur,
-        CAST(t4.order_grand_total / NULLIF(t6.rate, 0) AS NUMERIC(18,6)) AS order_grand_total_eur
+        CAST({{divide_decimal(t4.discount_amount, NULLIF(t5.rate, 0))}} AS NUMERIC(18,6)) AS discount_amount_eur,
+        CAST({{divide_decimal(t4.order_grand_total, NULLIF(t6.rate, 0))}} AS NUMERIC(18,6)) AS order_grand_total_eur
     FROM discount_order_lines t4
     LEFT JOIN exchange_rates t5
         ON t5.base_code = 'EUR'
@@ -108,7 +108,7 @@ non_discounted_orders AS (
 non_discounted_orders_eur AS (
     SELECT
         t9.*,
-        CAST(t9.grand_total / NULLIF(t10.rate, 0) AS NUMERIC(18,6)) AS grand_total_eur
+        CAST({{divide_decimal(t9.grand_total, NULLIF(t10.rate, 0))}} AS NUMERIC(18,6)) AS grand_total_eur
     FROM non_discounted_orders t9
     LEFT JOIN exchange_rates t10
         ON t10.base_code = 'EUR'
@@ -146,8 +146,7 @@ SELECT
     COALESCE(t16.avg_discounted_order_value_eur, 0) - t17.avg_other_order_value_eur AS lift_eur,
     (COALESCE(t16.avg_discounted_order_value_eur, 0) - t17.avg_other_order_value_eur)
     / NULLIF(t17.avg_other_order_value_eur, 0) * 100 AS lift_pct,
-    CAST(COALESCE(t18.customers_with_other_orders, 0) AS DECIMAL(18,6))
-    / NULLIF(t15.distinct_customers, 0) * 100 AS pct_customers_with_other_nondiscounted_order
+    {{divide_decimal(CAST(COALESCE(t18.customers_with_other_orders, 0) AS DECIMAL(18,6)), NULLIF(t15.distinct_customers, 0))}} * 100 AS pct_customers_with_other_nondiscounted_order
 FROM top_discounts t0
 LEFT JOIN discount_coupon_code t13 ON t13.discount_id = t0.discount_id
 LEFT JOIN discount_order_count t14 ON t14.discount_id = t0.discount_id

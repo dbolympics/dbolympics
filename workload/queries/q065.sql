@@ -4,9 +4,9 @@ SELECT
   t0.industry AS industry,
   t1.distinct_customers AS distinct_customers,
   COALESCE(t2.repeat_customers, 0) AS repeat_customers,
-  COALESCE(t2.repeat_customers, 0) * 100.0 / t1.distinct_customers AS repeat_purchase_rate_pct,
+  {{divide_decimal(COALESCE(t2.repeat_customers, 0) * 100.0, t1.distinct_customers)}} AS repeat_purchase_rate_pct,
   COALESCE(t3.total_orders, 0) AS total_orders_last_12_months,
-  COALESCE(t3.total_orders, 0) * 1.0 / t1.distinct_customers AS avg_orders_per_customer
+  {{divide_decimal(COALESCE(t3.total_orders, 0) * 1.0, t1.distinct_customers)}} AS avg_orders_per_customer
 FROM tenants t0
 INNER JOIN (
   SELECT o.tenant_id AS tenant_id, COUNT(DISTINCT o.user_id) AS distinct_customers

@@ -11,7 +11,7 @@ fx_rates AS (
   WHERE base_code = 'EUR'
 ),
 orders_eur AS (
-  SELECT ow.tenant_id AS tenant_id, ow.order_id AS order_id, CAST(ow.grand_total / fx.rate AS NUMERIC(18,6)) AS revenue_eur
+  SELECT ow.tenant_id AS tenant_id, ow.order_id AS order_id, CAST({{divide_decimal(ow.grand_total, fx.rate)}} AS NUMERIC(18,6)) AS revenue_eur
   FROM orders_window ow
   JOIN fx_rates fx
     ON fx.quote_code = ow.currency_code
@@ -30,8 +30,8 @@ top15 AS (
 ),
 tickets_window AS (
   SELECT t.tenant_id AS tenant_id, t.id AS ticket_id,
-    {{seconds_between(t.created_at, t.first_response_at)}}/3600.0 AS first_response_hours,
-    {{seconds_between(t.created_at, t.resolved_at)}}/3600.0 AS resolution_hours
+    {{divide_decimal({{seconds_between(t.created_at, t.first_response_at)}}, 3600.0)}} AS first_response_hours,
+    {{divide_decimal({{seconds_between(t.created_at, t.resolved_at)}}, 3600.0)}} AS resolution_hours
   FROM tickets t
   JOIN top15 ON top15.tenant_id = t.tenant_id
   WHERE t.created_at >= TIMESTAMP '2025-10-03'
@@ -61,7 +61,7 @@ SELECT
   tn.name AS merchant_name,
   tn.industry AS industry,
   COALESCE(ta.ticket_count, 0) AS tickets_last_90_days,
-  COALESCE(ta.ticket_count,0) * 100.0 / NULLIF(top15.order_count,0) AS tickets_per_100_orders,
+  {{divide_decimal(COALESCE(ta.ticket_count,0) * 100.0, NULLIF(top15.order_count,0))}} AS tickets_per_100_orders,
   ta.avg_first_response_hours AS avg_first_response_hours,
   ta.avg_resolution_hours AS avg_resolution_hours,
   ca.csat_avg_score AS csat_avg_score,

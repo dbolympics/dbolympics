@@ -46,8 +46,8 @@ SELECT
   a.period AS period,
   a.shipments_shipped AS shipments_shipped,
   a.avg_transit_days AS avg_transit_days,
-  100.0 * a.within3 / NULLIF(a.delivered_count, 0) AS pct_within_3_days,
-  100.0 * a.shipments_shipped / t.total_shipments AS share_of_period_shipments_pct
+  {{divide_decimal(100.0 * a.within3, NULLIF(a.delivered_count, 0))}} AS pct_within_3_days,
+  {{divide_decimal(100.0 * a.shipments_shipped, t.total_shipments)}} AS share_of_period_shipments_pct
 FROM agg a
 JOIN totals t ON a.period = t.period
 JOIN qualified q ON q.destination_country = a.destination_country

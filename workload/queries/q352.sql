@@ -12,7 +12,7 @@ product_counts AS (
 ),
 variant_counts AS (
   SELECT p.tenant_id AS tenant_id,
-         CAST(COUNT(pv.id) AS decimal(18,6)) / NULLIF(COUNT(DISTINCT p.id), 0) AS avg_variants_per_product
+         {{divide_decimal(CAST(COUNT(pv.id) AS decimal(18,6)), NULLIF(COUNT(DISTINCT p.id), 0))}} AS avg_variants_per_product
   FROM products p
   JOIN product_variants pv ON pv.product_id = p.id AND pv.is_active = true
   WHERE p.status = 'active'
@@ -33,7 +33,7 @@ bundled_product_counts AS (
 ),
 order_stats AS (
   SELECT o.tenant_id AS tenant_id,
-         SUM(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) AS revenue_eur,
+         SUM(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) AS revenue_eur,
          COUNT(*) AS order_count
   FROM orders o
   JOIN exchange_rates er
@@ -49,11 +49,11 @@ SELECT
   t.name AS merchant_name,
   t.industry AS industry,
   bc.active_bundle_count AS active_bundle_count,
-  100.0 * COALESCE(bpc.bundled_product_count, 0) / NULLIF(pc.active_product_count, 0) AS pct_active_products_in_a_bundle,
+  {{divide_decimal(100.0 * COALESCE(bpc.bundled_product_count, 0), NULLIF(pc.active_product_count, 0))}} AS pct_active_products_in_a_bundle,
   pc.active_product_count AS active_product_count,
   vc.avg_variants_per_product AS avg_variants_per_product,
   os.revenue_eur AS revenue_eur_last_12mo,
-  os.revenue_eur / NULLIF(os.order_count, 0) AS avg_order_value_eur_last_12mo
+  {{divide_decimal(os.revenue_eur, NULLIF(os.order_count, 0))}} AS avg_order_value_eur_last_12mo
 FROM bundle_counts bc
 JOIN tenants t ON t.id = bc.tenant_id
 LEFT JOIN product_counts pc ON pc.tenant_id = bc.tenant_id

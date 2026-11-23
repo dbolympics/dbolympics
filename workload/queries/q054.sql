@@ -2,11 +2,11 @@ SELECT
   t0.name AS tenant_name,
   t0.industry AS industry,
   COALESCE(t1.orders_jan_jul, 0) AS orders_jan_jul_2025,
-  COALESCE(t1.discount_orders, 0) * 100.0 / NULLIF(t1.orders_jan_jul, 0) AS discount_rate_jan_jul_pct,
+  {{divide_decimal(COALESCE(t1.discount_orders, 0) * 100.0, NULLIF(t1.orders_jan_jul, 0))}} AS discount_rate_jan_jul_pct,
   COALESCE(t2.orders_other, 0) AS orders_other_months_2025,
-  COALESCE(t2.discount_orders, 0) * 100.0 / NULLIF(t2.orders_other, 0) AS discount_rate_other_months_pct,
-  (COALESCE(t1.discount_orders, 0) * 100.0 / NULLIF(t1.orders_jan_jul, 0))
-    - (COALESCE(t2.discount_orders, 0) * 100.0 / NULLIF(t2.orders_other, 0)) AS delta_pct_points
+  {{divide_decimal(COALESCE(t2.discount_orders, 0) * 100.0, NULLIF(t2.orders_other, 0))}} AS discount_rate_other_months_pct,
+  ({{divide_decimal(COALESCE(t1.discount_orders, 0) * 100.0, NULLIF(t1.orders_jan_jul, 0))}})
+    - ({{divide_decimal(COALESCE(t2.discount_orders, 0) * 100.0, NULLIF(t2.orders_other, 0))}}) AS delta_pct_points
 FROM tenants t0
 JOIN (
   SELECT

@@ -4,7 +4,7 @@ SELECT
   payment_count,
   gross_captured_eur,
   amount_refunded_eur,
-  CASE WHEN gross_captured_eur = 0 THEN NULL ELSE amount_refunded_eur / gross_captured_eur * 100 END AS refund_rate_pct,
+  CASE WHEN gross_captured_eur = 0 THEN NULL ELSE {{divide_decimal(amount_refunded_eur, gross_captured_eur)}} * 100 END AS refund_rate_pct,
   avg_refund_rate_pct AS avg_refund_rate_per_merchant_pct
 FROM (
   SELECT
@@ -19,10 +19,10 @@ FROM (
       COALESCE(t.industry, 'Unknown') AS vertical,
       t.id AS tenant_id,
       COUNT(*) AS payment_count,
-      SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) AS gross_captured_eur,
-      SUM(CAST(p.amount_refunded / er.rate AS NUMERIC(18,6))) AS amount_refunded_eur,
-      CASE WHEN SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) = 0 THEN 0
-           ELSE SUM(CAST(p.amount_refunded / er.rate AS NUMERIC(18,6))) / SUM(CAST(p.amount / er.rate AS NUMERIC(18,6))) * 100
+      SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) AS gross_captured_eur,
+      SUM(CAST({{divide_decimal(p.amount_refunded, er.rate)}} AS NUMERIC(18,6))) AS amount_refunded_eur,
+      CASE WHEN SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))) = 0 THEN 0
+           ELSE {{divide_decimal(SUM(CAST({{divide_decimal(p.amount_refunded, er.rate)}} AS NUMERIC(18,6))), SUM(CAST({{divide_decimal(p.amount, er.rate)}} AS NUMERIC(18,6))))}} * 100
       END AS tenant_refund_rate_pct
     FROM payments p
     JOIN tenants t ON t.id = p.tenant_id

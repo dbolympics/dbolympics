@@ -1,7 +1,7 @@
 with tenant_rev as (
   select
     o.tenant_id AS tenant_id,
-    sum(CAST(o.grand_total / er.rate AS NUMERIC(18,6))) as revenue_eur
+    sum(CAST({{divide_decimal(o.grand_total, er.rate)}} AS NUMERIC(18,6))) as revenue_eur
   from orders o
   join exchange_rates er
     on er.base_code = 'EUR'
@@ -83,13 +83,13 @@ product_agg as (
 select
   ta.tier AS tier,
   ta.merchant_count AS merchant_count,
-  CAST(pa.active_products AS numeric(18,6)) / NULLIF(ta.merchant_count, 0) as avg_active_products_per_merchant,
+  {{divide_decimal(CAST(pa.active_products AS numeric(18,6)), NULLIF(ta.merchant_count, 0))}} as avg_active_products_per_merchant,
   pa.avg_variants as avg_variants_per_product,
   pa.avg_categories as avg_categories_per_product,
   (100.0*pa.pct_primary_image) as pct_products_with_primary_image,
   pa.avg_media as avg_media_count_per_product,
   (100.0*pa.pct_in_collection) as pct_active_products_in_a_collection,
-  (100.0*ta.tier_revenue / NULLIF(sum(ta.tier_revenue) over (), 0)) as revenue_share_pct
+  ({{divide_decimal(100.0*ta.tier_revenue, NULLIF(sum(ta.tier_revenue) over (), 0))}}) as revenue_share_pct
 from tier_agg ta
 join product_agg pa on pa.tier = ta.tier
 order by ta.tier_order NULLS LAST

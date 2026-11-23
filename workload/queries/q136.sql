@@ -29,7 +29,7 @@ reviews_agg AS (
 orders_agg AS (
   SELECT o.tenant_id AS tenant_id,
     count(*) AS orders_last_12mo,
-    sum(CAST(o.grand_total / COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END) AS NUMERIC(18,6))) AS revenue_eur
+    sum(CAST({{divide_decimal(o.grand_total, COALESCE(er.rate, CASE WHEN o.currency_code = 'EUR' THEN 1 END))}} AS NUMERIC(18,6))) AS revenue_eur
   FROM orders o
   LEFT JOIN exchange_rates er
     ON er.base_code = 'EUR'
@@ -45,10 +45,10 @@ SELECT
   t.industry AS industry,
   COALESCE(pa.active_product_count, 0) AS active_product_count,
   COALESCE(va.active_variant_count, 0) AS active_variant_count,
-  CAST(COALESCE(va.active_variant_count, 0) AS numeric(18,6)) / NULLIF(pa.active_product_count, 0) AS avg_variants_per_product,
-  100.0 * COALESCE(pa.products_with_primary_image, 0) / NULLIF(pa.active_product_count, 0) AS pct_products_with_primary_image,
-  100.0 * COALESCE(pa.products_with_description, 0) / NULLIF(pa.active_product_count, 0) AS pct_products_with_description,
-  CAST(COALESCE(ra.approved_review_count, 0) AS numeric(18,6)) / NULLIF(pa.active_product_count, 0) AS avg_reviews_per_product,
+  {{divide_decimal(CAST(COALESCE(va.active_variant_count, 0) AS numeric(18,6)), NULLIF(pa.active_product_count, 0))}} AS avg_variants_per_product,
+  {{divide_decimal(100.0 * COALESCE(pa.products_with_primary_image, 0), NULLIF(pa.active_product_count, 0))}} AS pct_products_with_primary_image,
+  {{divide_decimal(100.0 * COALESCE(pa.products_with_description, 0), NULLIF(pa.active_product_count, 0))}} AS pct_products_with_description,
+  {{divide_decimal(CAST(COALESCE(ra.approved_review_count, 0) AS numeric(18,6)), NULLIF(pa.active_product_count, 0))}} AS avg_reviews_per_product,
   ra.avg_rating AS avg_rating,
   COALESCE(oa.orders_last_12mo, 0) AS orders_last_12mo,
   COALESCE(oa.revenue_eur, 0) AS revenue_eur_last_12mo

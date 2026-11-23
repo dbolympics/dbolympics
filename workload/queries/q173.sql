@@ -3,7 +3,7 @@ SELECT
   count(*) AS opportunities_closed,
   count(*) FILTER (WHERE o.is_won) AS closed_won,
   count(*) FILTER (WHERE NOT o.is_won) AS closed_lost,
-  100.0 * count(*) FILTER (WHERE o.is_won) / NULLIF(count(*), 0) AS win_rate_pct,
+  {{divide_decimal(100.0 * count(*) FILTER (WHERE o.is_won), NULLIF(count(*), 0))}} AS win_rate_pct,
   avg({{whole_days_between(o.created_at, o.closed_at)}}) AS avg_cycle_days,
   {{percentile_cont(0.5, {{whole_days_between(o.created_at, o.closed_at)}})}} AS median_cycle_days
 FROM opportunities o

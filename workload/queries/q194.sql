@@ -5,7 +5,7 @@ SELECT
   sub.abs_units_variance AS abs_units_variance,
   sub.net_units_variance AS net_units_variance,
   sub.estimated_value_eur AS estimated_value_eur,
-  sub.estimated_value_eur * 100.0 / SUM(sub.estimated_value_eur) OVER () AS share_of_total_value_pct
+  {{divide_decimal(sub.estimated_value_eur * 100.0, SUM(sub.estimated_value_eur) OVER ())}} AS share_of_total_value_pct
 FROM (
   SELECT
     t.name AS tenant_name,
@@ -15,7 +15,7 @@ FROM (
     SUM(sm.quantity) AS net_units_variance,
     SUM(
 ABS(sm.quantity) * COALESCE(
-  (SELECT CAST(sp.unit_cost / er.rate AS NUMERIC(18,6))
+  (SELECT CAST({{divide_decimal(sp.unit_cost, er.rate)}} AS NUMERIC(18,6))
    FROM supplier_products sp
    JOIN exchange_rates er
      ON er.base_code = 'EUR'

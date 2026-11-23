@@ -37,13 +37,13 @@ rated AS (
 categorized AS (
   SELECT
     r.*,
-    CASE WHEN r.fx_rate IS NULL OR r.fx_rate = 0 THEN NULL ELSE CAST(r.refund_total / r.fx_rate AS NUMERIC(18,6)) END AS refund_amount_eur,
+    CASE WHEN r.fx_rate IS NULL OR r.fx_rate = 0 THEN NULL ELSE CAST({{divide_decimal(r.refund_total, r.fx_rate)}} AS NUMERIC(18,6)) END AS refund_amount_eur,
     CASE WHEN r.first_captured_at IS NULL THEN NULL
          ELSE (EXTRACT(YEAR FROM r.refunded_at)*4 + EXTRACT(QUARTER FROM r.refunded_at))
             - (EXTRACT(YEAR FROM r.first_captured_at)*4 + EXTRACT(QUARTER FROM r.first_captured_at))
     END AS quarter_diff,
     CASE WHEN r.first_captured_at IS NULL THEN NULL
-         ELSE {{seconds_between(r.first_captured_at, r.refunded_at)}} / 86400.0
+         ELSE {{divide_decimal({{seconds_between(r.first_captured_at, r.refunded_at)}}, 86400.0)}}
     END AS lag_days
   FROM rated r
 ),
@@ -62,7 +62,7 @@ SELECT
   b.lag_category AS lag_category,
   COUNT(*) AS return_count,
   SUM(b.refund_amount_eur) AS refund_amount_eur,
-  100.0 * SUM(b.refund_amount_eur) / SUM(SUM(b.refund_amount_eur)) OVER () AS pct_of_total_2025_refund_amount,
+  {{divide_decimal(100.0 * SUM(b.refund_amount_eur), SUM(SUM(b.refund_amount_eur)) OVER ())}} AS pct_of_total_2025_refund_amount,
   AVG(b.lag_days) AS avg_lag_days
 FROM bucketed b
 GROUP BY b.lag_category

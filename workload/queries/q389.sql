@@ -44,7 +44,7 @@ SELECT
   COALESCE(a.net_units_variance, 0) AS net_units_variance,
   COALESCE(a.distinct_locations_active, 0) AS distinct_locations_active,
   CASE WHEN COALESCE(a.distinct_locations_active, 0) = 0 THEN NULL
-       ELSE CAST(a.events AS numeric(18,6)) / a.distinct_locations_active
+       ELSE {{divide_decimal(CAST(a.events AS numeric(18,6)), a.distinct_locations_active)}}
   END AS events_per_active_location,
   COALESCE(w.new_warehouses, 0) AS new_warehouses_opened_this_period
 FROM periods p

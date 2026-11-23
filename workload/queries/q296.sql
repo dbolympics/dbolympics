@@ -28,7 +28,7 @@ select
     user_status,
     item_count_group,
     cart_count,
-    100.0 * converted_count / cart_count as conversion_pct
+    {{divide_decimal(100.0 * converted_count, cart_count)}} as conversion_pct
 from grouped
 order by
     case

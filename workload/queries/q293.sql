@@ -29,8 +29,8 @@ grouped AS (
 SELECT
   group_name AS "group",
   COUNT(*) AS cart_count,
-  100.0 * COUNT(*) FILTER (WHERE status = 'converted') / COUNT(*) AS pct_eventually_converted,
-  {{percentile_cont_filter(0.5, {{seconds_between(created_at, converted_at)}} / 86400.0, status = 'converted')}} AS median_days_to_convert
+  {{divide_decimal(100.0 * COUNT(*) FILTER (WHERE status = 'converted'), COUNT(*))}} AS pct_eventually_converted,
+  {{percentile_cont_filter(0.5, {{divide_decimal({{seconds_between(created_at, converted_at)}}, 86400.0)}}, status = 'converted')}} AS median_days_to_convert
 FROM grouped
 GROUP BY group_name
 ORDER BY CASE group_name WHEN 'received_email' THEN 1 WHEN 'logged_in_no_email' THEN 2 WHEN 'guest' THEN 3 END NULLS LAST

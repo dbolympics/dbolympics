@@ -8,7 +8,7 @@ SELECT t0.name AS merchant_name,
 FROM tenants t0
 INNER JOIN (
     SELECT i0.tenant_id AS tenant_id,
-           SUM(i0.amount_due / CASE WHEN i0.currency_code = 'EUR' THEN 1 ELSE fx0.rate END) AS total_unpaid_eur
+           SUM({{divide_decimal(i0.amount_due, CASE WHEN i0.currency_code = 'EUR' THEN 1 ELSE fx0.rate END)}}) AS total_unpaid_eur
     FROM invoices i0
     LEFT JOIN (
         SELECT er0.quote_code AS currency_code, er0.rate AS rate
@@ -40,7 +40,7 @@ LEFT JOIN (
 ) m3 ON m3.tenant_id = t0.id
 LEFT JOIN (
     SELECT i4.tenant_id AS tenant_id,
-           MAX(i4.amount_due / CASE WHEN i4.currency_code='EUR' THEN 1 ELSE fx4.rate END) AS largest_unpaid_eur
+           MAX({{divide_decimal(i4.amount_due, CASE WHEN i4.currency_code='EUR' THEN 1 ELSE fx4.rate END)}}) AS largest_unpaid_eur
     FROM invoices i4
     LEFT JOIN (
         SELECT er2.quote_code AS currency_code, er2.rate AS rate

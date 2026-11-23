@@ -13,8 +13,7 @@ JOIN (
     COUNT(*) AS pos_ordered,
     COUNT(po.received_at) AS pos_received,
     AVG(CAST(CASE WHEN po.received_at IS NOT NULL THEN ({{date_diff_days(po.ordered_at, po.received_at)}}) END AS NUMERIC(18,6))) AS avg_actual_lead_days,
-    100.0 * SUM(CASE WHEN po.expected_at IS NOT NULL AND po.received_at IS NOT NULL AND po.received_at > po.expected_at THEN 1 ELSE 0 END)
-      / NULLIF(SUM(CASE WHEN po.expected_at IS NOT NULL AND po.received_at IS NOT NULL THEN 1 ELSE 0 END), 0) AS pct_received_late,
+    {{divide_decimal(100.0 * SUM(CASE WHEN po.expected_at IS NOT NULL AND po.received_at IS NOT NULL AND po.received_at > po.expected_at THEN 1 ELSE 0 END), NULLIF(SUM(CASE WHEN po.expected_at IS NOT NULL AND po.received_at IS NOT NULL THEN 1 ELSE 0 END), 0))}} AS pct_received_late,
     AVG(CAST(CASE WHEN po.expected_at IS NOT NULL AND po.received_at IS NOT NULL AND po.received_at > po.expected_at
              THEN ({{date_diff_days(po.expected_at, po.received_at)}}) END AS NUMERIC(18,6))) AS avg_days_late
   FROM purchase_orders po

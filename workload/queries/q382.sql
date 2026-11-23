@@ -49,9 +49,9 @@ totals AS (
 SELECT
   b.lifecycle_quartile AS lifecycle_quartile,
   COUNT(*) AS total_activities_in_bucket,
-  100.0 * COUNT(*) / t.total_activities_all AS pct_of_total_activities,
+  {{divide_decimal(100.0 * COUNT(*), t.total_activities_all)}} AS pct_of_total_activities,
   COUNT(DISTINCT b.opportunity_id) AS opportunities_with_at_least_one_activity_in_bucket,
-  100.0 * COUNT(DISTINCT b.opportunity_id) / tl.total_lost_opps AS pct_of_lost_opportunities_with_activity_in_bucket
+  {{divide_decimal(100.0 * COUNT(DISTINCT b.opportunity_id), tl.total_lost_opps)}} AS pct_of_lost_opportunities_with_activity_in_bucket
 FROM bucketed b
 CROSS JOIN totals t
 CROSS JOIN total_lost tl

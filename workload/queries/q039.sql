@@ -2,15 +2,15 @@ SELECT
   stn.name AS tag_name,
   COALESCE(a.cnt,0) AS tickets_last_6mo,
   COALESCE(b.cnt,0) AS tickets_prior_6mo,
-  COALESCE(a.cnt,0) * 100.0 / NULLIF(totals.total_a,0) AS share_last_6mo_pct,
-  COALESCE(b.cnt,0) * 100.0 / NULLIF(totals.total_b,0) AS share_prior_6mo_pct,
-  COALESCE(a.cnt,0) * 100.0 / NULLIF(totals.total_a,0)
-  - COALESCE(b.cnt,0) * 100.0 / NULLIF(totals.total_b,0) AS share_change_pp,
+  {{divide_decimal(COALESCE(a.cnt,0) * 100.0, NULLIF(totals.total_a,0))}} AS share_last_6mo_pct,
+  {{divide_decimal(COALESCE(b.cnt,0) * 100.0, NULLIF(totals.total_b,0))}} AS share_prior_6mo_pct,
+  {{divide_decimal(COALESCE(a.cnt,0) * 100.0, NULLIF(totals.total_a,0))}}
+  - {{divide_decimal(COALESCE(b.cnt,0) * 100.0, NULLIF(totals.total_b,0))}} AS share_change_pp,
   a.avg_res_hours AS avg_resolution_hours_last_6mo
 FROM (SELECT DISTINCT name FROM support_tags) stn
 LEFT JOIN (
   SELECT st.name AS name, COUNT(*) AS cnt,
-         AVG({{seconds_between(t.created_at, t.resolved_at)}} / 3600.0) AS avg_res_hours
+         AVG({{divide_decimal({{seconds_between(t.created_at, t.resolved_at)}}, 3600.0)}}) AS avg_res_hours
   FROM ticket_tags_map ttm
   JOIN tickets t ON t.id = ttm.ticket_id
   JOIN support_tags st ON st.id = ttm.support_tag_id

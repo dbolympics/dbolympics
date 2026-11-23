@@ -21,7 +21,7 @@ agg AS (
     COUNT(*) AS cycle_count_events,
     SUM(sm.quantity) AS net_units_variance,
     SUM(ABS(sm.quantity)) AS abs_units_variance,
-    SUM(ABS(sm.quantity) * vc.unit_cost / CASE WHEN vc.currency_code = 'EUR' THEN 1 ELSE er.rate END) AS estimated_value_eur
+    SUM({{divide_decimal(ABS(sm.quantity) * vc.unit_cost, CASE WHEN vc.currency_code = 'EUR' THEN 1 ELSE er.rate END)}}) AS estimated_value_eur
   FROM stock_movements sm
   JOIN stock_locations sl ON sl.id = sm.stock_location_id
   JOIN warehouses w ON w.id = sl.warehouse_id

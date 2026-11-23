@@ -25,8 +25,8 @@ inv AS (
     i.currency_code AS currency_code,
     i.due_at AS due_at,
     CASE
-      WHEN i.currency_code = 'EUR' THEN i.amount_due
-      ELSE CAST(i.amount_due / r.rate AS NUMERIC(18,6))
+      WHEN i.currency_code = 'EUR' THEN CAST(i.amount_due AS NUMERIC(18,6))
+      ELSE CAST({{divide_decimal(i.amount_due, r.rate)}} AS NUMERIC(18,6))
     END AS amount_due_eur,
     CASE
       WHEN i.due_at IS NULL OR i.due_at >= DATE '2025-12-31' THEN 'Not yet due'
@@ -58,7 +58,7 @@ SELECT
   aging_bucket,
   invoice_count,
   amount_due_eur AS amount_due_eur,
-  amount_due_eur / SUM(amount_due_eur) OVER () * 100 AS pct_of_total_amount_due,
+  {{divide_decimal(amount_due_eur, SUM(amount_due_eur) OVER ())}} * 100 AS pct_of_total_amount_due,
   avg_days_past_due AS avg_days_past_due
 FROM agg
 ORDER BY amount_due_eur DESC NULLS FIRST, aging_bucket ASC NULLS LAST

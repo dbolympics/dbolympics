@@ -28,7 +28,7 @@ status_metrics AS (
   SELECT
     sl.status_name AS status_name,
     COUNT(DISTINCT fr.order_id) AS orders_reaching_status,
-    {{percentile_cont(0.5, ({{seconds_between(bo.order_created_at, fr.first_reached_at)}} / 3600.0))}} AS median_hours
+    {{percentile_cont(0.5, ({{divide_decimal({{seconds_between(bo.order_created_at, fr.first_reached_at)}}, 3600.0)}}))}} AS median_hours
   FROM status_list sl
   LEFT JOIN first_reach fr ON fr.status_name = sl.status_name
   LEFT JOIN base_orders bo ON bo.order_id = fr.order_id
@@ -37,7 +37,7 @@ status_metrics AS (
 SELECT
   sm.status_name AS status,
   COALESCE(sm.orders_reaching_status, 0) AS orders_reaching_status,
-  COALESCE(sm.orders_reaching_status, 0) * 100.0 / NULLIF(t.total_orders, 0) AS pct_of_total_orders,
+  {{divide_decimal(COALESCE(sm.orders_reaching_status, 0) * 100.0, NULLIF(t.total_orders, 0))}} AS pct_of_total_orders,
   sm.median_hours AS median_hours_to_status
 FROM status_metrics sm
 CROSS JOIN total_orders t

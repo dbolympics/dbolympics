@@ -1,6 +1,6 @@
 SELECT table_name, earliest_record_date, days_since_earliest_record, total_row_count,
        row_count_older_than_730_days,
-       100.0 * row_count_older_than_730_days / NULLIF(total_row_count, 0) AS pct_older_than_730_days
+       {{divide_decimal(100.0 * row_count_older_than_730_days, NULLIF(total_row_count, 0))}} AS pct_older_than_730_days
 FROM (
   SELECT 'access_log' AS table_name,
          CAST(MIN(occurred_at) AS date) AS earliest_record_date,

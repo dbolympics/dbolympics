@@ -42,8 +42,8 @@ SELECT
   s.category_name AS category_name,
   s.units_sold AS units_sold_last_12mo,
   COALESCE(r.return_count, 0) AS return_count,
-  COALESCE(r.return_count, 0) * 100.0 / NULLIF(s.units_sold, 0) AS return_rate_pct,
-  COALESCE(r.damage_count, 0) * 100.0 / NULLIF(r.return_count, 0) AS pct_returns_damage_related
+  {{divide_decimal(COALESCE(r.return_count, 0) * 100.0, NULLIF(s.units_sold, 0))}} AS return_rate_pct,
+  {{divide_decimal(COALESCE(r.damage_count, 0) * 100.0, NULLIF(r.return_count, 0))}} AS pct_returns_damage_related
 FROM sales s
 LEFT JOIN returns r ON r.category_name = s.category_name
 ORDER BY return_rate_pct DESC NULLS LAST, s.category_name ASC NULLS LAST

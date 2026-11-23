@@ -44,7 +44,7 @@ SELECT
   COALESCE(nt.name, 'no template / ad hoc') AS template_name,
   COALESCE(nt.channel, 'n/a') AS channel,
   t2.email_count AS email_count,
-  100.0 * t2.email_count / NULLIF(t3.total_matched, 0) AS pct_of_matched_emails
+  {{divide_decimal(100.0 * t2.email_count, NULLIF(t3.total_matched, 0))}} AS pct_of_matched_emails
 FROM t2
 CROSS JOIN t3
 LEFT JOIN notification_templates nt ON nt.id = t2.template_id

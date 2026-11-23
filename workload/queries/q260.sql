@@ -24,8 +24,8 @@ orders_2025 AS (
 ),
 orders_eur AS (
   SELECT oe.*,
-    CASE WHEN oe.currency_code = 'EUR' THEN oe.grand_total
-         ELSE CAST(oe.grand_total / er.rate AS NUMERIC(18,6))
+    CASE WHEN oe.currency_code = 'EUR' THEN CAST(oe.grand_total AS NUMERIC(18,6))
+         ELSE CAST({{divide_decimal(oe.grand_total, er.rate)}} AS NUMERIC(18,6))
     END AS grand_total_eur
   FROM orders_2025 oe
   LEFT JOIN exchange_rates er
@@ -55,7 +55,7 @@ SELECT
   au.industry AS industry,
   au.segment AS segment,
   au.users_count AS users_count,
-  100.0 * au.repeat_users / NULLIF(au.users_count,0) AS repeat_rate_pct,
+  {{divide_decimal(100.0 * au.repeat_users, NULLIF(au.users_count,0))}} AS repeat_rate_pct,
   au.avg_orders_per_user AS avg_orders_per_user,
   ao.avg_order_value_eur AS avg_order_value_eur
 FROM agg_users au
