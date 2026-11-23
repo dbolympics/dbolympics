@@ -3,6 +3,8 @@
 # the same server and ADBC driver.
 name = "hardcharger-parquet"
 base = "hardcharger"
+# runs on DuckDB (docs/RUNNER.md): the website shows it under DuckDB, when DuckDB is opened
+based_on = "duckdb-parquet"
 keys = ["none"]
 category = "parquet"
 
