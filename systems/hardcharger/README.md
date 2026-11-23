@@ -1,36 +1,39 @@
 # Hardcharger
 
-[Hardcharger](https://github.com/gizmodata/hardcharger) 2.4.1 serves DuckDB 2.0.0
-through Chargewire. `install` uses the [official Hardcharger installer](https://gizmodata.com/hardcharger/install),
-pinned to `--version 2.4.1`, to install the server and `hardcharger` CLI under
-`/opt/hardcharger`. The installer selects the architecture, verifies the release
-checksums and checks both binaries before making them current. The runner adapter
-is built with a pinned Rust toolchain and lockfile. JSON and Parquet support are
-compiled into the server; the run needs no network access or extension downloads.
+[Hardcharger](https://github.com/gizmodata/hardcharger) 2.14.0 runs on its own engine,
+[Hardcharger Engine](https://github.com/gizmodata/hardcharger-engine) v2.0.1, a fork derived from
+DuckDB 2.0.1 and modified for performance
+([changes and benchmark notes](https://github.com/gizmodata/hardcharger-engine/blob/v2.0.1/docs/optimizations.md)),
+and serves it through [Chargewire](https://github.com/gizmodata/chargewire). `install` uses the
+[official Hardcharger installer](https://gizmodata.com/hardcharger/install), pinned to
+`HARDCHARGER_VERSION` (2.14.0), to install the server under `/opt/hardcharger`; the installer
+selects the architecture, verifies the release checksums and checks the binaries before making
+them current. JSON and Parquet support are compiled into the server; the run needs no network
+access or extension downloads.
 
-Every benchmark statement is sent unchanged to **one persistent `hardcharger`
-CLI process**, using one database session for the whole run. The CLI produces
-headerless CSV with an empty NULL representation and no row limit. `.once`
-redirects each result to a file which is closed after the statement; `.echo`
-provides a local completion barrier. Neither command executes SQL or launches a
-subprocess. The adapter returns the CLI's CSV or its error text to `dbo::serve`.
-Update acknowledgements are ignored by the runner, as for other systems.
+The query program is a client of the server through the
+[Hardcharger ADBC driver](https://github.com/gizmodata/hardcharger-adbc) 2.7.2 (`ADBC_VERSION`),
+installed by [GizmoData's ADBC installer](https://github.com/gizmodata/adbc-install), which
+verifies the release's `SHA256SUMS` and writes the driver manifest
+`/etc/adbc/drivers/hardcharger.toml`. Apache Arrow's Rust driver manager (`adbc_driver_manager`)
+loads the driver by that name. The program keeps one ADBC database and one connection, so one
+server session, for the whole run; every statement is a new ADBC statement on that connection,
+sent unchanged. The result arrives as Arrow record batches over the C Data Interface, in one
+stream (`hardcharger.query.result_partitions = 1`), and Arrow's CSV writer turns it into
+headerless CSV with an empty NULL, as the DuckDB entry does. At a timeout the runner's timer
+thread cancels the running statement through ADBC's `StatementCancel`, which sends Chargewire's
+cancel request for that statement; the program answers the next request only after the cancel
+returned.
 
-At startup, the CLI identifies its own session with
-`SELECT session_id FROM hardcharger_active_connections() WHERE is_current`.
-The adapter authenticates a separate HTTP **control channel**, used only to send
-Chargewire's session-cancel request at a timeout. Waiting for its acknowledgement
-and the CLI's completion barrier keeps cancellation from reaching the next
-statement. All schema creation, data loading and benchmark queries go through the
-CLI; the control channel never executes SQL. This also avoids sending SIGINT to
-a noninteractive CLI after the server has finished and CSV formatting has begun.
+The server is bound to loopback, without TLS, inside the runner's isolated container, with
+role-based access control off (its default). Its initial engine thread count and memory limit
+follow `DBO_THREADS` and 80% of `DBO_MEMORY_MB`; the session settings use the same limits and
+dialect as the DuckDB entry. Session idle eviction is disabled so the session survives between
+requests. No query result cache, query rewrites, extra tables, indexes or precomputed answers are
+used.
 
-The server is bound to loopback, without TLS, inside the runner's isolated
-container. Its initial DuckDB thread count and memory limit follow `DBO_THREADS`
-and 80% of `DBO_MEMORY_MB`; the session settings use the same limits and dialect
-as the DuckDB entry. The CLI requests one result stream. Session idle eviction is
-disabled so the original session survives between requests. No query result
-cache, query rewrites, extra tables, indexes or precomputed answers are used.
+`hardcharger-parquet` is this system on the Parquet files in place, as `duckdb-parquet` is
+DuckDB's: every table is a view over its files so far, and the Parquet metadata cache is on.
 
 From the repository root:
 
