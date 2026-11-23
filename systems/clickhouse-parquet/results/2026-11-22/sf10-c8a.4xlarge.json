@@ -1,0 +1,34 @@
+{
+  "benchmark": "bench/benchmark_sf10.toml",
+  "category": "parquet",
+  "commit": "338ba7c894b05076b98d6141960e9b920662c57a",
+  "complete": true,
+  "config": "sf10-c8a.4xlarge",
+  "cpuset": "0-15",
+  "date": "2026-11-22",
+  "dirty": false,
+  "grace_period": 5,
+  "host": {
+    "cpu": "AMD EPYC 9745 128-Core Processor",
+    "cpus": 256,
+    "kernel": "7.0.0-38-generic",
+    "memory_bytes": 1080968810496
+  },
+  "images": {
+    "system": "localhost/dbo-clickhouse@sha256:371ac9631b7679d5a434e5825e909cc7ab069616a9bf42f85f3463eebaa9ba06"
+  },
+  "keys": "none",
+  "load_timeout": 600,
+  "memory": "32GB",
+  "memory_peak_bytes": 2524155904,
+  "queries": null,
+  "query_timeout": 5,
+  "repetitions": 1,
+  "schema_seconds": 0.0,
+  "sf": 10.0,
+  "storage_bytes": 166247065,
+  "system": "clickhouse-parquet",
+  "threads": 16,
+  "timeout_check": "cancelled",
+  "version": "26.10.10.3"
+}
